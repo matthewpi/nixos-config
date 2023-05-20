@@ -50,8 +50,9 @@ stdenv.mkDerivation rec {
 
   meta = {
     description = "A tool to make it easy to stream wayland windows and screens to Xwayland applicatons that don't have native pipewire support.";
-    homepage = "https://invent.kde.org/davidedmundson/xwaylandvideobridge";
+    homepage = "https://invent.kde.org/system/xwaylandvideobridge";
     license = lib.licenses.gpl2Plus;
-    maintainers = [lib.maintainers.matthewpi];
+    platforms = lib.platforms.unix;
+    maintainers = with lib.maintainers; [matthewpi];
   };
 }
