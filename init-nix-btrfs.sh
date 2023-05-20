@@ -4,6 +4,9 @@ set -e
 
 # This script configures a btrfs filesystem for use with NixOS.
 
+# TODO: find a way to detect the DEVICE or allow the user to specify it.
+# Keep in mind if this is detected as an NVME, partitions need a `p` prefix.
+# So for `/dev/nvme0n1`, the first partition would be named `/dev/nvme0n1p1`
 DEVICE="/dev/vda"
 
 BOOT_SIZE="512MB"
@@ -22,6 +25,7 @@ parted "$DEVICE" -- mkpart ESP fat32 1MB "$BOOT_SIZE"
 parted "$DEVICE" -- set 1 esp on
 
 # Create the root partition, and optionally a swap partition.
+# TODO: remove swap entirely?  We use zram for most things instead
 if [[ $CONFIGURE_SWAP == "true" ]]; then
 	parted "$DEVICE" -- mkpart primary "$BOOT_SIZE" "-$SWAP_SIZE"
 	parted "$DEVICE" -- mkpart primary linux-swap "-$SWAP_SIZE" 100%
@@ -97,3 +101,5 @@ cp -r /etc/secureboot /mnt/persist/etc/
 
 # Generate the NixOS configuration.
 nixos-generate-config --root /mnt
+
+# TODO: get the new disk UUIDs for use in the hardware-configuration

@@ -4,7 +4,7 @@
   ...
 }: {
   nix = {
-    # Use the unstable version of Nix.
+    # Use the unstable version of Nix
     package = pkgs.nixUnstable;
 
     settings = {

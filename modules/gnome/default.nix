@@ -28,7 +28,7 @@
       ];
     };
 
-    # Enable GNOME, GDM, and Wayland.
+    # Enable GNOME, GDM, and Wayland
     services.xserver = {
       enable = lib.mkDefault true;
 
@@ -61,7 +61,7 @@
         };
 
         touchpad = {
-          accelProfile = lib.mkDefault "flat"; # TODO: figure out what the best setting is if I am using a laptop.
+          accelProfile = lib.mkDefault "flat"; # TODO: figure out what the best setting is if I am using a laptop
           disableWhileTyping = lib.mkDefault true;
           middleEmulation = lib.mkDefault true;
           naturalScrolling = lib.mkDefault true;
@@ -69,7 +69,7 @@
       };
     };
 
-    # Yeet packages that I don't want.
+    # Yeet packages that I don't want
     environment.gnome.excludePackages =
       (with pkgs; [
         gnome-console
@@ -86,13 +86,13 @@
         gnome-initial-setup
       ]);
 
-    # Enable xdg-desktop-portal.
+    # Enable xdg-desktop-portal
     xdg.portal = {
       enable = lib.mkDefault true;
       xdgOpenUsePortal = lib.mkDefault true;
     };
 
-    # Enable dconf.
+    # Enable dconf
     programs.dconf.enable = lib.mkDefault true;
 
     # Enable wayland environment variables for Electron Ozone, SDL2, and QT

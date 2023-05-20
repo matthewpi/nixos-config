@@ -133,15 +133,6 @@
       panel-positions = "{\"0\":\"TOP\",\"1\":\"TOP\"}";
     };
 
-    # "org/gnome/shell/extensions/vitals" = {
-    #   hot-sensors = ["_processor_usage_" "_memory_usage_" "_temperature_zenpower_tctl_" "_voltage_zenpower_svi2_core_"];
-
-    #   show-network = false;
-    #   show-storage = false;
-
-    #   update-time = 3;
-    # };
-
     "org/gnome/system/location" = {
       enabled = false;
     };
@@ -163,11 +154,9 @@
     gnomeExtensions.hide-minimized
     gnomeExtensions.just-perfection
     gnomeExtensions.remove-alttab-delay-v2
-    # gnomeExtensions.vitals
   ];
 
   # Monitor settings
-  # TODO: re-use the same settings as GDM
   xdg.configFile."monitors.xml".text = ''
     <monitors version="2">
       <configuration>

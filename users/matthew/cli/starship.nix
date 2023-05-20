@@ -205,7 +205,7 @@
 
         kubernetes = {
           disabled = true;
-          # symbol = "ﴱ "; # TODO
+          symbol = "󱃾 ";
         };
 
         line_break = {

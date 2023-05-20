@@ -2,6 +2,7 @@
   config,
   flavour,
   inputs,
+  lib,
   outputs,
   pkgs,
   ...
@@ -32,11 +33,11 @@
     matthew = {
       isNormalUser = true;
       shell = pkgs.zsh;
-      # TODO: conditionally add user to groups depending on if their associated services are enabled
-      extraGroups = ["wheel" "corectrl" "libvirtd" "qemu-libvirtd"];
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJ30VI7vAdrs2MDgkNHSQMJt2xBtBLrirVhinSyteeU"
-      ];
+      extraGroups =
+        ["wheel"]
+        ++ lib.optionals config.programs.corectrl.enable ["corectrl"]
+        ++ lib.optionals config.virtualisation.libvirtd.enable ["libvirtd" "qemu-libvirtd"];
+      openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJ30VI7vAdrs2MDgkNHSQMJt2xBtBLrirVhinSyteeU"];
       passwordFile = config.age.secrets.passwordfile-matthew.path;
     };
   };
@@ -357,7 +358,7 @@
   };
 
   # Add a udev rule for Elgato Stream Deck(s)
-  # TODO: figure out why the second udev rule is broken.
+  # TODO: figure out why the second udev rule doesn't work
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", ATTRS{idProduct}=="0060|0063|006c|006d", MODE="0660", TAG+="uaccess"
     ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="1" , ATTRS{idVendor}=="046d", ATTRS{idProduct}=="4082", RUN+="${pkgs.libratbag}/bin/ratbagctl 'Logitech MX Master 3' dpi set 400"
