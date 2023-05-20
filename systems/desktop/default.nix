@@ -18,7 +18,7 @@
   time.timeZone = "America/Edmonton";
 
   # Use the xanmod kernel
-  boot.kernelPackages = pkgs.linuxKernel.packages.linux_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_xanmod_latest;
 
   # Enable SSH
   services.openssh.enable = true;
