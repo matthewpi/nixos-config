@@ -1,0 +1,42 @@
+name: Update
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "20 4 * * *" # "At 04:20."
+
+jobs:
+  nix-flake-lock:
+    name: Nix (flake.lock)
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@8e5e7e5ab8b370d6c329ec480221332ada57f0ab # v3.5.2
+        with:
+          ref: master
+
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@9b252454a8d70586c4ee7f163bf4bb1e9de3d763 # v2
+
+      - name: Install gitsign
+        uses: chainguard-dev/actions/setup-gitsign@dccee5bdbeaa304a0e9396dbed515fa950eb1fa1 # main
+
+      - name: nix flake update
+        run: |
+          nix flake update --commit-lock-file --commit-lockfile-summary "nix: update flake.lock"
+
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@284f54f989303d2699d373481a0cfa13ad5a6666 # v5.0.1
+        with:
+          branch: nix-flake-update
+          commit-message: ""
+          delete-branch: true
+          title: "nix: update flake.lock"
+          labels: dependencies
+          assignees: matthewpi
+          reviewers: matthewpi
+          body: ""
