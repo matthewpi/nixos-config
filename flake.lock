@@ -177,7 +177,28 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nixos-hardware": "nixos-hardware",
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": "nixpkgs",
+        "treefmt-nix": "treefmt-nix"
+      }
+    },
+    "treefmt-nix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1684416994,
+        "narHash": "sha256-KkZ9diPRl3Y05TngWYs/QhZKnI/3tA3s+2Hhmei8FnE=",
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "rev": "42045102f90cfd23ca44ae4ef8362180fefcd7fd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "treefmt-nix",
+        "type": "github"
       }
     }
   },
