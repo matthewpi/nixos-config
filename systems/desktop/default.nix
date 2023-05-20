@@ -142,24 +142,6 @@
     ''}"
   ];
 
-  hardware = {
-    amdgpu = {
-      loadInInitrd = true;
-      amdvlk = false;
-      opencl = true;
-    };
-
-    opengl = {
-      enable = true;
-      driSupport = true;
-      driSupport32Bit = true;
-
-      # https://github.com/NixOS/nixpkgs/pull/225325
-      package = lib.mkForce pkgs.mesa.drivers;
-      package32 = lib.mkForce pkgs.pkgsi686Linux.mesa.drivers;
-    };
-  };
-
   # Enable aarch64 emulation for Nix builds
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
