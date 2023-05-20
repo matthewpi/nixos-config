@@ -165,4 +165,33 @@
 
   # Set the RTC to local-time to prevent it from breaking time in Windows
   time.hardwareClockInLocalTime = true;
+
+  # Configure restic to backup important directories
+  services.restic.backups = {
+    matthew-code = {
+      initialize = true;
+      user = "matthew";
+      paths = [
+        "/home/matthew/code/matthewpi"
+        "/home/matthew/code/pterodactyl"
+      ];
+      exclude = [
+        ".direnv"
+        "result*"
+        "node_modules"
+        ".output"
+        ".turbo"
+        ".nuxt"
+      ];
+
+      environmentFile = config.age.secrets.restic-matthew-code.path;
+      repositoryFile = config.age.secrets.restic-matthew-code-repository.path;
+      passwordFile = config.age.secrets.restic-matthew-code-password.path;
+
+      timerConfig = {
+        OnCalendar = "*:0/15"; # every 15 minutes
+        Persistent = true;
+      };
+    };
+  };
 }

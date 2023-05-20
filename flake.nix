@@ -87,6 +87,20 @@
               {
                 age.secrets = {
                   passwordfile-matthew.file = secrets/passwordfile-matthew.age;
+
+                  restic-matthew-code.file = secrets/restic-matthew-code.age;
+                  restic-matthew-code-repository = {
+                    file = secrets/restic-matthew-code-repository.age;
+                    mode = "400";
+                    owner = "matthew";
+                    group = "users";
+                  };
+                  restic-matthew-code-password = {
+                    file = secrets/restic-matthew-code-password.age;
+                    mode = "400";
+                    owner = "matthew";
+                    group = "users";
+                  };
                 };
 
                 age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
