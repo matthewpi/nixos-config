@@ -33,7 +33,7 @@ stdenv.mkDerivation rec {
     qt5.qtquickcontrols2
     qt5.qtx11extras
     libsForQt5.kdelibs4support
-    (libsForQt5.kpipewire.overrideAttrs (oldAttrs: {
+    (libsForQt5.kpipewire.overrideAttrs (_oldAttrs: {
       version = "unstable-2023-03-28";
 
       src = fetchFromGitLab {

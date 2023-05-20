@@ -31,6 +31,10 @@
     impermanence.url = "github:nix-community/impermanence";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {self, ...} @ inputs: let
@@ -41,6 +45,7 @@
 
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
+        inputs.treefmt-nix.flakeModule
 
         ./modules
         ./packages
@@ -112,6 +117,22 @@
 
             pkgs.gitsign
           ];
+        };
+
+        treefmt = {
+          projectRootFile = "flake.nix";
+
+          programs = {
+            alejandra.enable = true;
+            deadnix.enable = true;
+            shellcheck.enable = true;
+            shfmt = {
+              enable = true;
+              # https://flake.parts/options/treefmt-nix.html#opt-perSystem.treefmt.programs.shfmt.indent_size
+              # 0 causes shfmt to use tabs
+              indent_size = 0;
+            };
+          };
         };
       };
     };

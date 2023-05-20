@@ -1,6 +1,5 @@
 {
   flavour,
-  lib,
   pkgs,
   ...
 }: {

@@ -22,7 +22,7 @@ parted "$DEVICE" -- mkpart ESP fat32 1MB "$BOOT_SIZE"
 parted "$DEVICE" -- set 1 esp on
 
 # Create the root partition, and optionally a swap partition.
-if [[ "$CONFIGURE_SWAP" == "true" ]]; then
+if [[ $CONFIGURE_SWAP == "true" ]]; then
 	parted "$DEVICE" -- mkpart primary "$BOOT_SIZE" "-$SWAP_SIZE"
 	parted "$DEVICE" -- mkpart primary linux-swap "-$SWAP_SIZE" 100%
 else
@@ -33,7 +33,7 @@ fi
 mkfs.fat -F 32 -n boot "$BOOT_PARTITION"
 
 # Setup the swap partition.
-if [[ "$CONFIGURE_SWAP" == "true" ]]; then
+if [[ $CONFIGURE_SWAP == "true" ]]; then
 	mkswap -L swap "$SWAP_PARTITION"
 	swapon "$SWAP_PARTITION"
 fi

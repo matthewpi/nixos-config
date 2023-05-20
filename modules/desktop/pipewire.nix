@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{lib, ...}: {
   # Disable pulseaudio
   hardware.pulseaudio.enable = false;
 

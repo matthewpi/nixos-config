@@ -1,7 +1,6 @@
 {
   config,
   flavour,
-  lib,
   inputs,
   outputs,
   pkgs,

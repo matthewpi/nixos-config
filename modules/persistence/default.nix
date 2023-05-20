@@ -1,9 +1,4 @@
-{
-  config,
-  inputs,
-  lib,
-  ...
-}: {
+{inputs, ...}: {
   flake.nixosModules.persistence = {
     imports = [
       inputs.impermanence.nixosModules.impermanence
