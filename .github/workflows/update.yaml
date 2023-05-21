@@ -29,9 +29,23 @@ jobs:
         run: |
           nix flake update --commit-lock-file --commit-lockfile-summary "nix: update flake.lock"
 
+      # This is used to bypass GitHub's restriction on actions that create pull requests not
+      # triggering any other action runs.  I would like for the PR created by this action to
+      # be ran through our CI checks to ensure it builds correctly before it gets merged.
+      #
+      # See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
+      # for more information.
+      - name: Generate GitHub App Token
+        id: generate-token
+        uses: tibdex/github-app-token@b62528385c34dbc9f38e5f4225ac829252d1ea92 # v1.8.0
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
+
       - name: Create pull request
         uses: peter-evans/create-pull-request@284f54f989303d2699d373481a0cfa13ad5a6666 # v5.0.1
         with:
+          token: ${{ steps.generate-token.outputs.token }}
           branch: nix-flake-update
           commit-message: ""
           delete-branch: true
