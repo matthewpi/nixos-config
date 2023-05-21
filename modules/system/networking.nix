@@ -1,7 +1,7 @@
 {lib, ...}: {
-  # Disable systemd-timesyncd in favor of chrony
-  services.timesyncd.enable = lib.mkDefault false;
-  services.chrony.enable = lib.mkDefault true;
+  # Enable systemd-timesyncd in favor of chrony
+  services.timesyncd.enable = lib.mkDefault true;
+  services.chrony.enable = lib.mkDefault false;
 
   # Disable systemd-networkd
   systemd.network.enable = lib.mkDefault false;
