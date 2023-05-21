@@ -9,8 +9,8 @@ on:
       - master
 
 jobs:
-  nix:
-    name: Nix
+  nix-flake-check:
+    name: nix flake check
     runs-on: ubuntu-22.04
     permissions:
       contents: read
