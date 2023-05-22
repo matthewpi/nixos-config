@@ -12,6 +12,7 @@
         ];
       };
     in {
+      catppuccin-k9s = pkgs.callPackage ./catppuccin/k9s.nix {};
       catppuccin-plymouth = pkgs.callPackage ./catppuccin/plymouth.nix {};
 
       fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting.nix {};
@@ -31,6 +32,7 @@
     overlayAttrs = {
       inherit
         (config.packages)
+        catppuccin-k9s
         catppuccin-plymouth
         fast-syntax-highlighting
         xwaylandvideobridge

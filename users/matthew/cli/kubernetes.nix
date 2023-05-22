@@ -1,6 +1,11 @@
-{pkgs, ...}: {
+{
+  flavour,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [kubernetes kubernetes-helm];
 
-  # TODO: catppuccin theme.  k9s uses YAML for themes which Nix doesn't provide a way to parse.
   programs.k9s.enable = true;
+  # Enable the catppuccin theme for k9s
+  xdg.configFile."k9s/skin.yml".source = "${pkgs.catppuccin-k9s}/${flavour}.yaml";
 }
