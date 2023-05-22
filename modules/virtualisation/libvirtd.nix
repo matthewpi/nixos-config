@@ -13,7 +13,7 @@
     qemu = {
       ovmf = {
         packages = [
-          # Compile OVMF without CSM support, it break secureboot for VMs
+          # Compile OVMF without CSM support, CSM breaks secureboot for VMs
           (pkgs.OVMF.override {
             secureBoot = true;
             csmSupport = false;
@@ -43,4 +43,9 @@
     # Needed for host <-> vm communication
     checkReversePath = lib.mkForce false;
   };
+
+  # Enable additional kernel modules that may be needed by libvirt
+  boot.kernelModules = lib.mkIf config.virtualisation.libvirtd.enable [
+    "vfio-pci"
+  ];
 }
