@@ -4,6 +4,7 @@
     ./bat.nix
     ./bottom.nix
     ./direnv.nix
+    ./fzf.nix
     ./gh.nix
     ./git.nix
     ./kubernetes.nix
