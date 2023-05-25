@@ -2,6 +2,6 @@
   imports = [
     #./bottles.nix
     ./lunar-client.nix
-    #./steam.nix
+    ./steam.nix
   ];
 }
