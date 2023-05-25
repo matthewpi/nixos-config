@@ -46,8 +46,6 @@ stdenv.mkDerivation rec {
     }))
   ];
 
-  # dontWrapQtApps = true;
-
   meta = {
     description = "A tool to make it easy to stream wayland windows and screens to Xwayland applicatons that don't have native pipewire support.";
     homepage = "https://invent.kde.org/system/xwaylandvideobridge";
