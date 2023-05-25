@@ -112,7 +112,7 @@
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
         "firefox.desktop"
-        "discord.desktop"
+        "discord-canary.desktop"
         "spotify.desktop"
         "com.raggesilver.BlackBox.desktop"
         "code.desktop"
