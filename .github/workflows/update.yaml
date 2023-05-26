@@ -22,10 +22,10 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@129f07902485941992791c670de648dbe572a9ac # v3
 
-      - name: nix develop .\#ci
+      - name: nix develop .#ci
         uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # v1.1.0
         with:
-          devShell: .\#ci
+          devShell: .#ci
 
       - name: Configure gitsign
         run: |
