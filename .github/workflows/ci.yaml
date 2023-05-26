@@ -22,4 +22,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@129f07902485941992791c670de648dbe572a9ac # v3
 
       - name: nix flake check
-        run: nix flake check
+        env:
+          NIXPKGS_ALLOW_UNFREE: 1
+        # The `--impure` flag is required to respect `NIXPKGS_ALLOW_UNFREE`.
+        run: nix flake check --impure
