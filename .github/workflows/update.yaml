@@ -22,8 +22,22 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@129f07902485941992791c670de648dbe572a9ac # v3
 
-      - name: Install gitsign
-        uses: chainguard-dev/actions/setup-gitsign@dccee5bdbeaa304a0e9396dbed515fa950eb1fa1 # main
+      - name: nix develop .\#ci
+        uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # v1.1.0
+        with:
+          devShell: .\#ci
+
+      - name: Configure gitsign
+        run: |
+          git config --global commit.gpgsign true       # Sign all commits
+          git config --global tag.gpgsign true          # Sign all tags
+          git config --global gpg.x509.program gitsign  # Use gitsign for signing
+          git config --global gpg.format x509           # gitsign expects x509 args
+
+          # Use workflow name as the username
+          git config --global user.name "${{ github.workflow }}"
+          # This email identifies the commit as GitHub Actions - see https://github.com/orgs/community/discussions/26560
+          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
       - name: nix flake update
         run: |

@@ -125,12 +125,15 @@
         system,
         ...
       }: {
-        devShells.default = pkgs.mkShell {
-          buildInputs = [
-            inputs.agenix.packages."${system}".default
+        devShells = {
+          ci = pkgs.mkShell {buildInputs = [pkgs.gitsign];};
 
-            pkgs.gitsign
-          ];
+          default = pkgs.mkShell {
+            buildInputs = [
+              inputs.agenix.packages."${system}".default
+              pkgs.gitsign
+            ];
+          };
         };
 
         treefmt = {
