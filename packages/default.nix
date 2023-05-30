@@ -17,16 +17,11 @@
 
       fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting.nix {};
 
-      xwaylandvideobridge = pkgs.libsForQt5.callPackage ./xwaylandvideobridge.nix {};
-
-      # linuxPackages_xanmod = pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor xanmodKernels.lts);
       linux_xanmod = xanmodKernels.lts;
-
-      # linuxPackages_xanmod_stable = pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor xanmodKernels.main);
       linux_xanmod_stable = xanmodKernels.main;
-
-      # linuxPackages_xanmod_latest = pkgs.recurseIntoAttrs (pkgs.linuxPackagesFor xanmodKernels.main);
       linux_xanmod_latest = xanmodKernels.main;
+
+      xwaylandvideobridge = pkgs.libsForQt5.callPackage ./xwaylandvideobridge.nix {};
     };
 
     overlayAttrs = {
@@ -35,8 +30,10 @@
         catppuccin-k9s
         catppuccin-plymouth
         fast-syntax-highlighting
-        xwaylandvideobridge
+        linux_xanmod
+        linux_xanmod_stable
         linux_xanmod_latest
+        xwaylandvideobridge
         ;
     };
   };
