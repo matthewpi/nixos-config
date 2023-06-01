@@ -1,9 +1,5 @@
 {
-  flake.nixosModules.amd-ryzen = {
-    config,
-    lib,
-    ...
-  }: {
+  flake.nixosModules.amd-ryzen = {config, ...}: {
     # Enable zenpower
     boot.extraModulePackages = with config.boot.kernelPackages; [zenpower];
 
@@ -11,16 +7,5 @@
     boot.blacklistedKernelModules = [
       "k10temp"
     ];
-
-    # Enable amd_pstate correctly
-    boot.kernelParams =
-      if lib.versionAtLeast config.boot.kernelPackages.kernel.version "6.3"
-      then [
-        "amd_pstate=active"
-      ]
-      else [
-        "amd_pstate=passive"
-        "amd_pstate.shared_mem=1"
-      ];
   };
 }
