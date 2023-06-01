@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  home.packages = with pkgs; [element-desktop];
+
   # For whatever reason the default StartupWMClass is set incorrectly, causing duplicate icons
   # to appear in the taskbar.
   xdg.desktopEntries.element-desktop = {
@@ -13,6 +15,4 @@
       StartupWMClass = "Element";
     };
   };
-
-  home.packages = with pkgs; [element-desktop];
 }
