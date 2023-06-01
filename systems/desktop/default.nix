@@ -102,9 +102,6 @@
   # Enable aarch64 emulation for Nix builds
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
-  # Set the RTC to local-time to prevent it from breaking time in Windows
-  time.hardwareClockInLocalTime = true;
-
   # Configure restic to backup important directories
   services.restic.backups = {
     matthew-code = {
