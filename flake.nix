@@ -69,6 +69,7 @@
               {nixpkgs.overlays = builtins.attrValues outputs.overlays;}
 
               inputs.nixos-hardware.nixosModules.common-cpu-amd
+              inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
               inputs.nixos-hardware.nixosModules.common-gpu-amd
 
               self.nixosModules.agenix
