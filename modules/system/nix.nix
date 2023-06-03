@@ -4,8 +4,8 @@
   ...
 }: {
   nix = {
-    # Use the unstable version of Nix
-    package = pkgs.nixUnstable;
+    # Use the latest version of Nix
+    package = pkgs.nixVersions.nix_2_16;
 
     settings = {
       # Auto-scale builders
