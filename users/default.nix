@@ -252,6 +252,10 @@
           mode = "0700";
         }
         {
+          directory = ".local/share/PrismLauncher";
+          mode = "0700";
+        }
+        {
           directory = ".local/share/Steam";
           mode = "0700";
         }
