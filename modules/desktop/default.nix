@@ -4,6 +4,7 @@
       ./1password.nix
       ./bluetooth.nix
       ./corectrl.nix
+      ./gamemode.nix
       ./pipewire.nix
       ./plymouth.nix
       ./printing.nix
