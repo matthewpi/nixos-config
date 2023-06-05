@@ -196,6 +196,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/kubernetes";
+          mode = "0700";
+        }
+        {
           directory = ".config/libreoffice";
           mode = "0700";
         }
