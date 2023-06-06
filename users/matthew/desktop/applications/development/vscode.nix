@@ -41,7 +41,7 @@
       matthewpi.caddyfile-support # Caddyfile Support
       catppuccin.catppuccin-vsc # Catppuccin for VSCode
       streetsidesoftware.code-spell-checker # Code Spell Checker
-      #aasdine.cue # Cue; TODO: uncomment once https://github.com/NixOS/nixpkgs/pull/232264 is merged
+      asdine.cue # Cue; TODO: uncomment once https://github.com/NixOS/nixpkgs/pull/232264 is merged
       ms-azuretools.vscode-docker # Docker
       mikestead.dotenv # DotENV
       editorconfig.editorconfig # EditorConfig for VS Code
