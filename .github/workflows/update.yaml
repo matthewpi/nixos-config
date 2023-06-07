@@ -20,7 +20,7 @@ jobs:
           ref: master
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@129f07902485941992791c670de648dbe572a9ac # v3
+        uses: DeterminateSystems/nix-installer-action@65d7c888b2778e8cf30a07a88422ccb23499bfb8 # v4
 
       - name: nix develop .#ci
         uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # v1.1.0
