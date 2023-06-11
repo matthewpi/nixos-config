@@ -10,6 +10,7 @@
   # Configure home-manager
   home-manager = {
     useUserPackages = true;
+
     extraSpecialArgs = {
       inherit flavour inputs outputs;
     };

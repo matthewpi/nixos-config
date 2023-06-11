@@ -29,8 +29,15 @@
     };
 
     impermanence.url = "github:nix-community/impermanence";
+
+    nix-index-database = {
+      url = "github:Mic92/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -57,7 +64,7 @@
         nixosConfigurations = {
           desktop = inputs.nixpkgs.lib.nixosSystem {
             specialArgs = {
-              inherit outputs;
+              inherit inputs outputs;
 
               # Catppuccin flavour
               # https://github.com/catppuccin/catppuccin#-palette

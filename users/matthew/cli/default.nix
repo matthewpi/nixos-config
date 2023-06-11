@@ -9,6 +9,7 @@
     ./git.nix
     ./kubernetes.nix
     ./neovim.nix
+    ./nix-index.nix
     ./ssh.nix
     ./starship.nix
     ./tmux.nix
