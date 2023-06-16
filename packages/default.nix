@@ -15,8 +15,6 @@
       catppuccin-k9s = pkgs.callPackage ./catppuccin/k9s.nix {};
       catppuccin-plymouth = pkgs.callPackage ./catppuccin/plymouth.nix {};
 
-      discord-canary = (pkgs.callPackage ./overrides/discord.nix {}).discord-canary;
-
       fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting.nix {};
 
       linux_xanmod = xanmodKernels.lts;
