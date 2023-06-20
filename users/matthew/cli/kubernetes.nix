@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [kubernetes kubernetes-helm kubelogin-oidc];
+  home.packages = with pkgs; [kubectl kubernetes-helm kubelogin-oidc];
 
   # Change the kubeconfig location
   home.sessionVariables.KUBECONFIG = "${config.home.homeDirectory}/.config/kubernetes/config.yaml";
