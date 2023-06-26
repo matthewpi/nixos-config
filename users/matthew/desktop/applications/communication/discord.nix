@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [(pkgs.callPackage ../../../../../packages/overrides/discord.nix {}).discord-canary];
+  home.packages = with pkgs; [discord-canary];
 
   # For whatever reason the default StartupWMClass is set incorrectly, causing duplicate icons
   # to appear in the taskbar.
