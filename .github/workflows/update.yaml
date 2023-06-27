@@ -23,7 +23,7 @@ jobs:
         uses: DeterminateSystems/nix-installer-action@65d7c888b2778e8cf30a07a88422ccb23499bfb8 # v4
 
       - name: Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@53b6b26c21172d05af1bbc39e3fb6facd7140272 # v1
+        uses: DeterminateSystems/magic-nix-cache-action@8a218f9e264e9c3803c9a1ee1c30d8e4ab55be63 # v2
 
       - name: nix develop .#ci
         uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # v1.1.0
