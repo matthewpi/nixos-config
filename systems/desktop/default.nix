@@ -11,6 +11,12 @@
     ./secure-boot.nix
   ];
 
+  # Allow unfree
+  nixpkgs.config = {
+    allowUnfree = true;
+    allowUnfreePredicate = _: true;
+  };
+
   # Hostname
   networking.hostName = "matthew-desktop";
 
@@ -23,11 +29,8 @@
   # Enable SSH
   services.openssh.enable = true;
 
-  # Allow unfree
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
+  # Enable Tailscale
+  services.tailscale.enable = true;
 
   # Allow passwordless sudo
   security.sudo.extraRules = [
