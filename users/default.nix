@@ -20,6 +20,9 @@
     };
   };
 
+  # Enable steam hardware
+  hardware.steam-hardware.enable = true;
+
   # Enable zsh
   programs.zsh.enable = true;
 
