@@ -4,4 +4,9 @@
     enable = lib.mkDefault true;
     powerOnBoot = lib.mkDefault false;
   };
+
+  boot.kernelModules = [
+    "bluetooth"
+    "hidp"
+  ];
 }
