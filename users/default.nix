@@ -220,6 +220,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/rclone";
+          mode = "0700";
+        }
+        {
           directory = ".config/spotify";
           mode = "0700";
         }
