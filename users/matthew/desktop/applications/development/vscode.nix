@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   # For whatever reason the default StartupWMClass is set incorrectly, causing duplicate icons
   # to appear in the taskbar.
   xdg.desktopEntries.code = {
@@ -29,7 +33,7 @@
 
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = false;
-    mutableExtensionsDir = true;
+    mutableExtensionsDir = false;
 
     extensions = with pkgs.vscode-extensions; [
       #redhat.ansible # Ansible; TODO: package
@@ -45,6 +49,7 @@
       ms-azuretools.vscode-docker # Docker
       mikestead.dotenv # DotENV
       editorconfig.editorconfig # EditorConfig for VS Code
+      usernamehw.errorlens # Error Lens
       dbaeumer.vscode-eslint # ESLint
       file-icons.file-icons # file-icons
       #github.copilot # GitHub Copilot
@@ -66,6 +71,7 @@
       bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
       #wayou.vscode-todo-highlight # TODO Highlight; TODO: package
       #britesnow.vscode-toggle-quotes # Toggle Quotes; TODO: package
+      vscode-icons-team.vscode-icons # vscode-icons
       zxh404.vscode-proto3 # vscode-proto3
       #vue.volar # Vue Language Features (Volar); TODO: package
       redhat.vscode-xml # XML
@@ -121,7 +127,7 @@
 
       # Workbench
       "workbench.colorTheme" = "Catppuccin Mocha";
-      "workbench.iconTheme" = "file-icons";
+      "workbench.iconTheme" = "vscode-icons";
       "workbench.startupEditor" = "none";
       "workbench.tree.indent" = 16;
       "workbench.enableExperiments" = false;
@@ -152,8 +158,18 @@
         "format.gofumpt" = true;
       };
 
+      # Nix
+      "nix.enableLanguageServer" = true;
+      "nix.serverPath" = lib.getExe pkgs.nixd;
+      "nix.serverSettings" = {
+        "nixd" = {};
+      };
+
       # Red Hat Commons
       "redhat.telemetry.enabled" = false;
+
+      # vscode-icons
+      "vsicons.dontShowNewVersionMessage" = true;
     };
   };
 }
