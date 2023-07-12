@@ -9,13 +9,13 @@
 } @ args: let
   # These names are how they are designated in https://xanmod.org.
   ltsVariant = {
-    version = "6.1.37";
-    hash = "sha256-g8cmAhsM03jBu7UZoNOLBX7cGg8rz70/xhF7sJj9nCY=";
+    version = "6.1.38";
+    hash = "sha256-7dNM4T0F4B6KBHkOy+LrDNKkYnjeaf5pdVDZ736GOzw=";
   };
 
   mainVariant = {
-    version = "6.4.1";
-    hash = "sha256-WPnINDkOj0IoUDLBG/2LOrppVi9o9XSSgMrs/NBbqdA=";
+    version = "6.4.3";
+    hash = "sha256-5t1i9VKkEMn11xkum0qU6omZAUi+qTYY2oOirVXV+yM=";
   };
 
   xanmodKernelFor = {
