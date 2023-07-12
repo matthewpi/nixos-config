@@ -14,6 +14,10 @@
       source /home/matthew/.config/op/plugins.sh
     '';
 
+    initExtraBeforeCompInit = ''
+      bindkey "\e[3~" delete-char
+    '';
+
     # While we use atuin, we also want regular zsh history as it works with zsh-autosuggestions
     history = {
       extended = true;
