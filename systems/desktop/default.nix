@@ -31,6 +31,7 @@
 
   # Enable Tailscale
   services.tailscale.enable = true;
+  networking.firewall.trustedInterfaces = ["tailscale0"];
 
   # Allow passwordless sudo
   security.sudo.extraRules = [
