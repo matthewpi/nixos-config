@@ -144,10 +144,6 @@
           mode = "0700";
         }
         {
-          directory = ".config/Code";
-          mode = "0700";
-        }
-        {
           directory = ".config/Element";
           mode = "0700";
         }
@@ -173,6 +169,10 @@
         }
         {
           directory = ".config/Slack";
+          mode = "0700";
+        }
+        {
+          directory = ".config/VSCodium";
           mode = "0700";
         }
         {

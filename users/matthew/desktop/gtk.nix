@@ -115,7 +115,7 @@
         "discord-canary.desktop"
         "spotify.desktop"
         "com.raggesilver.BlackBox.desktop"
-        "code.desktop"
+        "codium.desktop"
         "slack.desktop"
       ];
     };
