@@ -24,7 +24,10 @@
   hardware.steam-hardware.enable = true;
 
   # Enable zsh
-  programs.zsh.enable = true;
+  programs.zsh = {
+    enable = true;
+    vteIntegration = true;
+  };
 
   # Allow matthew access to 1Password
   programs._1password-gui.polkitPolicyOwners = ["matthew"];
