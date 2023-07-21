@@ -30,7 +30,10 @@
   services.openssh.enable = true;
 
   # Enable Tailscale
-  services.tailscale.enable = true;
+  services.tailscale = {
+    enable = true;
+    permitCertUid = "1000";
+  };
   networking.firewall.trustedInterfaces = ["tailscale0"];
 
   # Allow passwordless sudo
