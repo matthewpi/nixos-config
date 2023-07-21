@@ -9,5 +9,6 @@
 
     ./firefox.nix
     ./terminal.nix
+    ./trayscale.nix
   ];
 }
