@@ -54,8 +54,8 @@
     "sctp"
   ];
 
-  # Disable kernel module loading once the system is fully initialised
-  security.lockKernelModules = lib.mkDefault true;
+  # Allow kernel module loading once the system is fully initialised
+  security.lockKernelModules = lib.mkDefault false;
 
   # Prevent replacing the running kernel image
   security.protectKernelImage = lib.mkDefault true;
