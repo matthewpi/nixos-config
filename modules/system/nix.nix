@@ -36,6 +36,9 @@
       # Enable experimental features
       experimental-features = lib.mkDefault ["auto-allocate-uids" "nix-command" "flakes"];
       auto-allocate-uids = lib.mkDefault true;
+
+      # Configure Nix to follow the XDG base directory spec.
+      use-xdg-base-directories = true;
     };
   };
 }
