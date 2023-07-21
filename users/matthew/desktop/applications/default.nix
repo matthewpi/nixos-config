@@ -8,7 +8,6 @@
     ./virtualisation
 
     ./firefox.nix
-    ./spotify.nix
     ./terminal.nix
   ];
 }
