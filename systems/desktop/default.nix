@@ -116,6 +116,7 @@
       user = "matthew";
       paths = [
         "/home/matthew/code/matthewpi"
+        "/home/matthew/code/nexavo"
         "/home/matthew/code/pterodactyl"
       ];
       exclude = [
