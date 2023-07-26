@@ -26,6 +26,6 @@
     security.polkit.enable = lib.mkDefault true;
 
     # Enable htop
-    programs.htop.enable = true;
+    programs.htop.enable = lib.mkDefault true;
   };
 }
