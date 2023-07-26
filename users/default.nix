@@ -159,10 +159,6 @@
           mode = "0700";
         }
         {
-          directory = ".config/Postman";
-          mode = "0700";
-        }
-        {
           directory = ".config/Signal";
           mode = "0700";
         }
