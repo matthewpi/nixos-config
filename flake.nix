@@ -48,7 +48,7 @@
     inherit (self) outputs;
   in
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-darwin" "x86_64-linux"];
+      systems = ["x86_64-linux"];
 
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
