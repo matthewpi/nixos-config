@@ -134,9 +134,9 @@
         ...
       }: {
         devShells = {
-          ci = pkgs.mkShell {buildInputs = [pkgs.gitsign];};
+          ci = pkgs.mkShellNoCC {buildInputs = [pkgs.gitsign];};
 
-          default = pkgs.mkShell {
+          default = pkgs.mkShellNoCC {
             buildInputs = [
               inputs.agenix.packages."${system}".default
               pkgs.gitsign
