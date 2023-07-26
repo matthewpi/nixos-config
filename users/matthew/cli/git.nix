@@ -5,6 +5,8 @@
 }: {
   programs.git = {
     enable = true;
+
+    # Build a customized version of Git with the minimum features I use.
     package = pkgs.git.override {
       sendEmailSupport = true;
       withSsh = true;
@@ -150,6 +152,7 @@
     # Enable Git LFS
     lfs.enable = true;
 
+    # Ignore directories and files that should never be committed globally.
     ignores = [".direnv" "result*"];
 
     extraConfig = {
