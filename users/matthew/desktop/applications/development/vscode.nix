@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -204,7 +205,7 @@
       "go.formatTool" = "default";
       "go.lintTool" = "golangci-lint";
       "go.lintOnSave" = "off";
-      "go.gopath" = "/home/matthew/.local/share/go";
+      "go.gopath" = config.home.sessionVariables.GOPATH;
       "go.goroot" = "${pkgs.go_1_20}/share/go";
       "go.toolsManagement.checkForUpdates" = false;
       "go.toolsManagement.autoUpdate" = false;
