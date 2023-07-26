@@ -159,6 +159,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/OpenLens";
+          mode = "0700";
+        }
+        {
           directory = ".config/Signal";
           mode = "0700";
         }
