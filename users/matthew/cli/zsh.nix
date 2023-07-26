@@ -12,9 +12,11 @@
     dotDir = ".config/zsh";
 
     initExtra = ''
-      source ${pkgs.fast-syntax-highlighting}/share/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
+      # Enable the fast-syntax-highlighting plugin
+      source "${pkgs.fast-syntax-highlighting}/share/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
-      source /home/matthew/.config/op/plugins.sh
+      # 1Password CLI Plugins
+      source "${config.home.homeDirectory}/.config/op/plugins.sh"
     '';
 
     initExtraBeforeCompInit = ''

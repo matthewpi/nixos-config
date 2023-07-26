@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   # https://nix-community.github.io/home-manager/options.html#opt-systemd.user.startServices
   systemd.user.startServices = "sd-switch";
 
@@ -8,7 +8,7 @@
     };
 
     Service = {
-      ExecStart = "/home/matthew/code/matthewpi/streamdeck-local/streamdeck"; # TODO: package
+      ExecStart = "${config.home.homeDirectory}/code/matthewpi/streamdeck-local/streamdeck"; # TODO: package
       ExecStop = "/bin/kill --signal INT $MAINPID";
       Restart = "on-failure";
     };

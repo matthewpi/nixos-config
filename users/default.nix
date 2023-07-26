@@ -16,7 +16,7 @@
     };
 
     users = {
-      matthew = import ./matthew/default.nix;
+      matthew = import ./matthew/linux.nix;
     };
   };
 

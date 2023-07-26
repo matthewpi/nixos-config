@@ -163,7 +163,10 @@
       gpg = {
         format = "ssh";
         ssh = {
-          program = "${pkgs._1password-gui}/share/1password/op-ssh-sign";
+          program =
+            if pkgs.stdenv.isDarwin
+            then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+            else "${pkgs._1password-gui}/share/1password/op-ssh-sign";
         };
       };
       user.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKL873MsP1OFfffNC8n9WcVuOXOSW65/q26MIzib0K9k";
