@@ -151,10 +151,6 @@
           mode = "0700";
         }
         {
-          directory = ".config/Insomnia";
-          mode = "0700";
-        }
-        {
           directory = ".config/JetBrains";
           mode = "0700";
         }
