@@ -38,7 +38,7 @@
       auto-allocate-uids = lib.mkDefault true;
 
       # Configure Nix to follow the XDG base directory spec.
-      use-xdg-base-directories = true;
+      use-xdg-base-directories = lib.mkDefault true;
     };
   };
 }

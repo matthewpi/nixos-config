@@ -6,13 +6,6 @@
   programs.git = {
     enable = true;
 
-    # Build a customized version of Git with the minimum features I use.
-    package = pkgs.git.override {
-      sendEmailSupport = true;
-      withSsh = true;
-      withLibsecret = !pkgs.stdenv.isDarwin;
-    };
-
     # User settings
     userEmail = "me@matthewp.io";
     userName = "Matthew Penner";

@@ -48,7 +48,7 @@
     inherit (self) outputs;
   in
     inputs.flake-parts.lib.mkFlake {inherit inputs;} {
-      systems = ["x86_64-linux"];
+      systems = ["x86_64-darwin" "x86_64-linux"];
 
       imports = [
         inputs.flake-parts.flakeModules.easyOverlay
@@ -59,7 +59,24 @@
       ];
 
       flake = {
-        darwinConfigurations = {};
+        darwinConfigurations."Matthews-MBP" = inputs.darwin.lib.darwinSystem {
+          specialArgs = {
+            inherit inputs outputs;
+
+            # Catppuccin flavour
+            # https://github.com/catppuccin/catppuccin#-palette
+            flavour = "mocha";
+          };
+
+          modules = [
+            # Enable our overlays to replace built-in packages
+            {nixpkgs.overlays = builtins.attrValues outputs.overlays;}
+
+            inputs.home-manager.darwinModules.home-manager
+
+            ./systems/mbp
+          ];
+        };
 
         nixosConfigurations = {
           desktop = inputs.nixpkgs.lib.nixosSystem {
