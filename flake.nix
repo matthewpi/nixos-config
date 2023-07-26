@@ -79,9 +79,9 @@
               inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
               inputs.nixos-hardware.nixosModules.common-gpu-amd
 
-              self.nixosModules.agenix
-              self.nixosModules.bootspec-secureboot
-              self.nixosModules.home-manager
+              inputs.agenix.nixosModules.default
+              inputs.bootspec-secureboot.nixosModules.bootspec-secureboot
+              inputs.home-manager.nixosModules.home-manager
 
               self.nixosModules.amd-ryzen
               self.nixosModules.catppuccin
