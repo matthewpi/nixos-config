@@ -138,4 +138,7 @@
       };
     };
   };
+
+  # Allow loading of kernel modules at runtime.
+  security.lockKernelModules = false;
 }

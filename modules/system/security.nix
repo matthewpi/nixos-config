@@ -55,7 +55,7 @@
   ];
 
   # Allow kernel module loading once the system is fully initialised
-  security.lockKernelModules = lib.mkDefault false;
+  security.lockKernelModules = lib.mkDefault true;
 
   # Prevent replacing the running kernel image
   security.protectKernelImage = lib.mkDefault true;
