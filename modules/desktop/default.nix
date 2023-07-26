@@ -1,5 +1,9 @@
 {
-  flake.nixosModules.desktop = {pkgs, ...}: {
+  flake.nixosModules.desktop = {
+    lib,
+    pkgs,
+    ...
+  }: {
     imports = [
       ./1password.nix
       ./bluetooth.nix
@@ -61,5 +65,8 @@
       usbutils
       vulkan-tools
     ];
+
+    # Set location provider to geoclue2.
+    location.provider = lib.mkDefault "geoclue2";
   };
 }
