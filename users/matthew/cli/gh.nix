@@ -1,7 +1,9 @@
 {
   programs.gh = {
     enable = true;
-    enableGitCredentialHelper = false;
+    gitCredentialHelper = {
+      enable = false;
+    };
     extensions = [];
     settings = {
       git_protocol = "ssh";
