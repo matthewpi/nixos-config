@@ -17,7 +17,7 @@
 
       fontDir.enable = true;
 
-      fonts = with pkgs; [
+      packages = with pkgs; [
         inter
         go-font
         hack-font
