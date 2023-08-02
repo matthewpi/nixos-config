@@ -40,7 +40,6 @@ stdenv.mkDerivation rec {
     description = "Feature-rich syntax highlighting for ZSH";
     homepage = "https://github.com/zdharma-continuum/fast-syntax-highlighting";
     license = lib.licenses.bsd3;
-    platforms = lib.platforms.unix;
     maintainers = with lib.maintainers; [matthewpi];
   };
 }
