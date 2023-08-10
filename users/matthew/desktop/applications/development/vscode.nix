@@ -223,7 +223,7 @@
       # Nix
       "nix.enableLanguageServer" = true;
       # "nix.formatterPath" = ["nix" "fmt" "--" "-"];
-      "nix.serverPath" = lib.getExe pkgs.nixd;
+      "nix.serverPath" = "${lib.getBin pkgs.nixd}/bin/nixd";
       "nix.serverSettings" = {
         "nixd" = {};
       };
