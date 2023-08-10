@@ -46,7 +46,9 @@
     };
 
     shellAliases = {
-      ll = "ls --almost-all --color=always --group-directories-first --human-readable -l --size -v";
+      ll = let
+        ls = if pkgs.stdenv.isDarwin then "${pkgs.coreutils}/bin/ls" else "ls";
+      in "${ls} --almost-all --color=always --group-directories-first --human-readable -l --size -v";
 
       sudo = "sudo ";
       please = "sudo ";
