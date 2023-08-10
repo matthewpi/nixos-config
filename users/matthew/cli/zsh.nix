@@ -16,7 +16,9 @@
       source "${pkgs.fast-syntax-highlighting}/share/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
       # 1Password CLI Plugins
-      source "${config.home.homeDirectory}/.config/op/plugins.sh"
+      if [[ -f "${config.home.homeDirectory}/.config/op/plugins.sh" ]]; then
+        source "${config.home.homeDirectory}/.config/op/plugins.sh"
+      fi
     '';
 
     initExtraBeforeCompInit = ''
