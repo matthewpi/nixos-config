@@ -23,6 +23,11 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    flake-registry = {
+      url = "github:nixos/flake-registry";
+      flake = false;
+    };
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -58,7 +63,21 @@
         ./packages
       ];
 
-      flake = {
+      flake = let
+        nixFlakeSettings = {
+          # Enable our overlays to replace built-in packages
+          nixpkgs.overlays = builtins.attrValues outputs.overlays;
+
+          # Set nixpkgs to the one used by the flake. (affects legacy commands and comma)
+          nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
+
+          # Add nixpkgs to the registry. (affects flake commands)
+          nix.registry.nixpkgs.flake = inputs.nixpkgs;
+
+          # Pre-fetch the flake-registry to prevent it from being re-downloaded.
+          nix.settings.flake-registry = "${inputs.flake-registry}/flake-registry.json";
+        };
+      in {
         darwinConfigurations."Matthews-MBP" = inputs.darwin.lib.darwinSystem {
           specialArgs = {
             inherit inputs outputs;
@@ -69,8 +88,7 @@
           };
 
           modules = [
-            # Enable our overlays to replace built-in packages
-            {nixpkgs.overlays = builtins.attrValues outputs.overlays;}
+            nixFlakeSettings
 
             inputs.home-manager.darwinModules.home-manager
 
@@ -89,8 +107,7 @@
             };
 
             modules = [
-              # Enable our overlays to replace built-in packages
-              {nixpkgs.overlays = builtins.attrValues outputs.overlays;}
+              nixFlakeSettings
 
               inputs.nixos-hardware.nixosModules.common-cpu-amd
               inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -139,6 +156,7 @@
           iso = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
             modules = [
+              nixFlakeSettings
               "${inputs.nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal-new-kernel.nix"
             ];
           };
