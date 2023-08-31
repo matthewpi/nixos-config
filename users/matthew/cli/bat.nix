@@ -24,7 +24,4 @@
       Catppuccin-mocha = builtins.readFile (catppuccin + /Catppuccin-mocha.tmTheme);
     };
   };
-
-  # TODO: automatically generate this directory using `bat cache --build`, otherwise
-  # the themes will not be available.
 }

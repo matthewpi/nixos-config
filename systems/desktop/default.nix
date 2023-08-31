@@ -59,11 +59,7 @@
     fd
     file
     fzf
-    (git.override {
-      sendEmailSupport = true;
-      withSsh = true;
-      withLibsecret = !stdenv.isDarwin;
-    })
+    git
     gnugrep
     (neovim.override {
       configure = {
@@ -141,4 +137,10 @@
 
   # Allow loading of kernel modules at runtime.
   security.lockKernelModules = false;
+
+  # Enable GNOME sysprof.
+  services.sysprof.enable = true;
+
+  # Disable coredumps.
+  systemd.coredump.enable = false;
 }
