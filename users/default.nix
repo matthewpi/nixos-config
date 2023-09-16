@@ -45,7 +45,7 @@
         ++ lib.optionals config.programs.corectrl.enable ["corectrl"]
         ++ lib.optionals config.virtualisation.libvirtd.enable ["libvirtd" "qemu-libvirtd"];
       openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJ30VI7vAdrs2MDgkNHSQMJt2xBtBLrirVhinSyteeU"];
-      passwordFile = config.age.secrets.passwordfile-matthew.path;
+      hashedPasswordFile = config.age.secrets.passwordfile-matthew.path;
     };
   };
 
