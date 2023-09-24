@@ -149,10 +149,13 @@
     ignores = [".direnv" "result*"];
 
     extraConfig = {
-      # Change the default branch to master
+      # Disable advice.
+      advice.detachedHead = false;
+
+      # Change the default branch to master.
       init.defaultBranch = "master";
 
-      # Use 1Password ssh agent
+      # Use the 1Password SSH Agent.
       gpg = {
         format = "ssh";
         ssh = {
@@ -166,11 +169,22 @@
       commit.gpgSign = true;
       tag.gpgSign = true;
 
+      # Use SSH for GitHub, even if a HTTP url is used.
       url = {
         "git@github.com:" = {
           insteadOf = "https://github.com/";
         };
       };
+
+      # Enable the manyFiles feature.
+      feature.manyFiles = true;
+
+      # Enable the commit graph.
+      core.commitgraph = true;
+
+      # Write the commit graph persistently.
+      feature.writeCommitGraph = true;
+      fetch.writeCommitGraph = true;
     };
   };
 }
