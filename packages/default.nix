@@ -29,6 +29,8 @@
       jetbrains-idea-ultimate = jetbrains.idea-ultimate;
       jetbrains-phpstorm = jetbrains.phpstorm;
       jetbrains-webstorm = jetbrains.webstorm;
+
+      podman = pkgs.callPackage ./podman/default.nix {};
     };
 
     overlayAttrs = {
@@ -44,6 +46,7 @@
         jetbrains-idea-ultimate
         jetbrains-phpstorm
         jetbrains-webstorm
+        podman
         ;
     };
   };
