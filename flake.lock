@@ -33,16 +33,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1690452988,
-        "narHash": "sha256-E2Ons6JxrThaHq1SYJKvddeoANiqmjgKEpPiT9tuPQI=",
-        "owner": "DeterminateSystems",
+        "lastModified": 1696090892,
+        "narHash": "sha256-okeMjNslO2aMXoEwphgZ+ih2Y9OcibCe0zjQmLunqAY=",
+        "owner": "peigongdsd",
         "repo": "bootspec-secureboot",
-        "rev": "cff36b9eff8b4cc4abe77c87ad2eedb9919b6cd5",
+        "rev": "35f90d65e189ec9c6fe3a47524be7e6d9736376a",
         "type": "github"
       },
       "original": {
-        "owner": "DeterminateSystems",
+        "owner": "peigongdsd",
         "repo": "bootspec-secureboot",
+        "rev": "35f90d65e189ec9c6fe3a47524be7e6d9736376a",
         "type": "github"
       }
     },

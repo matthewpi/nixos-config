@@ -12,7 +12,7 @@
     };
 
     bootspec-secureboot = {
-      url = "github:DeterminateSystems/bootspec-secureboot";
+      url = "github:peigongdsd/bootspec-secureboot/35f90d65e189ec9c6fe3a47524be7e6d9736376a";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
