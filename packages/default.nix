@@ -21,6 +21,7 @@
 
       catppuccin-k9s = pkgs.callPackage ./catppuccin/k9s.nix {};
       catppuccin-plymouth = pkgs.callPackage ./catppuccin/plymouth.nix {};
+      catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers/default.nix {};
 
       fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting.nix {};
 
@@ -40,6 +41,7 @@
         _1password-gui-beta
         catppuccin-k9s
         catppuccin-plymouth
+        catppuccin-wallpapers
         fast-syntax-highlighting
         jetbrains-datagrip
         jetbrains-goland

@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   ...
@@ -180,8 +179,8 @@
       picture-options = "zoom";
 
       # TODO: package?
-      picture-uri = "file://${config.home.homeDirectory}/Pictures/nix-magenta-blue-1920x1080.png";
-      picture-uri-dark = "file://${config.home.homeDirectory}/Pictures/nix-black-4k.png";
+      picture-uri = "file://${pkgs.catppuccin-wallpapers}/nix-magenta-blue-1920x1080.png";
+      picture-uri-dark = "file://${pkgs.catppuccin-wallpapers}/nix-black-4k.png";
     };
 
     "org/gnome/desktop/interface" = {
