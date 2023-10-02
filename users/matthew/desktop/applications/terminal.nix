@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [blackbox-terminal gnome.gnome-terminal];
+  home.packages = with pkgs; [blackbox-terminal];
 
   dconf.settings = let
     _flavour = lib.strings.concatStrings [
@@ -30,6 +30,8 @@
       font = "Hack Nerd Font Mono 10";
 
       opacity = lib.hm.gvariant.mkUint32 75;
+
+      notify-process-completion = false;
 
       theme-dark = "Catppuccin-${_flavour}";
       theme-light = "Catppuccin-Latte";
