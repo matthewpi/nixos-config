@@ -1,30 +1,48 @@
 {
   perSystem = {
     config,
+    lib,
     pkgs,
     ...
   }: {
     packages = {
-      _1password-gui = pkgs.callPackage ./1password-gui/default.nix {};
-      _1password-gui-beta = pkgs.callPackage ./1password-gui/default.nix {channel = "beta";};
       catppuccin-k9s = pkgs.callPackage ./catppuccin/k9s.nix {};
       catppuccin-plymouth = pkgs.callPackage ./catppuccin/plymouth.nix {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers/default.nix {};
       fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting.nix {};
-      podman = pkgs.callPackage ./podman/default.nix {};
     };
 
-    overlayAttrs = {
+    overlayAttrs = let
+      _1passwordPreFixup = ''
+        makeShellWrapper $out/share/1password/1password $out/bin/1password \
+          "''${gappsWrapperArgs[@]}" \
+          --suffix PATH : ${lib.makeBinPath [pkgs.xdg-utils]} \
+          --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \
+          --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --use-tray-icon}}"
+      '';
+    in {
       inherit
         (config.packages)
-        _1password-gui
-        _1password-gui-beta
         catppuccin-k9s
         catppuccin-plymouth
         catppuccin-wallpapers
         fast-syntax-highlighting
-        podman
         ;
+
+      podman = pkgs.callPackage ./podman/default.nix {};
+
+      _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+      _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+
+      signal-desktop = pkgs.signal-desktop.overrideAttrs (old: {
+        preFixup =
+          old.preFixup
+          + ''
+            gappsWrapperArgs+=(
+              --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --use-tray-icon}}"
+            )
+          '';
+      });
     };
   };
 }

@@ -8,7 +8,6 @@
     ./virtualisation
 
     ./firefox.nix
-    ./flare-signal.nix
     ./terminal.nix
     ./trayscale.nix
   ];

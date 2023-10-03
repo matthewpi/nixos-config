@@ -262,6 +262,7 @@
         "com.raggesilver.BlackBox.desktop"
         "codium.desktop"
         "slack.desktop"
+        "signal-desktop.desktop"
       ];
     };
 
