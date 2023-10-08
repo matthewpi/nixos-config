@@ -18,10 +18,22 @@
         hash = "sha256-6WVKQErGdaqb++oaXnY3i6/GuH2FhTgK0v4TN4Y0Wbw=";
       };
     in {
-      Catppuccin-frappe = builtins.readFile (catppuccin + /Catppuccin-frappe.tmTheme);
-      Catppuccin-latte = builtins.readFile (catppuccin + /Catppuccin-latte.tmTheme);
-      Catppuccin-macchiato = builtins.readFile (catppuccin + /Catppuccin-macchiato.tmTheme);
-      Catppuccin-mocha = builtins.readFile (catppuccin + /Catppuccin-mocha.tmTheme);
+      Catppuccin-frappe = {
+        src = catppuccin;
+        file = "Catppuccin-frappe.tmTheme";
+      };
+      Catppuccin-latte = {
+        src = catppuccin;
+        file = "Catppuccin-latte.tmTheme";
+      };
+      Catppuccin-macchiato = {
+        src = catppuccin;
+        file = "Catppuccin-macchiato.tmTheme";
+      };
+      Catppuccin-mocah = {
+        src = catppuccin;
+        file = "Catppuccin-mocha.tmTheme";
+      };
     };
   };
 }
