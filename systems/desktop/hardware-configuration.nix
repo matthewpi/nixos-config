@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: let
   bootDevice = "/dev/disk/by-uuid/2730-83BE";
@@ -17,10 +16,7 @@ in {
   boot.loader.timeout = 15;
 
   # Use systemd stage 1
-  boot.initrd.systemd = {
-    enable = true;
-    package = pkgs.systemdStage1;
-  };
+  boot.initrd.systemd.enable = true;
 
   # Configure luks
   boot.initrd.luks.devices = {
