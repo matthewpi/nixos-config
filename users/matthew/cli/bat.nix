@@ -30,7 +30,7 @@
         src = catppuccin;
         file = "Catppuccin-macchiato.tmTheme";
       };
-      Catppuccin-mocah = {
+      Catppuccin-mocha = {
         src = catppuccin;
         file = "Catppuccin-mocha.tmTheme";
       };
