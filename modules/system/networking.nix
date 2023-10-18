@@ -36,10 +36,10 @@
   };
 
   # Configure time servers
+  services.chrony.enableNTS = lib.mkDefault true;
   networking.timeServers = lib.mkDefault [
-    # https://nrc.canada.ca/en/certifications-evaluations-standards/canadas-official-time/network-time-protocol-ntp
-    "time.nrc.ca"
-    "time.chu.nrc.ca"
+    # https://developers.cloudflare.com/time-services/ntp/
+    "time.cloudflare.com"
   ];
 
   # Enable mtr
