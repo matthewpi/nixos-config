@@ -29,8 +29,6 @@
         fast-syntax-highlighting
         ;
 
-      podman = pkgs.callPackage ./podman/default.nix {};
-
       _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
       _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
 
