@@ -11,11 +11,6 @@
       };
     };
 
-    bootspec-secureboot = {
-      url = "github:peigongdsd/bootspec-secureboot/35f90d65e189ec9c6fe3a47524be7e6d9736376a";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,6 +29,14 @@
     };
 
     impermanence.url = "github:nix-community/impermanence";
+
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v0.3.0";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
 
     nix-index-database = {
       url = "github:Mic92/nix-index-database";
@@ -114,7 +117,6 @@
               inputs.nixos-hardware.nixosModules.common-gpu-amd
 
               inputs.agenix.nixosModules.default
-              inputs.bootspec-secureboot.nixosModules.bootspec-secureboot
               inputs.home-manager.nixosModules.home-manager
 
               self.nixosModules.amd-ryzen
@@ -123,6 +125,7 @@
               self.nixosModules.gnome
               self.nixosModules.persistence
               self.nixosModules.podman
+              self.nixosModules.secureboot
               self.nixosModules.system
               self.nixosModules.virtualisation
 

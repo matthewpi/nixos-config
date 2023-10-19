@@ -8,7 +8,6 @@
 
   imports = [
     ./hardware-configuration.nix
-    ./secure-boot.nix
   ];
 
   # Allow unfree

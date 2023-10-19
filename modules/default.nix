@@ -6,6 +6,7 @@
     ./gnome
     ./persistence
     ./podman
+    ./secureboot
     ./system
     ./virtualisation
   ];
