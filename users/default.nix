@@ -373,9 +373,10 @@
   };
 
   # Add a udev rule for Elgato Stream Deck(s)
-  # TODO: figure out why the second udev rule doesn't work
+  # Add a udev rule to set the DPI on a Logitech MX Master 3
   services.udev.extraRules = ''
     SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", ATTRS{idProduct}=="0060|0063|006c|006d", MODE="0660", TAG+="uaccess"
-    ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="1" , ATTRS{idVendor}=="046d", ATTRS{idProduct}=="4082", RUN+="${pkgs.libratbag}/bin/ratbagctl 'Logitech MX Master 3' dpi set 400"
+
+    ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="1", ATTR{manufacturer}=="Logitech", ATTR{model_name}=="Wireless Mouse MX Master 3", RUN+="${pkgs.libratbag}/bin/ratbagctl 'Logitech MX Master 3' dpi set 400"
   '';
 }
