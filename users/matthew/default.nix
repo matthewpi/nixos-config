@@ -1,10 +1,15 @@
 {
   config,
+  inputs,
   outputs,
   ...
 }: {
   # Enable our overlays to replace built-in packages.
   nixpkgs.overlays = builtins.attrValues outputs.overlays;
+
+  imports = [
+    inputs.nur.hmModules.nur
+  ];
 
   # Enable home-manager.
   programs.home-manager.enable = true;

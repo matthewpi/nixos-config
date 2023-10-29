@@ -318,6 +318,21 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1698018386,
+        "narHash": "sha256-Zgogpl7Tn7MFTJnC1XKywKul9ShoHX8Op+P8l3LnZDI=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "e8611e34be577f1e95d77a5106f3909906719e94",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
     "pre-commit-hooks-nix": {
       "inputs": {
         "flake-compat": [
@@ -361,6 +376,7 @@
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
+        "nur": "nur",
         "treefmt-nix": "treefmt-nix"
       }
     },
