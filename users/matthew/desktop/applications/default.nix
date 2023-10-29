@@ -6,9 +6,8 @@
     ./productivity
     ./security
     ./virtualisation
+    ./web
 
-    ./chromium.nix
-    ./firefox.nix
     ./terminal.nix
     ./trayscale.nix
   ];

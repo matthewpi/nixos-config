@@ -1,6 +1,6 @@
 {
   imports = [
-    #./bottles.nix
+    ./bottles.nix
     ./prismlauncher.nix
     ./steam.nix
   ];

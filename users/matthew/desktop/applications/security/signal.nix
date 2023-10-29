@@ -3,6 +3,8 @@
   pkgs,
   ...
 }: {
+  home.packages = with pkgs; [signal-desktop];
+
   # For whatever reason the default StartupWMClass is set incorrectly, causing duplicate icons
   # to appear in the taskbar.
   xdg.desktopEntries.signal-desktop = {
@@ -14,6 +16,4 @@
     name = "Signal";
     settings.StartupWMClass = "signal";
   };
-
-  home.packages = with pkgs; [signal-desktop];
 }
