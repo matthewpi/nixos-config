@@ -147,6 +147,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/Cider";
+          mode = "0700";
+        }
+        {
           directory = ".config/Element";
           mode = "0700";
         }
@@ -172,6 +176,10 @@
         }
         {
           directory = ".config/VSCodium";
+          mode = "0700";
+        }
+        {
+          directory = ".config/easyeffects";
           mode = "0700";
         }
         {

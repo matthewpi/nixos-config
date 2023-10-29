@@ -9,6 +9,9 @@
       catppuccin-k9s = pkgs.callPackage ./catppuccin/k9s.nix {};
       catppuccin-plymouth = pkgs.callPackage ./catppuccin/plymouth.nix {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers/default.nix {};
+
+      cider2 = pkgs.callPackage ./cider2/default.nix {};
+
       fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting.nix {};
     };
 
@@ -26,6 +29,7 @@
         catppuccin-k9s
         catppuccin-plymouth
         catppuccin-wallpapers
+        cider2
         fast-syntax-highlighting
         ;
 

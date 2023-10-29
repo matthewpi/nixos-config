@@ -1,5 +1,6 @@
 {
   imports = [
+    ./audio
     ./communication
     ./development
     ./games

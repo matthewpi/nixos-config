@@ -28,4 +28,4 @@ jobs:
         env:
           NIXPKGS_ALLOW_UNFREE: 1
         # The `--impure` flag is required to respect `NIXPKGS_ALLOW_UNFREE`.
-        run: nix flake check --impure
+        run: nix flake check --impure --all-systems
