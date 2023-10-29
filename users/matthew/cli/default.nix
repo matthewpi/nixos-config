@@ -8,6 +8,7 @@
     ./gh.nix
     ./git.nix
     ./kubernetes.nix
+    ./man.nix
     ./neovim.nix
     ./nix-index.nix
     ./ssh.nix
