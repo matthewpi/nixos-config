@@ -24,6 +24,13 @@
 
   # Use the xanmod kernel
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_xanmod_latest;
+  boot.kernelPatches = lib.singleton {
+    name = "enable-mem-soft-dirty";
+    patch = null;
+    extraStructuredConfig = with lib.kernel; {
+      MEM_SOFT_DIRTY = yes;
+    };
+  };
 
   # Enable SSH
   services.openssh.enable = true;
