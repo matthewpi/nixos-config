@@ -21,6 +21,10 @@
   # Allow matthew access to 1Password
   programs._1password-gui.polkitPolicyOwners = ["matthew"];
 
+  # Enable the wireshark dumpcap security wrapper.
+  # This allows us to call dumpcap without using separate privilege escalation.
+  programs.wireshark.enable = true;
+
   # Configure the matthew user.
   users.users.matthew = {
     isNormalUser = true;
@@ -28,7 +32,8 @@
     extraGroups =
       ["wheel"]
       ++ lib.optionals config.programs.corectrl.enable ["corectrl"]
-      ++ lib.optionals config.virtualisation.libvirtd.enable ["libvirtd" "qemu-libvirtd"];
+      ++ lib.optionals config.virtualisation.libvirtd.enable ["libvirtd" "qemu-libvirtd"]
+      ++ lib.optionals config.programs.wireshark.enable ["wireshark"];
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJ30VI7vAdrs2MDgkNHSQMJt2xBtBLrirVhinSyteeU"];
     hashedPasswordFile = config.age.secrets.passwordfile-matthew.path;
   };
