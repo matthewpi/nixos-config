@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
   imports = [
@@ -10,6 +11,9 @@
     ./gtk.nix
     ./streamdeck.nix
   ];
+
+  # Install tcpdump
+  home.packages = with pkgs; [tcpdump];
 
   xdg.mimeApps = {
     enable = lib.mkDefault config.xdg.mime.enable;
