@@ -5,7 +5,7 @@
 }: {
   nix = {
     # Use the latest version of Nix
-    package = pkgs.nixVersions.nix_2_16;
+    package = pkgs.nixVersions.nix_2_18;
 
     settings = {
       # Auto-scale builders
