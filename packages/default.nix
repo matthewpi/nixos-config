@@ -12,7 +12,8 @@
 
       cider2 = pkgs.callPackage ./cider2/default.nix {};
 
-      fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting.nix {};
+      fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
+      zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
     };
 
     overlayAttrs = let
@@ -31,6 +32,7 @@
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
+        zsh-titles
         ;
 
       _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});

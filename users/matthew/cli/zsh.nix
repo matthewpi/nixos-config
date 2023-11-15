@@ -15,6 +15,9 @@
       # Enable the fast-syntax-highlighting plugin
       source "${pkgs.fast-syntax-highlighting}/share/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
 
+      # Enable the zsh-titles plugin
+      source "${pkgs.zsh-titles}/share/zsh-titles/titles.plugin.zsh"
+
       # 1Password CLI Plugins
       if [[ -f "${config.home.homeDirectory}/.config/op/plugins.sh" ]]; then
         source "${config.home.homeDirectory}/.config/op/plugins.sh"
