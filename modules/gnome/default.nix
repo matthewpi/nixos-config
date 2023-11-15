@@ -22,6 +22,7 @@
         go-font
         hack-font
         jetbrains-mono
+        monaspace
         (nerdfonts.override {
           fonts = ["Go-Mono" "Hack" "JetBrainsMono"];
         })

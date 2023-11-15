@@ -14,6 +14,8 @@
 
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
+
+      monaspace = pkgs.callPackage ./monaspace.nix {};
     };
 
     overlayAttrs = let
@@ -33,6 +35,7 @@
         cider2
         fast-syntax-highlighting
         zsh-titles
+        monaspace
         ;
 
       _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
