@@ -59,10 +59,13 @@
       "image/x-icns" = [defaultImageViewer];
 
       # Text Editor
+      "application/xml" = [defaultTextEditor];
       "application/x-x509-ca-cert" = [defaultTextEditor];
+      "audio/x-mod" = [defaultTextEditor]; # go.mod
       "text/markdown" = [defaultTextEditor];
       "text/plain" = [defaultTextEditor];
       "text/vnd.trolltech.linguist" = [defaultTextEditor]; # TypeScript
+      "text/x-csrc" = [defaultTextEditor]; # .cfg
 
       # Archives
       "application/zip" = ["org.gnome.FileRoller.desktop"];
