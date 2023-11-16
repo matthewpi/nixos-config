@@ -123,6 +123,7 @@
         "/home/matthew/code/matthewpi"
         "/home/matthew/code/nexavo"
         "/home/matthew/code/pterodactyl"
+        "/home/matthew/.local/share/obsidian"
       ];
       exclude = [
         ".direnv"

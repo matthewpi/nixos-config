@@ -216,6 +216,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/obsidian";
+          mode = "0700";
+        }
+        {
           directory = ".config/op";
           mode = "0700";
         }
@@ -313,6 +317,10 @@
         }
         {
           directory = ".local/share/nautilus";
+          mode = "0700";
+        }
+        {
+          directory = ".local/share/obsidian";
           mode = "0700";
         }
         {
