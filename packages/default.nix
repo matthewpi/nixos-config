@@ -49,6 +49,8 @@
               --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --use-tray-icon}}"
             )
           '';
+
+        webcord = pkgs.callPackage ./webcord/default.nix {};
       });
     };
   };
