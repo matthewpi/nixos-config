@@ -6,7 +6,7 @@
     ./games
     ./productivity
     ./security
-    ./virtualisation
+    # ./virtualisation
     ./web
 
     ./terminal.nix
