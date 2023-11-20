@@ -12,8 +12,13 @@
     ./streamdeck.nix
   ];
 
-  # Install tcpdump
-  home.packages = with pkgs; [tcpdump];
+  home.packages = with pkgs; [
+    # Install tcpdump
+    tcpdump
+
+    # Install nvtop
+    nvtop-amd
+  ];
 
   xdg.mimeApps = {
     enable = lib.mkDefault config.xdg.mime.enable;
