@@ -1,8 +1,13 @@
 {pkgs, ...}: let
   steam-with-pkgs = pkgs.steam.override {
-    # extraEnv = {
-    #   OBS_VKCAPTURE = true;
-    # };
+    extraEnv = {
+      # Manually set SDL_VIDEODRIVER to x11.
+      #
+      # This fixes the `gldriverquery` segfault and issues with EAC crashing on games like Rust,
+      # rather than gracefully disabling itself.
+      SDL_VIDEODRIVER = "x11";
+      #OBS_VKCAPTURE = true;
+    };
 
     extraPkgs = pkgs:
       with pkgs; [
