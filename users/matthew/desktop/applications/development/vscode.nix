@@ -181,8 +181,8 @@
       "go.lintTool" = "golangci-lint";
       "go.lintOnSave" = "off";
       "go.gopath" = config.home.sessionVariables.GOPATH;
-      "go.goroot" = "${pkgs.go_1_20}/share/go";
-      "go.toolsManagement.checkForUpdates" = false;
+      "go.goroot" = "${pkgs.go_1_21}/share/go";
+      "go.toolsManagement.checkForUpdates" = "off";
       "go.toolsManagement.autoUpdate" = false;
       "go.alternateTools" = {
         "dlv" = "${pkgs.delve}/bin/dlv";
