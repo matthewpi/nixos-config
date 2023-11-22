@@ -4,7 +4,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [blackbox-terminal];
+  home.packages = with pkgs; [blackbox-terminal termius];
 
   dconf.settings = let
     _flavour = lib.strings.concatStrings [
