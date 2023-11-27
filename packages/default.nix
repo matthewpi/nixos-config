@@ -5,18 +5,22 @@
     pkgs,
     ...
   }: {
-    packages = {
-      catppuccin-k9s = pkgs.callPackage ./catppuccin/k9s.nix {};
-      catppuccin-plymouth = pkgs.callPackage ./catppuccin/plymouth.nix {};
-      catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers/default.nix {};
+    packages =
+      {
+        catppuccin-k9s = pkgs.callPackage ./catppuccin/k9s.nix {};
+        catppuccin-plymouth = pkgs.callPackage ./catppuccin/plymouth.nix {};
+        catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers/default.nix {};
 
-      cider2 = pkgs.callPackage ./cider2/default.nix {};
+        cider2 = pkgs.callPackage ./cider2/default.nix {};
 
-      fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
-      zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
+        fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
+        zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
 
-      monaspace = pkgs.callPackage ./monaspace.nix {};
-    };
+        monaspace = pkgs.callPackage ./monaspace.nix {};
+      }
+      // lib.optionalAttrs (pkgs.stdenv.system == "x86_64-linux") {
+        forge-sparks = pkgs.callPackage ./forge-sparks/default.nix {};
+      };
 
     overlayAttrs = let
       _1passwordPreFixup = ''
@@ -34,8 +38,9 @@
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
-        zsh-titles
+        forge-sparks
         monaspace
+        zsh-titles
         ;
 
       _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
