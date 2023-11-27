@@ -6,6 +6,7 @@
     ./games
     ./productivity
     ./security
+    ./utility
     # ./virtualisation
     ./web
 
