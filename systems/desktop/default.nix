@@ -151,6 +151,12 @@
   # Enable GNOME sysprof.
   services.sysprof.enable = true;
 
-  # Disable coredumps.
-  systemd.coredump.enable = false;
+  # Allow systemd to handle coredumps.
+  systemd.coredump = {
+    enable = true;
+    extraConfig = ''
+      Storage=none
+      ProcessSizeMax=0
+    '';
+  };
 }
