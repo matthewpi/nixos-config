@@ -35,8 +35,9 @@
       system-features = lib.mkDefault ["benchmark" "big-parallel" "kvm" "nixos-test"];
 
       # Enable experimental features
-      experimental-features = lib.mkDefault ["auto-allocate-uids" "nix-command" "flakes"];
+      experimental-features = lib.mkDefault ["auto-allocate-uids" "ca-derivations" "cgroups" "nix-command" "flakes"];
       auto-allocate-uids = lib.mkDefault true;
+      use-cgroups = lib.mkDefault true;
 
       # Configure Nix to follow the XDG base directory spec.
       use-xdg-base-directories = lib.mkDefault true;
