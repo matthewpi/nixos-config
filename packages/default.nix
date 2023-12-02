@@ -16,6 +16,8 @@
         fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
         zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
 
+        inter = pkgs.callPackage ./inter.nix {};
+
         monaspace = pkgs.callPackage ./monaspace.nix {};
       }
       // lib.optionalAttrs (pkgs.stdenv.system == "x86_64-linux") {
@@ -41,6 +43,7 @@
         forge-sparks
         monaspace
         zsh-titles
+        inter
         ;
 
       _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
