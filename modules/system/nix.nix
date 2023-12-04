@@ -41,6 +41,9 @@
 
       # Configure Nix to follow the XDG base directory spec.
       use-xdg-base-directories = lib.mkDefault true;
+
+      # Don't warn on a dirty tree.
+      warn-dirty = lib.mkDefault false;
     };
   };
 }
