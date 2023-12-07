@@ -25,7 +25,4 @@ jobs:
         uses: DeterminateSystems/magic-nix-cache-action@8a218f9e264e9c3803c9a1ee1c30d8e4ab55be63 # v2
 
       - name: nix flake check
-        env:
-          NIXPKGS_ALLOW_UNFREE: 1
-        # The `--impure` flag is required to respect `NIXPKGS_ALLOW_UNFREE`.
-        run: nix flake check --impure --all-systems
+        run: nix flake check --all-systems

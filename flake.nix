@@ -166,6 +166,7 @@
           _module.args.pkgs = import inputs.nixpkgs {
             inherit system;
             overlays = builtins.attrValues outputs.overlays;
+            config.allowUnfree = true;
           };
 
           devShells = {
