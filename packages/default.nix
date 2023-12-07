@@ -7,8 +7,7 @@
   }: {
     packages =
       {
-        catppuccin-k9s = pkgs.callPackage ./catppuccin/k9s.nix {};
-        catppuccin-plymouth = pkgs.callPackage ./catppuccin/plymouth.nix {};
+        catppuccin = pkgs.callPackage ./catppuccin/default.nix {};
         catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers/default.nix {};
 
         cider2 = pkgs.callPackage ./cider2/default.nix {};
@@ -35,8 +34,7 @@
     in {
       inherit
         (config.packages)
-        catppuccin-k9s
-        catppuccin-plymouth
+        catppuccin
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting

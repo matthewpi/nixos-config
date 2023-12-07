@@ -11,7 +11,7 @@
   in {
     # Theme plymouth if it is enabled
     config.boot.plymouth = lib.mkIf config.boot.plymouth.enable {
-      themePackages = [pkgs.catppuccin-plymouth];
+      themePackages = [pkgs.catppuccin];
       theme = "catppuccin-${flavour}";
     };
   };
