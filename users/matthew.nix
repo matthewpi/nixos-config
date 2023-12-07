@@ -258,6 +258,11 @@
           directory = ".kube";
           mode = "0700";
         }
+        {
+          # ref; https://github.com/lensapp/lens/issues/2494
+          directory = ".k8slens";
+          mode = "0700";
+        }
 
         {
           directory = ".local/share/JetBrains";
@@ -354,11 +359,7 @@
         }
 
         {
-          directory = ".lunarclient";
-          mode = "0700";
-        }
-        {
-          directory = ".minecraft";
+          directory = ".fleet";
           mode = "0700";
         }
 
