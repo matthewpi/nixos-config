@@ -108,7 +108,7 @@
 
   # Configure GDM to use the same monitor configuration as the "matthew" user does
   systemd.tmpfiles.rules = [
-    "L+ /run/gdm/.config/monitors.xml 0400 gdm gdm - ${pkgs.writeText "gdm-monitors.xml" config.home-manager.users.matthew.xdg.configFile."monitors.xml".text}"
+    "L+ /run/gdm/.config/monitors.xml 0400 gdm gdm - ${config.home-manager.users.matthew.xdg.configFile."monitors.xml".source}"
   ];
 
   # Enable aarch64 emulation for Nix builds
