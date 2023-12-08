@@ -191,7 +191,7 @@
       gtk-enable-primary-paste = false;
 
       document-font-name = "Inter 11";
-      monospace-font-name = "Hack Nerd Font Mono 10";
+      monospace-font-name = "MonaspiceNe Nerd Font 10";
     };
 
     "org/gnome/desktop/peripherals/mouse" = {

@@ -32,11 +32,11 @@
   fonts = {
     fontDir.enable = true;
     fonts = with pkgs; [
-      go-font
+      inter
       hack-font
-      jetbrains-mono
+      monaspace
       (nerdfonts.override {
-        fonts = ["Go-Mono" "Hack" "JetBrainsMono"];
+        fonts = ["Hack" "Monaspace"];
       })
     ];
   };

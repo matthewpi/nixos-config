@@ -98,7 +98,8 @@
     userSettings = {
       # Editor
       "editor.accessibilitySupport" = "off";
-      "editor.fontFamily" = "\"Hack Nerd Font Mono\", Menlo, Consolas, \"Liberation Mono\", \"Courier New\", monospace";
+      "editor.fontFamily" = "\"MonaspiceNe Nerd Font\", monospace";
+      "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
       "editor.linkedEditing" = true;
       "editor.wordWrap" = "on";
       "editor.wordWrapColumn" = 100;
@@ -141,7 +142,7 @@
       "telemetry.telemetryLevel" = "off";
 
       # Terminal
-      "terminal.integrated.fontFamily" = "Hack Nerd Font Mono";
+      "terminal.integrated.fontFamily" = "MonaspiceNe Nerd Font";
       "terminal.integrated.gpuAcceleration" = "auto";
       "terminal.integrated.fontSize" = 13;
       "terminal.integrated.lineHeight" = 1.5;

@@ -168,6 +168,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/Termius";
+          mode = "0700";
+        }
+        {
           directory = ".config/VSCodium";
           mode = "0700";
         }
