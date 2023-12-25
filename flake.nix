@@ -98,62 +98,74 @@
             };
           };
 
-          nixosConfigurations = {
-            desktop = inputs.nixpkgs.lib.nixosSystem {
-              specialArgs = {
-                inherit inputs outputs;
+          nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs outputs;
 
-                # Catppuccin flavour
-                # https://github.com/catppuccin/catppuccin#-palette
-                flavour = "mocha";
-              };
-
-              modules = [
-                nixFlakeSettings
-
-                inputs.nixos-hardware.nixosModules.common-cpu-amd
-                inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-                inputs.nixos-hardware.nixosModules.common-gpu-amd
-
-                inputs.agenix.nixosModules.default
-                inputs.home-manager.nixosModules.home-manager
-
-                self.nixosModules.amd-ryzen
-                self.nixosModules.catppuccin
-                self.nixosModules.desktop
-                self.nixosModules.gnome
-                self.nixosModules.persistence
-                self.nixosModules.podman
-                self.nixosModules.secureboot
-                self.nixosModules.system
-                # self.nixosModules.virtualisation
-
-                {
-                  age.secrets = {
-                    passwordfile-matthew.file = secrets/passwordfile-matthew.age;
-
-                    restic-matthew-code.file = secrets/restic-matthew-code.age;
-                    restic-matthew-code-repository = {
-                      file = secrets/restic-matthew-code-repository.age;
-                      mode = "400";
-                      owner = "matthew";
-                      group = "users";
-                    };
-                    restic-matthew-code-password = {
-                      file = secrets/restic-matthew-code-password.age;
-                      mode = "400";
-                      owner = "matthew";
-                      group = "users";
-                    };
-                  };
-
-                  age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
-                }
-
-                ./systems/desktop
-                ./users
-              ];
+              # Catppuccin flavour
+              # https://github.com/catppuccin/catppuccin#-palette
+              flavour = "mocha";
             };
+
+            modules = [
+              nixFlakeSettings
+
+              inputs.nixos-hardware.nixosModules.common-cpu-amd
+              inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+              inputs.nixos-hardware.nixosModules.common-gpu-amd
+
+              inputs.agenix.nixosModules.default
+              inputs.home-manager.nixosModules.home-manager
+
+              self.nixosModules.amd-ryzen
+              self.nixosModules.catppuccin
+              self.nixosModules.desktop
+              self.nixosModules.gnome
+              self.nixosModules.persistence
+              self.nixosModules.podman
+              self.nixosModules.secureboot
+              self.nixosModules.system
+              # self.nixosModules.virtualisation
+
+              {
+                age.secrets = {
+                  passwordfile-matthew.file = secrets/passwordfile-matthew.age;
+
+                  restic-matthew-code.file = secrets/restic-matthew-code.age;
+                  restic-matthew-code-repository = {
+                    file = secrets/restic-matthew-code-repository.age;
+                    mode = "400";
+                    owner = "matthew";
+                    group = "users";
+                  };
+                  restic-matthew-code-password = {
+                    file = secrets/restic-matthew-code-password.age;
+                    mode = "400";
+                    owner = "matthew";
+                    group = "users";
+                  };
+                };
+
+                age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+              }
+
+              ./systems/desktop
+              ./users
+            ];
+          };
+
+          darwinConfigurations."Matthews-MBP" = inputs.darwin.lib.darwinSystem {
+            specialArgs = {
+              inherit inputs outputs;
+
+              flavour = "mocha";
+            };
+
+            modules = [
+              nixFlakeSettings
+              inputs.home-manager.darwinModules.home-manager
+              ./systems/mbp
+            ];
           };
         };
 
