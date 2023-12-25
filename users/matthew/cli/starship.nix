@@ -69,6 +69,8 @@ in {
         disabled = true;
       };
 
+      character.disabled = pkgs.stdenv.isDarwin;
+
       c = {
         disabled = true;
         symbol = " ";
@@ -232,7 +234,7 @@ in {
       };
 
       line_break = {
-        disabled = false;
+        disabled = pkgs.stdenv.isDarwin;
       };
 
       localip = {
