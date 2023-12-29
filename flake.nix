@@ -16,11 +16,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    flake-parts.url = "github:hercules-ci/flake-parts";
+    flake-compat = {
+      url = "github:edolstra/flake-compat";
+      flake = false;
+    };
+
+    flake-parts = {
+      url = "github:hercules-ci/flake-parts";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+    };
 
     flake-registry = {
       url = "github:nixos/flake-registry";
       flake = false;
+    };
+
+    flake-utils = {
+      url = "github:numtide/flake-utils";
     };
 
     home-manager = {
@@ -28,13 +40,42 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hercules-ci-effects = {
+      url = "github:hercules-ci/hercules-ci-effects";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     impermanence.url = "github:nix-community/impermanence";
 
     lanzaboote = {
       url = "github:nix-community/lanzaboote/v0.3.0";
       inputs = {
+        flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
+        flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    neovim-flake = {
+      url = "github:neovim/neovim?dir=contrib";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
+    neovim-nightly-overlay = {
+      url = "github:nix-community/neovim-nightly-overlay";
+      inputs = {
+        flake-compat.follows = "flake-compat";
+        flake-parts.follows = "flake-parts";
+        hercules-ci-effects.follows = "hercules-ci-effects";
+        nixpkgs.follows = "nixpkgs";
+        neovim-flake.follows = "neovim-flake";
       };
     };
 
@@ -71,7 +112,7 @@
         flake = let
           nixFlakeSettings = {
             # Enable our overlays to replace built-in packages
-            nixpkgs.overlays = builtins.attrValues outputs.overlays;
+            nixpkgs.overlays = (builtins.attrValues outputs.overlays) ++ [inputs.neovim-nightly-overlay.overlay];
 
             # Set nixpkgs to the one used by the flake. (affects legacy commands and comma)
             nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];

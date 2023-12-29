@@ -5,7 +5,7 @@
   ...
 }: {
   # Enable our overlays to replace built-in packages.
-  nixpkgs.overlays = builtins.attrValues outputs.overlays;
+  nixpkgs.overlays = builtins.attrValues outputs.overlays ++ [inputs.neovim-nightly-overlay.overlay];
 
   imports = [
     inputs.nur.hmModules.nur
