@@ -90,7 +90,7 @@ in {
   # Add a udev rule for Elgato Stream Deck(s)
   # Add a udev rule to set the DPI on a Logitech MX Master 3
   services.udev.extraRules = ''
-    SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", ATTRS{idProduct}=="0060|0063|006c|006d", MODE="0660", TAG+="uaccess"
+    SUBSYSTEM=="usb", ATTRS{idVendor}=="0fd9", ATTRS{idProduct}=="0060|0063|006c|006d", MODE="0660", TAG+="systemd", SYMLINK+="streamdeck"
 
     ACTION=="change", SUBSYSTEM=="power_supply", ATTR{online}=="1", ATTR{manufacturer}=="Logitech", ATTR{model_name}=="Wireless Mouse MX Master 3", RUN+="${pkgs.libratbag}/bin/ratbagctl 'Logitech MX Master 3' dpi set 400"
   '';
