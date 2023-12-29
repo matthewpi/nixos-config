@@ -136,10 +136,6 @@
       coordinateY2 = 2.6392287230418559;
     };
   in {
-    "dev/deedles/Trayscale" = {
-      tray-icon = false;
-    };
-
     "org/gnome/Weather" = {
       locations = lib.hm.gvariant.mkArray lib.hm.gvariant.type.variant [calgary];
     };
