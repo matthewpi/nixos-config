@@ -32,18 +32,22 @@
       allowed-users = lib.mkDefault ["root" "@wheel"];
 
       # Expose functionality
-      system-features = lib.mkDefault ["benchmark" "big-parallel" "kvm" "nixos-test"];
+      system-features = lib.mkDefault ["benchmark" "big-parallel" "kvm" "nixos-test" "uid-range"];
 
       # Enable experimental features
-      experimental-features = lib.mkDefault ["auto-allocate-uids" "ca-derivations" "cgroups" "nix-command" "flakes"];
+      experimental-features = lib.mkDefault ["auto-allocate-uids" "ca-derivations" "cgroups" "nix-command" "flakes" "repl-flake"];
       auto-allocate-uids = lib.mkDefault true;
       use-cgroups = lib.mkDefault true;
+      accept-flake-config = lib.mkDefault true;
 
       # Configure Nix to follow the XDG base directory spec.
       use-xdg-base-directories = lib.mkDefault true;
 
       # Don't warn on a dirty tree.
       warn-dirty = lib.mkDefault false;
+
+      # Increase the amount of lines logged immediately following a build failure.
+      log-lines = lib.mkDefault 25;
     };
   };
 }
