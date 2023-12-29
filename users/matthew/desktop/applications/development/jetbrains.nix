@@ -7,5 +7,9 @@
     jetbrains.idea-ultimate
     jetbrains.phpstorm
     jetbrains.webstorm
+
+    go_1_21
+    gofumpt
+    gotools
   ];
 }
