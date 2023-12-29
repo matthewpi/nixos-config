@@ -62,10 +62,37 @@
     environment.persistence."/persist" = {
       directories = [
         "/etc/nixos"
-        "/etc/secureboot"
+        {
+          directory = "/etc/secureboot";
+          mode = "0700";
+        }
 
         "/var/lib/nixos"
-        "/var/lib/private"
+        {
+          directory = "/var/lib/private";
+          mode = "0700";
+        }
+
+        {
+          directory = "/var/cache/restic-backups-matthew-code";
+          mode = "0700";
+          user = "matthew";
+          group = "users";
+        }
+        {
+          directory = "/var/cache/regreet";
+          mode = "0750";
+          user = "greeter";
+          group = "greeter";
+        }
+        {
+          directory = "/var/cache/tailscale";
+          mode = "0750";
+        }
+        {
+          directory = "/var/cache/private";
+          mode = "0700";
+        }
       ];
 
       files = [

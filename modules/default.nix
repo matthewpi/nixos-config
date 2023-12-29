@@ -4,6 +4,7 @@
     ./catppuccin
     ./desktop
     ./gnome
+    ./hyprland
     ./persistence
     ./podman
     ./secureboot

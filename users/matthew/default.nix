@@ -41,6 +41,8 @@
     # Change GOPATH from the default ~/go location to follow the XDG spec.
     GOPATH = "${config.home.sessionVariables.XDG_DATA_HOME}/go";
 
-    _JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.home.sessionVariables.XDG_CONFIG_HOME}/java";
+    #_JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.home.sessionVariables.XDG_CONFIG_HOME}/java";
   };
+
+  systemd.user.sessionVariables = config.home.sessionVariables;
 }

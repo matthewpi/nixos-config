@@ -1,10 +1,12 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }: {
   gtk = {
     enable = true;
+    gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
 
     cursorTheme = {
       name = "macOS-Monterey";
@@ -26,6 +28,15 @@
       package = pkgs.inter;
       size = 11;
     };
+
+    gtk3.bookmarks = [
+      "file://${config.home.homeDirectory}/code"
+      "file://${config.home.homeDirectory}/Documents"
+      "file://${config.home.homeDirectory}/Downloads"
+      "file://${config.home.homeDirectory}/Music"
+      "file://${config.home.homeDirectory}/Pictures"
+      "file://${config.home.homeDirectory}/Videos"
+    ];
   };
 
   dconf.settings = let
@@ -171,13 +182,6 @@
       ];
     };
 
-    "org/gnome/desktop/background" = {
-      picture-options = "zoom";
-
-      picture-uri = "file://${pkgs.catppuccin-wallpapers}/nix-magenta-blue-1920x1080.png";
-      picture-uri-dark = "file://${pkgs.catppuccin-wallpapers}/nix-black-4k.png";
-    };
-
     "org/gnome/desktop/interface" = {
       clock-show-weekday = true;
       color-scheme = "prefer-dark";
@@ -190,14 +194,9 @@
       monospace-font-name = "MonaspiceNe Nerd Font 10";
     };
 
-    "org/gnome/desktop/peripherals/mouse" = {
-      accel-profile = "flat";
-      speed = lib.hm.gvariant.mkDouble 0.0;
-    };
-
     "org/gnome/desktop/privacy" = {
-      disable-camera = true;
-      disable-microphone = true;
+      #disable-camera = true;
+      #disable-microphone = true;
 
       remember-recent-files = true;
       recent-files-max-age = 30;
@@ -207,79 +206,14 @@
       old-files-age = 14;
     };
 
-    "org/gnome/desktop/session" = {
-      idle-delay = lib.hm.gvariant.mkUint32 600;
-    };
-
     "org/gnome/desktop/wm/preferences" = {
-      button-layout = "appmenu:minimize,maximize,close";
-      num-workspaces = 1;
+      button-layout = "appmenu:close";
 
       titlebar-font = "Inter 11";
     };
 
-    "org/gnome/mutter" = {
-      dynamic-workspaces = false;
-      edge-tiling = true;
-    };
-
     "org/gnome/nautilus/preferences" = {
       default-folder-viewer = "list-view";
-    };
-
-    "org/gnome/settings-daemon/plugins/color" = {
-      night-light-enabled = true;
-      night-light-schedule-from = 21.0;
-      night-light-schedule-to = 9.0;
-    };
-
-    "org/gnome/settings-daemon/plugins/power" = {
-      sleep-inactive-ac-timeout = 1800;
-      # sleep-inactive-ac-type = "nothing";
-    };
-
-    "org/gnome/shell" = {
-      disable-user-extensions = false;
-
-      enabled-extensions = [
-        "appindicatorsupport@rgcjonas.gmail.com"
-        "blur-my-shell@aunetx"
-        "dash-to-panel@jderose9.github.com"
-        "hide-minimized@danigm.net"
-        "just-perfection-desktop@just-perfection"
-        "tailscale-status@maxgallup.github.com"
-      ];
-
-      favorite-apps = [
-        "org.gnome.Nautilus.desktop"
-        "firefox.desktop"
-        "webcord.desktop"
-        "com.raggesilver.BlackBox.desktop"
-        "codium.desktop"
-        "slack.desktop"
-        "signal-desktop.desktop"
-      ];
-    };
-
-    "org/gnome/shell/extensions/dash-to-panel" = {
-      appicon-margin = 4;
-
-      dot-style-focused = "DOTS";
-      dot-style-unfocused = "DOTS";
-      dot-position = "TOP";
-
-      hide-overview-on-startup = true;
-
-      panel-sizes = "{\"0\":40,\"1\":40}";
-      panel-positions = "{\"0\":\"TOP\",\"1\":\"TOP\"}";
-    };
-
-    "org/gnome/system/location" = {
-      enabled = false;
-    };
-
-    "org/gnome/tweaks" = {
-      show-extensions-notice = false;
     };
 
     "org/gtk/gtk4/settings/file-chooser" = {
@@ -287,58 +221,4 @@
       sort-directories-first = true;
     };
   };
-
-  home.packages = with pkgs.gnomeExtensions; [
-    appindicator
-    blur-my-shell
-    dash-to-panel
-    hide-minimized
-    just-perfection
-    tailscale-status
-  ];
-
-  # Monitor settings
-  xdg.configFile."monitors.xml".text = ''
-    <monitors version="2">
-      <configuration>
-        <logicalmonitor>
-          <x>0</x>
-          <y>0</y>
-          <scale>1</scale>
-          <monitor>
-            <monitorspec>
-              <connector>HDMI-1</connector>
-              <vendor>ACR</vendor>
-              <product>GN246HL</product>
-              <serial>LW3AA0018533</serial>
-            </monitorspec>
-            <mode>
-              <width>1920</width>
-              <height>1080</height>
-              <rate>60.000</rate>
-            </mode>
-          </monitor>
-        </logicalmonitor>
-        <logicalmonitor>
-          <x>1920</x>
-          <y>0</y>
-          <scale>1</scale>
-          <primary>yes</primary>
-          <monitor>
-            <monitorspec>
-              <connector>DP-3</connector>
-              <vendor>VSC</vendor>
-              <product>XG2405</product>
-              <serial>VYE204002754</serial>
-            </monitorspec>
-            <mode>
-              <width>1920</width>
-              <height>1080</height>
-              <rate>144.001</rate>
-            </mode>
-          </monitor>
-        </logicalmonitor>
-      </configuration>
-    </monitors>
-  '';
 }

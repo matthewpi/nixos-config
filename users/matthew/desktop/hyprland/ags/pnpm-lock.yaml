@@ -1,0 +1,272 @@
+lockfileVersion: '6.0'
+
+settings:
+    autoInstallPeers: true
+    excludeLinksFromLockfile: false
+
+devDependencies:
+    '@girs/dbusmenugtk3-0.4':
+        specifier: 0.4.0-3.2.6
+        version: 0.4.0-3.2.6
+    '@girs/gdk-3.0':
+        specifier: 3.24.38-3.2.6
+        version: 3.24.38-3.2.6
+    '@girs/glib-2.0':
+        specifier: 2.78.0-3.2.6
+        version: 2.78.0-3.2.6
+    '@girs/gobject-2.0':
+        specifier: 2.78.0-3.2.6
+        version: 2.78.0-3.2.6
+    '@girs/gtk-3.0':
+        specifier: 3.24.38-3.2.6
+        version: 3.24.38-3.2.6
+    '@girs/gvc-1.0':
+        specifier: 1.0.0-3.2.6
+        version: 1.0.0-3.2.6
+    '@girs/nm-1.0':
+        specifier: 1.45.1-3.2.6
+        version: 1.45.1-3.2.6
+    typescript:
+        specifier: 5.3.3
+        version: 5.3.3
+
+packages:
+    /@girs/atk-1.0@2.50.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-u6aXdrD4za3F8w3lSsXOGnmaOsonr5WzbMVawIaYdzyni+0GTZWUoAsmPeELFSXybRJY7zAJuIho1F0nO030KQ==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/cairo-1.0@1.0.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-cQa1/DpWc3bysBVZlvQCPQXRTFGQQk89iVQe3aU3hLK4NpTSIZrgx0DpIfgR0/mgwGZOFpJyN4eZC63JXZlZnw==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/dbusmenu-0.4@0.4.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-cXKAX2QAErVvC71eRiC4MMO5wG9YLFzHcvaptTCTjsQhYovjwNoR2ftpIuKa+4mD+WdteTBOE74Cqov4DAniOw==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/dbusmenugtk3-0.4@0.4.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-Pp5IQGzaORCmPzReLJlNv3cfetk/bz1DpszaUfCFpBCXDwLRyy/2OYyhwOwAtquJzgZ1QmCOkRQJnUfNP327VA==,
+            }
+        dependencies:
+            '@girs/atk-1.0': 2.50.0-3.2.6
+            '@girs/cairo-1.0': 1.0.0-3.2.6
+            '@girs/dbusmenu-0.4': 0.4.0-3.2.6
+            '@girs/freetype2-2.0': 2.0.0-3.2.6
+            '@girs/gdk-3.0': 3.24.38-3.2.6
+            '@girs/gdkpixbuf-2.0': 2.0.0-3.2.6
+            '@girs/gio-2.0': 2.78.0-3.2.6
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gmodule-2.0': 2.0.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+            '@girs/gtk-3.0': 3.24.38-3.2.6
+            '@girs/harfbuzz-0.0': 8.2.1-3.2.6
+            '@girs/pango-1.0': 1.51.0-3.2.6
+            '@girs/xlib-2.0': 2.0.0-3.2.6
+        dev: true
+
+    /@girs/freetype2-2.0@2.0.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-E8utYdnopbL0DxArc6KE95824xuWomzkEydVxNsaJqksusvItJR9T85JhQeHwtcKZbfxuFvrglO8cCCL7LrCLA==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/gdk-3.0@3.24.38-3.2.6:
+        resolution:
+            {
+                integrity: sha512-fUwufZiZ3/BWniI+wwHF9hrdNKIOKKq9SSiM0YV/1MpBgsMYTOKMwCan5kHDWQLVYMua86J2uWO3G0E2d/eGBw==,
+            }
+        dependencies:
+            '@girs/cairo-1.0': 1.0.0-3.2.6
+            '@girs/freetype2-2.0': 2.0.0-3.2.6
+            '@girs/gdkpixbuf-2.0': 2.0.0-3.2.6
+            '@girs/gio-2.0': 2.78.0-3.2.6
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gmodule-2.0': 2.0.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+            '@girs/harfbuzz-0.0': 8.2.1-3.2.6
+            '@girs/pango-1.0': 1.51.0-3.2.6
+        dev: true
+
+    /@girs/gdkpixbuf-2.0@2.0.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-iJyUeBzd09Qz6XgfCU0j22cG9xUmRW7V2Y8Uak04NEDt0JmbjIsTnsLUS1dtJ+pJH7+qccijJHVzTbQPnNVUsQ==,
+            }
+        dependencies:
+            '@girs/gio-2.0': 2.78.0-3.2.6
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gmodule-2.0': 2.0.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/gio-2.0@2.78.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-MmPAB3gB5V2I5sfrbsj9D5/+iIcbkfqDYq8fAgLXav558xSDNjux+lNykxawL1oCNcxr+kC2PguYhnLEFCgxmA==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/gjs@3.2.6:
+        resolution:
+            {
+                integrity: sha512-PY1i3RzkTw+kp/OKalPg5O6BHEiBq82PPq41GDivlkbrWcY1fX4UqcdjXBU7L0mRFd2po8ciVW9J0/yheyXXIg==,
+            }
+        dependencies:
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/glib-2.0@2.78.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-grdCdAH+mfdzoz5iMNKsvu+BSaJWaCdLcMyoa0tq/+Rz84D/2GmLslyomjFXzA7Xr6BrIXOzgHaTuRrCZNtnmw==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/gmodule-2.0@2.0.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-KNkdMFTH0vzJMO/aIkLzue8xO0Oz+BlX8SbP+yVzEMtb+jlFzLd3VxA1W+60V3xpxkzSZbXbdCuSjBOx9hSaSA==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/gobject-2.0@2.78.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-Yyy+hTpczMgkdgVADnSt4idEa29ZKFIbQTHjZutsUkn2kF3fxQMD7fQUpr03d0DSXY7gLKMwDtXq4XkH4cy0lg==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/gtk-3.0@3.24.38-3.2.6:
+        resolution:
+            {
+                integrity: sha512-dwPSOqGQiX9Fh5IHE5avVR5vFaDuCElbXRpdI++mvAszMD8C/0DQ4/CwUbSlXMMo42IrXGzJG3LuI+o3DWlv8A==,
+            }
+        dependencies:
+            '@girs/atk-1.0': 2.50.0-3.2.6
+            '@girs/cairo-1.0': 1.0.0-3.2.6
+            '@girs/freetype2-2.0': 2.0.0-3.2.6
+            '@girs/gdk-3.0': 3.24.38-3.2.6
+            '@girs/gdkpixbuf-2.0': 2.0.0-3.2.6
+            '@girs/gio-2.0': 2.78.0-3.2.6
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gmodule-2.0': 2.0.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+            '@girs/harfbuzz-0.0': 8.2.1-3.2.6
+            '@girs/pango-1.0': 1.51.0-3.2.6
+            '@girs/xlib-2.0': 2.0.0-3.2.6
+        dev: true
+
+    /@girs/gvc-1.0@1.0.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-jScCsKYdtxt3b7qHfsinAZ8T93NWPKakw1PVX1tor9UFCJTCUqDaISzeo8Z7mfQU2pSiLNyNfkg1rTEUw2ciAQ==,
+            }
+        dependencies:
+            '@girs/gio-2.0': 2.78.0-3.2.6
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/harfbuzz-0.0@8.2.1-3.2.6:
+        resolution:
+            {
+                integrity: sha512-SHaXwp01mfWxwAJAtagZ/b+dnqGnjzr/9qLv3KUEfBx1P3eI6oSB0xbpi+c/yXrrbIjZd1vuVkCsdchy+Spj8w==,
+            }
+        dependencies:
+            '@girs/freetype2-2.0': 2.0.0-3.2.6
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/nm-1.0@1.45.1-3.2.6:
+        resolution:
+            {
+                integrity: sha512-hTi8pYm/JfaOazT6cqEWdlzwwQBs/MjzKExlP/wA0J7yQ7jDISnHFvg/pGZWQL/fp+gW/ZisejxO1/NpO2fGXA==,
+            }
+        dependencies:
+            '@girs/gio-2.0': 2.78.0-3.2.6
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /@girs/pango-1.0@1.51.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-8c+YXB/+OkEM0EZ3t2czVLPutklUF3AQFb6lYHrdzIYSmdMDUNCHT2dJ85ug1SKHZ/HfKl/bsMz9PTqXGYIT8Q==,
+            }
+        dependencies:
+            '@girs/cairo-1.0': 1.0.0-3.2.6
+            '@girs/freetype2-2.0': 2.0.0-3.2.6
+            '@girs/gio-2.0': 2.78.0-3.2.6
+            '@girs/gjs': 3.2.6
+            '@girs/glib-2.0': 2.78.0-3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+            '@girs/harfbuzz-0.0': 8.2.1-3.2.6
+        dev: true
+
+    /@girs/xlib-2.0@2.0.0-3.2.6:
+        resolution:
+            {
+                integrity: sha512-mXo+BEYQNEZp3pOahxt4Bl42YZTciWO2C0705o/ZKW6dQE5ky08wiG2t6Y8x0w6vYVeg9xWP9oz2jUOAdfTsdA==,
+            }
+        dependencies:
+            '@girs/gjs': 3.2.6
+            '@girs/gobject-2.0': 2.78.0-3.2.6
+        dev: true
+
+    /typescript@5.3.3:
+        resolution:
+            {
+                integrity: sha512-pXWcraxM0uxAS+tN0AG/BF2TyqmHO014Z070UsJ+pFvYuRSq8KH8DmWpnbXe0pEPDHXZV3FcAbJkijJ5oNEnWw==,
+            }
+        engines: { node: '>=14.17' }
+        hasBin: true
+        dev: true

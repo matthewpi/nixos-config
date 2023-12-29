@@ -6,6 +6,7 @@
 }: {
   imports = [
     ./applications
+    ./hyprland
     ./services
 
     ./gtk.nix

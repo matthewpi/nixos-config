@@ -47,6 +47,10 @@
           mode = "0700";
         }
         {
+          directory = ".cache/ags";
+          mode = "0700";
+        }
+        {
           directory = ".cache/amberol";
           mode = "0700";
         }
@@ -208,6 +212,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/java";
+          mode = "0700";
+        }
+        {
           directory = ".config/kubernetes";
           mode = "0700";
         }
@@ -248,14 +256,9 @@
           mode = "0700";
         }
 
-        # I don't use this but other apps do
-        {
-          directory = ".gnupg";
-          mode = "0700";
-        }
-
         # I hate this, JetBrains uses it to store
         # auth data and agreement to their ToS
+        # TODO: remove once we have verified our _JAVA_OPTIONS override works
         {
           directory = ".java";
           mode = "0700";
@@ -314,6 +317,10 @@
         }
         {
           directory = ".local/share/go";
+          mode = "0700";
+        }
+        {
+          directory = ".local/share/gnupg";
           mode = "0700";
         }
         {

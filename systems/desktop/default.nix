@@ -106,11 +106,6 @@
     zip
   ];
 
-  # Configure GDM to use the same monitor configuration as the "matthew" user does
-  systemd.tmpfiles.rules = [
-    "L+ /run/gdm/.config/monitors.xml 0400 gdm gdm - ${config.home-manager.users.matthew.xdg.configFile."monitors.xml".source}"
-  ];
-
   # Enable aarch64 emulation for Nix builds
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 

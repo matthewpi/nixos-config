@@ -11,6 +11,19 @@
       };
     };
 
+    ags = {
+      url = "github:Aylur/ags";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    anyrun = {
+      url = "github:Kirottu/anyrun";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -46,6 +59,11 @@
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
       };
+    };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     impermanence.url = "github:nix-community/impermanence";
@@ -93,6 +111,19 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
+
+  #nixConfig = {
+  #  extra-substituters = [
+  #    "https://cache.nicetry.lol"
+  #    #"https://hyprland.cachix.org"
+  #    #"https://anyrun.cachix.org"
+  #  ];
+  #  extra-trusted-public-keys = [
+  #    "cache.nicetry.lol-1:JnmGgdqevlSBH1ZpAemFGR+AChxgGcNKW9G3ThtW4bk="
+  #    #"hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
+  #    #"anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
+  #  ];
+  #};
 
   outputs = {self, ...} @ inputs: let
     inherit (self) outputs;
@@ -161,7 +192,7 @@
               self.nixosModules.amd-ryzen
               self.nixosModules.catppuccin
               self.nixosModules.desktop
-              self.nixosModules.gnome
+              self.nixosModules.hyprland
               self.nixosModules.persistence
               self.nixosModules.podman
               self.nixosModules.secureboot
@@ -226,10 +257,15 @@
             ci = pkgs.mkShellNoCC {buildInputs = [pkgs.gitsign];};
 
             default = pkgs.mkShellNoCC {
-              buildInputs = [
-                inputs.agenix.packages."${system}".default
-                pkgs.gitsign
-              ];
+              buildInputs =
+                [
+                  inputs.agenix.packages."${system}".default
+                ]
+                ++ (with pkgs; [
+                  gitsign
+                  nodejs_20
+                  nodePackages.pnpm
+                ]);
             };
           };
 
@@ -239,6 +275,7 @@
             programs = {
               alejandra.enable = true;
               deadnix.enable = true;
+              prettier.enable = true;
               shellcheck.enable = true;
               shfmt = {
                 enable = true;

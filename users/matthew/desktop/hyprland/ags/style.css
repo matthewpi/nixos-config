@@ -1,0 +1,90 @@
+/* TODO: find a way to auto-link this from Nix, ideally without needing to write the CSS in Nix. */
+@import '/nix/store/nd83c2gri78gdjc5h10nz5z1vlh1hqp9-catppuccin-unstable-2023-10-09/waybar/mocha.css';
+
+@define-color primary @peach;
+
+* {
+	font-family: 'MonaspiceNe Nerd Font', monospace;
+	font-weight: 400;
+}
+
+button {
+	background-color: transparent;
+	color: @text;
+}
+
+button:hover {
+	background-color: @mantle;
+}
+
+button:active {
+	background-color: @crust;
+}
+
+/* Style the bar itself, this is the root element */
+.bar {
+	background-color: @base;
+	border-bottom: 0.125rem solid @mantle;
+}
+
+.media .media-icon {
+	font-size: 1.25rem;
+	margin-right: 0.75rem;
+}
+
+.media .media-label {
+	font-size: 0.75rem;
+}
+
+.media-label .media-title {
+	color: @text;
+}
+
+.media-label .media-artists {
+	color: @overlay1;
+}
+
+/* Style the clock display */
+.clock {
+	background-color: transparent;
+	color: @text;
+	margin: 0 0.375rem;
+	font-size: 1rem;
+}
+
+.clock .clock-box:first-child .clock-display {
+	margin-right: 0.5rem;
+}
+
+.clock .clock-box:last-child .clock-display {
+	margin-left: 0.5rem;
+}
+
+.clock-display .timezone {
+	color: @overlay1;
+}
+
+/* Style the volume slider */
+.volume {
+	margin-right: 0.75rem;
+}
+
+.volume > .volume-icon {
+	margin-right: 0.5rem;
+}
+
+.volume > .volume-slider progress,
+highlight {
+	background-color: @primary;
+	min-height: 0.4rem;
+}
+
+.volume > .volume-slider progress,
+slider {
+	background-color: @primary;
+}
+
+/* Style the tray icons */
+.tray {
+	margin-right: 2rem;
+}

@@ -10,7 +10,7 @@
     ];
 
     # Make tpm kernel modules available in the initrd
-    boot.initrd.availableKernelModules = ["tpm-tis" "tpm-crb"];
+    boot.initrd.availableKernelModules = ["tpm-crb" "tpm-tis"];
 
     # Install fido2, sbctl, and tpm packages
     environment.systemPackages = with pkgs; [libfido2 sbctl tpm2-tools tpm2-tss];
