@@ -1,6 +1,6 @@
 let
   validAccents = ["rosewater" "flamingo" "pink" "mauve" "red" "maroon" "peach" "yellow" "green" "teal" "sky" "sapphire" "blue" "lavender"];
-  validThemes = ["bat" "blackbox" "bottom" "btop" "hyprland" "k9s" "lazygit" "plymouth" "refind" "rofi" "starship" "waybar"];
+  validThemes = ["alacritty" "bat" "blackbox" "bottom" "btop" "hyprland" "k9s" "lazygit" "plymouth" "refind" "rofi" "starship" "waybar"];
   validVariants = ["latte" "frappe" "macchiato" "mocha"];
 in
   {
@@ -17,6 +17,13 @@ in
     variants = validVariants;
 
     sources = {
+      alacritty = fetchFromGitHub {
+        owner = "catppuccin";
+        repo = "alacritty";
+        rev = "3c808cbb4f9c87be43ba5241bc57373c793d2f17";
+        hash = "sha256-w9XVtEe7TqzxxGUCDUR9BFkzLZjG8XrplXJ3lX6f+x0=";
+      };
+
       bat = fetchFromGitHub {
         owner = "catppuccin";
         repo = "bat";
@@ -133,6 +140,13 @@ in
           runHook preInstall
 
         ''
+        + lib.optionalString (lib.elem "alacritty" themes) ''
+          mkdir -p $out/alacritty
+          for variant in $variants; do
+            cp "${sources.alacritty}/catppuccin-$variant.yml" "$out/alacritty/Catppuccin-$variant.yaml"
+          done
+
+        ''
         + lib.optionalString (lib.elem "bat" themes) ''
           mkdir -p $out/bat
           for variant in $variants; do
@@ -172,7 +186,7 @@ in
         + lib.optionalString (lib.elem "k9s" themes) ''
           mkdir -p $out/k9s
           for variant in $variants; do
-            cp "${sources.k9s}/dist/$variant.yml" "$out/k9s/"
+            cp "${sources.k9s}/dist/$variant.yml" "$out/k9s/$variant.yaml"
           done
 
         ''
