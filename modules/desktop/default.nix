@@ -71,5 +71,6 @@
 
     # Set location provider to geoclue2.
     location.provider = lib.mkDefault "geoclue2";
+    systemd.user.services.geoclue-agent.serviceConfig.Slice = "background.slice";
   };
 }
