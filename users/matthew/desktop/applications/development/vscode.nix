@@ -31,7 +31,6 @@
         file-icons.file-icons # file-icons
         #github.copilot # GitHub Copilot; TODO: enable?
         #github.vscode-github-actions # GitHub Actions
-        #github.github-vscode-theme # GitHub Theme
         eamodio.gitlens # GitLens — Git supercharged
         golang.go # Go
         hashicorp.terraform # HashiCorp Terraform
@@ -91,6 +90,13 @@
           version = "1.8.5";
           sha256 = "sha256-AEIQFglW6RiWusiciMUeXgMs+bIERI/oDY6GUEQTPKg=";
         }
+        # MDC - Markdown Components
+        {
+          name = "mdc";
+          publisher = "Nuxt";
+          version = "0.2.0";
+          sha256 = "sha256-M/29ZDg1sva9msGgRe6xqpCYDpW6X/BqKxmiJhzeVXQ=";
+        }
       ];
 
     keybindings = [];
@@ -99,7 +105,8 @@
       # Editor
       "editor.accessibilitySupport" = "off";
       "editor.fontFamily" = "\"MonaspiceNe Nerd Font\", monospace";
-      "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
+      "editor.fontLigatures" = false;
+      # "editor.fontLigatures" = "'ss01', 'ss02', 'ss03', 'ss04', 'ss05', 'ss06', 'ss07', 'ss08', 'calt', 'dlig'";
       "editor.linkedEditing" = true;
       "editor.wordWrap" = "on";
       "editor.wordWrapColumn" = 100;
