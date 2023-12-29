@@ -5,6 +5,6 @@
     compression-algorithm = zstd
   '';
 
-  systemd.packages = [pkgs.zram-generator];
-  systemd.services."systemd-zram-setup@".path = [pkgs.util-linux];
+  systemd.packages = with pkgs; [zram-generator];
+  systemd.services."systemd-zram-setup@".path = with pkgs; [util-linux];
 }
