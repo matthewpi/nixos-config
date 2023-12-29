@@ -117,7 +117,10 @@
   # Configure restic to backup important directories
   services.restic.backups = {
     matthew-code = {
-      initialize = true;
+      # This avoids running a PreStart command that prints 20,000 snapshot entries,
+      # if we ever need to re-initialize the repository, set this option to true,
+      # then disable it.
+      initialize = false;
       user = "matthew";
       paths = [
         "/home/matthew/code/matthewpi"
