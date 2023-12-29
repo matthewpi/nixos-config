@@ -47,6 +47,10 @@
           mode = "0700";
         }
         {
+          directory = ".cache/amberol";
+          mode = "0700";
+        }
+        {
           directory = ".cache/bat";
           mode = "0700";
         }
