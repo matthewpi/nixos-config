@@ -1,4 +1,4 @@
-{
+{...}: {
   perSystem = {
     config,
     lib,
@@ -12,11 +12,12 @@
 
         cider2 = pkgs.callPackage ./cider2/default.nix {};
 
+        dbus-broker = pkgs.callPackage ./dbus-broker/default.nix {};
+
         fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
         zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
 
         inter = pkgs.callPackage ./inter.nix {};
-
         monaspace = pkgs.callPackage ./monaspace.nix {};
       }
       // lib.optionalAttrs (pkgs.stdenv.system == "x86_64-linux") {
@@ -29,19 +30,20 @@
           "''${gappsWrapperArgs[@]}" \
           --suffix PATH : ${lib.makeBinPath [pkgs.xdg-utils]} \
           --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \
-          --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --use-tray-icon}}"
+          --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
       '';
-    in {
+    in rec {
       inherit
         (config.packages)
         catppuccin
         catppuccin-wallpapers
         cider2
+        dbus-broker
         fast-syntax-highlighting
         forge-sparks
+        inter
         monaspace
         zsh-titles
-        inter
         ;
 
       _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
@@ -52,12 +54,12 @@
           old.preFixup
           + ''
             gappsWrapperArgs+=(
-              --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations --use-tray-icon}}"
+              --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
             )
           '';
-
-        webcord = pkgs.callPackage ./webcord/default.nix {};
       });
+
+      webcord = pkgs.callPackage ./webcord/default.nix {};
     };
   };
 }
