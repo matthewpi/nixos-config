@@ -152,11 +152,5 @@
   services.sysprof.enable = true;
 
   # Allow systemd to handle coredumps.
-  systemd.coredump = {
-    enable = true;
-    extraConfig = ''
-      Storage=none
-      ProcessSizeMax=0
-    '';
-  };
+  systemd.coredump.enable = true;
 }
