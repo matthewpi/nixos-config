@@ -4,9 +4,14 @@
   ...
 }: {
   config = lib.mkIf config.services.openssh.enable {
+    # Only start OpenSSH when needed, this is useful on graphical systems where incoming SSH
+    # connections are rarely used.
+    services.openssh.startWhenNeeded = lib.mkDefault true;
+
     # Secure OpenSSH
     services.openssh.settings = {
       PasswordAuthentication = lib.mkDefault false;
+      KbdInteractiveAuthentication = lib.mkDefault false;
       PermitRootLogin = lib.mkDefault "no";
     };
 
