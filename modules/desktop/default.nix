@@ -7,11 +7,11 @@
     imports = [
       ./1password.nix
       ./bluetooth.nix
-      ./corectrl.nix
+      #./corectrl.nix
       ./gamemode.nix
       ./pipewire.nix
       ./plymouth.nix
-      ./printing.nix
+      #./printing.nix
       ./ratbagd.nix
     ];
 
