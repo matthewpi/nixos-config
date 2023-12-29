@@ -11,7 +11,7 @@ in {
   boot.kernelModules = ["kvm-amd"];
 
   boot.initrd.availableKernelModules = ["ahci" "nvme" "usbhid" "xhci_pci"];
-  boot.initrd.supportedFilesystems = ["btrfs"];
+  boot.initrd.supportedFilesystems = ["btrfs" "ntfs"];
 
   # Change the boot loader timeout to 15 seconds.
   boot.loader.timeout = 15;
@@ -76,6 +76,12 @@ in {
       fsType = "btrfs";
       options = ["subvol=log" "compress=zstd" "noatime" "nodev" "noexec" "nosuid" "discard=async"];
       neededForBoot = true;
+    };
+
+    "/mnt/games" = {
+      device = "/dev/disk/by-uuid/CE3E37913E377197";
+      fsType = "ntfs-3g";
+      options = ["noatime" "nosuid" "nodev" "nofail" "x-gvfs-show" "rw" "uid=1000" "umask=000"];
     };
   };
 
