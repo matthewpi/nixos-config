@@ -124,11 +124,11 @@ in
 
     doCheck = true;
 
-    meta = with lib; {
+    meta = {
       description = "Linux D-Bus Message Broker";
       homepage = "https://github.com/bus1/dbus-broker/wiki";
-      license = licenses.asl20;
-      maintainers = with maintainers; [peterhoeg];
-      platforms = platforms.linux;
+      license = lib.licenses.asl20;
+      maintainers = with lib.maintainers; [matthewpi];
+      platforms = lib.platforms.linux;
     };
   })

@@ -41,5 +41,6 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/zdharma-continuum/fast-syntax-highlighting";
     license = lib.licenses.bsd3;
     maintainers = with lib.maintainers; [matthewpi];
+    platforms = lib.platforms.all;
   };
 }

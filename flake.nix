@@ -8,6 +8,7 @@
         darwin.follows = "darwin";
         home-manager.follows = "home-manager";
         nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems";
       };
     };
 
@@ -63,7 +64,10 @@
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
     };
 
     impermanence.url = "github:nix-community/impermanence";
@@ -105,6 +109,9 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/NUR";
+
+    systems.url = "github:nix-systems/default";
+    systems-linux.url = "github:nix-systems/default-linux";
 
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";

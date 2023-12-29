@@ -27,5 +27,6 @@ stdenv.mkDerivation rec {
     homepage = "https://github.com/amyreese/zsh-titles";
     license = lib.licenses.mit;
     maintainers = with lib.maintainers; [matthewpi];
+    platforms = lib.platforms.all;
   };
 }

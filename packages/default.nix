@@ -1,11 +1,11 @@
-{...}: {
+{
   perSystem = {
-    config,
     lib,
     pkgs,
+    system,
     ...
-  }: {
-    packages =
+  }: let
+    _packages =
       {
         catppuccin = pkgs.callPackage ./catppuccin/default.nix {};
         catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers/default.nix {};
@@ -23,6 +23,8 @@
       // lib.optionalAttrs (pkgs.stdenv.system == "x86_64-linux") {
         forge-sparks = pkgs.callPackage ./forge-sparks/default.nix {};
       };
+  in {
+    packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
 
     overlayAttrs = let
       _1passwordPreFixup = ''
@@ -32,9 +34,9 @@
           --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \
           --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
       '';
-    in rec {
+    in {
       inherit
-        (config.packages)
+        (_packages)
         catppuccin
         catppuccin-wallpapers
         cider2

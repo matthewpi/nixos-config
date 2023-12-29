@@ -18,5 +18,6 @@ stdenv.mkDerivation rec {
 
   meta = {
     maintainers = with lib.maintainers; [matthewpi];
+    platforms = lib.platforms.all;
   };
 }
