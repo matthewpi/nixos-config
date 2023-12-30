@@ -296,7 +296,7 @@ in {
     dimDuration = 10;
     dimCommand = "${lib.getExe pkgs.chayang} -d ${toString dimDuration}";
     lockCommand = "${lib.getExe config.programs.swaylock.package} --daemonize --show-failed-attempts --color 000000";
-    lockWithDpms = "${lockCommand}; ${pkgs.coreutils}/bin/sleep 1s && ${hyprland}/bin/hyprctl dispatch dpms off";
+    lockWithDpms = "${lockCommand} && ${pkgs.coreutils}/bin/sleep 1s && ${hyprland}/bin/hyprctl dispatch dpms off";
   in {
     enable = true;
     systemdTarget = "hyprland-session.target";
