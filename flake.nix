@@ -187,20 +187,20 @@
             nix.settings.flake-registry = "${inputs.flake-registry}/flake-registry.json";
           };
         in rec {
-          hydraJobs = let
-            inherit (inputs.nixpkgs.lib) mapAttrs;
-            getCfg = _: cfg: cfg.config.system.build.toplevel;
-          in {
-            hosts = mapAttrs getCfg self.nixosConfigurations;
-
-            checks = {
-              inherit (self.checks) x86_64-linux;
-            };
-
-            packages = {
-              inherit (self.packages) x86_64-linux;
-            };
-          };
+          #hydraJobs = let
+          #  inherit (inputs.nixpkgs.lib) mapAttrs;
+          #  getCfg = _: cfg: cfg.config.system.build.toplevel;
+          #in {
+          #  hosts = mapAttrs getCfg self.nixosConfigurations;
+          #
+          #  checks = {
+          #    inherit (self.checks) x86_64-linux;
+          #  };
+          #
+          #  packages = {
+          #    inherit (self.packages) x86_64-linux;
+          #  };
+          #};
 
           nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
             specialArgs = {
