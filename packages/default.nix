@@ -12,8 +12,6 @@
 
         cider2 = pkgs.callPackage ./cider2/default.nix {};
 
-        dbus-broker = pkgs.callPackage ./dbus-broker/default.nix {};
-
         fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
         zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
 
@@ -40,7 +38,6 @@
         catppuccin
         catppuccin-wallpapers
         cider2
-        dbus-broker
         fast-syntax-highlighting
         forge-sparks
         inter
