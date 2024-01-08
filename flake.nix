@@ -47,6 +47,7 @@
 
     flake-utils = {
       url = "github:numtide/flake-utils";
+      inputs.systems.follows = "systems";
     };
 
     home-manager = {
@@ -65,9 +66,24 @@
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs = {
+        hyprland-protocols.follows = "hyprland-protocols";
+        xdph.follows = "xdph";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
+    };
+
+    hyprland-protocols = {
+      url = "github:hyprwm/hyprland-protocols";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
+    hyprlang = {
+      url = "github:hyprwm/hyprlang";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     impermanence.url = "github:nix-community/impermanence";
@@ -116,6 +132,15 @@
     treefmt-nix = {
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    xdph = {
+      url = "github:hyprwm/xdg-desktop-portal-hyprland";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+        hyprland-protocols.follows = "hyprland-protocols";
+      };
     };
   };
 
