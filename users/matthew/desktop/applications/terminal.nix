@@ -10,7 +10,7 @@
     enable = true;
 
     settings = {
-      import = ["${pkgs.catppuccin}/alacritty/Catppuccin-${flavour}.yaml"];
+      import = ["${pkgs.catppuccin}/alacritty/Catppuccin-${flavour}.toml"];
 
       env = {
         TERM_PROGRAM = "alacritty";
@@ -28,7 +28,7 @@
 
       ipc_socket = false;
 
-      key_bindings = [
+      keyboard.bindings = [
         {
           mods = "Control";
           key = "V";

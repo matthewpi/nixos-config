@@ -20,8 +20,8 @@ in
       alacritty = fetchFromGitHub {
         owner = "catppuccin";
         repo = "alacritty";
-        rev = "3c808cbb4f9c87be43ba5241bc57373c793d2f17";
-        hash = "sha256-w9XVtEe7TqzxxGUCDUR9BFkzLZjG8XrplXJ3lX6f+x0=";
+        rev = "ce476fb41f307d90f841c1a4fd7f0727c21248b2";
+        hash = "sha256-bpHznCqkNMbauDQjh98qj2+r1V8mXQIVmvKTldLcln0=";
       };
 
       bat = fetchFromGitHub {
@@ -143,7 +143,7 @@ in
         + lib.optionalString (lib.elem "alacritty" themes) ''
           mkdir -p $out/alacritty
           for variant in $variants; do
-            cp "${sources.alacritty}/catppuccin-$variant.yml" "$out/alacritty/Catppuccin-$variant.yaml"
+            cp "${sources.alacritty}/catppuccin-$variant.toml" "$out/alacritty/Catppuccin-$variant.toml"
           done
 
         ''
