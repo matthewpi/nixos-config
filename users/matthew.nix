@@ -21,6 +21,10 @@
   # Allow matthew access to 1Password
   programs._1password-gui.polkitPolicyOwners = ["matthew"];
 
+  # Enable yubikey-agent
+  services.yubikey-agent.enable = true;
+  programs.gnupg.agent.pinentryFlavor = "gnome3";
+
   # Enable the wireshark dumpcap security wrapper.
   # This allows us to call dumpcap without using separate privilege escalation.
   programs.wireshark.enable = true;
