@@ -42,6 +42,7 @@
         -- transparent_background = true,
 
         integrations = {
+          barbar = true,
           cmp = true,
           coc_nvim = true,
           dropbar = {
@@ -144,6 +145,10 @@
         git = {
           enable = false,
           ignore = true,
+        },
+
+        view = {
+          width = 36,
         },
       })
 
@@ -280,11 +285,32 @@
 
       --require("mini.comment").setup()
 
+      require("barbar").setup({
+        animation = false,
+        sidebar_filetypes = {
+          NvimTree = true,
+        },
+      })
+
+      -- Handle opening nvim-tree
+      local function open_nvim_tree(data)
+        local directory = vim.fn.isdirectory(data.file) == 1
+        if not directory then
+          return
+        end
+
+        vim.cmd.cd(data.file)
+        require("nvim-tree.api").tree.open()
+      end
+
+      vim.api.nvim_create_autocmd({ "VimEnter" }, { callback = open_nvim_tree })
+
       -- setup must be called before loading
       vim.cmd.colorscheme "catppuccin"
     '';
 
     plugins = with pkgs.vimPlugins; [
+      barbar-nvim
       catppuccin-nvim
       cmp-buffer
       cmp-cmdline
