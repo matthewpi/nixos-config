@@ -24,6 +24,24 @@
   xdg.mimeApps = {
     enable = lib.mkDefault config.xdg.mime.enable;
 
+    associations.added = {
+      # While firefox's .desktop file sets these, Junction tries to explicitly set these associations.
+      "x-scheme-handler/http" = ["firefox.desktop"];
+      "x-scheme-handler/https" = ["firefox.desktop"];
+      "application/xhtml+xml" = ["firefox.desktop"];
+      "text/html" = ["firefox.desktop"];
+      "text/xml" = ["firefox.desktop"];
+
+      # GNOME Text Editor doesn't set any mime types.
+      "application/xml" = ["org.gnome.TextEditor.desktop"];
+      "application/x-x509-ca-cert" = ["org.gnome.TextEditor.desktop"];
+      "audio/x-mod" = ["org.gnome.TextEditor.desktop"]; # go.mod
+      "text/markdown" = ["org.gnome.TextEditor.desktop"];
+      "text/plain" = ["org.gnome.TextEditor.desktop"];
+      "text/vnd.trolltech.linguist" = ["org.gnome.TextEditor.desktop"]; # TypeScript
+      "text/x-csrc" = ["org.gnome.TextEditor.desktop"]; # .cfg
+    };
+
     defaultApplications = let
       junction = "re.sonny.Junction.desktop";
       defaultBrowser = "firefox.desktop";
@@ -35,6 +53,7 @@
       "x-scheme-handler/https" = [junction];
       "application/xhtml+xml" = [defaultBrowser];
       "text/html" = [defaultBrowser];
+      "text/xml" = [defaultBrowser];
 
       # PDFs
       "application/pdf" = ["org.gnome.Evince.desktop"];
