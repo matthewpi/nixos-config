@@ -24,6 +24,7 @@
     # Configure lanzaboote for secureboot
     boot.lanzaboote = {
       enable = lib.mkDefault true;
+      configurationLimit = 5;
       pkiBundle = lib.mkDefault "/persist/etc/secureboot";
     };
   };
