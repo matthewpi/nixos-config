@@ -14,7 +14,7 @@ button {
 }
 
 button:hover {
-	background-color: @mantle;
+	background-color: @base;
 }
 
 button:active {
@@ -23,8 +23,8 @@ button:active {
 
 /* Style the bar itself, this is the root element */
 .bar {
-	background-color: @base;
-	border-bottom: 0.125rem solid @mantle;
+	background-color: @mantle;
+	border-bottom: 0.125rem solid @crust;
 }
 
 .media .media-icon {
@@ -61,7 +61,7 @@ button:active {
 }
 
 .clock-display .timezone {
-	color: @overlay1;
+	color: @overlay0;
 }
 
 /* Style the volume slider */
@@ -87,4 +87,70 @@ slider {
 /* Style the tray icons */
 .tray {
 	margin-right: 2rem;
+}
+
+/* Notifications window */
+window#notifications {
+	all: unset;
+}
+
+window#notifications box.notifications {
+	padding-top: 3rem;
+	padding-right: 0.75rem;
+}
+
+/* Notification */
+.notification {
+	min-width: 350px;
+	background-color: @mantle;
+	border: 1px solid @surface0;
+	border-radius: 0.75rem;
+	padding: 1rem;
+	/* margin: 0.5rem; */
+}
+
+/* Additional styling on critical notifications */
+.notification.critical {
+	border: 1px solid @primary;
+}
+
+.notification .icon {
+	/*min-width: 68px;
+	min-height: 68px;*/
+	margin-right: 0.75rem;
+}
+
+.notification .icon box {
+	/*min-width: 68px;
+	min-height: 68px;*/
+	border-radius: 0.5rem;
+}
+
+.notification .icon image {
+	font-size: 2rem;
+	color: @overlay1;
+}
+
+.notification .title {
+	color: @text;
+	font-size: 1rem;
+	margin-bottom: 0.25rem;
+}
+
+.notification .body {
+	color: @overlay1;
+	font-size: 0.875rem;
+}
+
+.notification .actions .action-button {
+	margin: 0 0.4rem;
+	margin-top: 0.8rem;
+}
+
+.notification .actions .action-button:first-child {
+	margin-left: 0;
+}
+
+.notification .actions .action-button:last-child {
+	margin-right: 0;
 }

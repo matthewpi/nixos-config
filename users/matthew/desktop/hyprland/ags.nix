@@ -1,4 +1,8 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   # Enable ags.
   programs.ags = {
     enable = true;
@@ -12,6 +16,9 @@
     };
 
     Service = {
+      Environment = [
+        "PATH=${pkgs.bun}/bin"
+      ];
       ExecStart = "${config.programs.ags.package}/bin/ags";
       Slice = "session.slice";
 
