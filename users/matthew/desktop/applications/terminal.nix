@@ -17,7 +17,11 @@
         TERM = "xterm-256color";
       };
 
-      window.decorations = "Full";
+      window = {
+        decorations = "None";
+        opacity = 0.8;
+        blur = true;
+      };
 
       font = {
         size = 10.0;
