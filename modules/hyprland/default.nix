@@ -17,6 +17,7 @@
     programs.hyprland = {
       enable = lib.mkDefault true;
       package = lib.mkDefault inputs.hyprland.packages.${pkgs.system}.hyprland;
+      portalPackage = lib.mkDefault inputs.xdph.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
     };
 
     # Enable wayland environment variables for Electron Ozone, SDL2, and QT
