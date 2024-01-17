@@ -38,8 +38,7 @@
 
         flavour = "${flavour}",
         term_colors = true,
-        -- Disabled due to plugins needing this and the DE not working with it
-        -- transparent_background = true,
+        transparent_background = true,
 
         integrations = {
           barbar = true,
