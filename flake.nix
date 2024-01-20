@@ -135,7 +135,7 @@
     };
 
     xdph = {
-      url = "github:hyprwm/xdg-desktop-portal-hyprland";
+      url = "github:hyprwm/xdg-desktop-portal-hyprland/6a5de92769d5b7038134044053f90e7458f6a197";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
