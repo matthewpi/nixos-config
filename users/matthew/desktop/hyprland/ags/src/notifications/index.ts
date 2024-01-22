@@ -1,3 +1,5 @@
+import App from 'resource:///com/github/Aylur/ags/app.js';
+
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import { lookUpIcon } from 'resource:///com/github/Aylur/ags/utils.js';
 
@@ -125,12 +127,12 @@ function NotificationList() {
 			self.hook(
 				Notifications,
 				(box, id) => {
-					console.log('notified');
+					print('notified');
 
 					// Check if no notifications are currently being shown.
 					// if (box.get_children().length == 0) {
 					// 	Notifications.notifications.forEach(n => {
-					// 		console.log(n);
+					// 		print(n);
 					// 		box.pack_end(NotificationBox(n), false, false, 0);
 					// 	});
 
@@ -140,7 +142,7 @@ function NotificationList() {
 
 					const n = Notifications.getNotification(id);
 					if (n !== undefined) {
-						console.log(n);
+						print(n);
 						// box.pack_end(NotificationBox(n), false, false, 0);
 						// box.show_all();
 					}
@@ -151,19 +153,19 @@ function NotificationList() {
 			self.hook(
 				Notifications,
 				(box, id) => {
-					console.log('closed');
+					print('closed');
 					if (!id) {
 						return;
 					}
-					console.log(id);
+					print(id);
 
 					// for (const child of box.children) {
-					// 	console.log(child._id);
+					// 	print(child._id);
 					// 	if (child._id !== id) {
 					// 		continue;
 					// 	}
 
-					// 	console.log('destroying', id);
+					// 	print('destroying', id);
 					// 	child.attribute.destroy();
 					// }
 				},
@@ -178,14 +180,17 @@ function NotificationList() {
  *
  * @param {number} monitor ID of the monitor to render the Bar on.
  */
-function NotificationWindow(monitor: number) {
+function NotificationWindow(monitor: number, monitorName: string) {
 	return Widget.Window({
-		name: 'notifications',
+		name: `'notifications-${monitorName}'`,
 		layer: 'top',
 		anchor: ['top', 'right'],
 		exclusivity: 'normal',
+		// @ts-expect-error go away
 		child: NotificationList(),
 		monitor,
+		// Ensure the window is removed when it is destroyed.
+		setup: self => self.on('destroy', () => App.removeWindow(self)),
 	});
 }
 

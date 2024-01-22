@@ -28,7 +28,11 @@
 
       # Filesystem
       # TODO: figure out how to protect home and system without breaking themes and styles.
-      # BindPaths = ["/run/user"];
+      BindPaths = [
+        # Required to access Hyprland IPC
+        "/tmp/hypr"
+        # "/run/user"
+      ];
       # BindReadOnlyPaths = [
       #   "/etc/profiles/per-user/matthew"
       #   "${config.home.homeDirectory}/.config/ags"

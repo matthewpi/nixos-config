@@ -4,12 +4,13 @@ import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import { lookUpIcon } from 'resource:///com/github/Aylur/ags/utils.js';
 
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
+import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
 import SystemTray, { TrayItem } from 'resource:///com/github/Aylur/ags/service/systemtray.js';
 
 import AgsWindow from 'resource:///com/github/Aylur/ags/widgets/window.js';
 
-// import Gtk from 'gi://Gtk?version=3.0';
+import Gtk from 'gi://Gtk?version=3.0';
 import Gdk from 'gi://Gdk?version=3.0';
 
 import { Clock } from './clock';
@@ -249,95 +250,146 @@ function Right() {
  *
  * @param {number} monitor ID of the monitor to render the Bar on.
  */
-function Bar(monitor: number) {
+function Bar(monitor: number, monitorName: string) {
 	return Widget.Window({
-		name: `bar-${monitor}`,
+		name: `bar-${monitorName}`,
 		className: 'bar',
 		anchor: ['top', 'left', 'right'],
 		exclusivity: 'exclusive',
+		// @ts-expect-error go away
 		child: Widget.CenterBox({
 			startWidget: Left(),
 			centerWidget: Center(),
 			endWidget: Right(),
 		}),
 		monitor,
+		// Ensure the window is removed when it is destroyed.
+		setup: self => self.on('destroy', () => App.removeWindow(self)),
 	});
 }
 
 /**
- * ?
+ * Name of the primary monitor.
  *
- * @param {Gdk.Display} display ?
+ * Used control which monitor widgets like notifications are displayed on.
  */
-function getWindows(display: Gdk.Display) {
-	const numMonitors = display.get_n_monitors();
-	if (numMonitors < 1) {
-		return [];
-	}
+const primaryMonitorName = 'DP-3';
 
-	// console.log(`Number of Monitors: ${numMonitors}`);
+const registeredMonitors = new Set<string>();
 
-	const windows = [NotificationWindow(1)];
-	for (let i = 0; i < numMonitors; i++) {
-		const monitor = display.get_monitor(i);
-		if (monitor === null) {
-			// console.log(`${i}: no monitor found`);
+/**
+ * Hook into Hyprland to watch changes to monitors.
+ *
+ * This callback seems to get dispatched pretty often, even when monitors
+ * don't change. Be careful about when windows are added or removed.
+ */
+Hyprland.connect('notify::monitors', () => {
+	const monitorSet = new Set<string>();
+	for (const monitor of Hyprland.monitors) {
+		// Make a list of monitors (this is used to detect monitor removals).
+		monitorSet.add(monitor.name);
+
+		// Check if the monitor has already been processed.
+		if (registeredMonitors.has(monitor.name)) {
+			// print(`Monitor ${monitor.name} already has windows (ID ${monitor.id.toString()})`);
 			continue;
 		}
 
-		// console.log(`${i}: monitor found`);
+		// print(`Adding windows to ${monitor.name} (ID ${monitor.id.toString()})`);
 
-		windows.push(Bar(i));
+		// Add a Bar to the monitor.
+		App.addWindow(Bar(monitor.id, monitor.name));
+
+		// If this is the primary monitor, add the notification window.
+		if (monitor.name === primaryMonitorName) {
+			App.addWindow(NotificationWindow(monitor.id, monitor.name));
+		}
 	}
 
-	return windows;
-}
+	// print(
+	// 	`Monitors: [${Array.from(monitorSet)
+	// 		.map(v => v.toString())
+	// 		.join(', ')}]`,
+	// );
 
-let windows: AgsWindow[] = [];
+	// Get the difference in monitors between the monitor list and the monitors map.
+	const newMonitors = difference(monitorSet, registeredMonitors);
+	// print(
+	// 	`New Monitors: [${Array.from(newMonitors)
+	// 		.map(v => v.toString())
+	// 		.join(', ')}]`,
+	// );
 
-// Wonderful way to handle ensuring bars are rendered on all monitors.
-//
-// TODO: figure out if there is a better way to do this.
-//
-// The problem we are running into is that some monitor types are {Gtk.Monitor}
-// but the Window wants a monitor/display id, which the other monitor type does
-// not expose (at least from what I could find).
-const display = Gdk.Display.get_default();
-if (display !== null) {
-	// Add the bar to all monitors.
-	windows = getWindows(display);
+	for (const name of newMonitors) {
+		// Mark the monitor as being processed.
+		registeredMonitors.add(name);
+	}
 
-	// Whenever a monitor is connected, remove then add bars to all monitors.
-	display.connect('monitor-added', (_, monitor) => {
-		console.log(`monitor-added: ${monitor}`);
+	const diff = difference(registeredMonitors, monitorSet);
+	// print(
+	// 	`Difference: [${Array.from(diff)
+	// 		.map(v => v.toString())
+	// 		.join(', ')}]`,
+	// );
 
-		for (const [name] of App.windows) {
-			console.log(`removing window: ${name}`);
-			App.removeWindow(name);
-		}
+	// Unregister the monitor if it was removed.
+	// If it gets re-added the windows will be re-created.
+	for (const name of diff) {
+		registeredMonitors.delete(name);
 
-		for (const window of getWindows(display)) {
-			App.addWindow(window);
-		}
-	});
-
-	// Whenever a monitor is disconnected, remove then add bars to all monitors.
-	display.connect('monitor-removed', (display, monitor) => {
-		console.log(`monitor-removed: ${monitor}`);
-
-		for (const [name] of App.windows) {
-			console.log(`removing window: ${name}`);
-			App.removeWindow(name);
-		}
-
-		for (const window of getWindows(display)) {
-			App.addWindow(window);
-		}
-	});
-}
+		// TODO: find matching windows with the monitor's name?
+	}
+});
 
 // exporting the config so ags can manage the windows
 export default {
 	style: App.configDir + '/style.css',
-	windows,
+	windows: [],
 };
+
+function isSuperset<T>(set: Set<T>, subset: Set<T>): boolean {
+	for (const elem of subset) {
+		if (!set.has(elem)) {
+			return false;
+		}
+	}
+	return true;
+}
+
+function union<T>(setA: Set<T>, setB: Set<T>): Set<T> {
+	const _union = new Set<T>(setA);
+	for (const elem of setB) {
+		_union.add(elem);
+	}
+	return _union;
+}
+
+function intersection<T>(setA: Set<T>, setB: Set<T>): Set<T> {
+	const _intersection = new Set<T>();
+	for (const elem of setB) {
+		if (setA.has(elem)) {
+			_intersection.add(elem);
+		}
+	}
+	return _intersection;
+}
+
+function symmetricDifference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
+	const _difference = new Set<T>(setA);
+	for (const elem of setB) {
+		if (_difference.has(elem)) {
+			_difference.delete(elem);
+		} else {
+			_difference.add(elem);
+		}
+	}
+	return _difference;
+}
+
+function difference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
+	const _difference = new Set<T>(setA);
+	for (const elem of setB) {
+		_difference.delete(elem);
+	}
+	return _difference;
+}
