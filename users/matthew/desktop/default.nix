@@ -43,14 +43,14 @@
     };
 
     defaultApplications = let
-      junction = "re.sonny.Junction.desktop";
+      #junction = "re.sonny.Junction.desktop";
       defaultBrowser = "firefox.desktop";
       defaultImageViewer = "org.gnome.eog.desktop";
       defaultTextEditor = "org.gnome.TextEditor.desktop";
     in {
       # Web Browser
-      "x-scheme-handler/http" = [junction];
-      "x-scheme-handler/https" = [junction];
+      "x-scheme-handler/http" = [defaultBrowser];
+      "x-scheme-handler/https" = [defaultBrowser];
       "application/xhtml+xml" = [defaultBrowser];
       "text/html" = [defaultBrowser];
       "text/xml" = [defaultBrowser];
