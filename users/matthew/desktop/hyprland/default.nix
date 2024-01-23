@@ -96,6 +96,21 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
+
+    # Add additional variables that allow desktop portals to work properly.
+    systemd.variables = lib.mkDefault [
+      "DISPLAY"
+      "HYPRLAND_CMD"
+      "HYPRLAND_INSTANCE_SIGNATURE"
+      "WAYLAND_DISPLAY"
+      "XDG_CURRENT_DESKTOP"
+      "XDG_SEAT"
+      "XDG_SESSION_CLASS"
+      "XDG_SESSION_ID"
+      "XDG_SESSION_TYPE"
+      "XDG_VTNR"
+    ];
+
     extraConfig = ''
       # Load catppuccin color variables so we can have a nice color scheme
       source = ${pkgs.catppuccin}/hyprland/${flavour}.conf
@@ -171,8 +186,19 @@ in {
       windowrule = float, title:^(Library)(.*)$
       windowrule = float, title:^(Accounts)(.*)$
 
-      # Workaround for JetBrains IDE pop-ups being positioned incorrectly
-      windowrulev2 = center, class:jetbrains-idea
+      # Gamescope
+      windowrulev2 = fakefullscreen, class:(.gamescope-wrapped)
+      windowrulev2 = size 100%, class:(.gamescope-wrapped)
+      windowrulev2 = tile, class:(.gamescope-wrapped)
+
+      # Fixes for JetBrains IDE pop-ups
+      # ref; https://github.com/hyprwm/Hyprland/issues/1947#issuecomment-1784909413
+      windowrulev2 = windowdance, class:^(jetbrains-.*)$
+      windowrulev2 = dimaround, class:^(jetbrains-.*)$, floating:1, title:^(?!win)
+      windowrulev2 = center, class:^(jetbrains-.*)$, floating:1, title:^(?!win)
+      windowrulev2 = noanim, class:^(jetbrains-.*)$, title:^(win.*)$
+      windowrulev2 = noinitialfocus, class:^(jetbrains-.*)$, title:^(win.*)$
+      windowrulev2 = rounding 0, class:^(jetbrains-.*)$, title:^(win.*)$
 
       # Steam
       windowrulev2 = center, title:(Steam), class:(), floating:1
@@ -181,7 +207,7 @@ in {
       # Disable borders on floating windows
       windowrulev2 = noborder, floating:1
 
-      # Idle inhibit
+      # Inhibit idle whenever an application is fullscreened
       windowrulev2 = idleinhibit always, fullscreen:1
 
       # Monitor configuration
@@ -193,9 +219,11 @@ in {
       workspace = 2, monitor:HDMI-A-1, default:true
 
       # Special workspaces that can be toggled on and off
-      workspace = special:terminal, on-created-empty:[float] ${alacritty}
-      workspace = special:discord,  on-created-empty:[float] ${webcord}
-      workspace = special:slack,    on-created-empty:[float] ${slack}
+      # TODO: remove systemd-run for these apps, it causes issues with them
+      # being created in a different workspace if the mouse is moved.
+      workspace = special:terminal, on-created-empty:${alacritty}
+      workspace = special:discord,  on-created-empty:${webcord}
+      workspace = special:slack,    on-created-empty:${slack}
 
       # Keybinds
       $mainMod = Super
@@ -266,7 +294,7 @@ in {
   # https://wiki.hyprland.org/Useful-Utilities/Wallpapers/#hyprpaper
   # https://github.com/hyprwm/hyprpaper/tree/main?tab=readme-ov-file#usage
   xdg.configFile."hypr/hyprpaper.conf".text = ''
-    # Disable IPC, we only staticly set a wallpaper and never need IPC.
+    # Disable IPC, we only staticly set a wallpaper and never use IPC.
     ipc = off
 
     # Preload and set the wallpaper
@@ -321,10 +349,10 @@ in {
         command = "${dimCommand} && ${lockWithDpms}";
       }
       # After 15 minutes of inactivity, suspend the system.
-      {
-        timeout = 900;
-        command = "${pkgs.systemd}/bin/systemctl suspend";
-      }
+      #{
+      #  timeout = 900;
+      #  command = "${pkgs.systemd}/bin/systemctl suspend";
+      #}
     ];
   };
   systemd.user.services.swayidle.Service.Slice = "session.slice";
