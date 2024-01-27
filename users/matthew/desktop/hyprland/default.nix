@@ -163,6 +163,10 @@ in {
         # Disable auto-reloading
         disable_autoreload = true
 
+        # Disable logo and splash
+        disable_hyprland_logo = true
+        disable_splash_rendering = true
+
         # Disable the default wallpaper, we will load our own with hyprpaper.
         force_default_wallpaper = 0
 
@@ -171,6 +175,9 @@ in {
 
         # Focus a window on `activate`
         focus_on_activate = true
+
+        # Allow direct scanout
+        no_direct_scanout = false
       }
 
       # Start hyprpaper

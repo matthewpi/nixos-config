@@ -1,5 +1,4 @@
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-// import { Variable } from 'resource:///com/github/Aylur/ags/variable.js';
 
 /**
  * ?
@@ -50,24 +49,5 @@ function TimeWithZone(timeZone?: string) {
 		},
 	});
 }
-
-// function TimeVariable(timeZone?: string) {
-// 	return new Variable('', {
-// 		poll: [
-// 			1000,
-// 			() => {
-// 				const date = new Date();
-//
-// 				return date.toLocaleTimeString('en-CA', {
-// 					hour12: false,
-// 					hour: '2-digit',
-// 					minute: '2-digit',
-// 					second: '2-digit',
-// 					timeZone,
-// 				});
-// 			},
-// 		],
-// 	});
-// }
 
 export { Clock };

@@ -1,5 +1,5 @@
 /* TODO: find a way to auto-link this from Nix, ideally without needing to write the CSS in Nix. */
-@import '/nix/store/nd83c2gri78gdjc5h10nz5z1vlh1hqp9-catppuccin-unstable-2023-10-09/waybar/mocha.css';
+@import '/nix/store/abd954n0n5cizpqavscg6f6bpdkc77na-catppuccin-unstable-2023-10-09/waybar/mocha.css';
 
 @define-color primary @peach;
 
@@ -96,7 +96,7 @@ window#notifications {
 
 window#notifications box.notifications {
 	padding-top: 3rem;
-	padding-right: 0.75rem;
+	/* padding-right: 0.75rem; */
 }
 
 /* Notification */

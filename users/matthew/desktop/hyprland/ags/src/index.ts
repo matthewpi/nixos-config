@@ -8,13 +8,8 @@ import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
 import SystemTray, { TrayItem } from 'resource:///com/github/Aylur/ags/service/systemtray.js';
 
-import AgsWindow from 'resource:///com/github/Aylur/ags/widgets/window.js';
-
-import Gtk from 'gi://Gtk?version=3.0';
-import Gdk from 'gi://Gdk?version=3.0';
-
 import { Clock } from './clock';
-import { NotificationWindow } from './notifications';
+import { NotificationButton, NotificationWindow } from './notifications';
 
 /**
  * ?
@@ -241,14 +236,15 @@ function Center() {
 function Right() {
 	return Widget.Box({
 		hpack: 'end',
-		children: [SysTray(), Volume()],
+		children: [SysTray(), Volume(), NotificationButton()],
 	});
 }
 
 /**
  * Creates a Bar pinned to the top of a monitor.
  *
- * @param {number} monitor ID of the monitor to render the Bar on.
+ * @param monitor ID of the monitor to render the Bar on.
+ * @param monitorName Name of the monitor to render the Bar on.
  */
 function Bar(monitor: number, monitorName: string) {
 	return Widget.Window({
@@ -291,11 +287,8 @@ Hyprland.connect('notify::monitors', () => {
 
 		// Check if the monitor has already been processed.
 		if (registeredMonitors.has(monitor.name)) {
-			// print(`Monitor ${monitor.name} already has windows (ID ${monitor.id.toString()})`);
 			continue;
 		}
-
-		// print(`Adding windows to ${monitor.name} (ID ${monitor.id.toString()})`);
 
 		// Add a Bar to the monitor.
 		App.addWindow(Bar(monitor.id, monitor.name));
@@ -303,22 +296,12 @@ Hyprland.connect('notify::monitors', () => {
 		// If this is the primary monitor, add the notification window.
 		if (monitor.name === primaryMonitorName) {
 			App.addWindow(NotificationWindow(monitor.id, monitor.name));
+			continue;
 		}
 	}
 
-	// print(
-	// 	`Monitors: [${Array.from(monitorSet)
-	// 		.map(v => v.toString())
-	// 		.join(', ')}]`,
-	// );
-
 	// Get the difference in monitors between the monitor list and the monitors map.
 	const newMonitors = difference(monitorSet, registeredMonitors);
-	// print(
-	// 	`New Monitors: [${Array.from(newMonitors)
-	// 		.map(v => v.toString())
-	// 		.join(', ')}]`,
-	// );
 
 	for (const name of newMonitors) {
 		// Mark the monitor as being processed.
@@ -326,11 +309,6 @@ Hyprland.connect('notify::monitors', () => {
 	}
 
 	const diff = difference(registeredMonitors, monitorSet);
-	// print(
-	// 	`Difference: [${Array.from(diff)
-	// 		.map(v => v.toString())
-	// 		.join(', ')}]`,
-	// );
 
 	// Unregister the monitor if it was removed.
 	// If it gets re-added the windows will be re-created.
@@ -340,12 +318,6 @@ Hyprland.connect('notify::monitors', () => {
 		// TODO: find matching windows with the monitor's name?
 	}
 });
-
-// exporting the config so ags can manage the windows
-export default {
-	style: App.configDir + '/style.css',
-	windows: [],
-};
 
 function isSuperset<T>(set: Set<T>, subset: Set<T>): boolean {
 	for (const elem of subset) {
@@ -393,3 +365,11 @@ function difference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
 	}
 	return _difference;
 }
+
+// exporting the config so ags can manage the windows
+export default {
+	style: App.configDir + '/style.css',
+	windows: [],
+	notificationPopupTimeout: 10 * 1000,
+	cacheCoverArt: false,
+};
