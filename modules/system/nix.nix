@@ -5,7 +5,7 @@
 }: {
   nix = {
     # Use the latest version of Nix
-    package = pkgs.nixVersions.nix_2_18;
+    package = pkgs.nixVersions.nix_2_19;
 
     settings = {
       # Auto-scale builders
@@ -35,7 +35,7 @@
       system-features = lib.mkDefault ["benchmark" "big-parallel" "kvm" "nixos-test" "uid-range"];
 
       # Enable experimental features
-      experimental-features = lib.mkDefault ["auto-allocate-uids" "ca-derivations" "cgroups" "nix-command" "flakes" "repl-flake"];
+      experimental-features = lib.mkDefault ["auto-allocate-uids" "ca-derivations" "cgroups" "nix-command" "flakes"];
       auto-allocate-uids = lib.mkDefault true;
       use-cgroups = lib.mkDefault true;
       accept-flake-config = lib.mkDefault true;
