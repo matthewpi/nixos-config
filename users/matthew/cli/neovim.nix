@@ -44,10 +44,10 @@
           barbar = true,
           cmp = true,
           coc_nvim = true,
-          dropbar = {
-            enabled = true,
-            color_mode = true, -- false
-          },
+          --dropbar = {
+          --  enabled = true,
+          --  color_mode = true,
+          --},
           indent_blankline = {
             enabled = true,
             colored_indent_levels = false,
@@ -319,7 +319,8 @@
       cmp-nvim-lsp
       cmp-nvim-lsp-signature-help
       cmp-path
-      dropbar-nvim
+      # dropbar requires neovim 0.10 (aka nightly)
+      #dropbar-nvim
       editorconfig-vim
       indent-blankline-nvim
       lspkind-nvim
