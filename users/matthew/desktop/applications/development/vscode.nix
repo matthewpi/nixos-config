@@ -160,6 +160,9 @@
       "update.mode" = "none";
       "update.showReleaseNotes" = false;
 
+      # Window
+      "window.titleBarStyle" = "custom";
+
       # Workbench
       "workbench.colorTheme" = "Catppuccin Mocha";
       "workbench.iconTheme" = "vscode-icons";
