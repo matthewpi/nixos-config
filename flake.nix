@@ -55,14 +55,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hercules-ci-effects = {
-      url = "github:hercules-ci/hercules-ci-effects";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs = {
@@ -95,25 +87,6 @@
         flake-parts.follows = "flake-parts";
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
-      };
-    };
-
-    neovim-flake = {
-      url = "github:neovim/neovim?dir=contrib";
-      inputs = {
-        flake-utils.follows = "flake-utils";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
-    neovim-nightly-overlay = {
-      url = "github:nix-community/neovim-nightly-overlay";
-      inputs = {
-        flake-compat.follows = "flake-compat";
-        flake-parts.follows = "flake-parts";
-        hercules-ci-effects.follows = "hercules-ci-effects";
-        nixpkgs.follows = "nixpkgs";
-        neovim-flake.follows = "neovim-flake";
       };
     };
 
@@ -175,7 +148,7 @@
         flake = let
           nixFlakeSettings = {
             # Enable our overlays to replace built-in packages
-            nixpkgs.overlays = (builtins.attrValues outputs.overlays) ++ [inputs.neovim-nightly-overlay.overlay];
+            nixpkgs.overlays = builtins.attrValues outputs.overlays;
 
             # Set nixpkgs to the one used by the flake. (affects legacy commands and comma)
             nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
