@@ -5,7 +5,8 @@ import { lookUpIcon } from 'resource:///com/github/Aylur/ags/utils.js';
 
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 import { Notification } from 'resource:///com/github/Aylur/ags/service/notifications.js';
-import notifications from '../../types/service/notifications';
+
+import type { Label } from 'resource:///com/github/Aylur/ags/widgets/label.js';
 
 /**
  * ?
@@ -22,22 +23,27 @@ function NotificationIcon(notification: Notification) {
 		});
 	}
 
-	let icon = 'dialog-information-symbolic';
+	let icon = 'notification-symbolic';
 	if (lookUpIcon(notification.app_icon) !== null) {
 		icon = notification.app_icon;
 	}
 
-	if (notification.app_entry !== null && lookUpIcon(notification.app_entry) !== null) {
+	if (
+		notification.app_entry !== undefined &&
+		notification.app_entry !== null &&
+		lookUpIcon(notification.app_entry) !== null
+	) {
 		icon = notification.app_entry;
 	}
 
-	return Widget.Icon(icon);
+	return Widget.Icon({ icon });
 }
 
 /**
  * ?
  */
 function NotificationBox(notification: Notification, popup: boolean) {
+	// @ts-expect-error go away (TODO figure out why this is erroring)
 	const icon = Widget.Box({
 		vpack: 'start',
 		className: 'icon',
@@ -80,7 +86,7 @@ function NotificationBox(notification: Notification, popup: boolean) {
 
 	const close = Widget.Button({
 		className: 'close-button',
-		child: Widget.Icon('window-close'),
+		child: Widget.Icon('close-symbolic'),
 		on_clicked: () => {
 			// If the notification is a popup dismiss it.
 			if (popup) {
@@ -94,33 +100,29 @@ function NotificationBox(notification: Notification, popup: boolean) {
 		},
 	});
 
+	const content = Widget.Box({
+		vertical: true,
+		children: [
+			Widget.Box({
+				children: [
+					icon,
+					Widget.Box({
+						vertical: true,
+						children: [title, body],
+					}),
+				],
+			}),
+			actions,
+		],
+	});
+
+	const container = Widget.Box({
+		className: `notification ${notification.urgency}`,
+		children: [content, close],
+	});
+
 	return Widget.EventBox({
-		// attribute: {
-		// 	id: notification.id,
-		// 	destroy: () => notification.dismiss(),
-		// },
-		child: Widget.Box({
-			className: `notification ${notification.urgency}`,
-			children: [
-				Widget.Box({
-					vertical: true,
-					children: [
-						Widget.Box({
-							children: [
-								icon,
-								Widget.Box({
-									vertical: true,
-									children: [title, body],
-								}),
-							],
-						}),
-						actions,
-					],
-				}),
-				close,
-			],
-		}),
-		// on_primary_click: () => notification.dismiss(),
+		child: container,
 	});
 }
 
@@ -133,10 +135,61 @@ function NotificationList() {
 		vertical: true,
 		css: 'padding: 1px;',
 		children: Notifications.bind('popups').transform(popups => {
-			console.log(popups);
 			return popups.map(n => NotificationBox(n, true));
 		}),
 	});
+}
+
+interface NotificationLabelAttrs {
+	unreadCount: number;
+	update: (self: Label<NotificationLabelAttrs>) => void;
+}
+
+function NotificationLabel() {
+	return Widget.Label<NotificationLabelAttrs>({
+		className: '',
+		label: '0',
+		attribute: {
+			unreadCount: 0,
+			update: self => {
+				self.label = self.attribute.unreadCount.toString();
+			},
+		},
+		setup: self => {
+			self.hook(Notifications, (self, _) => {
+				// This isn't the "unread" count, instead it is just the number of notifications
+				// that have been dismissed (either manually or after a timeout).
+				//
+				// If we want a proper unread count we will need to track when the notifications
+				// list is opened and closed.
+				self.attribute.unreadCount = Notifications.notifications.length;
+				self.attribute.update(self);
+			});
+		},
+	});
+}
+
+function NotificationsWindow(name: string) {
+	return Widget.Window({
+		name,
+		className: 'notifications-window',
+		anchor: ['top'],
+		child: NotificationTab(),
+	});
+}
+
+const WINDOW_NAME = 'yeet';
+
+function closeNotificationWindow(): void {
+	for (const window of App.windows) {
+		if (window.name !== WINDOW_NAME) {
+			continue;
+		}
+
+		print('removing window', window.name);
+		App.removeWindow(window);
+		break;
+	}
 }
 
 /**
@@ -148,55 +201,53 @@ function NotificationButton() {
 		child: Widget.Stack({
 			className: 'notification-icon',
 			items: [
-				// TODO: find better icons.
-				['0', Widget.Icon('notifications')],
-				['1', Widget.Icon('notifications')],
+				['0', Widget.Icon('notifications-symbolic')],
+				['1', Widget.Icon('notifications-new-symbolic')],
 			],
 			setup: self => {
-				// TODO: switch what icon is being shown depending on if the window is being rendered or not.
-				self.shown = '1';
+				self.hook(Notifications, self => {
+					if (Notifications.notifications.length < 1) {
+						self.shown = '0';
+						return;
+					}
+
+					self.shown = '1';
+				});
 			},
 		}),
 		on_primary_click: () => {
 			// TODO: is there a better way to toggle a window like this?
-			const windowName = 'yeet';
-			for (const [name, window] of App.windows) {
-				if (name !== windowName) {
+			for (const window of App.windows) {
+				if (window.name !== WINDOW_NAME) {
 					continue;
 				}
 
-				console.log('removing window');
+				print('removing window', window.name);
 				App.removeWindow(window);
 				return;
 			}
 
-			App.addWindow(
-				Widget.Window({
-					name: windowName,
-					className: '',
-					anchor: ['top'],
-					// @ts-expect-error go away
-					child: NotificationTab(),
-					// Ensure the window is removed when it is destroyed.
-					setup: self => self.on('destroy', () => App.removeWindow(self)),
-				}),
-			);
+			App.addWindow(NotificationsWindow(WINDOW_NAME));
+		},
+		setup: self => {
+			self.hook(Notifications, () => {
+				if (Notifications.notifications.length > 0) {
+					return;
+				}
+
+				// Close the notification window after all notifications are closed.
+				closeNotificationWindow();
+			});
 		},
 	});
 }
 
-/**
- *
- * @returns
- */
 function NotificationTab() {
 	return Widget.Box({
 		vertical: true,
 		className: 'notifications',
 		css: 'padding: 1px;',
-		// TODO: unrender window if all notifications are dismissed.
 		children: Notifications.bind('notifications').transform(notifications => {
-			console.log(notifications);
 			return notifications.map(n => NotificationBox(n, false));
 		}),
 	});
@@ -208,19 +259,16 @@ function NotificationTab() {
  * @param monitor ID of the monitor to render the Bar on.
  * @param monitorName Name of the monitor to render the Bar on.
  */
-function NotificationWindow(monitor: number, monitorName: string) {
+function PopupNotificationWindow(monitor: number, name: string) {
 	return Widget.Window({
-		name: `notifications-${monitorName}`,
+		monitor,
+		name: `notifications-${name}`,
 		layer: 'top',
 		anchor: ['top'],
 		exclusivity: 'normal',
-		className: '',
-		// @ts-expect-error go away
+		className: 'notification-popups',
 		child: NotificationList(),
-		monitor,
-		// Ensure the window is removed when it is destroyed.
-		setup: self => self.on('destroy', () => App.removeWindow(self)),
 	});
 }
 
-export { NotificationButton, NotificationWindow };
+export { NotificationButton, NotificationLabel, PopupNotificationWindow };

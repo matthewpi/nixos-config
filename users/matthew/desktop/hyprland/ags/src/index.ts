@@ -1,266 +1,56 @@
 import App from 'resource:///com/github/Aylur/ags/app.js';
-
+import Service from 'resource:///com/github/Aylur/ags/service.js';
 import Widget from 'resource:///com/github/Aylur/ags/widget.js';
-import { lookUpIcon } from 'resource:///com/github/Aylur/ags/utils.js';
 
-import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
-import Hyprland from 'resource:///com/github/Aylur/ags/service/hyprland.js';
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
-import SystemTray, { TrayItem } from 'resource:///com/github/Aylur/ags/service/systemtray.js';
+import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 
 import { Clock } from './clock';
-import { NotificationButton, NotificationWindow } from './notifications';
+import { Media } from './media';
+import { NotificationButton, NotificationLabel, PopupNotificationWindow } from './notifications';
+import { difference } from './set';
+import { SysTray } from './systray';
+// import { Volume } from './volume';
 
-/**
- * ?
- */
-function Media() {
-	return Widget.Button({
-		className: 'media',
-		onPrimaryClick: () => Mpris.getPlayer('')?.playPause(),
-		onScrollUp: () => Mpris.getPlayer('')?.next(),
-		onScrollDown: () => Mpris.getPlayer('')?.previous(),
-		child: Widget.Box({
-			setup: self => {
-				self.hook(Mpris, () => {
-					const mpris = Mpris.getPlayer('');
+import Gdk from 'gi://Gdk?version=3.0';
+import Gtk from 'gi://Gtk?version=3.0';
+import { Window } from 'resource:///com/github/Aylur/ags/widgets/window.js';
 
-					const children = [];
-					switch (mpris?.play_back_status ?? '') {
-						case 'Paused':
-							children.push(
-								Widget.Box({
-									className: 'media-icon',
-									child: Widget.Icon({ icon: 'media-playback-pause', size: 20 }),
-								}),
-							);
-							break;
-						case 'Playing':
-							children.push(
-								Widget.Box({
-									className: 'media-icon',
-									child: Widget.Icon({ icon: 'media-playback-start', size: 20 }),
-								}),
-							);
-							break;
-					}
-
-					if (mpris === null) {
-						children.push(
-							Widget.Label({
-								className: 'media-label',
-								label: 'Nothing is playing',
-							}),
-						);
-					} else {
-						const boxChildren = [
-							Widget.Label({
-								className: 'media-title',
-								label: mpris.track_title,
-							}),
-						];
-
-						if (mpris.track_artists.length > 0) {
-							boxChildren.push(
-								Widget.Label({
-									className: 'media-artists',
-									label: `By ${mpris.track_artists.join(', ')}`.trim(),
-								}),
-							);
-						}
-
-						children.push(
-							Widget.Box({
-								className: 'media-label',
-								vertical: true,
-								homogeneous: false,
-								children: boxChildren,
-							}),
-						);
-					}
-
-					self.children = children;
-				});
-			},
+function BarContent() {
+	return Widget.CenterBox({
+		// Left
+		startWidget: Widget.Box({
+			children: [Media()],
 		}),
-	});
-}
-
-/**
- * ?
- */
-function Volume() {
-	return Widget.Box({
-		className: 'volume',
-		css: 'min-width: 180px',
-		children: [
-			Widget.Stack({
-				className: 'volume-icon',
-				items: [
-					// tuples of [string, Widget]
-					['101', Widget.Icon('audio-volume-overamplified-symbolic')],
-					['67', Widget.Icon('audio-volume-high-symbolic')],
-					['34', Widget.Icon('audio-volume-medium-symbolic')],
-					['1', Widget.Icon('audio-volume-low-symbolic')],
-					['0', Widget.Icon('audio-volume-muted-symbolic')],
-				],
-				setup: self => {
-					self.hook(
-						Audio,
-						() => {
-							const speaker = Audio.speaker;
-							if (speaker === undefined) {
-								return;
-							}
-
-							// `speaker.is_muted` is only true when the volume is set to 0,
-							// while `speaker.stream.is_muted` handles the audio output being
-							// muted separately of volume control.
-							if (speaker.is_muted || speaker.stream.is_muted) {
-								self.shown = '0';
-								return;
-							}
-
-							// Find the icon to show for the current volume.
-							const show = [101, 67, 34, 1, 0].find(threshold => threshold <= speaker.volume * 100);
-
-							// Show the correct icon, defaulting to audio muted if a matching icon
-							// couldn't be found.
-							self.shown = (show ?? 0).toString();
-						},
-						'speaker-changed',
-					);
-				},
-			}),
-			Widget.Slider({
-				className: 'volume-slider',
-				hexpand: true,
-				drawValue: false,
-				setup: self => {
-					self.hook(
-						Audio,
-						() => {
-							const speaker = Audio.speaker;
-							if (speaker === undefined) {
-								self.value = 0;
-								return;
-							}
-
-							self.value = speaker.volume;
-						},
-						'speaker-changed',
-					);
-
-					self.on_change = self => {
-						const speaker = Audio.speaker;
-						if (speaker === undefined) {
-							return;
-						}
-
-						speaker.volume = self.value;
-					};
-				},
-			}),
-		],
-	});
-}
-
-function SysTrayIcon(item: TrayItem) {
-	// Icon can be either a string or GdkPixbuf.Pixbuf
-	if (typeof item.icon !== 'string') {
-		return Widget.Icon({
-			icon: item.icon,
-		});
-	}
-
-	// TODO: better fallback icon
-	let icon = 'dialog-information-symbolic';
-	if (lookUpIcon(item.icon) !== null) {
-		icon = item.icon;
-	}
-
-	return Widget.Icon({ icon });
-}
-
-/**
- * ?
- */
-function SysTray() {
-	return Widget.Box({
-		className: 'tray',
-		setup: self => {
-			self.hook(SystemTray, () => {
-				self.children = SystemTray.items.map(item => {
-					return Widget.Button({
-						child: SysTrayIcon(item),
-						// TODO: figure out how to port these to the new API properly.
-						// child: Widget.Icon({ binds: [['icon', item, 'icon']] }),
-						// binds: [['tooltip-markup', item, 'tooltip-markup']],
-
-						// @ts-expect-error fix these types
-						on_primary_click: (_, event) => {
-							item.activate(event);
-						},
-						// @ts-expect-error fix these types
-						on_secondary_click: (_, event) => {
-							item.openMenu(event);
-						},
-					});
-				});
-			});
-		},
-	});
-}
-
-/**
- * ?
- */
-function Left() {
-	return Widget.Box({
-		children: [Media()],
-	});
-}
-
-/**
- * ?
- */
-function Center() {
-	return Widget.Box({
-		children: [Clock()],
-	});
-}
-
-/**
- * ?
- */
-function Right() {
-	return Widget.Box({
-		hpack: 'end',
-		children: [SysTray(), Volume(), NotificationButton()],
+		// Center
+		centerWidget: Widget.Box({
+			children: [Clock()],
+		}),
+		// Right
+		endWidget: Widget.Box({
+			hpack: 'end',
+			children: [SysTray(), NotificationLabel(), NotificationButton()],
+		}),
 	});
 }
 
 /**
  * Creates a Bar pinned to the top of a monitor.
- *
- * @param monitor ID of the monitor to render the Bar on.
- * @param monitorName Name of the monitor to render the Bar on.
  */
-function Bar(monitor: number, monitorName: string) {
+function Bar(monitor: number, name: string) {
 	return Widget.Window({
-		name: `bar-${monitorName}`,
+		monitor,
+		name: `bar-${name}`,
 		className: 'bar',
 		anchor: ['top', 'left', 'right'],
 		exclusivity: 'exclusive',
-		// @ts-expect-error go away
-		child: Widget.CenterBox({
-			startWidget: Left(),
-			centerWidget: Center(),
-			endWidget: Right(),
-		}),
-		monitor,
+		child: BarContent(),
 		// Ensure the window is removed when it is destroyed.
-		setup: self => self.on('destroy', () => App.removeWindow(self)),
+		setup: self =>
+			self.on('destroy', self => {
+				print('window destroyed', self.name);
+				App.removeWindow(self);
+			}),
 	});
 }
 
@@ -270,8 +60,8 @@ function Bar(monitor: number, monitorName: string) {
  * Used control which monitor widgets like notifications are displayed on.
  */
 const primaryMonitorName = 'DP-3';
-
 const registeredMonitors = new Set<string>();
+const hyprland = await Service.import('hyprland');
 
 /**
  * Hook into Hyprland to watch changes to monitors.
@@ -279,97 +69,114 @@ const registeredMonitors = new Set<string>();
  * This callback seems to get dispatched pretty often, even when monitors
  * don't change. Be careful about when windows are added or removed.
  */
-Hyprland.connect('notify::monitors', () => {
+hyprland.connect('notify::monitors', self => {
 	const monitorSet = new Set<string>();
-	for (const monitor of Hyprland.monitors) {
-		// Make a list of monitors (this is used to detect monitor removals).
+	for (const monitor of self.monitors) {
+		// Make a set of monitors (this is used to detect monitor removals).
 		monitorSet.add(monitor.name);
+	}
 
-		// Check if the monitor has already been processed.
+	// Get the difference in monitors between the monitor list and the monitors map.
+	// const newMonitors = difference(monitorSet, registeredMonitors);
+
+	// Get the monitors that were removed.
+	const removedMonitors = difference(registeredMonitors, monitorSet);
+
+	// If the monitors have changed, re-render all the windows.
+	const display = Gdk.Display.get_default() ?? undefined;
+	for (const monitor of self.monitors) {
 		if (registeredMonitors.has(monitor.name)) {
 			continue;
 		}
 
-		// Add a Bar to the monitor.
-		App.addWindow(Bar(monitor.id, monitor.name));
-
-		// If this is the primary monitor, add the notification window.
-		if (monitor.name === primaryMonitorName) {
-			App.addWindow(NotificationWindow(monitor.id, monitor.name));
+		const data = getMonitorByCoordinates(monitor.x, monitor.y, display);
+		if (data === undefined) {
+			print('failed to get gdk monitor');
 			continue;
+		}
+
+		const { id, monitor: m } = data;
+
+		// Mark the monitor as being processed.
+		print('adding monitor', monitor.name);
+		registeredMonitors.add(monitor.name);
+
+		print(id, monitor.model, m.model);
+		print(monitor.x, m.geometry.x);
+		print(monitor.y, m.geometry.y);
+
+		// Add a Bar to the monitor.
+		addWindow(Bar(id, monitor.name));
+
+		// // If this is the primary monitor, add the notification window.
+		if (monitor.name === primaryMonitorName) {
+			addWindow(PopupNotificationWindow(id, monitor.name));
 		}
 	}
 
-	// Get the difference in monitors between the monitor list and the monitors map.
-	const newMonitors = difference(monitorSet, registeredMonitors);
-
-	for (const name of newMonitors) {
-		// Mark the monitor as being processed.
-		registeredMonitors.add(name);
-	}
-
-	const diff = difference(registeredMonitors, monitorSet);
-
 	// Unregister the monitor if it was removed.
-	// If it gets re-added the windows will be re-created.
-	for (const name of diff) {
+	for (const name of removedMonitors) {
+		print('removing monitor', name);
 		registeredMonitors.delete(name);
-
-		// TODO: find matching windows with the monitor's name?
 	}
 });
 
-function isSuperset<T>(set: Set<T>, subset: Set<T>): boolean {
-	for (const elem of subset) {
-		if (!set.has(elem)) {
-			return false;
+function addWindow<Child extends Gtk.Widget, Attr>(win: Window<Child, Attr>): void {
+	win.on('destroy', () => {
+		print('window destroyed', win.name);
+		App.removeWindow(win);
+	});
+	App.addWindow(win);
+}
+
+/**
+ * Finds a {@type Gdk.Monitor} using coordinates. This function returns both the {@type Gdk.Monitor}
+ * and numeric ID that are the closest matches to those coordinates.
+ *
+ * @param x ?
+ * @param y ?
+ * @param display ?
+ * @returns ?
+ */
+function getMonitorByCoordinates(
+	x: number,
+	y: number,
+	display?: Gdk.Display,
+): { id: number; monitor: Gdk.Monitor } | undefined {
+	// Allow the caller to pass a display instance if they already have it. This is an optimization
+	// if the caller expects to call this function multiple times, I don't write inefficient code.
+	if (display === undefined) {
+		display = Gdk.Display.get_default() ?? undefined;
+		if (display === undefined) {
+			return undefined;
 		}
 	}
-	return true;
-}
 
-function union<T>(setA: Set<T>, setB: Set<T>): Set<T> {
-	const _union = new Set<T>(setA);
-	for (const elem of setB) {
-		_union.add(elem);
-	}
-	return _union;
-}
+	// Get the monitor closest to those coordinates.
+	const gdkMonitor = display.get_monitor_at_point(x, y);
 
-function intersection<T>(setA: Set<T>, setB: Set<T>): Set<T> {
-	const _intersection = new Set<T>();
-	for (const elem of setB) {
-		if (setA.has(elem)) {
-			_intersection.add(elem);
+	// Find the index of the monitor at those coordinates.
+	const numMonitors = display.get_n_monitors();
+	for (let i = 0; i < numMonitors; i++) {
+		const m = display.get_monitor(i);
+
+		if (m === gdkMonitor) {
+			return {
+				id: i,
+				monitor: gdkMonitor,
+			};
 		}
 	}
-	return _intersection;
+
+	return undefined;
 }
 
-function symmetricDifference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
-	const _difference = new Set<T>(setA);
-	for (const elem of setB) {
-		if (_difference.has(elem)) {
-			_difference.delete(elem);
-		} else {
-			_difference.add(elem);
-		}
-	}
-	return _difference;
-}
-
-function difference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
-	const _difference = new Set<T>(setA);
-	for (const elem of setB) {
-		_difference.delete(elem);
-	}
-	return _difference;
-}
+// Service settings
+Mpris.cacheCoverArt = false;
+Notifications.popupTimeout = 10 * 1000;
 
 // exporting the config so ags can manage the windows
 export default {
 	style: App.configDir + '/style.css',
 	windows: [],
-	notificationPopupTimeout: 10 * 1000,
-	cacheCoverArt: false,
 };

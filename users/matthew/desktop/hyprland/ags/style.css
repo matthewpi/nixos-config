@@ -1,5 +1,5 @@
 /* TODO: find a way to auto-link this from Nix, ideally without needing to write the CSS in Nix. */
-@import '/nix/store/abd954n0n5cizpqavscg6f6bpdkc77na-catppuccin-unstable-2023-10-09/waybar/mocha.css';
+@import '/nix/store/sabf4azz0g3pilz239lkjxirw8inv3ck-catppuccin-unstable-2023-10-09/waybar/mocha.css';
 
 @define-color primary @peach;
 
@@ -90,14 +90,18 @@ slider {
 }
 
 /* Notifications window */
-window#notifications {
+window.notification-popups {
 	all: unset;
 }
 
-window#notifications box.notifications {
+window.notification-popups box.notifications {
 	padding-top: 3rem;
 	/* padding-right: 0.75rem; */
 }
+
+/*window.notifications-window {
+
+}*/
 
 /* Notification */
 .notification {
