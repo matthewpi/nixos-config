@@ -290,6 +290,11 @@
                 indent_size = 0;
               };
             };
+
+            settings.global.excludes = [
+              "**/node_modules"
+              "**/pnpm-lock.yaml"
+            ];
           };
         };
       }
