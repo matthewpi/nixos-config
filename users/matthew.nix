@@ -139,6 +139,10 @@
           mode = "0700";
         }
         {
+          directory = ".cache/tree-sitter";
+          mode = "0700";
+        }
+        {
           directory = ".cache/turbo";
           mode = "0700";
         }
