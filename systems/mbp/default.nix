@@ -50,7 +50,7 @@
 
   nix = {
     # Use the latest version of Nix
-    package = pkgs.nixVersions.nix_2_15;
+    package = pkgs.nixVersions.nix_2_19;
 
     settings = {
       build-users-group = "nixbld";
@@ -71,7 +71,7 @@
 
       # Hard-link files by file content address
       # Disabled on darwin due to https://github.com/NixOS/nix/issues/7273
-      auto-optimise-store = lib.mkDefault (! pkgs.stdenv.isDarwin);
+      auto-optimise-store = lib.mkDefault (!pkgs.stdenv.isDarwin);
 
       # Basic trust settings
       require-sigs = lib.mkDefault true;
@@ -82,7 +82,18 @@
       system-features = lib.mkDefault ["benchmark" "big-parallel" "kvm" "nixos-test"];
 
       # Enable experimental features
-      experimental-features = lib.mkDefault ["nix-command" "flakes"];
+      experimental-features = lib.mkDefault ["auto-allocate-uids" "ca-derivations" "cgroups" "nix-command" "flakes"];
+      auto-allocate-uids = lib.mkDefault true;
+      accept-flake-config = lib.mkDefault true;
+
+      # Configure Nix to follow the XDG base directory spec.
+      use-xdg-base-directories = lib.mkDefault true;
+
+      # Don't warn on a dirty tree.
+      warn-dirty = lib.mkDefault false;
+
+      # Increase the amount of lines logged immediately following a build failure.
+      log-lines = lib.mkDefault 25;
     };
   };
 }

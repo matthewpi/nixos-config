@@ -248,6 +248,7 @@
         };
 
         perSystem = {
+          lib,
           pkgs,
           system,
           ...
@@ -264,14 +265,12 @@
 
             default = pkgs.mkShellNoCC {
               buildInputs =
-                [
-                  inputs.agenix.packages."${system}".default
-                ]
-                ++ (with pkgs; [
+                (with pkgs; [
                   gitsign
                   nodejs_20
                   nodePackages.pnpm
-                ]);
+                ])
+                ++ lib.optional (system == "x86_64-linux") inputs.agenix.packages."${system}".default;
             };
           };
 
