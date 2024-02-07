@@ -175,6 +175,9 @@
       # Extension Settings
       #
 
+      # Caddyfile Support
+      "caddyfile.executable" = "${lib.getExe pkgs.caddy}";
+
       # Error Lens
       "errorLens.enabledDiagnosticLevels" = ["error" "warning"];
 
@@ -196,9 +199,9 @@
       "go.toolsManagement.checkForUpdates" = "off";
       "go.toolsManagement.autoUpdate" = false;
       "go.alternateTools" = {
-        "dlv" = "${pkgs.delve}/bin/dlv";
-        "golangci-lint" = "${pkgs.golangci-lint}/bin/golangci-lint";
-        "gopls" = "${pkgs.gopls}/bin/gopls";
+        "dlv" = "${lib.getExe pkgs.delve}";
+        "golangci-lint" = "${lib.getExe' pkgs.golangci-lint "golangci-lint"}";
+        "gopls" = "${lib.getExe pkgs.gopls}";
         "staticcheck" = "${pkgs.go-tools}/bin/staticcheck";
       };
       "gopls" = {
@@ -209,7 +212,7 @@
       # Nix
       "nix.enableLanguageServer" = true;
       # "nix.formatterPath" = ["nix" "fmt" "--" "-"];
-      "nix.serverPath" = "${lib.getBin pkgs.nixd}/bin/nixd";
+      "nix.serverPath" = "${lib.getExe pkgs.nixd}";
       "nix.serverSettings" = {
         "nixd" = {};
       };
