@@ -115,10 +115,33 @@
       vim.notify = require("notify")
 
       require("nvim-treesitter.configs").setup({
+        parser_install_dir = "/home/matthew/.cache/tree-sitter",
         auto_install = false,
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = false,
+        },
+      })
+      vim.opt.runtimepath:append("/home/matthew/.cache/tree-sitter")
+
+      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
+      parser_config.caddyfile = {
+        install_info = {
+          url = "~/code/caddyserver/tree-sitter-caddyfile",
+          files = {"src/parser.c"},
+          branch = "master",
+          generate_requires_npm = false,
+          requires_generate_from_grammar = false,
+        },
+      }
+
+      vim.filetype.add({
+        filename = {
+          ["Caddyfile"] = "caddyfile",
+        },
+        extension = {
+          caddyfile = "caddyfile",
+          Caddyfile = "caddyfile",
         },
       })
 

@@ -14,6 +14,7 @@
     ./ssh.nix
     ./starship.nix
     ./tmux.nix
+    ./tree-sitter.nix
     ./zsh.nix
   ];
 
