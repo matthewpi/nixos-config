@@ -2,6 +2,15 @@ import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 
 import Audio from 'resource:///com/github/Aylur/ags/service/audio.js';
 
+import Gtk from 'gi://Gtk?version=3.0';
+
+// TODO: enum?
+type VolumeIconValue = 101 | 67 | 34 | 1 | 0;
+
+type VolumeChildren = {
+	[name in VolumeIconValue]: Gtk.Widget;
+};
+
 /**
  * ?
  */
@@ -10,16 +19,15 @@ function Volume() {
 		className: 'volume',
 		css: 'min-width: 180px',
 		children: [
-			Widget.Stack({
+			Widget.Stack<VolumeChildren, unknown>({
 				className: 'volume-icon',
-				items: [
-					// tuples of [string, Widget]
-					['101', Widget.Icon('audio-volume-overamplified-symbolic')],
-					['67', Widget.Icon('audio-volume-high-symbolic')],
-					['34', Widget.Icon('audio-volume-medium-symbolic')],
-					['1', Widget.Icon('audio-volume-low-symbolic')],
-					['0', Widget.Icon('audio-volume-muted-symbolic')],
-				],
+				children: {
+					101: Widget.Icon('audio-volume-overamplified-symbolic'),
+					67: Widget.Icon('audio-volume-high-symbolic'),
+					34: Widget.Icon('audio-volume-medium-symbolic'),
+					1: Widget.Icon('audio-volume-low-symbolic'),
+					0: Widget.Icon('audio-volume-muted-symbolic'),
+				},
 				setup: self => {
 					self.hook(
 						Audio,
@@ -33,16 +41,18 @@ function Volume() {
 							// while `speaker.stream.is_muted` handles the audio output being
 							// muted separately of volume control.
 							if (speaker.is_muted || (speaker.stream?.is_muted ?? false)) {
-								self.shown = '0';
+								self.shown = 0;
 								return;
 							}
 
 							// Find the icon to show for the current volume.
-							const show = [101, 67, 34, 1, 0].find(threshold => threshold <= speaker.volume * 100);
+							const show = ([101, 67, 34, 1, 0] as VolumeIconValue[]).find(
+								threshold => threshold <= speaker.volume * 100,
+							);
 
 							// Show the correct icon, defaulting to audio muted if a matching icon
 							// couldn't be found.
-							self.shown = (show ?? 0).toString();
+							self.shown = show ?? 0;
 						},
 						'speaker-changed',
 					);

@@ -200,18 +200,18 @@ function NotificationButton() {
 		className: 'notification-button',
 		child: Widget.Stack({
 			className: 'notification-icon',
-			items: [
-				['0', Widget.Icon('notifications-symbolic')],
-				['1', Widget.Icon('notifications-new-symbolic')],
-			],
+			children: {
+				0: Widget.Icon('notifications-symbolic'),
+				1: Widget.Icon('notifications-new-symbolic'),
+			},
 			setup: self => {
 				self.hook(Notifications, self => {
 					if (Notifications.notifications.length < 1) {
-						self.shown = '0';
+						self.shown = 0;
 						return;
 					}
 
-					self.shown = '1';
+					self.shown = 1;
 				});
 			},
 		}),
