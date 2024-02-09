@@ -49,6 +49,9 @@
     '';
     # --output-filename "${config.home.homeDirectory}/Pictures/Screenshots/$(date '+%Y%m%d-%H:%M:%S').png"
   });
+
+  _hyprpaper = inputs.hyprpaper.packages.${pkgs.system}.hyprpaper;
+  _hyprpicker = inputs.hyprpicker.packages.${pkgs.system}.hyprpicker;
 in {
   imports = [
     inputs.hyprland.homeManagerModules.default
@@ -85,7 +88,8 @@ in {
     gnome-text-editor
 
     # Hyprland
-    hyprpaper
+    _hyprpaper
+    _hyprpicker
 
     # swayidle
     config.services.swayidle.package
@@ -182,7 +186,7 @@ in {
 
       # Start hyprpaper
       # TODO: can we do this under systemd?
-      exec-once = ${lib.getExe pkgs.hyprpaper}
+      exec-once = ${lib.getExe _hyprpaper}
 
       # Dialogs
       windowrule = float, title:^(Open File)(.*)$
@@ -260,7 +264,7 @@ in {
 
       # Application keybinds
       bind = $mainMod, Space, exec, ${lib.getExe' config.programs.anyrun.package "anyrun"} # App Launcher
-      bind = $mainMod, P, exec, ${lib.getExe pkgs.hyprpicker} # Color Picker
+      bind = $mainMod, P, exec, ${lib.getExe' _hyprpicker "hyprpicker"} # Color Picker
       bind = $mainMod, T, exec, ${alacritty} # Terminal
       bind = $mainMod, B, exec, ${firefox} # Web Browser
 
