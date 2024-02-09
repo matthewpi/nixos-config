@@ -280,7 +280,16 @@
             programs = {
               alejandra.enable = true;
               deadnix.enable = true;
-              prettier.enable = true;
+              prettier = {
+                enable = true;
+                includes = [
+                  "*.css"
+                  "*.js"
+                  "*.ts"
+                  "*.md"
+                  "*.yaml"
+                ];
+              };
               shellcheck.enable = true;
               shfmt = {
                 enable = true;
