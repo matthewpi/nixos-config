@@ -198,9 +198,9 @@ in {
       windowrule = float, title:^(Accounts)(.*)$
 
       # Gamescope
-      windowrulev2 = fakefullscreen, class:(.gamescope-wrapped)
-      windowrulev2 = size 100%, class:(.gamescope-wrapped)
-      windowrulev2 = tile, class:(.gamescope-wrapped)
+      #windowrulev2 = fakefullscreen, class:(.gamescope-wrapped)
+      #windowrulev2 = size 100%, class:(.gamescope-wrapped)
+      #windowrulev2 = tile, class:(.gamescope-wrapped)
 
       # Fixes for JetBrains IDE pop-ups
       # ref; https://github.com/hyprwm/Hyprland/issues/1947#issuecomment-1784909413
