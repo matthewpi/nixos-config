@@ -25,15 +25,55 @@
   # Use the xanmod kernel
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_xanmod_latest;
 
-  # Enable the MEM_SOFT_DIRTY kernel option.
-  # This is temporarily disabled due to it causing a kernel rebuild and not currently being required.
-  # boot.kernelPatches = lib.singleton {
-  #   name = "enable-mem-soft-dirty";
-  #   patch = null;
-  #   extraStructuredConfig = with lib.kernel; {
-  #     MEM_SOFT_DIRTY = yes;
-  #   };
-  # };
+  # https://criu.org/Linux_kernel
+  boot.kernelPatches = lib.singleton {
+    name = "criu";
+    patch = null;
+    extraStructuredConfig = with lib.kernel; {
+      #CHECKPOINT_RESTORE = yes;
+      #NAMESPACES = yes;
+      #UTS_NS = yes;
+      #IPC_NS = yes;
+      #SYSVIPC_SYSCTL = yes;
+      #PID_NS = yes;
+      #NET_NS = yes;
+      #FHANDLE = yes;
+      #EVENTFD = yes;
+      #EPOLL = yes;
+
+      #UNIX_DIAG = yes;
+      #INET_DIAG = yes;
+      #INET_UDP_DIAG = yes;
+      #PACKET_DIAG = yes;
+      #NETLINK_DIAG = yes;
+
+      #NETFILTER_XT_MARK = yes;
+      #TUN = yes;
+
+      #INOTIFY_USER = yes;
+      #FANOTIFY = yes;
+      #MEMCG = yes;
+      #CGROUP_DEVICE = yes;
+      #MACVLAN = yes;
+      #BRIDGE = yes;
+      #BINFMT_MISC = yes;
+      #IA32_EMULATION = yes;
+
+      MEM_SOFT_DIRTY = yes;
+      #USERFAULTFD = yes;
+    };
+  };
+  boot.kernelModules = [
+    "unix_diag"
+    "inet_diag"
+    "inet_udp_diag"
+    "packet_diag"
+    "netlink_diag"
+    "netfilter_xt_mark"
+    "tun"
+    "macvlan"
+    "bridge"
+  ];
 
   # Enable SSH
   services.openssh.enable = true;
