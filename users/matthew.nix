@@ -23,6 +23,7 @@
 
   # Enable yubikey-agent
   services.yubikey-agent.enable = true;
+  systemd.user.services."yubikey-agent".serviceConfig.Slice = "background.slice";
   programs.gnupg.agent.pinentryFlavor = "gnome3";
 
   # Enable the wireshark dumpcap security wrapper.
