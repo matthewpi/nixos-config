@@ -66,6 +66,6 @@
     monitor = DP-3, 1920x1080@144, 0x0, 1, vrr,1
     monitor = HDMI-A-1, 1920x1080@60, -1920x0, 1, vrr,0
 
-    exec-once = ${lib.getExe inputs.ags.packages.${pkgs.system}.ags} --config /etc/greetd/ags/config.js; hyprctl dispatch exit
+    exec-once = ${lib.getExe' inputs.ags.packages.${pkgs.system}.ags "ags"} --config /etc/greetd/ags/config.js; hyprctl dispatch exit
   '';
 }
