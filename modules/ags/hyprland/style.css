@@ -1,6 +1,3 @@
-/* TODO: find a way to auto-link this from Nix, ideally without needing to write the CSS in Nix. */
-@import '/nix/store/sabf4azz0g3pilz239lkjxirw8inv3ck-catppuccin-unstable-2023-10-09/waybar/mocha.css';
-
 @define-color primary @peach;
 
 * {

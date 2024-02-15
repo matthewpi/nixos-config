@@ -35,5 +35,5 @@
 		"target": "ESNext"
 	},
 	"exclude": ["node_modules"],
-	"include": ["config.js", "src", "types"]
+	"include": ["config.js", "src", "../../../types"]
 }

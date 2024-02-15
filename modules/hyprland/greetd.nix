@@ -1,4 +1,5 @@
 {
+  inputs,
   config,
   lib,
   pkgs,
@@ -13,63 +14,58 @@
       # the available session options. We can add additional sessions in this config if needed.
       hyprland = {
         command = "${lib.getExe config.programs.hyprland.package}";
-        # TODO: is user needed here?
-        #user = "matthew";
       };
 
-      # The default session launches regreet under cage (a wayland kiosh compositor)
       default_session = {
-        command = "${lib.getExe pkgs.cage} ${lib.escapeShellArgs config.programs.regreet.cageArgs} -- ${lib.getExe config.programs.regreet.package}";
+        command = "${lib.getExe config.programs.hyprland.package} --config /etc/greetd/hyprland.conf";
         user = "greeter";
       };
     };
   };
 
-  # Enable regreet, a GTK greeter for greetd.
-  programs.regreet = {
-    enable = lib.mkDefault true;
+  environment.etc."greetd/ags".source = ../ags/greetd;
 
-    # Defaults to ["-s"], but we add the `["-m" "last"]` argument to
-    # force cage to only use the last connected output. Otherwise
-    # cage will span across all displays which is not wanted.
-    #
-    # The other option is to use a tool like `wlr-randr` that uses the
-    # `wlr-output-management` protocol to allow the configuration of
-    # displays.
-    cageArgs = lib.mkDefault ["-s" "-m" "last"];
+  environment.etc."greetd/hyprland.conf".text = ''
+    # Load catppuccin color variables so we can have a nice color scheme
+    # TODO: map flavour
+    source = ${pkgs.catppuccin}/hyprland/mocha.conf
 
-    settings = {
-      GTK = {
-        # Enable regreet's dark theme.
-        application_prefer_dark_theme = lib.mkDefault true;
-      };
-    };
-  };
+    input {
+      kb_layout = us
 
-  # Override the default greetd unit to properly handle plymouth.
-  #
-  # The upstream unit in nixpkgs causes Plymouth to be visible, then disappear
-  # causing the TTY to be shown before greetd has started.
-  #  systemd.services.greetd.unitConfig = let
-  #    tty = "tty@${toString config.services.greetd.vt}";
-  #  in {
-  #    After = lib.mkDefault [
-  #      "systemd-user-sessions.service"
-  #      "getty@${tty}.service"
-  #      "plymouth-start.service"
-  #      "plymouth-quit.service"
-  #    ];
-  #    Wants = ["systemd-user-sessions.service"];
-  #    Conflicts = ["getty@${tty}.service"];
-  #    OnFailure = ["plymouth-quit.service"];
-  #  };
+      # Disable mouse acceleration
+      accel_profile = flat
+    }
 
-  # Prevent nixos-rebuild switch from bringing down the graphical
-  # session. (If multi-user.target wants plymouth-quit.service which
-  # conflicts greetd.service, then when nixos-rebuild
-  # switch starts multi-user.target, greetd.service is
-  # stopped so plymouth-quit.service can be started)
-  #  systemd.services.plymouth-quit = lib.mkIf config.boot.plymouth.enable {
-  #    wantedBy = lib.mkForce [];
-  #  };
+    general {
+      # Border Colors
+      col.active_border   = $surface1
+      col.inactive_border = $surface0
+
+      # Use smaller window gaps
+      gaps_in  = 4
+      gaps_out = 12
+    }
+
+    animations {
+      # Disable animations
+      enabled = false
+    }
+
+    decoration {
+      # Round the corners of windows
+      rounding = 8
+
+      blur {
+        # Disable window background blur
+        enabled = false
+      }
+    }
+
+    # Monitor configuration
+    monitor = DP-3, 1920x1080@144, 0x0, 1, vrr,1
+    monitor = HDMI-A-1, 1920x1080@60, -1920x0, 1, vrr,0
+
+    exec-once = ${lib.getExe inputs.ags.packages.${pkgs.system}.ags} --config /etc/greetd/ags/config.js; hyprctl dispatch exit
+  '';
 }

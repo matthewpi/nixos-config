@@ -2,7 +2,6 @@
   flake.nixosModules.system = {lib, ...}: {
     imports = [
       ./dbus.nix
-      #./irqbalance.nix
       ./networking.nix
       ./nix.nix
       ./openssh.nix

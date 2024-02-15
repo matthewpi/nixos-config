@@ -5,8 +5,9 @@ set -eou pipefail
 # Nix commands to get the path to AGS in the Nix store.
 #
 # This assumes the the ags input is named `ags` in your `flake.nix`
-nar_hash="$(nix flake metadata --json | jq -r '.locked.narHash')"
-flake_url="$(nix flake metadata --json | jq -r '.url')?narHash=${nar_hash}"
+metadata_json="$(nix flake metadata --json)"
+nar_hash="$(echo "${metadata_json}" | jq -r '.locked.narHash')"
+flake_url="$(echo "${metadata_json}" | jq -r '.resolvedUrl')?narHash=${nar_hash}"
 ags_path="$(nix eval --impure --expr "(builtins.getFlake \"${flake_url}\").inputs.ags" --apply 'builtins.toString' --raw)"
 
 WORKING_DIR="$(pwd)"

@@ -7,10 +7,10 @@
   }: let
     _packages =
       {
-        catppuccin = pkgs.callPackage ./catppuccin/default.nix {};
-        catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers/default.nix {};
+        catppuccin = pkgs.callPackage ./catppuccin {};
+        catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
 
-        cider2 = pkgs.callPackage ./cider2/default.nix {};
+        cider2 = pkgs.callPackage ./cider2 {};
 
         fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
         zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
@@ -19,7 +19,7 @@
         monaspace = pkgs.callPackage ./monaspace.nix {};
       }
       // lib.optionalAttrs (pkgs.stdenv.system == "x86_64-linux") {
-        forge-sparks = pkgs.callPackage ./forge-sparks/default.nix {};
+        forge-sparks = pkgs.callPackage ./forge-sparks {};
       };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;

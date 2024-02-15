@@ -58,7 +58,11 @@ in {
     inputs.anyrun.homeManagerModules.default
     inputs.ags.homeManagerModules.default
 
-    ./ags.nix
+    ./polkit.nix
+    ./swayidle.nix
+    ./swaylock.nix
+
+    ../../../../modules/ags
   ];
 
   home.packages = with pkgs; [
@@ -326,71 +330,6 @@ in {
         inputs.anyrun.packages.${pkgs.system}.shell
       ];
       layer = "overlay";
-    };
-  };
-
-  # Enable swayidle.
-  services.swayidle = let
-    hyprland = inputs.hyprland.packages.${pkgs.system}.hyprland;
-    # dimCommand blocks until `-d` number of seconds has passed, while dimming the display to black
-    # over the same time period. If movement is detected in this period, the command will exit early
-    # with an exit-code of 2.
-    dimDuration = 10;
-    dimCommand = "${lib.getExe pkgs.chayang} -d ${toString dimDuration}";
-    lockCommand = "${lib.getExe config.programs.swaylock.package} --daemonize --show-failed-attempts --color 000000";
-    lockWithDpms = "${lockCommand} && ${pkgs.coreutils}/bin/sleep 1s && ${hyprland}/bin/hyprctl dispatch dpms off";
-  in {
-    enable = true;
-    systemdTarget = "hyprland-session.target";
-    events = [
-      {
-        event = "before-sleep";
-        command = lockCommand;
-      }
-      {
-        event = "lock";
-        command = lockWithDpms;
-      }
-      {
-        event = "after-resume";
-        command = "${hyprland}/bin/hyprctl dispatch dpms on";
-      }
-    ];
-    timeouts = [
-      # After 5 minutes of inactivity, lock the system.
-      {
-        timeout = 300 - dimDuration;
-        command = "${dimCommand} && ${lockWithDpms}";
-      }
-      # After 15 minutes of inactivity, suspend the system.
-      #{
-      #  timeout = 900;
-      #  command = "${pkgs.systemd}/bin/systemctl suspend";
-      #}
-    ];
-  };
-  systemd.user.services.swayidle.Service.Slice = "session.slice";
-
-  # Enable swaylock.
-  programs.swaylock.enable = true;
-
-  # Add a systemd user service for the GNOME polkit agent.
-  systemd.user.services.polkit-gnome-authentication-agent-1 = {
-    Unit = {
-      Description = "Polkit GNOME Authentication Agent";
-    };
-
-    Service = {
-      Type = "simple";
-      ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-      Restart = "on-failure";
-      RestartSec = 1;
-      TimeoutStopSec = 10;
-      Slice = "session.slice";
-    };
-
-    Install = {
-      WantedBy = ["graphical-session.target"];
     };
   };
 

@@ -1,3 +1,0 @@
-{
-  services.irqbalance.enable = true;
-}

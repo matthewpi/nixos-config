@@ -5,6 +5,8 @@ import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
 import Notifications from 'resource:///com/github/Aylur/ags/service/notifications.js';
 
+import { Window } from 'resource:///com/github/Aylur/ags/widgets/window.js';
+
 import { Clock } from './clock';
 import { Media } from './media';
 import { NotificationButton, NotificationLabel, PopupNotificationWindow } from './notifications';
@@ -14,7 +16,7 @@ import { SysTray } from './systray';
 
 import Gdk from 'gi://Gdk?version=3.0';
 import Gtk from 'gi://Gtk?version=3.0';
-import { Window } from 'resource:///com/github/Aylur/ags/widgets/window.js';
+import GLib from 'gi://GLib?version=2.0';
 
 function BarContent() {
 	return Widget.CenterBox({
@@ -175,8 +177,14 @@ function getMonitorByCoordinates(
 Mpris.cacheCoverArt = false;
 Notifications.popupTimeout = 10 * 1000;
 
+App.resetCss();
+const catppuccin = GLib.getenv('CATPPUCCIN_CSS') ?? undefined;
+if (catppuccin !== undefined) {
+	App.applyCss(catppuccin);
+}
+App.applyCss(`${App.configDir}/style.css`);
+
 // exporting the config so ags can manage the windows
 export default {
-	style: App.configDir + '/style.css',
 	windows: [],
 };

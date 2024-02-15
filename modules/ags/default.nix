@@ -6,7 +6,7 @@
   # Enable ags.
   programs.ags = {
     enable = true;
-    configDir = ./ags;
+    configDir = ./hyprland;
   };
 
   # Configure a systemd user service for AGS.
@@ -18,6 +18,7 @@
     Service = {
       Environment = [
         "PATH=${pkgs.bun}/bin"
+        "CATPPUCCIN_CSS=${pkgs.catppuccin}/waybar/mocha.css"
       ];
       ExecStart = "${config.programs.ags.package}/bin/ags";
       Slice = "session.slice";
