@@ -17,6 +17,8 @@
 
         inter = pkgs.callPackage ./inter.nix {};
         monaspace = pkgs.callPackage ./monaspace.nix {};
+
+        zed-editor = pkgs.callPackage ./zed-editor {};
       }
       // lib.optionalAttrs (pkgs.stdenv.system == "x86_64-linux") {
         forge-sparks = pkgs.callPackage ./forge-sparks {};
@@ -42,6 +44,7 @@
         forge-sparks
         inter
         monaspace
+        zed-editor
         zsh-titles
         ;
 
