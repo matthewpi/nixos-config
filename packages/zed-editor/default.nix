@@ -7,6 +7,7 @@
   freetype,
   lib,
   libgit2,
+  libxkbcommon,
   makeBinaryWrapper,
   openssl,
   pkg-config,
@@ -24,14 +25,14 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "zed-editor";
-  version = "0.122.2";
+  version = "0.123.2-pre";
 
   src = fetchFromGitHub {
     owner = "zed-industries";
     repo = "zed";
     # rev = "refs/tags/v${version}";
-    rev = "41372a96ed9bc63e7d56d8514a691dfcd49f618d";
-    hash = "sha256-417OH7JJBEFfnDrAoZL895Gux7xxf3optDWa7Bvg4PA=";
+    rev = "3cbc18895a471e19b5918bd1effc8ae1a6b61f60";
+    hash = "sha256-wJaJ4u7fTPuFM2cpjT+xY7K5sDIa17BEh0l2WxQ+VRo=";
     fetchSubmodules = true;
   };
 
@@ -39,11 +40,11 @@ rustPlatform.buildRustPackage rec {
     lockFile = ./Cargo.lock;
     outputHashes = {
       "async-pipe-0.1.3" = "sha256-g120X88HGT8P6GNCrzpS5SutALx5H+45Sf4iSSxzctE=";
-      "blade-graphics-0.3.0" = "sha256-G/TesBYutMyH1DoVyX/GOKXqgmLAvLGwlllj6iH3doU=";
+      "blade-graphics-0.3.0" = "sha256-sDq1EmXnXfMQ3SQQ+yvwpFo4fN0VGavTCE4JMjKGkcQ=";
       "blade-macros-0.2.1" = "sha256-G/TesBYutMyH1DoVyX/GOKXqgmLAvLGwlllj6iH3doU=";
       "bromberg_sl2-0.6.0" = "sha256-+bwdnk3EgYEAxQSP4KpEPicCfO+r2er1DRZjvfF4jSM=";
       "cranelift-bforest-0.103.0" = "sha256-kySJme79RQMI8PP2Jhx1mjqJpUIf5jPn2TvbPEzw5hY=";
-      "font-kit-0.11.0" = "sha256-Lo2EeCK6GBPQo4FxAbBla3NP4TLccxWZ5kljks7JB84=";
+      "font-kit-0.11.0" = "sha256-+4zMzjFyMS60HfLMEXGfXqKn6P+pOngLA45udV09DM8=";
       "lsp-types-0.94.1" = "sha256-kplgPsafrgZFMI1D9pQCwmg+FKMn5HNWLbcgdXHUFVU=";
       "nvim-rs-0.6.0-pre" = "sha256-bdWWuCsBv01mnPA5e5zRpq48BgOqaqIcAu+b7y1NnM8=";
       "pathfinder_simd-0.5.2" = "sha256-fvMDo1U5Bh9Apa85pX882v4k7ST5Bw44Kt8jNk++FAw=";
@@ -130,6 +131,7 @@ rustPlatform.buildRustPackage rec {
     ])
     ++ lib.optionals stdenv.isLinux [
       alsa-lib
+      libxkbcommon
       vulkan-validation-layers
       wayland
       xorg.libxcb
