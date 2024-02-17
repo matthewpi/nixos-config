@@ -264,6 +264,10 @@
           directory = ".config/turborepo";
           mode = "0700";
         }
+        {
+          directory = ".config/zed";
+          mode = "0700";
+        }
 
         # I hate this, JetBrains uses it to store
         # auth data and agreement to their ToS
@@ -302,6 +306,10 @@
         }
         {
           directory = ".local/share/bottles";
+          mode = "0700";
+        }
+        {
+          directory = ".local/share/cargo";
           mode = "0700";
         }
         {

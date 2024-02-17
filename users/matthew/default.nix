@@ -35,6 +35,9 @@
     # XDG_DATA_HOME = config.xdg.dataHome;
     # XDG_STATE_HOME = config.xdg.stateHome;
 
+    # Change CARGO_HOME from the default ~/.cargo location to follow the XDG spec.
+    CARGO_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/cargo";
+
     # Change GNUPGHOME from the default ~/.gnupg location to follow the XDG spec.
     GNUPGHOME = "${config.home.sessionVariables.XDG_DATA_HOME}/gnupg";
 
