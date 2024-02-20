@@ -59,6 +59,7 @@
       url = "github:hyprwm/Hyprland";
       inputs = {
         hyprland-protocols.follows = "hyprland-protocols";
+        hyprlang.follows = "hyprlang";
         xdph.follows = "xdph";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
