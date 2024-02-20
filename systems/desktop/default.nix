@@ -26,43 +26,43 @@
   boot.kernelPackages = pkgs.linuxPackagesFor pkgs.linux_xanmod_latest;
 
   # https://criu.org/Linux_kernel
-  boot.kernelPatches = lib.singleton {
-    name = "criu";
-    patch = null;
-    extraStructuredConfig = with lib.kernel; {
-      #CHECKPOINT_RESTORE = yes;
-      #NAMESPACES = yes;
-      #UTS_NS = yes;
-      #IPC_NS = yes;
-      #SYSVIPC_SYSCTL = yes;
-      #PID_NS = yes;
-      #NET_NS = yes;
-      #FHANDLE = yes;
-      #EVENTFD = yes;
-      #EPOLL = yes;
+  # boot.kernelPatches = lib.singleton {
+  #   name = "criu";
+  #   patch = null;
+  #   extraStructuredConfig = with lib.kernel; {
+  #     #CHECKPOINT_RESTORE = yes;
+  #     #NAMESPACES = yes;
+  #     #UTS_NS = yes;
+  #     #IPC_NS = yes;
+  #     #SYSVIPC_SYSCTL = yes;
+  #     #PID_NS = yes;
+  #     #NET_NS = yes;
+  #     #FHANDLE = yes;
+  #     #EVENTFD = yes;
+  #     #EPOLL = yes;
 
-      #UNIX_DIAG = yes;
-      #INET_DIAG = yes;
-      #INET_UDP_DIAG = yes;
-      #PACKET_DIAG = yes;
-      #NETLINK_DIAG = yes;
+  #     #UNIX_DIAG = yes;
+  #     #INET_DIAG = yes;
+  #     #INET_UDP_DIAG = yes;
+  #     #PACKET_DIAG = yes;
+  #     #NETLINK_DIAG = yes;
 
-      #NETFILTER_XT_MARK = yes;
-      #TUN = yes;
+  #     #NETFILTER_XT_MARK = yes;
+  #     #TUN = yes;
 
-      #INOTIFY_USER = yes;
-      #FANOTIFY = yes;
-      #MEMCG = yes;
-      #CGROUP_DEVICE = yes;
-      #MACVLAN = yes;
-      #BRIDGE = yes;
-      #BINFMT_MISC = yes;
-      #IA32_EMULATION = yes;
+  #     #INOTIFY_USER = yes;
+  #     #FANOTIFY = yes;
+  #     #MEMCG = yes;
+  #     #CGROUP_DEVICE = yes;
+  #     #MACVLAN = yes;
+  #     #BRIDGE = yes;
+  #     #BINFMT_MISC = yes;
+  #     #IA32_EMULATION = yes;
 
-      MEM_SOFT_DIRTY = yes;
-      #USERFAULTFD = yes;
-    };
-  };
+  #     MEM_SOFT_DIRTY = yes;
+  #     #USERFAULTFD = yes;
+  #   };
+  # };
   boot.kernelModules = [
     "unix_diag"
     "inet_diag"
