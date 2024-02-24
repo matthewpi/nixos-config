@@ -3,6 +3,7 @@
     ./bottles.nix
     ./cartridges.nix
     ./prismlauncher.nix
-    ./steam.nix
   ];
+
+  programs.mangohud.enable = true;
 }

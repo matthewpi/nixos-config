@@ -26,6 +26,45 @@
   systemd.user.services."yubikey-agent".serviceConfig.Slice = "background.slice";
   programs.gnupg.agent.pinentryFlavor = "gnome3";
 
+  # Enable gamescope
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+    args = ["--adaptive-sync" "--force-composition" "--nested-width 1920" "--nested-height 1080" "--nested-refresh 144" "--fullscreen" "--rt"];
+  };
+
+  programs.steam = {
+    enable = true;
+    package = pkgs.steam.override {
+      extraEnv = {
+        # Manually set SDL_VIDEODRIVER to x11.
+        #
+        # This fixes the `gldriverquery` segfault and issues with EAC crashing on games like Rust,
+        # rather than gracefully disabling itself.
+        SDL_VIDEODRIVER = "x11";
+        #OBS_VKCAPTURE = true;
+      };
+
+      extraPkgs = pkgs:
+        with pkgs; [
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+        ];
+    };
+    gamescopeSession = {
+      enable = true;
+    };
+    #localNetworkGameTransfers.openFirewall = true;
+  };
+
   # Enable the wireshark dumpcap security wrapper.
   # This allows us to call dumpcap without using separate privilege escalation.
   programs.wireshark.enable = true;
