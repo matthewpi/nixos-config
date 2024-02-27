@@ -6,7 +6,7 @@
 }: {
   # Enable swayidle.
   services.swayidle = let
-    hyprland = config.wayland.windowManager.hyprland.package;
+    # hyprland = config.wayland.windowManager.hyprland.finalPackage;
     # dimCommand blocks until `-d` number of seconds has passed, while dimming the display to black
     # over the same time period. If movement is detected in this period, the command will exit early
     # with an exit-code of 2.
@@ -27,10 +27,10 @@
         event = "lock";
         command = lockWithDpms;
       }
-      {
-        event = "after-resume";
-        command = "${hyprland}/bin/hyprctl dispatch dpms on";
-      }
+      # {
+      #   event = "after-resume";
+      #   command = "${hyprland}/bin/hyprctl dispatch dpms on";
+      # }
     ];
     timeouts = [
       # After 5 minutes of inactivity, lock the system.

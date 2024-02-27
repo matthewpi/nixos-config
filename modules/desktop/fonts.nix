@@ -5,11 +5,13 @@
 }: {
   # Configure fonts
   fonts = {
+    enableDefaultPackages = true;
+
     fontconfig = {
       defaultFonts = {
         serif = lib.mkDefault ["Inter"];
         sansSerif = lib.mkDefault ["Inter"];
-        monospace = lib.mkDefault ["Monaspace Neon"];
+        monospace = lib.mkDefault ["MonaspiceNe Nerd Font Mono"];
         emoji = lib.mkDefault ["Noto Color Emoji"];
       };
     };

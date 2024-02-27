@@ -50,7 +50,6 @@ function Bar(monitor: number, name: string) {
 		// Ensure the window is removed when it is destroyed.
 		setup: self =>
 			self.on('destroy', self => {
-				print('window destroyed', self.name);
 				App.removeWindow(self);
 			}),
 	});
@@ -93,19 +92,13 @@ hyprland.connect('notify::monitors', self => {
 
 		const data = getMonitorByCoordinates(monitor.x, monitor.y, display);
 		if (data === undefined) {
-			print('failed to get gdk monitor');
 			continue;
 		}
 
-		const { id, monitor: m } = data;
+		const { id } = data;
 
 		// Mark the monitor as being processed.
-		print('adding monitor', monitor.name);
 		registeredMonitors.add(monitor.name);
-
-		print(id, monitor.model, m.model);
-		print(monitor.x, m.geometry.x);
-		print(monitor.y, m.geometry.y);
 
 		// Add a Bar to the monitor.
 		addWindow(Bar(id, monitor.name));
@@ -118,14 +111,12 @@ hyprland.connect('notify::monitors', self => {
 
 	// Unregister the monitor if it was removed.
 	for (const name of removedMonitors) {
-		print('removing monitor', name);
 		registeredMonitors.delete(name);
 	}
 });
 
 function addWindow<Child extends Gtk.Widget, Attr>(win: Window<Child, Attr>): void {
 	win.on('destroy', () => {
-		print('window destroyed', win.name);
 		App.removeWindow(win);
 	});
 	App.addWindow(win);

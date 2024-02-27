@@ -186,7 +186,6 @@ function closeNotificationWindow(): void {
 			continue;
 		}
 
-		print('removing window', window.name);
 		App.removeWindow(window);
 		break;
 	}
@@ -222,7 +221,6 @@ function NotificationButton() {
 					continue;
 				}
 
-				print('removing window', window.name);
 				App.removeWindow(window);
 				return;
 			}

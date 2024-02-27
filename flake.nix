@@ -55,6 +55,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    hypridle = {
+      url = "github:hyprwm/hypridle";
+      inputs = {
+        hyprlang.follows = "hyprlang";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs = {
@@ -76,7 +84,18 @@
 
     hyprlang = {
       url = "github:hyprwm/hyprlang";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
+    hyprlock = {
+      url = "github:hyprwm/hyprlock";
+      inputs = {
+        hyprlang.follows = "hyprlang";
+        nixpkgs.follows = "nixpkgs";
+      };
     };
 
     hyprpaper = {
@@ -111,7 +130,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    nur.url = "github:nix-community/NUR";
 
     systems.url = "github:nix-systems/default";
     systems-linux.url = "github:nix-systems/default-linux";

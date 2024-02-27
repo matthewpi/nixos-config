@@ -1,4 +1,4 @@
-{
+{inputs, ...}: {
   perSystem = {
     lib,
     pkgs,
@@ -62,6 +62,15 @@
       });
 
       webcord = pkgs.callPackage ./webcord/default.nix {};
+
+      # Flake overlays
+      hypridle = inputs.hypridle.packages.${system}.hypridle;
+      hyprland = inputs.hyprland.packages.${system}.hyprland;
+      hyprlang = inputs.hyprlang.packages.${system}.hyprlang;
+      hyprlock = inputs.hyprlock.packages.${system}.hyprlock;
+      hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
+      hyprpicker = inputs.hyprpicker.packages.${system}.hyprpicker;
+      xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
     };
   };
 }

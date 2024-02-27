@@ -43,7 +43,6 @@
     };
 
     defaultApplications = let
-      #junction = "re.sonny.Junction.desktop";
       defaultBrowser = "firefox.desktop";
       defaultImageViewer = "org.gnome.eog.desktop";
       defaultTextEditor = "org.gnome.TextEditor.desktop";
