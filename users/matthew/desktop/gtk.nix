@@ -3,10 +3,30 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  xdgDirs = builtins.map (x: "${x}/share/gsettings-schemas/${x.name}") (with pkgs; [gsettings-desktop-schemas gtk3 gtk4]);
+in {
+  # Ensure the proper gsettings-schemas are installed and properly accessible.
+  home.sessionVariables.GSETTINGS_SCHEMAS_PATH = builtins.concatStringsSep ":" xdgDirs;
+  xdg.systemDirs.data = xdgDirs;
+
+  # Use gsettings to check for dark mode
+  # https://gitlab.gnome.org/GNOME/libadwaita/-/commit/e715fae6a509db006a805af816f9d163f81011ef
+  home.sessionVariables.ADW_DISABLE_PORTAL = "1";
+
   gtk = {
     enable = true;
     gtk2.configLocation = "${config.xdg.configHome}/gtk-2.0/gtkrc";
+
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
+    gtk3.bookmarks = [
+      "file://${config.home.homeDirectory}/code"
+      "file://${config.home.homeDirectory}/Documents"
+      "file://${config.home.homeDirectory}/Downloads"
+      "file://${config.home.homeDirectory}/Music"
+      "file://${config.home.homeDirectory}/Pictures"
+      "file://${config.home.homeDirectory}/Videos"
+    ];
 
     cursorTheme = {
       name = "macOS-Monterey";
@@ -19,26 +39,18 @@
       package = pkgs.whitesur-icon-theme;
     };
 
-    theme = {
-      name = "adw-gtk3-dark";
-      package = pkgs.adw-gtk3;
-    };
+    # TODO: only apply the gtk3 adwaita theme to gtk3 apps, gtk4 should not be affected by it.
+    theme.name = "Adwaita";
 
     font = {
       name = "Inter Regular";
       package = pkgs.inter;
       size = 11;
     };
-
-    gtk3.bookmarks = [
-      "file://${config.home.homeDirectory}/code"
-      "file://${config.home.homeDirectory}/Documents"
-      "file://${config.home.homeDirectory}/Downloads"
-      "file://${config.home.homeDirectory}/Music"
-      "file://${config.home.homeDirectory}/Pictures"
-      "file://${config.home.homeDirectory}/Videos"
-    ];
   };
+
+  # Disable any gtk-4.0 specific styling, I don't want to theme libadwaita.
+  xdg.configFile."gtk-4.0/gtk.css".enable = false;
 
   dconf.settings = let
     geolocationTupleType = lib.hm.gvariant.type.tupleOf [lib.hm.gvariant.type.double lib.hm.gvariant.type.double];

@@ -6,21 +6,21 @@
 }
 
 button {
-	background-color: transparent;
+	background: transparent;
 	color: @text;
 }
 
 button:hover {
-	background-color: @base;
+	background: @base;
 }
 
 button:active {
-	background-color: @crust;
+	background: @crust;
 }
 
 /* Style the bar itself, this is the root element */
 .bar {
-	background-color: @mantle;
+	background: @mantle;
 	border-bottom: 0.125rem solid @crust;
 }
 
@@ -43,7 +43,7 @@ button:active {
 
 /* Style the clock display */
 .clock {
-	background-color: transparent;
+	background: transparent;
 	color: @text;
 	margin: 0 0.375rem;
 	font-size: 1rem;
@@ -72,13 +72,13 @@ button:active {
 
 .volume > .volume-slider progress,
 highlight {
-	background-color: @primary;
+	background: @primary;
 	min-height: 0.4rem;
 }
 
 .volume > .volume-slider progress,
 slider {
-	background-color: @primary;
+	background: @primary;
 }
 
 /* Style the tray icons */
@@ -103,7 +103,7 @@ window.notification-popups box.notifications {
 /* Notification */
 .notification {
 	min-width: 350px;
-	background-color: @mantle;
+	background: @mantle;
 	border: 1px solid @surface0;
 	border-radius: 0.75rem;
 	padding: 1rem;

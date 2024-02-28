@@ -22,7 +22,7 @@
 
     # Enable Wayland for Electron Ozone, SDL, and QT.
     NIXOS_OZONE_WL = "1";
-    #SDL_VIDEODRIVER = "wayland";
+    SDL_VIDEODRIVER = "wayland";
     QT_QPA_PLATFORM = "wayland;xcb";
     CLUTTER_BACKEND = "wayland";
     GDK_BACKEND = "wayland,x11";
