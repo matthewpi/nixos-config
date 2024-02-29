@@ -30,7 +30,7 @@
   programs.gamescope = {
     enable = true;
     capSysNice = true;
-    args = ["--adaptive-sync" "--force-composition" "--nested-width 1920" "--nested-height 1080" "--nested-refresh 144" "--fullscreen" "--rt"];
+    args = ["--adaptive-sync" "--force-composition" "--nested-width 1920" "--nested-height 1080" "--nested-refresh 144" "--fullscreen" "--rt" "--expose-wayland" "--force-grab-cursor"];
   };
 
   programs.steam = {
