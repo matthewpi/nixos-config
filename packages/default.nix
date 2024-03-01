@@ -61,8 +61,6 @@
           '';
       });
 
-      webcord = pkgs.callPackage ./webcord/default.nix {};
-
       # Flake overlays
       hypridle = inputs.hypridle.packages.${system}.hypridle;
       hyprland = inputs.hyprland.packages.${system}.hyprland;

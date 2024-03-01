@@ -6,9 +6,9 @@
   ...
 }: let
   alacritty = lib.getExe config.programs.alacritty.package;
+  discord = lib.getExe pkgs.vesktop;
   firefox = lib.getExe pkgs.firefox; # TODO: from config
   slack = lib.getExe pkgs.slack;
-  webcord = lib.getExe pkgs.webcord;
 
   # Command used to take a screenshot.
   screenshot = lib.getExe (pkgs.writeShellApplication {
@@ -159,7 +159,7 @@ in {
 
       # Special workspaces that can be toggled on and off
       workspace = special:terminal, on-created-empty:${alacritty}
-      workspace = special:discord,  on-created-empty:${webcord}
+      workspace = special:discord,  on-created-empty:${discord}
       workspace = special:slack,    on-created-empty:${slack}
 
       # Keybinds
