@@ -30,7 +30,19 @@
   programs.gamescope = {
     enable = true;
     capSysNice = true;
-    args = ["--adaptive-sync" "--force-composition" "--nested-width 1920" "--nested-height 1080" "--nested-refresh 144" "--fullscreen" "--rt" "--expose-wayland" "--force-grab-cursor"];
+    args = [
+      "--force-composition"
+      "--nested-width 1920"
+      "--nested-height 1080"
+      "--nested-refresh 144"
+      "--output-width 1920"
+      "--output-height 1080"
+      "--nested-unfocused-refresh 30"
+      "--fullscreen"
+      "--rt"
+      "--expose-wayland"
+      "--force-grab-cursor"
+    ];
   };
 
   programs.steam = {
@@ -42,7 +54,6 @@
         # This fixes the `gldriverquery` segfault and issues with EAC crashing on games like Rust,
         # rather than gracefully disabling itself.
         SDL_VIDEODRIVER = "x11";
-        #OBS_VKCAPTURE = true;
       };
 
       extraPkgs = pkgs:
@@ -62,7 +73,7 @@
     gamescopeSession = {
       enable = true;
     };
-    #localNetworkGameTransfers.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
   };
 
   # Enable the wireshark dumpcap security wrapper.
