@@ -60,6 +60,7 @@
       inputs = {
         hyprlang.follows = "hyprlang";
         nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
       };
     };
 
@@ -95,6 +96,7 @@
       inputs = {
         hyprlang.follows = "hyprlang";
         nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
       };
     };
 
