@@ -31,16 +31,6 @@ in {
     systemd.variables = lib.mkDefault [
       # https://github.com/hyprwm/hypridle/issues/20#issuecomment-1964160720
       "--all"
-      ## These four options are the defaults.
-      #"DISPLAY"
-      #"HYPRLAND_INSTANCE_SIGNATURE"
-      #"WAYLAND_DISPLAY"
-      #"XDG_CURRENT_DESKTOP"
-      #
-      ## Fixes issues with `xdg-open`
-      #"BROWSER"
-      ## Fixes issues with `gio mime`
-      #"PATH"
     ];
 
     extraConfig = ''
@@ -125,11 +115,6 @@ in {
       windowrule = float, title:^(Library)(.*)$
       windowrule = float, title:^(Accounts)(.*)$
 
-      # Gamescope
-      #windowrulev2 = fakefullscreen, class:(.gamescope-wrapped)
-      #windowrulev2 = size 100%, class:(.gamescope-wrapped)
-      #windowrulev2 = tile, class:(.gamescope-wrapped)
-
       # Fixes for JetBrains IDE pop-ups
       # ref; https://github.com/hyprwm/Hyprland/issues/1947#issuecomment-1784909413
       windowrulev2 = windowdance, class:^(jetbrains-.*)$
@@ -170,11 +155,13 @@ in {
       bind = $mainMod, D, togglespecialworkspace, discord
       bind = $mainMod, S, togglespecialworkspace, slack
 
+      bind = $mainMod Shift, D, movetoworkspace, special:discord
+
       bind = , Print, exec, ${screenshot}
 
-      # swaylock keybinds
+      # hyprlock keybinds
       #
-      # swaylock is wired up via swayidle to systemd.
+      # hyprlock is wired up via swayidle to systemd.
       #
       # `loginctl lock-session` will launch only swaylock,
       # while `systemctl suspend` will handle both swaylock

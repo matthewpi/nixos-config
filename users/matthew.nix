@@ -315,6 +315,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/vesktop";
+          mode = "0700";
+        }
+        {
           directory = ".config/zed";
           mode = "0700";
         }
