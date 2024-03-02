@@ -4,19 +4,21 @@
   ...
 }: {
   # https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/
-  services.hypridle = {
+  services.hypridle = let
+    hyprlockExe = lib.getExe config.programs.hyprlock.package;
+  in {
     enable = true;
 
     listeners = [
       {
         timeout = 300;
-        onTimeout = lib.getExe config.programs.hyprlock.package;
+        onTimeout = hyprlockExe;
         onResume = "";
       }
     ];
 
-    lockCmd = lib.getExe config.programs.hyprlock.package;
-    beforeSleepCmd = lib.getExe config.programs.hyprlock.package;
+    lockCmd = "${hyprlockExe} & sleep 3 && hyprctl dispatch dpms off";
+    beforeSleepCmd = hyprlockExe;
     unlockCmd = "";
     afterSleepCmd = "";
   };
