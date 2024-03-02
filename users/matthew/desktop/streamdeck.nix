@@ -1,6 +1,5 @@
 {
   config,
-  pkgs,
   ...
 }: {
   # https://nix-community.github.io/home-manager/options.html#opt-systemd.user.startServices
@@ -16,7 +15,7 @@
 
     Service = {
       ExecStart = "${config.home.homeDirectory}/code/matthewpi/streamdeck-local/streamdeck"; # TODO: package
-      ExecStop = "${pkgs.coreutils}/bin/kill --signal INT $MAINPID";
+      KillSignal = "SIGINT";
       Restart = "on-failure";
       Slice = "background.slice";
 
@@ -69,8 +68,6 @@
       DeviceAllow = "/dev/streamdeck";
     };
 
-    Install = {
-      WantedBy = ["dev-streamdeck.device" "graphical-session.target"];
-    };
+    Install.WantedBy = ["dev-streamdeck.device" "graphical-session.target"];
   };
 }
