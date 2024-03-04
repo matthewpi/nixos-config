@@ -5,10 +5,39 @@
   pkgs,
   ...
 }: let
-  alacritty = lib.getExe config.programs.alacritty.package;
-  discord = lib.getExe pkgs.vesktop;
-  firefox = lib.getExe pkgs.firefox; # TODO: from config
-  slack = lib.getExe pkgs.slack;
+  mkSystemdRun = {
+    name,
+    command,
+    args ? null,
+  }: ''${pkgs.systemd}/bin/systemd-run --user --collect --no-block --slice=app --unit="app-${name}@''${RANDOM}" ${
+      if args == null
+      then ""
+      else ''${lib.concatStringsSep " " args} ''
+    }${command}'';
+
+  # Command used to launch alacritty.
+  alacritty = mkSystemdRun {
+    name = "org.alacritty.Alacritty";
+    command = lib.getExe config.programs.alacritty.package;
+  };
+
+  # Command used to launch discord.
+  discord = mkSystemdRun {
+    name = "com.discord.Discord";
+    command = lib.getExe pkgs.vesktop;
+  };
+
+  # Command used to launch firefox.
+  firefox = mkSystemdRun {
+    name = "org.mozilla.Firefox";
+    command = lib.getExe config.programs.firefox.package;
+  };
+
+  # Command used to launch slack.
+  slack = mkSystemdRun {
+    name = "com.slack.Slack";
+    command = lib.getExe pkgs.slack;
+  };
 
   # Command used to take a screenshot.
   screenshot = lib.getExe (pkgs.writeShellApplication {
