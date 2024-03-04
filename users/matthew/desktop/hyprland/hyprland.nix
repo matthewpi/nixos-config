@@ -21,11 +21,13 @@
 in {
   home.sessionVariables = {
     XDG_SESSION_DESKTOP = "Hyprland";
-    WLR_NO_HARDWARE_CURSORS = "1";
+    #WLR_NO_HARDWARE_CURSORS = "1";
   };
 
   wayland.windowManager.hyprland = {
     enable = true;
+
+    xwayland.enable = false;
 
     # Add additional variables that allow desktop portals to work properly.
     systemd.variables = lib.mkDefault [

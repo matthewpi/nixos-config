@@ -49,7 +49,6 @@
     gnome-text-editor
 
     # Hyprland
-    #hyprpaper
     hyprpicker
 
     # clipboard
