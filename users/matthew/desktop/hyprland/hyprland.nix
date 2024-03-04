@@ -56,7 +56,7 @@ in {
   wayland.windowManager.hyprland = {
     enable = true;
 
-    xwayland.enable = false;
+    xwayland.enable = true;
 
     # Add additional variables that allow desktop portals to work properly.
     systemd.variables = lib.mkDefault [
