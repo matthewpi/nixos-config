@@ -21,6 +21,12 @@
     command = lib.getExe config.programs.alacritty.package;
   };
 
+  # Command used to launch cider.
+  cider = mkSystemdRun {
+    name = "sh.cider.Cider";
+    command = lib.getExe pkgs.cider2;
+  };
+
   # Command used to launch discord.
   discord = mkSystemdRun {
     name = "com.discord.Discord";
@@ -186,16 +192,18 @@ in {
       bind = $mainMod, D, togglespecialworkspace, discord
       bind = $mainMod, S, togglespecialworkspace, slack
 
+      bind = $mainMod Shift, C, movetoworkspace, special:terminal
       bind = $mainMod Shift, D, movetoworkspace, special:discord
 
+      # Screenshot keybind
       bind = , Print, exec, ${screenshot}
 
       # hyprlock keybinds
       #
-      # hyprlock is wired up via swayidle to systemd.
+      # hyprlock is wired up via hypridle to systemd.
       #
-      # `loginctl lock-session` will launch only swaylock,
-      # while `systemctl suspend` will handle both swaylock
+      # `loginctl lock-session` will launch only hyprlock,
+      # while `systemctl suspend` will handle both hyprlock
       # and any other actions; such as DPMS.
       #
       # bindl allows the bind to be used even when an input inhibitor is active
@@ -211,6 +219,7 @@ in {
       bind = $mainMod, P, exec, ${lib.getExe' pkgs.hyprpicker "hyprpicker"} # Color Picker
       bind = $mainMod, T, exec, ${alacritty} # Terminal
       bind = $mainMod, B, exec, ${firefox} # Web Browser
+      bind = $mainMod, M, exec, ${cider} # Music
 
       # $mainMod + Left-click to drag window
       bindm = $mainMod, mouse:272, movewindow
