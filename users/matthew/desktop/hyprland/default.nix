@@ -1,5 +1,4 @@
 {
-  config,
   inputs,
   pkgs,
   ...
@@ -9,7 +8,6 @@
     inputs.hypridle.homeManagerModules.default
     inputs.hyprlock.homeManagerModules.default
 
-    inputs.anyrun.homeManagerModules.default
     inputs.ags.homeManagerModules.default
 
     ./hypridle.nix
@@ -54,19 +52,6 @@
     # clipboard
     wl-clipboard
   ];
-
-  # Enable anyrun (app launcher)
-  programs.anyrun = {
-    enable = true;
-    config = {
-      plugins = [
-        inputs.anyrun.packages.${pkgs.system}.applications
-        inputs.anyrun.packages.${pkgs.system}.rink
-        inputs.anyrun.packages.${pkgs.system}.shell
-      ];
-      layer = "overlay";
-    };
-  };
 
   # QT Theming
   qt = {

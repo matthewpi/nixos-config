@@ -178,7 +178,7 @@ in {
       bind = $mainMod, Q, killactive
 
       # Application keybinds
-      bind = $mainMod, Space, exec, ${lib.getExe' config.programs.anyrun.package "anyrun"} # App Launcher
+      #bind = $mainMod, Space, exec, <TODO: add a new app launcher> # App Launcher
       bind = $mainMod, P, exec, ${lib.getExe' pkgs.hyprpicker "hyprpicker"} # Color Picker
       bind = $mainMod, T, exec, ${alacritty} # Terminal
       bind = $mainMod, B, exec, ${firefox} # Web Browser

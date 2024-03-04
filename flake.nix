@@ -17,14 +17,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    anyrun = {
-      url = "github:Kirottu/anyrun";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -155,13 +147,9 @@
   #nixConfig = {
   #  extra-substituters = [
   #    "https://cache.nicetry.lol"
-  #    #"https://hyprland.cachix.org"
-  #    #"https://anyrun.cachix.org"
   #  ];
   #  extra-trusted-public-keys = [
   #    "cache.nicetry.lol-1:JnmGgdqevlSBH1ZpAemFGR+AChxgGcNKW9G3ThtW4bk="
-  #    #"hyprland.cachix.org-1:a7pgxzMz7+chwVL3/pzj6jIBMioiJM7ypFP8PwtkuGc="
-  #    #"anyrun.cachix.org-1:pqBobmOjI7nKlsUMV25u9QHa9btJK65/C8vnO3p346s="
   #  ];
   #};
 
