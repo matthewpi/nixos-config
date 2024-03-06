@@ -4,6 +4,7 @@
 	"main": "config.js",
 	"private": true,
 	"devDependencies": {
+		"@catppuccin/palette": "1.1.0",
 		"@girs/dbusmenugtk3-0.4": "0.4.0-3.2.6",
 		"@girs/gdk-2.0": "2.0.0-3.2.7",
 		"@girs/gdk-3.0": "3.24.38-3.2.6",

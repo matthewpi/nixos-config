@@ -1,7 +1,7 @@
 import App from 'resource:///com/github/Aylur/ags/app.js';
 import { execAsync } from 'resource:///com/github/Aylur/ags/utils.js';
 
-const entry = App.configDir + '/src/index.ts';
+const entry = `${App.configDir}/src/index.ts`;
 
 // The AGS services runs as an isolated service, it has a private /tmp directory that is isolated
 // from the main /tmp directory.
@@ -19,8 +19,8 @@ await execAsync([
 	'resource://*',
 	'--external',
 	'gi://*',
+	'--external',
+	'file://*',
 ]);
 
-const main = await import(`file://${outdir}/index.js`);
-
-export default main.default;
+await import(`file://${outdir}/index.js`);

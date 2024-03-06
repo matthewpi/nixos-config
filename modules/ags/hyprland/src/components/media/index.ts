@@ -2,6 +2,8 @@ import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 
 import Mpris from 'resource:///com/github/Aylur/ags/service/mpris.js';
 
+import Gtk from 'gi://Gtk?version=3.0';
+
 function Media() {
 	return Widget.Button({
 		className: 'media',
@@ -9,6 +11,9 @@ function Media() {
 		onScrollUp: () => Mpris.getPlayer('')?.next(),
 		onScrollDown: () => Mpris.getPlayer('')?.previous(),
 		child: Widget.Box({
+			valign: Gtk.Align.CENTER,
+			vexpand: true,
+
 			setup: self => {
 				self.hook(Mpris, () => {
 					const mpris = Mpris.getPlayer('');
@@ -33,20 +38,21 @@ function Media() {
 							break;
 					}
 
+					const boxChildren = [];
 					if (mpris === null) {
-						children.push(
+						boxChildren.push(
 							Widget.Label({
-								className: 'media-label',
+								className: 'media-label nothing',
 								label: 'Nothing is playing',
 							}),
 						);
 					} else {
-						const boxChildren = [
+						boxChildren.push(
 							Widget.Label({
 								className: 'media-title',
 								label: mpris.track_title,
 							}),
-						];
+						);
 
 						if (mpris.track_artists.length > 0) {
 							boxChildren.push(
@@ -56,16 +62,18 @@ function Media() {
 								}),
 							);
 						}
-
-						children.push(
-							Widget.Box({
-								className: 'media-label',
-								vertical: true,
-								homogeneous: false,
-								children: boxChildren,
-							}),
-						);
 					}
+
+					children.push(
+						Widget.Box({
+							className: 'media-label',
+							vertical: true,
+							homogeneous: false,
+							valign: Gtk.Align.CENTER,
+							vexpand: true,
+							children: boxChildren,
+						}),
+					);
 
 					self.children = children;
 				});

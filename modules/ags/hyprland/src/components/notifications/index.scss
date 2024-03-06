@@ -1,0 +1,66 @@
+// Notifications window
+window.notification-popups {
+	all: unset;
+}
+
+window.notification-popups box.notifications {
+	padding-top: 3rem;
+	//padding-right: 0.75rem;
+}
+
+//window.notifications-window {}
+
+.notification {
+	min-width: 350px;
+	background: $mantle;
+	border: 1px solid $surface0;
+	border-radius: 0.75rem;
+	padding: 1rem;
+	// margin: 0.5rem;
+}
+
+// Additional styling on critical notifications
+.notification.critical {
+	border: 1px solid $primary;
+}
+
+.notification .icon {
+	// min-width: 68px;
+	// min-height: 68px;
+	margin-right: 0.75rem;
+}
+
+.notification .icon box {
+	// min-width: 68px;
+	// min-height: 68px;
+	border-radius: 0.5rem;
+}
+
+.notification .icon image {
+	font-size: 2rem;
+	color: $overlay1;
+}
+
+.notification .title {
+	color: $text;
+	font-size: 1rem;
+	margin-bottom: 0.25rem;
+}
+
+.notification .body {
+	color: $overlay1;
+	font-size: 0.875rem;
+}
+
+.notification .actions .action-button {
+	margin: 0 0.4rem;
+	margin-top: 0.8rem;
+}
+
+.notification .actions .action-button:first-child {
+	margin-left: 0;
+}
+
+.notification .actions .action-button:last-child {
+	margin-right: 0;
+}

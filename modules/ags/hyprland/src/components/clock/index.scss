@@ -1,0 +1,18 @@
+.clock {
+	background: transparent;
+	color: $text;
+	margin: 0 0.375rem;
+	font-size: 1rem;
+}
+
+.clock .clock-box:first-child .clock-display {
+	margin-right: 0.5rem;
+}
+
+.clock .clock-box:last-child .clock-display {
+	margin-left: 0.5rem;
+}
+
+.clock-display .timezone {
+	color: $overlay0;
+}

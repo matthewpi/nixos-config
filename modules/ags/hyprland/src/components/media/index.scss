@@ -1,0 +1,29 @@
+button .media {
+	min-height: 38px;
+}
+
+.media {
+	& .media-icon {
+		font-size: 1.25rem;
+		margin-right: 0.75rem;
+	}
+
+	& .media-label {
+		font-size: 0.75rem;
+
+		// Change the color when nothing is playing.
+		&.nothing {
+			color: $overlay2;
+		}
+	}
+}
+
+.media-label {
+	& .media-title {
+		color: $text;
+	}
+
+	& .media-artists {
+		color: $overlay1;
+	}
+}

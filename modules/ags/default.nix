@@ -17,8 +17,7 @@
 
     Service = {
       Environment = [
-        "PATH=${pkgs.bun}/bin"
-        "CATPPUCCIN_CSS=${pkgs.catppuccin}/waybar/mocha.css"
+        "PATH=${pkgs.bash}/bin:${pkgs.bun}/bin:${pkgs.sass}/bin"
       ];
       ExecStart = "${config.programs.ags.package}/bin/ags";
       Slice = "session.slice";

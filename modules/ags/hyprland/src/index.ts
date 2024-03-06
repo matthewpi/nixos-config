@@ -7,16 +7,16 @@ import Notifications from 'resource:///com/github/Aylur/ags/service/notification
 
 import { Window } from 'resource:///com/github/Aylur/ags/widgets/window.js';
 
-import { Clock } from './clock';
-import { Media } from './media';
-import { NotificationButton, NotificationLabel, PopupNotificationWindow } from './notifications';
+import { Clock } from './components/clock';
+import { Media } from './components/media';
+import { NotificationButton, NotificationLabel, PopupNotificationWindow } from './components/notifications';
+import { SysTray } from './components/systray';
+// import { Volume } from './components/volume';
 import { difference } from './set';
-import { SysTray } from './systray';
-// import { Volume } from './volume';
+import { init as initStyle } from './style';
 
 import Gdk from 'gi://Gdk?version=3.0';
 import Gtk from 'gi://Gtk?version=3.0';
-import GLib from 'gi://GLib?version=2.0';
 
 function BarContent() {
 	return Widget.CenterBox({
@@ -26,6 +26,7 @@ function BarContent() {
 		}),
 		// Center
 		centerWidget: Widget.Box({
+			hpack: 'center',
 			children: [Clock()],
 		}),
 		// Right
@@ -168,14 +169,10 @@ function getMonitorByCoordinates(
 Mpris.cacheCoverArt = false;
 Notifications.popupTimeout = 10 * 1000;
 
-App.resetCss();
-const catppuccin = GLib.getenv('CATPPUCCIN_CSS') ?? undefined;
-if (catppuccin !== undefined) {
-	App.applyCss(catppuccin);
-}
-App.applyCss(`${App.configDir}/style.css`);
-
 // exporting the config so ags can manage the windows
-export default {
+App.config({
 	windows: [],
-};
+	onConfigParsed: () => {
+		initStyle();
+	},
+});
