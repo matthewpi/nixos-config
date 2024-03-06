@@ -56,9 +56,16 @@
       fetch.writeCommitGraph = false; # true (this option seems to piss of Cargo when dealing with submodules)
     };
 
+    difftastic = {
+      enable = true;
+      background = "dark";
+      color = "auto";
+      display = "side-by-side";
+    };
+
     # Use delta for diffing
     delta = {
-      enable = true;
+      # enable = true;
       options = {
         features = "catppuccin-${flavour}";
         line-numbers = true;
