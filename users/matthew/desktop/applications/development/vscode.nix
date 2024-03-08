@@ -230,17 +230,20 @@
   xdg.desktopEntries.codium = {
     actions = {
       "new-empty-window" = {
-        exec = "codium --new-window %F";
-        icon = "code";
+        exec = "codium --verbose --new-window %F";
+        icon = "vscodium";
         name = "New Empty Window";
       };
     };
 
     categories = ["Utility" "TextEditor" "Development" "IDE"];
     comment = "Code Editing. Redefined.";
-    exec = "codium %F";
+    # For some magical reason adding the `--verbose` flag causes codium to not crash when launched
+    # by `systemd-run`. I cannot figure out why, but someone else has reported the exact same
+    # issue and solution.
+    exec = "codium --verbose %F";
     genericName = "Text Editor";
-    icon = "code";
+    icon = "vscodium";
     mimeType = ["text/plain" "inode/directory"];
     name = "VSCodium";
     settings = {
