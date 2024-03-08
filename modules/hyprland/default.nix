@@ -24,5 +24,8 @@
       enable = lib.mkDefault true;
       criticalPowerAction = lib.mkDefault "PowerOff";
     };
+
+    # Enable gvfs
+    services.gvfs.enable = lib.mkDefault true;
   };
 }
