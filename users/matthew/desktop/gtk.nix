@@ -4,15 +4,97 @@
   pkgs,
   ...
 }: let
-  xdgDirs = builtins.map (x: "${x}/share/gsettings-schemas/${x.name}") (with pkgs; [gsettings-desktop-schemas gtk3 gtk4]);
+  pointerCursor = {
+    name = "macOS-Monterey";
+    package = pkgs.apple-cursor;
+    size = 16;
+
+    # Configure gtk.cursorTheme with the same options.
+    gtk.enable = true;
+  };
 in {
   # Ensure the proper gsettings-schemas are installed and properly accessible.
-  home.sessionVariables.GSETTINGS_SCHEMAS_PATH = builtins.concatStringsSep ":" xdgDirs;
-  xdg.systemDirs.data = xdgDirs;
+  #
+  # This path is linked by adding `/share/gsettings-schemas/glib-2.0` to `environment.pathsToLink`
+  # in the NixOS config (not under home-manager).
+  home.packages = [
+    (pkgs.runCommand "gsettings-schemas" {
+        nativeBuildInputs = with pkgs; [glib];
 
-  # Use gsettings to check for dark mode
-  # https://gitlab.gnome.org/GNOME/libadwaita/-/commit/e715fae6a509db006a805af816f9d163f81011ef
-  home.sessionVariables.ADW_DISABLE_PORTAL = "1";
+        # TODO: see if there is a better way to do this without needing to manually specify packages
+        # that have gsettings-schemas.
+        paths = with pkgs; [
+          gsettings-desktop-schemas
+          gtk3
+          gtk4
+
+          amberol
+          apostrophe
+          blackbox-terminal
+          eartag
+          easyeffects
+          errands
+          eyedropper
+          fragments
+          impression
+          switcheroo
+          video-trimmer
+          wike
+
+          epiphany
+          evince
+          gnome.dconf-editor
+          gnome.eog
+          gnome.file-roller
+          gnome.geary
+          gnome.gnome-calculator
+          gnome.gnome-calendar
+          gnome.gnome-characters
+          gnome.gnome-clocks
+          gnome.gnome-contacts
+          gnome.gnome-dictionary
+          gnome.gnome-disk-utility
+          gnome.gnome-font-viewer
+          gnome.gnome-logs
+          gnome.gnome-maps
+          gnome.gnome-system-monitor
+          gnome.gnome-weather
+          gnome.nautilus
+          gnome.seahorse
+          gnome.sushi
+          gnome.totem
+          gnome-text-editor
+        ];
+      } ''
+        mkdir schemas
+        # Get the gsettings-schemas for all paths
+        for path in $paths; do
+          cp $path/share/gsettings-schemas/*/glib-2.0/schemas/*.xml ./schemas || :
+          cp $path/share/gsettings-schemas/*/glib-2.0/schemas/*.override ./schemas || :
+        done
+
+        # Compile all the schemas
+        glib-compile-schemas ./schemas
+
+        mkdir -p "$out/share/gsettings-schemas/glib-2.0"
+        cp -r schemas "$out/share/gsettings-schemas/glib-2.0/"
+      '')
+  ];
+  home.sessionVariables.GSETTINGS_SCHEMAS_PATH = "${config.home.profileDirectory}/share/gsettings-schemas";
+  xdg.systemDirs.data = ["${config.home.profileDirectory}/share/gsettings-schemas"];
+
+  home.sessionVariables = {
+    # Use gsettings to check for dark mode
+    # https://gitlab.gnome.org/GNOME/libadwaita/-/commit/e715fae6a509db006a805af816f9d163f81011ef
+    ADW_DISABLE_PORTAL = "1";
+
+    # Set XCURSOR environment variables.
+    XCURSOR_THEME = pointerCursor.name;
+    XCURSOR_SIZE = toString pointerCursor.size;
+  };
+
+  # Configure the "pointer" (cursor) theme.
+  home.pointerCursor = pointerCursor;
 
   gtk = {
     enable = true;
@@ -27,12 +109,6 @@ in {
       "file://${config.home.homeDirectory}/Pictures"
       "file://${config.home.homeDirectory}/Videos"
     ];
-
-    cursorTheme = {
-      name = "macOS-Monterey";
-      package = pkgs.apple-cursor;
-      size = 16;
-    };
 
     iconTheme = {
       name = "WhiteSur-dark";

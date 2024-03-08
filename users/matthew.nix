@@ -9,6 +9,9 @@
     matthew = import ./matthew/linux.nix;
   };
 
+  # Link gsettings-schemas.
+  environment.pathsToLink = ["/share/gsettings-schemas/glib-2.0"];
+
   # Enable steam hardware
   hardware.steam-hardware.enable = true;
 
