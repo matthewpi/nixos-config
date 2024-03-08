@@ -44,48 +44,36 @@ npx tsc -d --declarationDir dts --emitDeclarationOnly
 
 # Fix paths
 echo 'Fixing type declaration imports'
-find ./dts -type f -print0 | while IFS= read -r -d '' file; do
-	sed -i 's/gi:\/\/DbusmenuGtk3/@girs\/dbusmenugtk3-0.4\/dbusmenugtk3-0.4/g' "$file"
-	sed -i 's/gi:\/\/GdkPixbuf/@girs\/gdkpixbuf-2.0\/gdkpixbuf-2.0/g' "$file" # Must go before gdk-2.0 to prevent partial matches
-	sed -i 's/gi:\/\/Gdk/@girs\/gdk-2.0\/gdk-2.0/g' "$file"
-	sed -i 's/gi:\/\/Gio/@girs\/gio-2.0\/gio-2.0/g' "$file"
-	sed -i 's/gi:\/\/GLib/@girs\/glib-2.0\/glib-2.0/g' "$file"
-	sed -i 's/gi:\/\/GObject/@girs\/gobject-2.0\/gobject-2.0/g' "$file"
-	sed -i 's/gi:\/\/Gtk?version=3.0/@girs\/gtk-3.0\/gtk-3.0/g' "$file"
-	sed -i 's/gi:\/\/Gvc/@girs\/gvc-1.0\/gvc-1.0/g' "$file"
-	sed -i 's/gi:\/\/NM/@girs\/nm-1.0\/nm-1.0/g' "$file"
-	sed -i 's/gi:\/\/Pango/@girs\/pango-1.0\/pango-1.0/g' "$file"
-done
+function fixPaths {
+	sed -i 's/node_modules/types/g' "$1"
+	sed -i 's/import("@girs/import("types\/@girs/g' "$1"
+}
+export -f fixPaths
+
+find ./dts -type f -print0 | xargs -0 -I % bash -c "fixPaths %"
+cp -r 'node_modules/@girs' ./dts/@girs
 
 # gen ags.d.ts
 function mod {
 	echo "declare module '$1' {
     const exports: typeof import('$2')
     export = exports
-}"
+}
+"
 }
 
 function resource {
 	mod "resource:///com/github/Aylur/ags/$1.js" "./$1"
 }
 
-function gi {
-	mod "gi://$1" "@girs/$2/$2"
-}
+dts='./dts/ags.d.ts'
 
-dts="${TMP_DIR}/ags/dts/ags.d.ts"
-
-echo "
-declare function print(...args: any[]): void;
-
-declare module console {
-    export function error(obj: object, others?: object[]): void;
-    export function error(msg: string, subsitutions?: any[]): void;
-    export function log(obj: object, others?: object[]): void;
-    export function log(msg: string, subsitutions?: any[]): void;
-    export function warn(obj: object, others?: object[]): void;
-    export function warn(msg: string, subsitutions?: any[]): void;
-}
+echo "declare function print(...args: any[]): void;
+declare const Widget: typeof import('./widget').default
+declare const Service: typeof import('./service').default
+declare const Variable: typeof import('./variable').default
+declare const Utils: typeof import('./utils').default
+declare const App: typeof import('./app').default
 " >"${dts}"
 
 for file in ./src/*.ts; do
@@ -103,12 +91,14 @@ for file in ./src/widgets/*.ts; do
 	resource "widgets/$(basename -s .ts "${file}")" >>"${dts}"
 done
 
-{
-	gi 'Gtk' 'gtk-3.0'
-	gi 'GObject' 'gobject-2.0'
-	gi 'Gio' 'gio-2.0'
-	gi 'GLib' 'glib-2.0'
-} >>"${dts}"
+for file in ./src/utils/*.ts; do
+	resource "utils/$(basename -s .ts "${file}")" >>"${dts}"
+done
 
 # Move types
+if [ -d "${WORKING_DIR}/types" ]; then
+	echo 'Removing previously generated types'
+	rm -rf "${WORKING_DIR}/types"
+fi
+echo 'Moving newly generated types'
 mv "${TMP_DIR}/ags/dts" "${WORKING_DIR}/types"

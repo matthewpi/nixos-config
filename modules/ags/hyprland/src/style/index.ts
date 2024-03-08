@@ -19,7 +19,7 @@ async function bash(strings: TemplateStringsArray | string, ...values: unknown[]
 
 async function resetCss(): Promise<void> {
 	try {
-		await bash`sass --scss --style compact '${entry}' '${outfile}'`;
+		await bash`sass --cache-location "\${XDG_CACHE_HOME}/sass" --scss --style compact '${entry}' '${outfile}'`;
 
 		App.resetCss();
 		App.applyCss(outfile);

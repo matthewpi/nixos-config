@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -9,6 +10,13 @@
     configDir = ./hyprland;
   };
 
+  # Used by AGS.
+  #
+  # Ideally we wouldn't install these globally and instead would add it to the path of the AGS
+  # service, but overwriting the PATH of the service causes issues when listing applications
+  # in the app launcher.
+  home.packages = with pkgs; [bun sass];
+
   # Configure a systemd user service for AGS.
   systemd.user.services.ags = {
     Unit = {
@@ -16,10 +24,7 @@
     };
 
     Service = {
-      Environment = [
-        "PATH=${pkgs.bash}/bin:${pkgs.bun}/bin:${pkgs.sass}/bin"
-      ];
-      ExecStart = "${config.programs.ags.package}/bin/ags";
+      ExecStart = lib.getExe' config.programs.ags.package "ags";
       Slice = "session.slice";
 
       # Capabilities

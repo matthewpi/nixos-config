@@ -37,13 +37,9 @@
 		"baseUrl": ".",
 
 		"typeRoots": [
-			"../../../types",
-			"../../../node_modules/@girs"
-		],
-
-		"paths": {
-			"types/*": ["../../../types/*"]
-		}
+			"./types",
+			"./node_modules/@girs"
+		]
 	},
-	"include": ["config.js", "src", "../../../types"]
+	"include": ["node_modules", "types"]
 }

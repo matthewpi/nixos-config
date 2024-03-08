@@ -32,7 +32,12 @@
 
 		"lib": ["ESNext"],
 		"module": "ESNext",
-		"target": "ESNext"
+		"target": "ESNext",
+
+		"typeRoots": ["../../../types"],
+		"paths": {
+			"types/*": ["../../../types/*"]
+		}
 	},
 	"exclude": ["node_modules"],
 	"include": ["config.js", "src", "../../../types"]
