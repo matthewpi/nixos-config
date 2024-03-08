@@ -88,10 +88,11 @@
     isNormalUser = true;
     shell = pkgs.zsh;
     extraGroups =
-      ["wheel"]
+      ["wheel" "audio" "video"]
       ++ lib.optionals config.programs.corectrl.enable ["corectrl"]
       ++ lib.optionals config.virtualisation.libvirtd.enable ["libvirtd" "qemu-libvirtd"]
-      ++ lib.optionals config.programs.wireshark.enable ["wireshark"];
+      ++ lib.optionals config.programs.wireshark.enable ["wireshark"]
+      ++ lib.optionals config.networking.networkmanager.enable ["networkmanager"];
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJ30VI7vAdrs2MDgkNHSQMJt2xBtBLrirVhinSyteeU"];
     hashedPasswordFile = config.age.secrets.passwordfile-matthew.path;
   };
@@ -439,16 +440,19 @@
         }
 
         {
+          directory = ".local/state/home-manager";
+          mode = "0700";
+        }
+        {
+          directory = ".local/state/nix";
+          mode = "0700";
+        }
+        {
           directory = ".local/state/nvim";
           mode = "0700";
         }
         {
           directory = ".local/state/wireplumber";
-          mode = "0700";
-        }
-
-        {
-          directory = ".fleet";
           mode = "0700";
         }
 
