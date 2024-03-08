@@ -8,6 +8,7 @@ import Notifications from 'resource:///com/github/Aylur/ags/service/notification
 import { Window } from 'resource:///com/github/Aylur/ags/widgets/window.js';
 
 import { Clock } from './components/clock';
+import { Window as LauncherWindow } from './components/launcher';
 import { Media } from './components/media';
 import { NotificationButton, NotificationLabel, PopupNotificationWindow } from './components/notifications';
 import { SysTray } from './components/systray';
@@ -171,7 +172,7 @@ Notifications.popupTimeout = 10 * 1000;
 
 // exporting the config so ags can manage the windows
 App.config({
-	windows: [],
+	windows: [LauncherWindow()],
 	onConfigParsed: () => {
 		initStyle();
 	},

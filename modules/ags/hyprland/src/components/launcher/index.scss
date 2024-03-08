@@ -1,0 +1,20 @@
+.app-launcher .scrollable {
+	padding-top: 0.75rem;
+	padding-left: 0.5rem;
+	padding-right: 0.5rem;
+	background: rgba(30, 30, 46, 0.75); // $base
+}
+
+// TODO: style entry
+
+.app-item {
+	background: transparent;
+	box-shadow: none;
+	border: none;
+	outline: none;
+}
+
+// TODO: find a way to make this not look ugly.
+button.app-item:focus {
+	box-shadow: 0 0 0 1px $primary;
+}
