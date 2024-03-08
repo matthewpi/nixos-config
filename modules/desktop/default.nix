@@ -6,7 +6,7 @@
   }: {
     imports = [
       ./1password.nix
-      #./bluetooth.nix
+      ./bluetooth.nix
       ./corectrl.nix
       ./dconf.nix
       ./fonts.nix
