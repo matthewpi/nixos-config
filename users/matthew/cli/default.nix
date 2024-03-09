@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   imports = [
     ./atuin.nix
     ./bat.nix
@@ -26,7 +30,7 @@
     nix-output-monitor
   ];
 
-  home.sessionVariables.NPM_CONFIG_USERCONFIG = ''''${XDG_CONFIG_HOME}/npm/npmrc'';
+  home.sessionVariables.NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
 
   xdg.configFile."npm/npmrc".text = ''
     # NPM
