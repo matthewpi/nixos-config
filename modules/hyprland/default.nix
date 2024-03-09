@@ -6,6 +6,7 @@
   }: {
     imports = [
       ./greetd.nix
+      ./gsettings.nix
     ];
 
     # Enable hyprlock PAM (and gnome-keyring integration)
