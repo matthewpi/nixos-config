@@ -21,14 +21,10 @@
   };
 
   home.sessionVariables = {
-    XDG_CACHE_HOME = "${config.home.homeDirectory}/.cache";
-    XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
-    XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
-    XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
-    # XDG_CACHE_HOME = config.xdg.cacheHome;
-    # XDG_CONFIG_HOME = config.xdg.configHome;
-    # XDG_DATA_HOME = config.xdg.dataHome;
-    # XDG_STATE_HOME = config.xdg.stateHome;
+    XDG_CACHE_HOME = config.xdg.cacheHome;
+    XDG_CONFIG_HOME = config.xdg.configHome;
+    XDG_DATA_HOME = config.xdg.dataHome;
+    XDG_STATE_HOME = config.xdg.stateHome;
 
     # Change CARGO_HOME from the default ~/.cargo location to follow the XDG spec.
     CARGO_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/cargo";
@@ -42,5 +38,6 @@
     #_JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.home.sessionVariables.XDG_CONFIG_HOME}/java";
   };
 
+  # Add all sessionVariables to systemd.
   systemd.user.sessionVariables = config.home.sessionVariables;
 }

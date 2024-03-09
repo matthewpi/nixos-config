@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  pkgs,
   ...
 }: {
   # https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/
@@ -8,6 +9,7 @@
     hyprlockExe = lib.getExe config.programs.hyprlock.package;
   in {
     enable = true;
+    package = pkgs.hypridle;
 
     listeners = [
       {

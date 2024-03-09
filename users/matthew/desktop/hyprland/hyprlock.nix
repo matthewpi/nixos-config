@@ -2,6 +2,7 @@
   # https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/
   programs.hyprlock = {
     enable = true;
+    package = pkgs.hyprlock;
 
     general = {
       disable_loading_bar = false;

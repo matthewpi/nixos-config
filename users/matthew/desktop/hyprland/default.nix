@@ -56,7 +56,7 @@
   # QT Theming
   qt = {
     enable = true;
-    platformTheme = "gtk";
+    platformTheme = "gtk3";
     style.name = "adwaita-dark";
   };
 }
