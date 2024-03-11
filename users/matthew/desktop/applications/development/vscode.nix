@@ -210,9 +210,9 @@
       };
 
       # Nix
-      "nix.enableLanguageServer" = true;
+      # "nix.enableLanguageServer" = true;
       # "nix.formatterPath" = ["nix" "fmt" "--" "-"];
-      "nix.serverPath" = "${lib.getExe pkgs.nixd}";
+      # "nix.serverPath" = "${lib.getExe pkgs.nixd}";
       "nix.serverSettings" = {
         "nixd" = {};
       };
