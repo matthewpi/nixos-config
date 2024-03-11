@@ -165,6 +165,7 @@ in {
       # Steam
       windowrulev2 = center, title:(Steam), class:(), floating:1
       windowrulev2 = float, title:(Steam Settings), class:(steam)
+      windowrulev2 = float, title:(Friends List), class:(steam)
 
       # Disable borders on floating windows
       windowrulev2 = noborder, floating:1
