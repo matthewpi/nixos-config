@@ -26,8 +26,8 @@
   # Add additional settings to the default xdg-desktop-portal-gtk user service.
   #systemd.user.services.xdg-desktop-portal-gtk = {
   #  Unit = {
-  #    PartOf = ["graphical-session.target"];
-  #    After = ["graphical-session.target"];
+  #    PartOf = ["hyprland-session.target"];
+  #    After = ["hyprland-session.target"];
   #    ConditionEnvironment = "WAYLAND_DISPLAY";
   #  };
   #  Service = {

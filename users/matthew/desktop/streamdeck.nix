@@ -65,6 +65,6 @@
       DeviceAllow = "/dev/streamdeck";
     };
 
-    Install.WantedBy = ["dev-streamdeck.device" "graphical-session.target"];
+    Install.WantedBy = ["dev-streamdeck.device" "hyprland-session.target"];
   };
 }
