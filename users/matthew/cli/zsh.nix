@@ -5,8 +5,9 @@
 }: {
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
     enableVteIntegration = true;
+
+    autosuggestion.enable = true;
 
     defaultKeymap = "emacs";
     dotDir = ".config/zsh";
