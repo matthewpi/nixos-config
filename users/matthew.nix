@@ -24,7 +24,7 @@
   # Enable yubikey-agent
   services.yubikey-agent.enable = true;
   systemd.user.services."yubikey-agent".serviceConfig.Slice = "background.slice";
-  programs.gnupg.agent.pinentryFlavor = "gnome3";
+  programs.gnupg.agent.pinentryPackage = with pkgs; pinentry-gnome3;
 
   # Enable gamescope
   programs.gamescope = {
