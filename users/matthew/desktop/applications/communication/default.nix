@@ -1,8 +1,7 @@
 {
   imports = [
     ./discord.nix
-    ./element.nix
-    #./fractal.nix
+    ./fractal.nix
     ./kooha.nix
     ./slack.nix
   ];
