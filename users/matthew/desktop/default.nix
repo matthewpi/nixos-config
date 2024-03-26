@@ -18,7 +18,7 @@
     tcpdump
 
     # Install nvtop
-    nvtop-amd
+    nvtopPackages.amd
 
     # Install kanidm
     (pkgs.linkFarm "kanidm" [
