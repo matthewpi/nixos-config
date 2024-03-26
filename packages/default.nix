@@ -62,6 +62,7 @@
       });
 
       # Flake overlays
+      hyprcursor = inputs.hyprcursor.packages.${system}.hyprcursor;
       hypridle = inputs.hypridle.packages.${system}.hypridle;
       hyprland = inputs.hyprland.packages.${system}.hyprland;
       hyprlang = inputs.hyprlang.packages.${system}.hyprlang;
