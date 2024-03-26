@@ -8,6 +8,7 @@
     _packages =
       {
         catppuccin = pkgs.callPackage ./catppuccin {};
+        catppuccin-hyprcursors = pkgs.callPackage ./catppuccin/hyprcursors.nix {};
         catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
 
         cider2 = pkgs.callPackage ./cider2 {};
@@ -38,6 +39,7 @@
       inherit
         (_packages)
         catppuccin
+        catppuccin-hyprcursors
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting

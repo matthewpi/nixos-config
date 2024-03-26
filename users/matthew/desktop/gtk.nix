@@ -5,8 +5,8 @@
   ...
 }: let
   pointerCursor = {
-    name = "macOS-Monterey";
-    package = pkgs.apple-cursor;
+    name = "Catppuccin-Mocha-Dark-Cursors";
+    package = pkgs.catppuccin-hyprcursors.mochaDark;
     size = 16;
 
     # Configure gtk.cursorTheme with the same options.
@@ -21,6 +21,9 @@ in {
     # Set XCURSOR environment variables.
     XCURSOR_THEME = pointerCursor.name;
     XCURSOR_SIZE = toString pointerCursor.size;
+
+    HYPRCURSOR_THEME = pointerCursor.name;
+    HYPRCURSOR_SIZE = toString pointerCursor.size;
   };
 
   # Configure the "pointer" (cursor) theme.
