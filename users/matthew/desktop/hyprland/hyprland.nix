@@ -140,10 +140,6 @@ in {
         no_direct_scanout = false
       }
 
-      # Start hyprpaper
-      # TODO: can we do this under systemd?
-      exec-once = ${lib.getExe pkgs.hyprpaper}
-
       # Dialogs
       windowrule = float, title:^(Open File)(.*)$
       windowrule = float, title:^(Select a File)(.*)$

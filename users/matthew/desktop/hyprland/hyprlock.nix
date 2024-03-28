@@ -1,4 +1,12 @@
-{pkgs, ...}: {
+{
+  inputs,
+  pkgs,
+  ...
+}: {
+  imports = [
+    inputs.hyprlock.homeManagerModules.default
+  ];
+
   # https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/
   programs.hyprlock = {
     enable = true;

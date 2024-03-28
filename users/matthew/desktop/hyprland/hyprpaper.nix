@@ -1,15 +1,20 @@
-{pkgs, ...}: {
-  # https://wiki.hyprland.org/Hypr-Ecosystem/hyprpaper/
-  # https://github.com/hyprwm/hyprpaper/tree/main?tab=readme-ov-file#usage
-  xdg.configFile."hypr/hyprpaper.conf".text = ''
-    # Disable IPC, we only staticly set a wallpaper and never use IPC.
-    ipc = off
+{
+  inputs,
+  pkgs,
+  ...
+}: {
+  imports = [
+    inputs.hyprpaper.homeManagerModules.hyprpaper
+  ];
 
-    # Disable splash
-    splash = off
-
-    # Preload and set the wallpaper
-    preload = ${pkgs.catppuccin-wallpapers}/nix-black-4k.png
-    wallpaper = ,${pkgs.catppuccin-wallpapers}/nix-black-4k.png
-  '';
+  services.hyprpaper = let
+    wallpaper = "${pkgs.catppuccin-wallpapers}/nix-black-4k.png";
+  in {
+    enable = true;
+    ipc = false;
+    splash = false;
+    # yes the extra comma here is intentional, it makes the wallpaper appear on all monitors.
+    wallpapers = [",${wallpaper}"];
+    preloads = [wallpaper];
+  };
 }

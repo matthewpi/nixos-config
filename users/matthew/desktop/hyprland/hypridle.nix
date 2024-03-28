@@ -1,9 +1,14 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
 }: {
+  imports = [
+    inputs.hypridle.homeManagerModules.default
+  ];
+
   # https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/
   services.hypridle = let
     hyprlockExe = lib.getExe config.programs.hyprlock.package;

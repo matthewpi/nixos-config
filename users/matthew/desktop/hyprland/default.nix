@@ -5,8 +5,6 @@
 }: {
   imports = [
     inputs.hyprland.homeManagerModules.default
-    inputs.hypridle.homeManagerModules.default
-    inputs.hyprlock.homeManagerModules.default
 
     inputs.ags.homeManagerModules.default
 
