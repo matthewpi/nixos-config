@@ -228,7 +228,10 @@
               inputs.agenix.nixosModules.default
               inputs.home-manager.nixosModules.home-manager
 
-              self.nixosModules.amd-ryzen
+              # Right now, the `amd-ryzen` module enables zenpower which doesn't
+              # support Zen 4. I just upgraded from Zen 3 to Zen 4, hence why this
+              # is now disabled.
+              # self.nixosModules.amd-ryzen
               self.nixosModules.catppuccin
               self.nixosModules.desktop
               self.nixosModules.hyprland
