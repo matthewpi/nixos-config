@@ -21,23 +21,24 @@
     nvtopPackages.amd
 
     # Install kanidm
-    (pkgs.linkFarm "kanidm" [
+    (linkFarm "kanidm" [
       # Only add the kanidm binary to our path, not all the server ones.
       rec {
         name = "bin/kanidm";
-        path = "${pkgs.kanidm}/${name}";
+        path = "${kanidm}/${name}";
       }
       # Bash completions
       rec {
         name = "share/bash-completion/kanidm.bash";
-        path = "${pkgs.kanidm}/${name}";
+        path = "${kanidm}/${name}";
       }
       # ZSH completions
       rec {
         name = "share/zsh/site-functions/_kanidm";
-        path = "${pkgs.kanidm}/${name}";
+        path = "${kanidm}/${name}";
       }
     ])
+    attic-client
   ];
 
   xdg.mimeApps = {

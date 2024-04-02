@@ -244,6 +244,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/attic";
+          mode = "0700";
+        }
+        {
           directory = ".config/easyeffects";
           mode = "0700";
         }
@@ -289,6 +293,10 @@
         }
         {
           directory = ".config/nautilus";
+          mode = "0700";
+        }
+        {
+          directory = ".config/nix";
           mode = "0700";
         }
         {
