@@ -66,8 +66,8 @@
 
     # Monitor configuration
     # TODO: re-use user-level monitor configuration.
-    monitor = DP-3, 1920x1080@144, 0x0, 1, vrr,1
-    monitor = HDMI-A-1, 1920x1080@60, -1920x0, 1, vrr,0
+    monitor = DP-3, 3840x2160@240, 0x0, 1.5, vrr,0
+    monitor = HDMI-A-1, 1920x1080@144, -1920x0, 1, vrr,0
 
     exec-once = ${lib.getExe' inputs.ags.packages.${pkgs.system}.ags "ags"} --config /etc/greetd/ags/config.js; hyprctl dispatch exit
   '';

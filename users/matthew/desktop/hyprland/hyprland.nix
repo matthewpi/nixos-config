@@ -170,8 +170,8 @@ in {
       windowrulev2 = idleinhibit always, fullscreen:1
 
       # Monitor configuration
-      monitor = DP-3, 1920x1080@144, 0x0, 1, vrr,1
-      monitor = HDMI-A-1, 1920x1080@60, -1920x0, 1, vrr,0
+      monitor = DP-3, 3840x2160@240, 0x0, 1.5, vrr,2
+      monitor = HDMI-A-1, 1920x1080@144, -1920x0, 1, vrr,0
 
       # Configure default workspaces for the monitors
       workspace = 1, monitor:DP-3, default:true
