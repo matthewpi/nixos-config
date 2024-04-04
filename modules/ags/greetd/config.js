@@ -36,7 +36,7 @@ const window = Widget.Window({
 });
 
 // exporting the config so ags can manage the windows
-export default {
+App.config({
 	style: `${App.configDir}/style.css`,
 	windows: [window],
-};
+});
