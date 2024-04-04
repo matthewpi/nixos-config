@@ -30,19 +30,19 @@
   programs.gamescope = {
     enable = true;
     capSysNice = true;
-    args = [
-      "--force-composition"
-      "--nested-width 1920"
-      "--nested-height 1080"
-      "--nested-refresh 144"
-      "--output-width 1920"
-      "--output-height 1080"
-      "--nested-unfocused-refresh 30"
-      "--fullscreen"
-      "--rt"
-      "--expose-wayland"
-      "--force-grab-cursor"
-    ];
+    #args = [
+    #  "--force-composition"
+    #  "--nested-width 3840"
+    #  "--nested-height 2160"
+    #  "--nested-refresh 120"
+    #  "--output-width 3840"
+    #  "--output-height 2160"
+    #  "--nested-unfocused-refresh 30"
+    #  "--fullscreen"
+    #  "--rt"
+    #  "--expose-wayland"
+    #  "--force-grab-cursor"
+    #];
   };
 
   programs.steam = {
