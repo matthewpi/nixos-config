@@ -52,29 +52,29 @@
         {
           name = "vscode-buf";
           publisher = "bufbuild";
-          version = "0.5.1";
-          sha256 = "sha256-73+VblPnfozEyqdqUJsUjGY6FKYS70keXIpEXS8EvxA=";
+          version = "0.6.2";
+          sha256 = "sha256-x2yk3J0peTMMV1VuF+eRCOM+I2lWPzwnBch7s4xJ3yA=";
         }
         # npm Intellisense
         {
           name = "npm-intellisense";
           publisher = "christian-kohler";
-          version = "1.4.4";
-          sha256 = "sha256-RLni/Iz2ZIX8/17gArc90ycVU9wPhNBa32Pe47sdGr0=";
+          version = "1.4.5";
+          sha256 = "sha256-liuFGnyvvVHzSv60oLkemFyv85R+RiGKErRIUz2PYKs=";
         }
         # Systemd Helper
         {
           name = "vscode-systemd-support";
           publisher = "hangxingliu";
-          version = "1.0.1";
-          sha256 = "sha256-2uMsLQWv06/nYt3F6qu1JLVSJAKdRlsOqSw+K4M38jg=";
+          version = "2.2.0";
+          sha256 = "sha256-08pypB6PZk9diwVmHkwuW6SMlpTbw159seuaWALfMlE=";
         }
-        # TODO Highlight
+        # TODO Highlight v2
         {
           name = "vscode-todo-highlight";
-          publisher = "wayou";
-          version = "1.0.5";
-          sha256 = "sha256-CQVtMdt/fZcNIbH/KybJixnLqCsz5iF1U0k+GfL65Ok=";
+          publisher = "jgclark";
+          version = "2.0.8";
+          sha256 = "sha256-/CctaLcG+dA2Cf69/ACeDKdRLsu/VUGbAxUbyhI0VyA=";
         }
         # Toggle Quotes
         {
@@ -87,8 +87,8 @@
         {
           name = "volar";
           publisher = "vue";
-          version = "1.8.5";
-          sha256 = "sha256-AEIQFglW6RiWusiciMUeXgMs+bIERI/oDY6GUEQTPKg=";
+          version = "2.0.7";
+          sha256 = "sha256-6UN9e45yP8jfnF7WuSwblXCf5d7QtNdzOV0tc7dp1TA=";
         }
         # MDC - Markdown Components
         {
@@ -96,6 +96,13 @@
           publisher = "Nuxt";
           version = "0.2.0";
           sha256 = "sha256-M/29ZDg1sva9msGgRe6xqpCYDpW6X/BqKxmiJhzeVXQ=";
+        }
+        # Nuxtr
+        {
+          name = "nuxtr-vscode";
+          publisher = "nuxtr";
+          version = "0.2.16";
+          sha256 = "sha256-DVoq8zdlJ2ch8PCG34f1PRkILym9XdclUHQ9s2B5OME=";
         }
       ];
 
