@@ -7,7 +7,7 @@
   pointerCursor = {
     name = "Catppuccin-Mocha-Dark-Cursors";
     package = pkgs.catppuccin-hyprcursors.mochaDark;
-    size = 16;
+    size = 24;
 
     # Configure gtk.cursorTheme with the same options.
     gtk.enable = true;
