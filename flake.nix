@@ -258,6 +258,14 @@
                     owner = "matthew";
                     group = "users";
                   };
+
+                  desktop-resolved = {
+                    file = secrets/desktop-resolved.age;
+                    path = "/etc/systemd/resolved.conf";
+                    mode = "444";
+                    owner = "root";
+                    group = "root";
+                  };
                 };
 
                 age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];

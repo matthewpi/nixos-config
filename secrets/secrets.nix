@@ -12,4 +12,6 @@ in {
   "restic-matthew-code.age".publicKeys = hosts ++ users;
   "restic-matthew-code-repository.age".publicKeys = hosts ++ users;
   "restic-matthew-code-password.age".publicKeys = hosts ++ users;
+
+  "desktop-resolved.age".publicKeys = hosts ++ users;
 }

@@ -214,4 +214,7 @@
     dhcpV4Config.UseDNS = false;
     dhcpV6Config.UseDNS = false;
   };
+
+  # Disable default resolved config, we use an age encrypted one with NextDNS.
+  environment.etc."systemd/resolved.conf".enable = false;
 }
