@@ -204,4 +204,14 @@
 
   # Allow systemd to handle coredumps.
   systemd.coredump.enable = true;
+
+  # Configure default interfaces for DHCP and IPv6 RA, alongside jumbo frames.
+  systemd.network.networks."40-en" = {
+    matchConfig.Name = "en*";
+    linkConfig.MTUBytes = "9216";
+    DHCP = "ipv4";
+    networkConfig.IPv6AcceptRA = true;
+    dhcpV4Config.UseDNS = false;
+    dhcpV6Config.UseDNS = false;
+  };
 }
