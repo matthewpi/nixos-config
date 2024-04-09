@@ -19,9 +19,14 @@
       };
 
       default_session = {
-        command = "${hyprland} --config /etc/greetd/hyprland.conf";
-        user = "greeter";
+        command = hyprland;
+        user = "matthew";
       };
+
+      #default_session = {
+      #  command = "${hyprland} --config /etc/greetd/hyprland.conf";
+      #  user = "greeter";
+      #};
     };
   };
 
@@ -31,6 +36,11 @@
     # Load catppuccin color variables so we can have a nice color scheme
     # TODO: map flavour
     source = ${pkgs.catppuccin}/hyprland/mocha.conf
+
+    xwayland {
+      # https://wiki.hyprland.org/Configuring/XWayland/#hidpi-xwayland
+      force_zero_scaling = true
+    }
 
     input {
       kb_layout = us

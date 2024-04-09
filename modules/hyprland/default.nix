@@ -10,8 +10,6 @@
     ];
 
     # Enable hyprlock PAM (and gnome-keyring integration)
-    #
-    # Won't do anything until https://github.com/hyprwm/hyprlock/issues/4#issuecomment-1960904526 is resolved.
     security.pam.services.hyprlock.enableGnomeKeyring = lib.mkDefault config.services.gnome.gnome-keyring.enable;
 
     # Enable GNOME keyring.
