@@ -1,5 +1,6 @@
 {
   inputs,
+  lib,
   pkgs,
   ...
 }: {
@@ -16,5 +17,11 @@
     # yes the extra comma here is intentional, it makes the wallpaper appear on all monitors.
     wallpapers = [",${wallpaper}"];
     preloads = [wallpaper];
+  };
+
+  systemd.user.services.hyprpaper = {
+    Service.Slice = "session.slice";
+    Unit.PartOf = lib.mkForce ["hyprland-session.target"];
+    Install.WantedBy = lib.mkForce ["hyprland-session.target"];
   };
 }

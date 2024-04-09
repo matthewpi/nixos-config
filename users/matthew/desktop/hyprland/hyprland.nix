@@ -55,8 +55,9 @@
   });
 in {
   home.sessionVariables = {
+    XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_DESKTOP = "Hyprland";
-    #WLR_NO_HARDWARE_CURSORS = "1";
+    WLR_NO_HARDWARE_CURSORS = "1";
   };
 
   wayland.windowManager.hyprland = {
@@ -67,13 +68,18 @@ in {
 
     # Add additional variables that allow desktop portals to work properly.
     systemd.variables = lib.mkDefault [
-      # https://github.com/hyprwm/hypridle/issues/20#issuecomment-1964160720
+      # https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#programs-dont-work-in-systemd-services-but-do-on-the-terminal
       "--all"
     ];
 
     extraConfig = ''
       # Load catppuccin color variables so we can have a nice color scheme
       source = ${pkgs.catppuccin}/hyprland/${flavour}.conf
+
+      xwayland {
+        # https://wiki.hyprland.org/Configuring/XWayland/#hidpi-xwayland
+        force_zero_scaling = true
+      }
 
       input {
         kb_layout = us
@@ -170,8 +176,8 @@ in {
       windowrulev2 = idleinhibit always, fullscreen:1
 
       # Monitor configuration
-      monitor = DP-3, 3840x2160@240, 0x0, 1.5, vrr,2
-      monitor = HDMI-A-1, 1920x1080@144, -1920x0, 1, vrr,0
+      monitor = DP-3, 3840x2160@240, 0x0, 1.5, vrr,2, bitdepth,8
+      monitor = HDMI-A-1, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8
 
       # Configure default workspaces for the monitors
       workspace = 1, monitor:DP-3, default:true

@@ -24,13 +24,16 @@
       }
     ];
 
-    lockCmd = "${hyprlockExe} & sleep 3 && hyprctl dispatch dpms off";
+    lockCmd = hyprlockExe;
     beforeSleepCmd = hyprlockExe;
     unlockCmd = "";
     afterSleepCmd = "";
   };
 
-  # Run hypridle under session.slice
-  systemd.user.services.hypridle.Service.Slice = "session.slice";
-  systemd.user.services.hypridle.Install.WantedBy = ["hyprland-session.target"];
+  systemd.user.services.hypridle = {
+    Service.Slice = "session.slice";
+    Unit.After = lib.mkForce [];
+    Unit.PartOf = lib.mkForce ["hyprland-session.target"];
+    Install.WantedBy = lib.mkForce ["hyprland-session.target"];
+  };
 }

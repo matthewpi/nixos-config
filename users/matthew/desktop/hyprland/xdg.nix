@@ -4,7 +4,8 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [glib xdg-utils];
+  # grim and slurp are wanted by XDPH.
+  home.packages = with pkgs; [glib xdg-utils grim slurp];
 
   xdg.portal = {
     enable = lib.mkDefault true;
@@ -15,10 +16,7 @@
       })
       pkgs.xdg-desktop-portal-gtk
     ];
-    configPackages = [
-      config.wayland.windowManager.hyprland.finalPackage
-    ];
-
+    config.common.default = ["hyprland" "gtk"];
     config.hyprland.default = ["hyprland" "gtk"];
   };
 
