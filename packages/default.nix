@@ -20,9 +20,6 @@
         monaspace = pkgs.callPackage ./monaspace.nix {};
 
         zed-editor = pkgs.callPackage ./zed-editor {};
-      }
-      // lib.optionalAttrs (pkgs.stdenv.system == "x86_64-linux") {
-        forge-sparks = pkgs.callPackage ./forge-sparks {};
       };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
