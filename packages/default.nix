@@ -5,20 +5,19 @@
     system,
     ...
   }: let
-    _packages =
-      {
-        catppuccin = pkgs.callPackage ./catppuccin {};
-        catppuccin-hyprcursors = pkgs.callPackage ./catppuccin/hyprcursors.nix {};
-        catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
+    _packages = {
+      catppuccin = pkgs.callPackage ./catppuccin {};
+      catppuccin-hyprcursors = pkgs.callPackage ./catppuccin/hyprcursors.nix {};
+      catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
 
-        cider2 = pkgs.callPackage ./cider2 {};
+      cider2 = pkgs.callPackage ./cider2 {};
 
-        fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
-        zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
+      fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
+      zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
 
-        inter = pkgs.callPackage ./inter.nix {};
-        monaspace = pkgs.callPackage ./monaspace.nix {};
-      };
+      inter = pkgs.callPackage ./inter.nix {};
+      monaspace = pkgs.callPackage ./monaspace.nix {};
+    };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
 
