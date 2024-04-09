@@ -1,10 +1,22 @@
-{lib, ...}: {
-  # Enable chrony in favor of systemd-timesyncd.
-  services.chrony.enable = lib.mkDefault true;
+{
+  config,
+  lib,
+  ...
+}: {
+  # Enable systemd-timesyncd in favor of chrony by default.
   services.timesyncd.enable = lib.mkDefault false;
+  services.chrony = {
+    enable = lib.mkDefault true;
+    enableNTS = lib.mkDefault true;
+    # TODO: client-side smearing?
+  };
 
-  # Disable systemd-networkd
-  systemd.network.enable = lib.mkDefault false;
+  # Configure time servers.
+  networking.timeServers = lib.mkDefault ["time.cloudflare.com"];
+
+  # Enable systemd-networkd by default.
+  systemd.network.enable = lib.mkDefault true;
+  networking.useNetworkd = lib.mkDefault true;
 
   # Enable firewall
   networking.firewall = {
@@ -12,35 +24,31 @@
     allowPing = lib.mkDefault true;
   };
 
-  # Enable NetworkManager
+  # Disable NetworkManager by default when systemd-networkd is disabled.
   networking.networkmanager = {
-    enable = lib.mkDefault true;
+    enable =
+      if config.systemd.network.enable
+      then lib.mkForce false
+      else lib.mkDefault true;
+    dns =
+      if config.services.resolved.enable
+      then lib.mkDefault "systemd-resolved"
+      else lib.mkDefault "default";
     plugins = lib.mkForce [];
-    dns = lib.mkDefault "systemd-resolved";
   };
 
-  # Disable wireless
-  networking.wireless = {
-    enable = lib.mkDefault false;
-  };
+  # Forcefully disable wireless.
+  networking.wireless.enable = lib.mkForce false;
 
-  # Enable systemd-resolved
+  # Enable systemd-resolved by default.
   services.resolved = {
     enable = lib.mkDefault true;
+    llmnr = lib.mkDefault "false";
     dnssec = lib.mkDefault "false";
   };
 
-  # Enable nftables
-  networking.nftables = {
-    enable = lib.mkDefault true;
-  };
-
-  # Configure time servers
-  services.chrony.enableNTS = lib.mkDefault true;
-  networking.timeServers = lib.mkDefault [
-    # https://developers.cloudflare.com/time-services/ntp/
-    "time.cloudflare.com"
-  ];
+  # Enable nftables by default.
+  networking.nftables.enable = lib.mkDefault true;
 
   # Enable mtr
   programs.mtr.enable = lib.mkDefault true;
