@@ -18,8 +18,6 @@
 
         inter = pkgs.callPackage ./inter.nix {};
         monaspace = pkgs.callPackage ./monaspace.nix {};
-
-        zed-editor = pkgs.callPackage ./zed-editor {};
       };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
