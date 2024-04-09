@@ -104,6 +104,27 @@
           version = "0.2.16";
           sha256 = "sha256-DVoq8zdlJ2ch8PCG34f1PRkILym9XdclUHQ9s2B5OME=";
         }
+        # SQLTools
+        {
+          name = "sqltools";
+          publisher = "mtxr";
+          version = "0.28.1";
+          sha256 = "sha256-PzDbH9pYeIzmMFOkPMsbo5pNGXI6qusaAlwM6sk9s10=";
+        }
+        # SQLTools PostgreSQL/Cockroach Driver
+        {
+          name = "sqltools-driver-pg";
+          publisher = "mtxr";
+          version = "0.5.1";
+          sha256 = "sha256-TZ5KMjSafdJozKuUL6IatHyChk/b4b27JcuOe1Qtnyw=";
+        }
+        # SQLTools ClickHouse Driver
+        {
+          name = "sqltools-clickhouse-driver";
+          publisher = "ultram4rine";
+          version = "0.5.0";
+          sha256 = "sha256-uvCTYDBKD/qCZmiGUQjxvUeT1KS9a8U9y/JIdnXhXxM=";
+        }
       ];
 
     keybindings = [];
@@ -202,7 +223,7 @@
       "go.lintTool" = "golangci-lint";
       "go.lintOnSave" = "off";
       "go.gopath" = config.home.sessionVariables.GOPATH;
-      "go.goroot" = "${pkgs.go_1_21}/share/go";
+      "go.goroot" = "${pkgs.go_1_22}/share/go";
       "go.toolsManagement.checkForUpdates" = "off";
       "go.toolsManagement.autoUpdate" = false;
       "go.alternateTools" = {
@@ -237,7 +258,7 @@
   xdg.desktopEntries.codium = {
     actions = {
       "new-empty-window" = {
-        exec = "codium --verbose --new-window %F";
+        exec = "codium --new-window %F";
         icon = "vscodium";
         name = "New Empty Window";
       };
@@ -245,10 +266,7 @@
 
     categories = ["Utility" "TextEditor" "Development" "IDE"];
     comment = "Code Editing. Redefined.";
-    # For some magical reason adding the `--verbose` flag causes codium to not crash when launched
-    # by `systemd-run`. I cannot figure out why, but someone else has reported the exact same
-    # issue and solution.
-    exec = "codium --verbose %F";
+    exec = "codium %F";
     genericName = "Text Editor";
     icon = "vscodium";
     mimeType = ["text/plain" "inode/directory"];
