@@ -92,10 +92,16 @@ in
 
         # Move all the normal SVGs into their appropriate directories alongside a `meta.hl` file.
         for file in *.svg; do
-          direct=hyprcursors/"''${file%.svg}"
+          cursorName="''${file%.svg}"
+          direct=hyprcursors/"$cursorName"
           mkdir "$direct"
           mv "$file" "$direct"
           echo -e "resize_algorithm = bilinear\ndefine_size = 64, $file" >"$direct"/meta.hl
+
+          # For the `text` cursor, fix the hotspot (the actual "click point" of the cursor).
+          if [ "$cursorName" == 'text' ]; then
+            echo -e "hotspot_x = 0.5\nhotspot_y = 0.5" >>"$direct"/meta.hl
+          fi
         done
 
         # Generate metadata for animations
