@@ -208,7 +208,7 @@
   # Configure default interfaces for DHCP and IPv6 RA, alongside jumbo frames.
   systemd.network.networks."40-en" = {
     matchConfig.Name = "en*";
-    linkConfig.MTUBytes = "9216";
+    linkConfig.MTUBytes = "9000";
     DHCP = "ipv4";
     networkConfig.IPv6AcceptRA = true;
     dhcpV4Config.UseDNS = false;
