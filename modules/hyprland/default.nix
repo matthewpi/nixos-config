@@ -26,5 +26,8 @@
 
     # Enable gvfs
     services.gvfs.enable = lib.mkDefault true;
+
+    # Fixes issues with XDG portal definitions not being detected.
+    environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
   };
 }
