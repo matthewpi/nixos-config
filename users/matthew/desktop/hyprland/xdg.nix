@@ -3,35 +3,71 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  inherit (pkgs) xdg-desktop-portal-gtk;
+  xdg-desktop-portal-hyprland = pkgs.xdg-desktop-portal-hyprland.override {
+    hyprland = config.wayland.windowManager.hyprland.finalPackage;
+  };
+in {
   # grim and slurp are wanted by XDPH.
   home.packages = with pkgs; [glib xdg-utils grim slurp];
 
   xdg.portal = {
     enable = lib.mkDefault true;
-    xdgOpenUsePortal = lib.mkDefault false;
+    xdgOpenUsePortal = lib.mkDefault true;
     extraPortals = [
-      (pkgs.xdg-desktop-portal-hyprland.override {
-        hyprland = config.wayland.windowManager.hyprland.finalPackage;
-      })
-      pkgs.xdg-desktop-portal-gtk
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
     ];
     config.hyprland.default = ["hyprland" "gtk"];
   };
 
-  # TODO: fix override, this doesn't work as the systemd configuration for the gtk portal is linked from it's package.
-  # Add additional settings to the default xdg-desktop-portal-gtk user service.
-  #systemd.user.services.xdg-desktop-portal-gtk = {
-  #  Unit = {
-  #    PartOf = ["hyprland-session.target"];
-  #    After = ["hyprland-session.target"];
-  #    ConditionEnvironment = "WAYLAND_DISPLAY";
-  #  };
-  #  Service = {
-  #    Restart = "on-failure";
-  #    Slice = "session.slice";
-  #  };
-  #};
+  systemd.user.services = {
+    xdg-desktop-portal = {
+      Unit = {
+        Description = "Portal service";
+        PartOf = ["hyprland-session.target"];
+        After = ["hyprland-session.target"];
+      };
+      Service = {
+        Slice = "session.slice";
+        Type = "dbus";
+        BusName = "org.freedesktop.portal.Desktop";
+        ExecStart = "${pkgs.xdg-desktop-portal}/libexec/xdg-desktop-portal";
+        Restart = "on-failure";
+      };
+    };
+
+    xdg-desktop-portal-gtk = {
+      Unit = {
+        Description = "Portal service (GTK/GNOME implementation)";
+        PartOf = ["hyprland-session.target"];
+        After = ["hyprland-session.target"];
+      };
+      Service = {
+        Slice = "session.slice";
+        Type = "dbus";
+        BusName = "org.freedesktop.impl.portal.desktop.gtk";
+        ExecStart = "${xdg-desktop-portal-gtk}/libexec/xdg-desktop-portal-gtk";
+        Restart = "on-failure";
+      };
+    };
+
+    xdg-desktop-portal-hyprland = {
+      Unit = {
+        Description = "Portal service (Hyprland implementation)";
+        PartOf = ["hyprland-session.target"];
+        After = ["hyprland-session.target"];
+      };
+      Service = {
+        Slice = "session.slice";
+        Type = "dbus";
+        BusName = "org.freedesktop.impl.portal.desktop.hyprland";
+        ExecStart = "${xdg-desktop-portal-hyprland}/libexec/xdg-desktop-portal-hyprland";
+        Restart = "on-failure";
+      };
+    };
+  };
 
   xdg.userDirs = {
     enable = true;
