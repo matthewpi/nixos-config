@@ -18,6 +18,9 @@
     # the GNOME keyring service is configured under home-manager.
     services.gnome.gnome-keyring.enable = lib.mkDefault true;
 
+    services.gnome.gnome-online-accounts.enable = lib.mkDefault true;
+    services.gnome.evolution-data-server.enable = lib.mkDefault true;
+
     # Enable upower
     services.upower = {
       enable = lib.mkDefault true;
