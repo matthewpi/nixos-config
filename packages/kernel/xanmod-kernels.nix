@@ -10,28 +10,19 @@
   # NOTE: When updating these, please also take a look at the changes done to
   # kernel config in the xanmod version commit
   ltsVariant = {
-    version = "6.6.22";
+    version = "6.6.28";
     hash = "sha256-vpWUdzgI8i/1r5nMp0tx+x67GDTnjQF5ueITIl36lvA=";
-    #variant = "lts";
   };
 
   mainVariant = {
-    version = "6.7.10";
-    hash = "sha256-uwlvQh11uf1skSdlIz7XdjRkdI/wf3VqEeOP20JO5OU=";
-    #variant = "main";
-  };
-
-  edgeVariant = {
-    version = "6.8.6";
-    hash = "sha256-7GsiIl3rcLm/u2zxrjpP6dTxn7w/6at22gaU//mLlzw=";
-    #variant = "edge";
+    version = "6.8.7";
+    hash = "sha256-S9UooZhMtvfyL2BVUfMBxvPLkZvXm37duWSjcpk5dvY=";
   };
 
   xanmodKernelFor = {
     version,
     suffix ? "xanmod1",
     hash,
-    #variant,
   }:
     buildLinux (args
       // rec {
@@ -77,5 +68,4 @@
 in {
   lts = xanmodKernelFor ltsVariant;
   main = xanmodKernelFor mainVariant;
-  edge = xanmodKernelFor edgeVariant;
 }

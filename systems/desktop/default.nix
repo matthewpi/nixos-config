@@ -31,9 +31,9 @@
       ];
     };
 
-    linux_xanmod_edge = xanmodKernels.edge;
+    linux_xanmod_main = xanmodKernels.main;
   in
-    pkgs.linuxPackagesFor linux_xanmod_edge;
+    pkgs.linuxPackagesFor linux_xanmod_main;
 
   # Enable the v4l2loopback kernel module.
   boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
