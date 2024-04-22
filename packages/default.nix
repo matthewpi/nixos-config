@@ -17,6 +17,8 @@
 
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
+
+      vesktop = pkgs.callPackage ./vesktop/package.nix {};
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -42,6 +44,7 @@
         monaspace
         zed-editor
         zsh-titles
+        vesktop
         ;
 
       _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
