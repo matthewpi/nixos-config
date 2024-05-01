@@ -15,8 +15,8 @@
   };
 
   mainVariant = {
-    version = "6.8.7";
-    hash = "sha256-S9UooZhMtvfyL2BVUfMBxvPLkZvXm37duWSjcpk5dvY=";
+    version = "6.8.8";
+    hash = "sha256-6fT9vRjHw775m4ySUAUWU9R0dz/cWYYdZsPCwZjGiXM=";
   };
 
   xanmodKernelFor = {
