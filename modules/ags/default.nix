@@ -35,8 +35,7 @@
       # TODO: figure out how to protect home and system without breaking themes and styles.
       BindPaths = [
         # Required to access Hyprland IPC
-        "/tmp/hypr"
-        # "/run/user"
+        "/run/user/1000/hypr"
       ];
       # BindReadOnlyPaths = [
       #   "/etc/profiles/per-user/matthew"
