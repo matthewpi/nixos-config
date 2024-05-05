@@ -86,9 +86,9 @@
         # Vue Language Features (Volar)
         {
           name = "volar";
-          publisher = "vue";
-          version = "2.0.7";
-          sha256 = "sha256-6UN9e45yP8jfnF7WuSwblXCf5d7QtNdzOV0tc7dp1TA=";
+          publisher = "Vue";
+          version = "2.0.16";
+          sha256 = "sha256-RTBbF7qahYP4L7SZ/5aCM/e5crZAyyPRcgL48FVL1jk=";
         }
         # MDC - Markdown Components
         {
