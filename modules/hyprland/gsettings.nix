@@ -14,7 +14,6 @@
 
           amberol
           apostrophe
-          blackbox-terminal
           eartag
           easyeffects
           errands
