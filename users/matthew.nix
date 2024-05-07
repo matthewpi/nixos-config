@@ -248,6 +248,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/aws";
+          mode = "0700";
+        }
+        {
           directory = ".config/easyeffects";
           mode = "0700";
         }
