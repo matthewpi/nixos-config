@@ -66,10 +66,9 @@
     };
 
     hyprland = {
-      url = "github:hyprwm/Hyprland";
+      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
       inputs = {
         hyprcursor.follows = "hyprcursor";
-        hyprland-protocols.follows = "hyprland-protocols";
         hyprlang.follows = "hyprlang";
         xdph.follows = "xdph";
         nixpkgs.follows = "nixpkgs";
