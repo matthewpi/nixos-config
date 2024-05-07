@@ -1,33 +1,29 @@
 {
   config,
-  inputs,
   lib,
   pkgs,
   ...
 }: {
-  imports = [
-    inputs.hypridle.homeManagerModules.default
-  ];
-
   # https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/
   services.hypridle = let
     hyprlockExe = lib.getExe config.programs.hyprlock.package;
   in {
     enable = true;
     package = pkgs.hypridle;
+    settings = {
+      general = {
+        lock_cmd = hyprlockExe;
+        before_sleep_cmd = hyprlockExe;
+        ignore_dbus_inhibit = false;
+      };
 
-    listeners = [
-      {
-        timeout = 300;
-        onTimeout = hyprlockExe;
-        onResume = "";
-      }
-    ];
-
-    lockCmd = hyprlockExe;
-    beforeSleepCmd = hyprlockExe;
-    unlockCmd = "";
-    afterSleepCmd = "";
+      listener = [
+        {
+          timeout = 300;
+          on-timeout = hyprlockExe;
+        }
+      ];
+    };
   };
 
   systemd.user.services.hypridle = {
