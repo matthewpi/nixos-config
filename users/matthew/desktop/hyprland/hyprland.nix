@@ -169,6 +169,18 @@ in {
       windowrulev2 = float, title:(Steam Settings), class:(steam)
       windowrulev2 = float, title:(Friends List), class:(steam)
 
+      # Polkit
+      windowrulev2 = dimaround, class:(polkit-gnome-authentication-agent-1)
+      windowrulev2 = center,    class:(polkit-gnome-authentication-agent-1)
+      windowrulev2 = float,     class:(polkit-gnome-authentication-agent-1)
+      windowrulev2 = pin,       class:(polkit-gnome-authentication-agent-1)
+
+      # Screenshare Portal
+      windowrulev2 = dimaround, title:(MainPicker)
+      windowrulev2 = center,    title:(MainPicker)
+      windowrulev2 = float,     title:(MainPicker)
+      windowrulev2 = pin,       title:(MainPicker)
+
       # Disable borders on floating windows
       windowrulev2 = noborder, floating:1
 
