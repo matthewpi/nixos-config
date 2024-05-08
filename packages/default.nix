@@ -42,7 +42,6 @@
         forge-sparks
         inter
         monaspace
-        zed-editor
         zsh-titles
         vesktop
         ;
