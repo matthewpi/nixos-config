@@ -18,6 +18,8 @@
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
 
+      openlens = pkgs.callPackage ./openlens {};
+
       vesktop = pkgs.callPackage ./vesktop/package.nix {};
     };
   in {
@@ -42,6 +44,7 @@
         forge-sparks
         inter
         monaspace
+        openlens
         zsh-titles
         vesktop
         ;
