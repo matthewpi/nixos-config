@@ -37,11 +37,13 @@
         ms-kubernetes-tools.vscode-kubernetes-tools # Kubernetes
         davidanson.vscode-markdownlint # markdownlint
         jnoortheen.nix-ide # Nix IDE
+        christian-kohler.npm-intellisense # npm Intellisense
         christian-kohler.path-intellisense # Path Intellisense
         esbenp.prettier-vscode # Prettier - Code formatter
         rust-lang.rust-analyzer # rust-analyzer
         tailscale.vscode-tailscale # Tailscale
         bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
+        vue.volar # Vue - Official
         vscode-icons-team.vscode-icons # vscode-icons
         zxh404.vscode-proto3 # vscode-proto3
         redhat.vscode-xml # XML
@@ -54,13 +56,6 @@
           publisher = "bufbuild";
           version = "0.6.2";
           sha256 = "sha256-x2yk3J0peTMMV1VuF+eRCOM+I2lWPzwnBch7s4xJ3yA=";
-        }
-        # npm Intellisense
-        {
-          name = "npm-intellisense";
-          publisher = "christian-kohler";
-          version = "1.4.5";
-          sha256 = "sha256-liuFGnyvvVHzSv60oLkemFyv85R+RiGKErRIUz2PYKs=";
         }
         # Systemd Helper
         {
@@ -82,13 +77,6 @@
           publisher = "britesnow";
           version = "0.3.6";
           sha256 = "sha256-Hn3Mk224ePAAnNtkhKMcCil/kTgbonweb1i884Q62rs=";
-        }
-        # Vue Language Features (Volar)
-        {
-          name = "volar";
-          publisher = "Vue";
-          version = "2.0.16";
-          sha256 = "sha256-RTBbF7qahYP4L7SZ/5aCM/e5crZAyyPRcgL48FVL1jk=";
         }
         # MDC - Markdown Components
         {
