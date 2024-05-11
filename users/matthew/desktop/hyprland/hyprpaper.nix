@@ -1,22 +1,19 @@
 {
-  inputs,
   lib,
   pkgs,
   ...
-}: {
-  imports = [
-    inputs.hyprpaper.homeManagerModules.hyprpaper
-  ];
-
-  services.hyprpaper = let
-    wallpaper = "${pkgs.catppuccin-wallpapers}/nix-black-4k.png";
-  in {
+}: let
+  wallpaper = "${pkgs.catppuccin-wallpapers}/nix-black-4k.png";
+in {
+  services.hyprpaper = {
     enable = true;
-    ipc = false;
-    splash = false;
-    # yes the extra comma here is intentional, it makes the wallpaper appear on all monitors.
-    wallpapers = [",${wallpaper}"];
-    preloads = [wallpaper];
+    settings = {
+      ipc = false;
+      splash = false;
+      preload = [wallpaper];
+      # The comma here causes the same wallpaper to be rendered on all monitors.
+      wallpaper = [",${wallpaper}"];
+    };
   };
 
   systemd.user.services.hyprpaper = {

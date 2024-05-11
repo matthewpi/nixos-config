@@ -103,9 +103,11 @@ in {
         # Use smaller window gaps
         gaps_in  = 4
         gaps_out = 12
+      }
 
-        # Disable warping the cursor.
-        no_cursor_warps = true
+      cursor {
+        # Disable cursor warping.
+        no_warps = true
       }
 
       animations {
