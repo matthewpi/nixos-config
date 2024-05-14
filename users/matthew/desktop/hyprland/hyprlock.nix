@@ -5,10 +5,9 @@
 
     settings = {
       general = {
-        disable_loading_bar = false;
         hide_cursor = true;
-        grace = 10;
-        no_fade_in = false;
+        grace = 5;
+        ignore_empty_input = true;
       };
 
       background = [
@@ -25,7 +24,47 @@
       label = [
         {
           monitor = "";
+          text = "Hello, $USER";
+          text_align = "center";
+          color = "rgb(205, 214, 244)"; # Text (mocha)
           font_family = "Inter";
+          font_size = 25;
+          rotate = 0;
+          position = "0, 80";
+          halign = "center";
+          valign = "center";
+        }
+      ];
+
+      input-field = [
+        {
+          monitor = "";
+          size = "320, 64";
+          outline_thickness = 4;
+          dots_size = 0.33;
+          dots_spacing = 0.15;
+          dots_center = true;
+          dots_rounding = -1;
+          outer_color = "rgb(69, 71, 90)"; # Surface 1 (mocha)
+          inner_color = "rgb(88, 91, 112)"; # Surface 2 (mocha)
+          font_color = "rgb(205, 214, 244)"; # Text (mocha)
+          fade_on_empty = false;
+          fade_timeout = 1000;
+          placeholder_text = "<i>Enter your password...</i>";
+          hide_input = false;
+          rounding = -1;
+          check_color = "rgb(250, 179, 135)"; # Peach (mocha)
+          fail_color = "rgb(243, 139, 168)"; # Red (mocha)
+          fail_transition = 300;
+          capslock_color = "-1";
+          numlock_color = "-1";
+          bothlock_color = "-1";
+          invert_numlock = false;
+          swap_font_color = false;
+
+          position = "0, -20";
+          halign = "center";
+          valign = "center";
         }
       ];
     };
