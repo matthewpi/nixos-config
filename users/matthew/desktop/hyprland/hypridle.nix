@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  pkgs,
   ...
 }: {
   # https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/
@@ -9,17 +8,17 @@
     hyprlockExe = lib.getExe config.programs.hyprlock.package;
   in {
     enable = true;
-    package = pkgs.hypridle;
     settings = {
       general = {
-        lock_cmd = hyprlockExe;
-        before_sleep_cmd = hyprlockExe;
+        lock_cmd = "${hyprlockExe} --immediate";
+        before_sleep_cmd = "${hyprlockExe} --immediate";
         ignore_dbus_inhibit = false;
       };
 
       listener = [
         {
-          timeout = 300;
+          # Set the timeout to 5 minutes (minus whatever the hyprlock grace-period is)
+          timeout = 300 - config.programs.hyprlock.settings.general.grace;
           on-timeout = hyprlockExe;
         }
       ];
