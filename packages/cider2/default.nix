@@ -5,7 +5,7 @@
   stdenv,
 }: let
   pname = "cider";
-  version = "2.3.1";
+  version = "2.4.0";
 
   # For anyone wondering, these files are locked behind firewall rules.
   # If you want Cider2, go buy it yourself.
@@ -20,7 +20,7 @@
     };
     x86_64-linux = {
       url = "https://r2.matthewp.io/cider/${version}/Cider-${version}.AppImage";
-      hash = "sha256-NyjeBPqcVqil49s5vfroeBFm5J0mAWyLewGuI1th9KY=";
+      hash = "sha256-PSOJYaxEGahqX/7XIKkAiObqHwuAu6YI7CF/qc9DOZU=";
     };
   };
 
