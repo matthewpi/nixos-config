@@ -18,6 +18,7 @@
   home = {
     stateVersion = "23.05";
     username = "matthew";
+    preferXdgDirectories = true;
   };
 
   home.sessionVariables = {

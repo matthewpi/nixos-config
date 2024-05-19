@@ -50,4 +50,14 @@
       log-lines = lib.mkDefault 25;
     };
   };
+
+  # Only use necessary profile paths.
+  # TODO: this should be gated behind `use-xdg-base-directories`.
+  # NOTE: some services (like flatpak) may try to add other entries to this array,
+  # be careful when using this.
+  environment.profiles = lib.mkForce [
+    "\${XDG_STATE_HOME}/nix/profile"
+    "/etc/profiles/per-user/$USER"
+    "/run/current-system/sw"
+  ];
 }
