@@ -2,6 +2,7 @@
   flake.nixosModules.hyprland = {
     config,
     lib,
+    pkgs,
     ...
   }: {
     imports = [
@@ -32,5 +33,8 @@
 
     # Fixes issues with XDG portal definitions not being detected.
     environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
+
+    # Add required packages to path.
+    environment.systemPackages = with pkgs; [pciutils];
   };
 }
