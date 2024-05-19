@@ -22,10 +22,11 @@
   programs._1password-gui.polkitPolicyOwners = ["matthew"];
 
   # Enable yubikey-agent
-  services.yubikey-agent.enable = true;
-  systemd.user.services."yubikey-agent".serviceConfig.Slice = "background.slice";
+  # Temporarily disabled due to breaking things.
+  #services.yubikey-agent.enable = true;
+  #systemd.user.services."yubikey-agent".serviceConfig.Slice = "background.slice";
   programs.gnupg.agent.pinentryPackage = with pkgs; pinentry-gnome3;
-  environment.extraInit = lib.mkForce (let
+  environment.extraInit = let
     sshAuthSock =
       if pkgs.stdenv.isDarwin
       then "/Library/Group Containers/2BUA8C4S2C.com.1password/t/agent.sock"
@@ -34,7 +35,7 @@
     if [ -z "$SSH_AUTH_SOCK" -a -n "$HOME" ]; then
       export SSH_AUTH_SOCK="''${HOME}${sshAuthSock}"
     fi
-  '');
+  '';
 
   # Enable gamescope
   programs.gamescope = {
