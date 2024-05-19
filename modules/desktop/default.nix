@@ -77,5 +77,8 @@
 
     # Disable NixOS documentation.
     documentation.nixos.enable = false;
+
+    # Override XCURSOR_PATH to only use the full XDG path.
+    environment.sessionVariables.XCURSOR_PATH = lib.mkForce ["$HOME/.local/share/icons"];
   };
 }
