@@ -20,6 +20,7 @@
         bungcip.better-toml # Better TOML
         matthewpi.caddyfile-support # Caddyfile Support
         catppuccin.catppuccin-vsc # Catppuccin for VSCode
+        catppuccin.catppuccin-vsc-icons # Catppuccin Icons for VSCode
         streetsidesoftware.code-spell-checker # Code Spell Checker
         asdine.cue # Cue
         ms-azuretools.vscode-docker # Docker
