@@ -228,6 +228,12 @@ in {
         "float,     title:(MainPicker)"
         "pin,       title:(MainPicker)"
 
+        # Keyring
+        "dimaround, title:(gcr-prompter)"
+        "center,    title:(gcr-prompter)"
+        "float,     title:(gcr-prompter)"
+        "pin,       title:(gcr-prompter)"
+
         # Disable borders on floating windows
         "noborder, floating:1"
 
