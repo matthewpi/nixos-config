@@ -25,5 +25,8 @@
     switcheroo
     video-trimmer
     wike
+
+    qFlipper
+    protonmail-desktop
   ];
 }

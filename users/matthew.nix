@@ -12,6 +12,9 @@
   # Enable steam hardware
   hardware.steam-hardware.enable = true;
 
+  # Enable flipperzero udev rules
+  hardware.flipperzero.enable = true;
+
   # Enable zsh
   programs.zsh = {
     enable = true;
@@ -223,6 +226,10 @@
           mode = "0700";
         }
         {
+          directory = ".config/Flipper Devices Inc";
+          mode = "0700";
+        }
+        {
           directory = ".config/JetBrains";
           mode = "0700";
         }
@@ -236,6 +243,10 @@
         }
         {
           directory = ".config/OpenLens";
+          mode = "0700";
+        }
+        {
+          directory = ".config/Proton Mail";
           mode = "0700";
         }
         {
