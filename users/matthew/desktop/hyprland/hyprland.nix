@@ -205,7 +205,7 @@ in {
         # Fixes for JetBrains IDE pop-ups
         # ref; https://github.com/hyprwm/Hyprland/issues/1947#issuecomment-1784909413
         "windowdance, class:^(jetbrains-.*)$"
-        "dimaround, class:^(jetbrains-.*)$, floating:1, title:^(?!win)"
+        #"dimaround, class:^(jetbrains-.*)$, floating:1, title:^(?!win)"
         "center, class:^(jetbrains-.*)$, floating:1, title:^(?!win)"
         "noanim, class:^(jetbrains-.*)$, title:^(win.*)$"
         "noinitialfocus, class:^(jetbrains-.*)$, title:^(win.*)$"
@@ -217,22 +217,22 @@ in {
         "float, title:(Friends List), class:(steam)"
 
         # Polkit
-        "dimaround, class:(polkit-gnome-authentication-agent-1)"
+        #"dimaround, class:(polkit-gnome-authentication-agent-1)"
         "center,    class:(polkit-gnome-authentication-agent-1)"
         "float,     class:(polkit-gnome-authentication-agent-1)"
         "pin,       class:(polkit-gnome-authentication-agent-1)"
 
         # Screenshare Portal
-        "dimaround, title:(MainPicker)"
+        #"dimaround, title:(MainPicker)"
         "center,    title:(MainPicker)"
         "float,     title:(MainPicker)"
         "pin,       title:(MainPicker)"
 
         # Keyring
-        "dimaround, title:(gcr-prompter)"
-        "center,    title:(gcr-prompter)"
-        "float,     title:(gcr-prompter)"
-        "pin,       title:(gcr-prompter)"
+        #"dimaround, class:(gcr-prompter)"
+        "center,    class:(gcr-prompter)"
+        "float,     class:(gcr-prompter)"
+        "pin,       class:(gcr-prompter)"
 
         # Disable borders on floating windows
         "noborder, floating:1"
