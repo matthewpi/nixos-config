@@ -5,11 +5,11 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "monaspace";
-  version = "1.000";
+  version = "1.101";
 
   src = fetchzip {
     url = "https://github.com/githubnext/${pname}/releases/download/v${version}/${pname}-v${version}.zip";
-    hash = "sha256-H8NOS+pVkrY9DofuJhPR2OlzkF4fMdmP2zfDBfrk83A=";
+    hash = "sha256-o5s4XBuwqA4sJ5KhEn5oYttBj4ojekr/LO6Ww9oQRGw=";
     stripRoot = false;
   };
 
