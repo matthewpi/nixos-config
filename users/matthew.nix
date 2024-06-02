@@ -238,10 +238,6 @@
           mode = "0700";
         }
         {
-          directory = ".config/WebCord";
-          mode = "0700";
-        }
-        {
           directory = ".config/OpenLens";
           mode = "0700";
         }
@@ -286,14 +282,6 @@
           mode = "0700";
         }
         {
-          directory = ".config/discordcanary";
-          mode = "0700";
-        }
-        {
-          directory = ".config/discordptb";
-          mode = "0700";
-        }
-        {
           directory = ".config/gh";
           mode = "0700";
         }
@@ -311,10 +299,6 @@
         }
         {
           directory = ".config/libreoffice";
-          mode = "0700";
-        }
-        {
-          directory = ".config/lunarclient";
           mode = "0700";
         }
         {
@@ -338,7 +322,7 @@
           mode = "0700";
         }
         {
-          directory = ".config/spotify";
+          directory = ".config/sh.cider.electron";
           mode = "0700";
         }
         {
