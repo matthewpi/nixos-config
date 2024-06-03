@@ -9,14 +9,9 @@
   # These names are how they are designated in https://xanmod.org.
   # NOTE: When updating these, please also take a look at the changes done to
   # kernel config in the xanmod version commit
-  ltsVariant = {
-    version = "6.6.28";
-    hash = "sha256-vpWUdzgI8i/1r5nMp0tx+x67GDTnjQF5ueITIl36lvA=";
-  };
-
   mainVariant = {
-    version = "6.8.11";
-    hash = "sha256-nEAUw7qFXab7J6x8coSsoB2meeOX4TQver2WztkFJJI=";
+    version = "6.9.3";
+    hash = "sha256-LGq87dfiGQ0cgwTEKchrHXshjwbAXVh1ike2oBp+p1o=";
   };
 
   xanmodKernelFor = {
@@ -66,6 +61,5 @@
       }
       // (args.argsOverride or {}));
 in {
-  lts = xanmodKernelFor ltsVariant;
   main = xanmodKernelFor mainVariant;
 }
