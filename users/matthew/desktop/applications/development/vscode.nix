@@ -182,7 +182,7 @@
 
       # Workbench
       "workbench.colorTheme" = "Catppuccin Mocha";
-      "workbench.iconTheme" = "vscode-icons";
+      "workbench.iconTheme" = "catppuccin-mocha";
       "workbench.startupEditor" = "none";
       "workbench.tree.indent" = 16;
       "workbench.enableExperiments" = false;
