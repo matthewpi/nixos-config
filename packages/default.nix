@@ -6,6 +6,9 @@
     ...
   }: let
     _packages = {
+      _1password-gui = pkgs.callPackage ./1password-gui {};
+      _1password-gui-beta = pkgs.callPackage ./1password-gui {channel = "beta";};
+
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-hyprcursors = pkgs.callPackage ./catppuccin/hyprcursors.nix {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
@@ -49,8 +52,8 @@
         vesktop
         ;
 
-      _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
-      _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+      _1password-gui = _packages._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+      _1password-gui-beta = _packages._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
 
       signal-desktop = pkgs.signal-desktop.overrideAttrs (old: {
         preFixup =
