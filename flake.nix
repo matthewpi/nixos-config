@@ -134,6 +134,7 @@
         flake-parts.follows = "flake-parts";
         flake-utils.follows = "flake-utils";
         nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks-nix.follows = "";
       };
     };
 
