@@ -10,6 +10,7 @@
       ./corectrl.nix
       ./dconf.nix
       ./fonts.nix
+      ./fwupd.nix
       ./gamemode.nix
       ./pipewire.nix
       ./plymouth.nix

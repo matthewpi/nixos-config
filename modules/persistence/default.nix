@@ -7,6 +7,7 @@
       ./chrony.nix
       ./colord.nix
       ./flatpak.nix
+      ./fwupd.nix
       ./gnome.nix
       ./libvirtd.nix
       ./networkmanager.nix
