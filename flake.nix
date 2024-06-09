@@ -87,6 +87,7 @@
     hyprlang = {
       url = "github:hyprwm/hyprlang";
       inputs = {
+        hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -96,6 +97,7 @@
       url = "github:hyprwm/hyprlock";
       inputs = {
         hyprlang.follows = "hyprlang";
+        hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -113,6 +115,14 @@
     hyprpicker = {
       url = "github:hyprwm/hyprpicker";
       inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprutils = {
+      url = "github:hyprwm/hyprutils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
     };
 
     impermanence.url = "github:nix-community/impermanence";
