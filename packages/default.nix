@@ -23,6 +23,8 @@
 
       openlens = pkgs.callPackage ./openlens {};
 
+      termius = pkgs.callPackage ./termius {};
+
       vesktop = pkgs.callPackage ./vesktop/package.nix {};
     };
   in {
@@ -48,8 +50,9 @@
         inter
         monaspace
         openlens
-        zsh-titles
+        termius
         vesktop
+        zsh-titles
         ;
 
       _1password-gui = _packages._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});

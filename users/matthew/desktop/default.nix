@@ -114,6 +114,9 @@
 
       # Archives
       "application/zip" = ["org.gnome.FileRoller.desktop"];
+
+      # Applications
+      "x-scheme-handler/termius" = ["termius-app.desktop"];
     };
   };
 }
