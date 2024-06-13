@@ -70,6 +70,7 @@
       inputs = {
         hyprcursor.follows = "hyprcursor";
         hyprlang.follows = "hyprlang";
+        hyprutils.follows = "hyprutils";
         xdph.follows = "xdph";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
