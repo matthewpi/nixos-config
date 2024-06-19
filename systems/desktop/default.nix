@@ -96,6 +96,13 @@
     enable = true;
     permitCertUid = "1000";
   };
+  systemd.services.tailscaled.serviceConfig.Environment = [
+    "TS_DEBUG_FIREWALL_MODE=${
+      if config.networking.nftables.enable
+      then "nftables"
+      else "iptables"
+    }"
+  ];
   networking.firewall.trustedInterfaces = ["tailscale0"];
 
   # Allow passwordless sudo
