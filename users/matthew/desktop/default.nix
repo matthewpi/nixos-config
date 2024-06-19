@@ -13,7 +13,13 @@
     ./streamdeck.nix
   ];
 
+  services.ssh-agent.enable = true;
+
   home.packages = with pkgs; [
+    # Install step
+    step-cli
+    step-kms-plugin
+
     # Install tcpdump
     tcpdump
 
