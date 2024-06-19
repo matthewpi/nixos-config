@@ -141,6 +141,10 @@
           mode = "0700";
         }
         {
+          directory = ".cache/direnv";
+          mode = "0700";
+        }
+        {
           directory = ".cache/evolution";
           mode = "0700";
         }
