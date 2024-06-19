@@ -3,6 +3,7 @@
     imports = [
       inputs.impermanence.nixosModules.impermanence
 
+      ./alsa.nix
       ./bluetooth.nix
       ./chrony.nix
       ./colord.nix
