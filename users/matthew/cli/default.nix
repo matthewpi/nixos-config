@@ -23,11 +23,13 @@
   ];
 
   home.packages = with pkgs; [
+    bgpq4
+    gnmic
     jq
+    minicom
+    nix-output-monitor
     whois
     yq-go
-
-    nix-output-monitor
   ];
 
   home.sessionVariables.NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
