@@ -88,6 +88,11 @@ hyprland.connect('notify::monitors', self => {
 	// If the monitors have changed, re-render all the windows.
 	const display = Gdk.Display.get_default() ?? undefined;
 	for (const monitor of self.monitors) {
+		// TODO: remove once we figure out why it's placing all bars on the same monitor.
+		if (monitor.name !== primaryMonitorName) {
+			continue;
+		}
+
 		if (registeredMonitors.has(monitor.name)) {
 			continue;
 		}
@@ -121,6 +126,7 @@ function addWindow<Child extends Gtk.Widget, Attr>(win: Window<Child, Attr>): vo
 	win.on('destroy', () => {
 		App.removeWindow(win);
 	});
+
 	App.addWindow(win);
 }
 
