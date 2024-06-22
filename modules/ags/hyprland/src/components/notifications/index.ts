@@ -254,12 +254,12 @@ function NotificationTab() {
 /**
  * Creates a Notification Window pinned on a monitor.
  *
- * @param monitor ID of the monitor to render the Bar on.
+ * @param gdkmonitor ID of the monitor to render the Bar on.
  * @param monitorName Name of the monitor to render the Bar on.
  */
-function PopupNotificationWindow(monitor: number, name: string) {
+function PopupNotificationWindow(monitor: Gdk.Monitor, name: string) {
 	return Widget.Window({
-		monitor,
+		gdkmonitor: monitor,
 		name: `notifications-${name}`,
 		layer: 'top',
 		anchor: ['top'],

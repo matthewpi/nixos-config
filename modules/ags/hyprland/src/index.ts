@@ -41,9 +41,9 @@ function BarContent() {
 /**
  * Creates a Bar pinned to the top of a monitor.
  */
-function Bar(monitor: number, name: string) {
+function Bar(monitor: Gdk.Monitor, name: string) {
 	return Widget.Window({
-		monitor,
+		gdkmonitor: monitor,
 		name: `bar-${name}`,
 		className: 'bar',
 		anchor: ['top', 'left', 'right'],
@@ -88,31 +88,24 @@ hyprland.connect('notify::monitors', self => {
 	// If the monitors have changed, re-render all the windows.
 	const display = Gdk.Display.get_default() ?? undefined;
 	for (const monitor of self.monitors) {
-		// TODO: remove once we figure out why it's placing all bars on the same monitor.
-		if (monitor.name !== primaryMonitorName) {
-			continue;
-		}
-
 		if (registeredMonitors.has(monitor.name)) {
 			continue;
 		}
 
-		const data = getMonitorByCoordinates(monitor.x, monitor.y, display);
-		if (data === undefined) {
+		const gdkMonitor = getMonitorByModel(monitor.model, display);
+		if (gdkMonitor === undefined) {
 			continue;
 		}
-
-		const { id } = data;
 
 		// Mark the monitor as being processed.
 		registeredMonitors.add(monitor.name);
 
 		// Add a Bar to the monitor.
-		addWindow(Bar(id, monitor.name));
+		addWindow(Bar(gdkMonitor, monitor.name));
 
 		// // If this is the primary monitor, add the notification window.
 		if (monitor.name === primaryMonitorName) {
-			addWindow(PopupNotificationWindow(id, monitor.name));
+			addWindow(PopupNotificationWindow(gdkMonitor, monitor.name));
 		}
 	}
 
@@ -131,19 +124,49 @@ function addWindow<Child extends Gtk.Widget, Attr>(win: Window<Child, Attr>): vo
 }
 
 /**
- * Finds a {@type Gdk.Monitor} using coordinates. This function returns both the {@type Gdk.Monitor}
- * and numeric ID that are the closest matches to those coordinates.
+ * Finds a {@type Gdk.Monitor} using it's model number.
+ *
+ * This should only be used if all the monitors have different models and if coordinate matching
+ * is unable to differentiate between the monitors.
+ *
+ * @param model ?
+ * @param display ?
+ * @returns ?
+ */
+function getMonitorByModel(model: string, display?: Gdk.Display): Gdk.Monitor | undefined {
+	// Allow the caller to pass a display instance if they already have it. This is an optimization
+	// if the caller expects to call this function multiple times, I don't write inefficient code.
+	if (display === undefined) {
+		display = Gdk.Display.get_default() ?? undefined;
+		if (display === undefined) {
+			return undefined;
+		}
+	}
+
+	// Find the index of the monitor at those coordinates.
+	const numMonitors = display.get_n_monitors();
+	for (let i = 0; i < numMonitors; i++) {
+		const m = display.get_monitor(i);
+
+		if (m.model !== model) {
+			continue;
+		}
+
+		return m;
+	}
+
+	return undefined;
+}
+
+/**
+ * Finds a {@type Gdk.Monitor} using coordinates.
  *
  * @param x ?
  * @param y ?
  * @param display ?
  * @returns ?
  */
-function getMonitorByCoordinates(
-	x: number,
-	y: number,
-	display?: Gdk.Display,
-): { id: number; monitor: Gdk.Monitor } | undefined {
+function getMonitorByCoordinates(x: number, y: number, display?: Gdk.Display): Gdk.Monitor | undefined {
 	// Allow the caller to pass a display instance if they already have it. This is an optimization
 	// if the caller expects to call this function multiple times, I don't write inefficient code.
 	if (display === undefined) {
@@ -154,22 +177,7 @@ function getMonitorByCoordinates(
 	}
 
 	// Get the monitor closest to those coordinates.
-	const gdkMonitor = display.get_monitor_at_point(x, y);
-
-	// Find the index of the monitor at those coordinates.
-	const numMonitors = display.get_n_monitors();
-	for (let i = 0; i < numMonitors; i++) {
-		const m = display.get_monitor(i);
-
-		if (m === gdkMonitor) {
-			return {
-				id: i,
-				monitor: gdkMonitor,
-			};
-		}
-	}
-
-	return undefined;
+	return display.get_monitor_at_point(x, y);
 }
 
 // Service settings
