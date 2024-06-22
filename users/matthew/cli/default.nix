@@ -24,6 +24,7 @@
 
   home.packages = with pkgs; [
     bgpq4
+    diskonaut
     gnmic
     jq
     minicom
