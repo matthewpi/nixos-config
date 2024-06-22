@@ -9,9 +9,6 @@
     matthew = import ./matthew/linux.nix;
   };
 
-  # Enable steam hardware
-  hardware.steam-hardware.enable = true;
-
   # Enable flipperzero udev rules
   hardware.flipperzero.enable = true;
 
@@ -39,56 +36,6 @@
       export SSH_AUTH_SOCK="''${HOME}${sshAuthSock}"
     fi
   '';
-
-  # Enable gamescope
-  programs.gamescope = {
-    enable = true;
-    capSysNice = true;
-    #args = [
-    #  "--force-composition"
-    #  "--nested-width 3840"
-    #  "--nested-height 2160"
-    #  "--nested-refresh 120"
-    #  "--output-width 3840"
-    #  "--output-height 2160"
-    #  "--nested-unfocused-refresh 30"
-    #  "--fullscreen"
-    #  "--rt"
-    #  "--expose-wayland"
-    #  "--force-grab-cursor"
-    #];
-  };
-
-  programs.steam = {
-    enable = true;
-    package = pkgs.steam.override {
-      extraEnv = {
-        # Manually set SDL_VIDEODRIVER to x11.
-        #
-        # This fixes the `gldriverquery` segfault and issues with EAC crashing on games like Rust,
-        # rather than gracefully disabling itself.
-        SDL_VIDEODRIVER = "x11";
-      };
-
-      extraPkgs = pkgs:
-        with pkgs; [
-          xorg.libXcursor
-          xorg.libXi
-          xorg.libXinerama
-          xorg.libXScrnSaver
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          libkrb5
-          keyutils
-        ];
-    };
-    gamescopeSession = {
-      enable = true;
-    };
-    localNetworkGameTransfers.openFirewall = true;
-  };
 
   # Enable the wireshark dumpcap security wrapper.
   # This allows us to call dumpcap without using separate privilege escalation.
