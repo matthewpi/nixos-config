@@ -4,12 +4,8 @@
   ...
 }: {
   # Enable systemd-timesyncd in favor of chrony by default.
-  services.timesyncd.enable = lib.mkDefault false;
-  services.chrony = {
-    enable = lib.mkDefault true;
-    enableNTS = lib.mkDefault true;
-    # TODO: client-side smearing?
-  };
+  services.timesyncd.enable = lib.mkDefault true;
+  services.chrony.enable = lib.mkDefault false;
 
   # Configure time servers.
   networking.timeServers = lib.mkDefault ["time.cloudflare.com"];

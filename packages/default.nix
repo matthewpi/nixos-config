@@ -22,10 +22,6 @@
       monaspace = pkgs.callPackage ./monaspace.nix {};
 
       openlens = pkgs.callPackage ./openlens {};
-
-      termius = pkgs.callPackage ./termius {};
-
-      vesktop = pkgs.callPackage ./vesktop/package.nix {};
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -46,12 +42,9 @@
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
-        forge-sparks
         inter
         monaspace
         openlens
-        termius
-        vesktop
         zsh-titles
         ;
 

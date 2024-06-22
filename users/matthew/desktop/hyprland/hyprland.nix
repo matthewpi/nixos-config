@@ -175,7 +175,7 @@ in {
 
       # Monitor configuration
       monitor = [
-        "DP-3, 3840x2160@240, 0x0, 1.5, vrr,2, bitdepth,8"
+        "DP-3, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
         "HDMI-A-1, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
       ];
 
