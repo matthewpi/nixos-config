@@ -60,10 +60,6 @@
     matthew = {
       directories = [
         {
-          directory = ".cache/JetBrains";
-          mode = "0700";
-        }
-        {
           directory = ".cache/ags";
           mode = "0700";
         }
@@ -97,10 +93,6 @@
         }
         {
           directory = ".cache/fontconfig";
-          mode = "0700";
-        }
-        {
-          directory = ".cache/gnome-software";
           mode = "0700";
         }
         {
@@ -169,19 +161,7 @@
           mode = "0700";
         }
         {
-          directory = ".config/Cider";
-          mode = "0700";
-        }
-        {
-          directory = ".config/Element";
-          mode = "0700";
-        }
-        {
           directory = ".config/Flipper Devices Inc";
-          mode = "0700";
-        }
-        {
-          directory = ".config/JetBrains";
           mode = "0700";
         }
         {
@@ -312,18 +292,6 @@
           mode = "0700";
         }
 
-        {
-          directory = ".local/share/JetBrains";
-          mode = "0700";
-        }
-        {
-          directory = ".local/share/PrismLauncher";
-          mode = "0700";
-        }
-        {
-          directory = ".local/share/Steam";
-          mode = "0700";
-        }
         {
           directory = ".local/share/atuin";
           mode = "0700";
