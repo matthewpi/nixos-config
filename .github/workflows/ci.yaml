@@ -1,28 +1,28 @@
 name: CI
 
 on:
-  push:
-    branches:
-      - master
-  pull_request:
-    branches:
-      - master
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
 
 jobs:
-  nix-flake-check:
-    name: nix flake check
-    runs-on: ubuntu-22.04
-    permissions:
-      contents: read
-    steps:
-      - name: Code checkout
-        uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
+    nix-flake-check:
+        name: nix flake check
+        runs-on: ubuntu-22.04
+        permissions:
+            contents: read
+        steps:
+            - name: Code checkout
+              uses: actions/checkout@692973e3d937129bcbf40652eb9f2f61becf3332 # v4.1.7
 
-      - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@7993355175c2765e5733dae74f3e0786fe0e5c4f # v12
+            - name: Install Nix
+              uses: DeterminateSystems/nix-installer-action@7993355175c2765e5733dae74f3e0786fe0e5c4f # v12
 
-      - name: Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@b46e247b898aa56e6d2d2e728dc6df6c84fdb738 # v7
+            - name: Nix Cache
+              uses: DeterminateSystems/magic-nix-cache-action@b46e247b898aa56e6d2d2e728dc6df6c84fdb738 # v7
 
-      - name: nix flake check
-        run: nix flake check --all-systems
+            - name: nix flake check
+              run: nix flake check --all-systems

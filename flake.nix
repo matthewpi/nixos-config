@@ -357,7 +357,7 @@
 
             settings.global.excludes = [
               "**/node_modules"
-              "**/pnpm-lock.yaml"
+              "pnpm-lock.yaml"
             ];
           };
         };
