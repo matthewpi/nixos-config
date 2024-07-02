@@ -234,6 +234,9 @@ in {
         "float,     class:(gcr-prompter)"
         "pin,       class:(gcr-prompter)"
 
+        # Float GNOME calculator
+        "float, class:(org.gnome.Calculator)"
+
         # Disable borders on floating windows
         "noborder, floating:1"
 
