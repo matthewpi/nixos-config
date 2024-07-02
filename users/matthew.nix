@@ -361,6 +361,10 @@
           mode = "0700";
         }
         {
+          directory = ".local/share/step";
+          mode = "0700";
+        }
+        {
           directory = ".local/share/turborepo";
           mode = "0700";
         }
