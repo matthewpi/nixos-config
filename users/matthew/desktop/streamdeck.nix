@@ -1,7 +1,4 @@
-{config, ...}: {
-  # https://nix-community.github.io/home-manager/options.html#opt-systemd.user.startServices
-  systemd.user.startServices = "sd-switch";
-
+{
   systemd.user.services.streamdeck = {
     Unit = {
       Description = "Streamdeck";
