@@ -44,7 +44,7 @@ jobs:
 
             - name: nix flake update
               run: |
-                  nix flake update --commit-lock-file --commit-lockfile-summary 'nix: update flake.lock'
+                  nix flake update --commit-lock-file --commit-lock-file-summary 'nix: update flake.lock'
 
             # This is used to bypass GitHub's restriction on actions that create pull requests not
             # triggering any other action runs.  I would like for the PR created by this action to
