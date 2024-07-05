@@ -10,8 +10,8 @@
   # NOTE: When updating these, please also take a look at the changes done to
   # kernel config in the xanmod version commit
   mainVariant = {
-    version = "6.9.6";
-    hash = "sha256-ekC9M3IB4NALYVaSuSuYV5MIIuP/VkJRJdB8ZJIZ2v0=";
+    version = "6.9.8";
+    hash = "sha256-rSwvVt+DW7rc//aY6Ho8mllUy/3MKuAs/71UG+p07Iw=";
   };
 
   xanmodKernelFor = {
