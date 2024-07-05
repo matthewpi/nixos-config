@@ -26,27 +26,27 @@
 
           epiphany
           evince
-          gnome.dconf-editor
-          gnome.eog
-          gnome.file-roller
-          gnome.geary
-          gnome.gnome-calculator
-          gnome.gnome-calendar
+          dconf-editor
+          eog
+          file-roller
+          geary
+          gnome-calculator
+          gnome-calendar
           gnome.gnome-characters
           gnome.gnome-clocks
           gnome.gnome-contacts
-          gnome.gnome-dictionary
-          gnome.gnome-disk-utility
-          gnome.gnome-font-viewer
+          gnome-dictionary
+          gnome-disk-utility
+          gnome-font-viewer
           gnome.gnome-logs
           gnome.gnome-maps
-          gnome.gnome-system-monitor
-          gnome.gnome-weather
-          gnome.nautilus
-          gnome.seahorse
-          gnome.sushi
-          gnome.totem
+          gnome-system-monitor
           gnome-text-editor
+          gnome.gnome-weather
+          nautilus
+          seahorse
+          sushi
+          totem
         ];
       } ''
         mkdir schemas

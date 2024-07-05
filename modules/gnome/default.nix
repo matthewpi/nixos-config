@@ -36,21 +36,18 @@
     };
 
     # Yeet packages that I don't want
-    environment.gnome.excludePackages =
-      (with pkgs; [
-        gnome-console
-        gnome-photos
-        gnome-tour
-      ])
-      ++ (with pkgs.gnome; [
-        cheese
-        gedit
-        epiphany
-        gnome-characters
-        yelp
-        gnome-contacts
-        gnome-initial-setup
-      ]);
+    environment.gnome.excludePackages = with pkgs; [
+      gnome-console
+      gnome-photos
+      gnome-tour
+      cheese
+      gedit
+      epiphany
+      gnome-contacts
+      gnome-initial-setup
+      gnome.gnome-characters
+      yelp
+    ];
 
     # Enable xdg-desktop-portal
     xdg.portal = {
