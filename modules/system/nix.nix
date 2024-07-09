@@ -32,10 +32,22 @@
       allowed-users = lib.mkDefault ["root" "@wheel"];
 
       # Expose functionality
-      system-features = lib.mkDefault ["benchmark" "big-parallel" "kvm" "nixos-test" "uid-range"];
+      system-features = lib.mkDefault [
+        "benchmark"
+        "big-parallel"
+        "kvm"
+        "nixos-test"
+        "uid-range"
+      ];
 
       # Enable experimental features
-      experimental-features = lib.mkDefault ["auto-allocate-uids" "cgroups" "nix-command" "flakes"];
+      experimental-features = lib.mkDefault [
+        "auto-allocate-uids"
+        "ca-derivations"
+        "cgroups"
+        "nix-command"
+        "flakes"
+      ];
       auto-allocate-uids = lib.mkDefault true;
       use-cgroups = lib.mkDefault true;
       accept-flake-config = lib.mkDefault true;
