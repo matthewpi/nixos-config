@@ -169,6 +169,11 @@
   # Enable aarch64 emulation for Nix builds
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
+  nix.settings.system-features = [
+    "gccarch-x86-64-v4"
+    "gccarch-znver4"
+  ];
+
   # Configure restic to backup important directories
   services.restic.backups = {
     matthew-code = {
