@@ -31,8 +31,8 @@
       trusted-users = lib.mkDefault ["root" "@wheel"];
       allowed-users = lib.mkDefault ["root" "@wheel"];
 
-      # Expose functionality
-      system-features = lib.mkDefault [
+      # Expose system functionality
+      system-features = [
         "benchmark"
         "big-parallel"
         "kvm"
@@ -41,7 +41,7 @@
       ];
 
       # Enable experimental features
-      experimental-features = lib.mkDefault [
+      experimental-features = [
         "auto-allocate-uids"
         "ca-derivations"
         "cgroups"
