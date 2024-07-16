@@ -10,8 +10,8 @@
   # NOTE: When updating these, please also take a look at the changes done to
   # kernel config in the xanmod version commit
   mainVariant = {
-    version = "6.9.8";
-    hash = "sha256-rSwvVt+DW7rc//aY6Ho8mllUy/3MKuAs/71UG+p07Iw=";
+    version = "6.9.9";
+    hash = "sha256-ZEU1RIgJ0ckyITFWZndEzXYwnTF39OviLxL9S5dEea4=";
   };
 
   xanmodKernelFor = {
@@ -49,8 +49,6 @@
 
           DRM_AMD_COLOR_STEAMDECK = yes;
         };
-
-        #buildFlags = ["KCFLAGS=-DAMD_PRIVATE_COLOR"];
 
         extraMeta = {
           branch = lib.versions.majorMinor version;
