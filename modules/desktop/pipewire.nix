@@ -3,10 +3,6 @@
   lib,
   ...
 }: {
-  # Disable "sound" (alsa).
-  # This is unnecessary since we are using Pipewire which provides it's own compatibility.
-  sound.enable = lib.mkForce false;
-
   # Disable pulseaudio
   hardware.pulseaudio.enable = lib.mkForce false;
 
