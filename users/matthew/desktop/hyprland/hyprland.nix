@@ -204,7 +204,7 @@ in {
       windowrulev2 = [
         # Fixes for JetBrains IDE pop-ups
         # ref; https://github.com/hyprwm/Hyprland/issues/1947#issuecomment-1784909413
-        "windowdance, class:^(jetbrains-.*)$"
+        #"windowdance, class:^(jetbrains-.*)$"
         #"dimaround, class:^(jetbrains-.*)$, floating:1, title:^(?!win)"
         "center, class:^(jetbrains-.*)$, floating:1, title:^(?!win)"
         "noanim, class:^(jetbrains-.*)$, title:^(win.*)$"
