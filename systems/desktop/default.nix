@@ -170,7 +170,11 @@
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
   nix.settings.system-features = [
+    "big-parallel"
+    "gccarch-x86-64-v2"
+    "gccarch-x86-64-v3"
     "gccarch-x86-64-v4"
+    "gccarch-znver3"
     "gccarch-znver4"
   ];
 

@@ -31,15 +31,6 @@
       trusted-users = lib.mkDefault ["root" "@wheel"];
       allowed-users = lib.mkDefault ["root" "@wheel"];
 
-      # Expose system functionality
-      system-features = [
-        "benchmark"
-        "big-parallel"
-        "kvm"
-        "nixos-test"
-        "uid-range"
-      ];
-
       # Enable experimental features
       experimental-features = [
         "auto-allocate-uids"
