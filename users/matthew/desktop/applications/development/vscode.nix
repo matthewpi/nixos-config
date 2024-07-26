@@ -49,6 +49,7 @@
         zxh404.vscode-proto3 # vscode-proto3
         redhat.vscode-xml # XML
         redhat.vscode-yaml # YAML
+        bmewburn.vscode-intelephense-client
       ]
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         # Buf
@@ -113,6 +114,13 @@
           publisher = "ultram4rine";
           version = "0.5.0";
           sha256 = "sha256-uvCTYDBKD/qCZmiGUQjxvUeT1KS9a8U9y/JIdnXhXxM=";
+        }
+        # Laravel Blade Snippets
+        {
+          name = "laravel-blade";
+          publisher = "onecentlin";
+          version = "1.36.1";
+          sha256 = "sha256-zOjUrdoBBtSz59/b/n63QByGyQRcOJFe+TMfosktEss=";
         }
       ];
 
@@ -239,6 +247,15 @@
 
       # vscode-icons
       "vsicons.dontShowNewVersionMessage" = true;
+
+      #
+      # Language Overrides
+      #
+
+      "[php]" = {
+        # For PHP we also want `$` and `-` as word separators.
+        "editor.wordSeparators" = "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?";
+      };
     };
   };
 
