@@ -14,7 +14,10 @@
 
     ags = {
       url = "github:Aylur/ags";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
     };
 
     darwin = {
@@ -60,6 +63,7 @@
       url = "github:hyprwm/hypridle";
       inputs = {
         hyprlang.follows = "hyprlang";
+        hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -71,6 +75,7 @@
         hyprcursor.follows = "hyprcursor";
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
+        hyprwayland-scanner.follows = "hyprwayland-scanner";
         xdph.follows = "xdph";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
@@ -108,6 +113,8 @@
       url = "github:hyprwm/hyprpaper";
       inputs = {
         hyprlang.follows = "hyprlang";
+        hyprutils.follows = "hyprutils";
+        hyprwayland-scanner.follows = "hyprwayland-scanner";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -115,11 +122,23 @@
 
     hyprpicker = {
       url = "github:hyprwm/hyprpicker";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs = {
+        hyprutils.follows = "hyprutils";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
     };
 
     hyprutils = {
       url = "github:hyprwm/hyprutils";
+      inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
+    hyprwayland-scanner = {
+      url = "github:hyprwm/hyprwayland-scanner";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
