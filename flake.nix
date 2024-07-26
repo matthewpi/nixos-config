@@ -250,7 +250,7 @@
               self.nixosModules.podman
               self.nixosModules.secureboot
               self.nixosModules.system
-              # self.nixosModules.virtualisation
+              self.nixosModules.virtualisation
 
               {
                 age.secrets = {

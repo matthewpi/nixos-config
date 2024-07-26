@@ -11,22 +11,8 @@
     onShutdown = lib.mkDefault "shutdown";
 
     qemu = {
-      ovmf = {
-        packages = [
-          # Compile OVMF without CSM support, CSM breaks secureboot for VMs
-          (pkgs.OVMF.override {
-            secureBoot = true;
-            csmSupport = false;
-            httpSupport = true;
-            tpmSupport = true;
-          })
-          .fd
-        ];
-      };
-
-      swtpm = {
-        enable = lib.mkDefault true;
-      };
+      ovmf.packages = with pkgs; [OVMFFull.fd];
+      swtpm.enable = lib.mkDefault true;
     };
   };
 
