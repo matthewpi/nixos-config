@@ -10,7 +10,7 @@
     ./services
 
     ./gtk.nix
-    # ./streamdeck.nix
+    ./streamdeck.nix
   ];
 
   # https://nix-community.github.io/home-manager/options.xhtml#opt-systemd.user.startServices

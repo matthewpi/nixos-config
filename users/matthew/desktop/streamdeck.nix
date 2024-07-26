@@ -1,4 +1,4 @@
-{
+{config, ...}: {
   systemd.user.services.streamdeck = {
     Unit = {
       Description = "Streamdeck";
