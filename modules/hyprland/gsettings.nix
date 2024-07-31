@@ -13,16 +13,9 @@
           gtk4
 
           amberol
-          apostrophe
-          eartag
-          easyeffects
-          errands
-          eyedropper
-          fragments
           impression
           switcheroo
           video-trimmer
-          wike
 
           epiphany
           evince

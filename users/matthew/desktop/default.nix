@@ -21,9 +21,9 @@
   home.sessionVariables.STEPPATH = "${config.home.sessionVariables.XDG_DATA_HOME}/step";
 
   home.packages = with pkgs; [
-    # Install step
-    step-cli
-    step-kms-plugin
+    # # Install step
+    # step-cli
+    # step-kms-plugin
 
     # Install tcpdump
     tcpdump

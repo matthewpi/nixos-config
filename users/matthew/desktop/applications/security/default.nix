@@ -1,7 +1,7 @@
 {
   imports = [
-    ./ledger-live.nix
-    ./signal.nix
+    # ./ledger-live.nix
+    # ./signal.nix
     ./wireshark.nix
   ];
 }

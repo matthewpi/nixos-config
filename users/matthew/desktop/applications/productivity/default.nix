@@ -1,7 +1,7 @@
 {
   imports = [
     ./libreoffice.nix
-    ./obs-studio.nix
+    # ./obs-studio.nix
     ./obsidian.nix
   ];
 }
