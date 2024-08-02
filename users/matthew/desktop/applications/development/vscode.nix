@@ -101,6 +101,13 @@
           version = "0.28.1";
           sha256 = "sha256-PzDbH9pYeIzmMFOkPMsbo5pNGXI6qusaAlwM6sk9s10=";
         }
+        # SQLTools MySQL/MariaDB
+        {
+          name = "sqltools-driver-mysql";
+          publisher = "mtxr";
+          version = "0.5.1";
+          sha256 = "sha256-RVPCjpIW/9T5TC8b0KQAHCCZnXNvTDJMjfsZWUe/nNg=";
+        }
         # SQLTools PostgreSQL/Cockroach Driver
         {
           name = "sqltools-driver-pg";
