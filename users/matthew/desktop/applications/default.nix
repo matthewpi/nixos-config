@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./firefox.nix
-    ./obs-studio.nix
+    # ./obs-studio.nix
     # ./signal.nix
     ./terminal.nix
     ./virt-manager.nix
