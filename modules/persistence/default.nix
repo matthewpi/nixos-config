@@ -94,6 +94,11 @@
           directory = "/var/cache/private";
           mode = "0700";
         }
+
+        {
+          directory = "/root";
+          mode = "0700";
+        }
       ];
 
       files = [
