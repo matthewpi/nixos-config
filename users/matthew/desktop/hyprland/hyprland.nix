@@ -168,10 +168,10 @@ in {
 
         # Focus a window on `activate`
         focus_on_activate = true;
-
-        # Allow direct scanout
-        no_direct_scanout = false;
       };
+
+      # Allow direct scanout.
+      render.direct_scanout = true;
 
       # Monitor configuration
       monitor = [
