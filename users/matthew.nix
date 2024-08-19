@@ -12,6 +12,9 @@
   # Enable flipperzero udev rules
   hardware.flipperzero.enable = true;
 
+  # Enable steam udev rules
+  hardware.steam-hardware.enable = true;
+
   # Enable zsh
   programs.zsh = {
     enable = true;
@@ -40,6 +43,44 @@
   # Enable the wireshark dumpcap security wrapper.
   # This allows us to call dumpcap without using separate privilege escalation.
   programs.wireshark.enable = true;
+
+  # Configure gamescope.
+  programs.gamescope = {
+    enable = true;
+    capSysNice = true;
+  };
+
+  # Configure steam.
+  programs.steam = {
+    enable = true;
+    package = pkgs.steam.override {
+      extraEnv = {
+        # Manually set SDL_VIDEODRIVER to x11.
+        #
+        # This fixes the `gldriverquery` segfault and issues with EAC crashing on games like Rust,
+        # rather than gracefully disabling itself.
+        SDL_VIDEODRIVER = "x11";
+      };
+
+      extraPkgs = pkgs:
+        with pkgs; [
+          xorg.libXcursor
+          xorg.libXi
+          xorg.libXinerama
+          xorg.libXScrnSaver
+          libpng
+          libpulseaudio
+          libvorbis
+          stdenv.cc.cc.lib
+          libkrb5
+          keyutils
+        ];
+    };
+    extraCompatPackages = with pkgs; [proton-ge-bin];
+    extraPackages = with pkgs; [gamescope];
+    localNetworkGameTransfers.openFirewall = true;
+    protontricks.enable = true;
+  };
 
   # Configure the matthew user.
   users.users.matthew = {
@@ -300,6 +341,10 @@
           mode = "0700";
         }
 
+        {
+          directory = ".local/share/Steam";
+          mode = "0700";
+        }
         {
           directory = ".local/share/atuin";
           mode = "0700";

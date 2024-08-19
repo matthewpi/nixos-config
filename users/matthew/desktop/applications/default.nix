@@ -1,6 +1,7 @@
 {pkgs, ...}: {
   imports = [
     ./firefox.nix
+    ./gaming.nix
     # ./obs-studio.nix
     # ./signal.nix
     ./terminal.nix
