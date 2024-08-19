@@ -4,8 +4,8 @@
   src,
   meta,
   stdenv,
-  unzip,
   undmg,
+  unzip,
 }:
 stdenv.mkDerivation {
   inherit pname version src meta;
@@ -15,7 +15,7 @@ stdenv.mkDerivation {
   sourceRoot = ".";
 
   installPhase = ''
-    mkdir -p $out/Applications
-    cp -r *.app $out/Applications
+    mkdir -p "$out"/Applications
+    cp -r *.app "$out"/Applications
   '';
 }
