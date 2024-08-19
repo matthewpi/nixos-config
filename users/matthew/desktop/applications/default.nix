@@ -19,6 +19,7 @@
     qFlipper
     slack
     switcheroo
+    ungoogled-chromium
     vesktop
     video-trimmer
     wireshark

@@ -76,6 +76,10 @@
           mode = "0700";
         }
         {
+          directory = ".cache/chromium";
+          mode = "0700";
+        }
+        {
           directory = ".cache/containers";
           mode = "0700";
         }
@@ -198,6 +202,10 @@
         }
         {
           directory = ".config/aws";
+          mode = "0700";
+        }
+        {
+          directory = ".config/chromium";
           mode = "0700";
         }
         {
