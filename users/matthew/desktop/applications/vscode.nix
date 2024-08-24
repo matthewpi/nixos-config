@@ -14,20 +14,20 @@
 
     extensions = with pkgs.vscode-extensions;
       [
-        formulahendry.auto-close-tag # Auto Close Tag
+        # formulahendry.auto-close-tag # Auto Close Tag
         formulahendry.auto-rename-tag # Auto Rename Tag
         mads-hartmann.bash-ide-vscode # Bash IDE
         bungcip.better-toml # Better TOML
         matthewpi.caddyfile-support # Caddyfile Support
         catppuccin.catppuccin-vsc # Catppuccin for VSCode
         catppuccin.catppuccin-vsc-icons # Catppuccin Icons for VSCode
-        streetsidesoftware.code-spell-checker # Code Spell Checker
+        # streetsidesoftware.code-spell-checker # Code Spell Checker
         asdine.cue # Cue
         ms-azuretools.vscode-docker # Docker
         mikestead.dotenv # DotENV
         mkhl.direnv # direnv
         editorconfig.editorconfig # EditorConfig for VS Code
-        usernamehw.errorlens # Error Lens
+        # usernamehw.errorlens # Error Lens
         dbaeumer.vscode-eslint # ESLint
         file-icons.file-icons # file-icons
         #github.copilot # GitHub Copilot; TODO: enable?
@@ -40,16 +40,16 @@
         jnoortheen.nix-ide # Nix IDE
         christian-kohler.npm-intellisense # npm Intellisense
         christian-kohler.path-intellisense # Path Intellisense
+        bmewburn.vscode-intelephense-client # PHP Intelephense
         esbenp.prettier-vscode # Prettier - Code formatter
         rust-lang.rust-analyzer # rust-analyzer
         tailscale.vscode-tailscale # Tailscale
         bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
-        vue.volar # Vue - Official
+        # vue.volar # Vue - Official
         vscode-icons-team.vscode-icons # vscode-icons
         zxh404.vscode-proto3 # vscode-proto3
         redhat.vscode-xml # XML
         redhat.vscode-yaml # YAML
-        bmewburn.vscode-intelephense-client
       ]
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         # Buf
@@ -129,6 +129,13 @@
           version = "1.36.1";
           sha256 = "sha256-zOjUrdoBBtSz59/b/n63QByGyQRcOJFe+TMfosktEss=";
         }
+        # Vue - Official
+        {
+          name = "volar";
+          publisher = "vue";
+          version = "2.0.28";
+          sha256 = "sha256-f0nnmQemu6DxveQfJJrZGrj3dOTHhH1wYJGnNJlM6sU=";
+        }
       ];
 
     keybindings = [];
@@ -149,12 +156,14 @@
       "editor.wordSeparators" = "`~!@#%^&*()=+[{]}\\|;:'\",.<>/?";
       "editor.quickSuggestionsDelay" = 0;
       "editor.insertSpaces" = false;
-      "editor.rulers" = [100 120];
+      "editor.rulers" = [80 100 120];
       "editor.fontSize" = 12;
 
       # Explorer
       "explorer.sortOrder" = "default";
-      "explorer.autoRevealExcludes" = {
+      "explorer.autoRevealExclude" = {
+        "**/.direnv" = true;
+        "**/.nuxt" = true;
         "**/bower_components" = true;
         "**/node_modules" = true;
         "**/result" = true;
@@ -208,7 +217,7 @@
       #
 
       # Caddyfile Support
-      "caddyfile.executable" = "${lib.getExe pkgs.caddy}";
+      "caddyfile.executable" = lib.getExe pkgs.caddy;
 
       # Error Lens
       "errorLens.enabledDiagnosticLevels" = ["error" "warning"];
@@ -231,10 +240,10 @@
       "go.toolsManagement.checkForUpdates" = "off";
       "go.toolsManagement.autoUpdate" = false;
       "go.alternateTools" = {
-        "dlv" = "${lib.getExe pkgs.delve}";
-        "golangci-lint" = "${lib.getExe' pkgs.golangci-lint "golangci-lint"}";
-        "gopls" = "${lib.getExe pkgs.gopls}";
-        "staticcheck" = "${pkgs.go-tools}/bin/staticcheck";
+        "dlv" = lib.getExe pkgs.delve;
+        "golangci-lint" = lib.getExe' pkgs.golangci-lint "golangci-lint";
+        "gopls" = lib.getExe pkgs.gopls;
+        "staticcheck" = lib.getExe' pkgs.go-tools "staticcheck";
       };
       "gopls" = {
         "format.gofumpt" = true;
