@@ -3,7 +3,7 @@
     imports = [
       ./dbus.nix
       ./networking.nix
-      ./nix.nix
+      ./nix-daemon.nix
       ./openssh.nix
       ./security.nix
       ./zram.nix
