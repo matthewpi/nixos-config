@@ -28,17 +28,17 @@
     geary
     gnome-calculator
     gnome-calendar
-    gnome.gnome-characters
-    gnome.gnome-clocks
-    gnome.gnome-contacts
+    gnome-characters
+    gnome-clocks
+    gnome-contacts
     gnome-dictionary
     gnome-disk-utility
     gnome-font-viewer
-    gnome.gnome-logs
-    gnome.gnome-maps
+    gnome-logs
+    gnome-maps
     gnome-system-monitor
     gnome-text-editor
-    gnome.gnome-weather
+    gnome-weather
     nautilus
     seahorse
     sushi

@@ -37,15 +37,15 @@
 
     # Yeet packages that I don't want
     environment.gnome.excludePackages = with pkgs; [
+      cheese
+      epiphany
+      gedit
+      gnome-characters
       gnome-console
       gnome-photos
       gnome-tour
-      cheese
-      gedit
-      epiphany
       gnome-contacts
       gnome-initial-setup
-      gnome.gnome-characters
       yelp
     ];
 
