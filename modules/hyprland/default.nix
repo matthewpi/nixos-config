@@ -10,6 +10,20 @@
       ./gsettings.nix
     ];
 
+    # TODO: not reference home-manager for the package.
+    programs.hyprland.package = config.home-manager.users.matthew.wayland.windowManager.hyprland.finalPackage;
+
+    # Add required packages to path.
+    environment.systemPackages = [config.programs.hyprland.package pkgs.pciutils];
+
+    # Install hyprland as a session package so it can be used by tuigreet.
+    services.displayManager.sessionPackages = [config.programs.hyprland.package];
+
+    # Path fixes for Hyprland.
+    systemd.user.extraConfig = ''
+      DefaultEnvironment="PATH=/run/wrappers/bin:/nix/profile/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:$PATH"
+    '';
+
     # Enable hyprlock PAM (and gnome-keyring integration)
     security.pam.services.hyprlock.enableGnomeKeyring = lib.mkDefault config.services.gnome.gnome-keyring.enable;
 
@@ -19,10 +33,7 @@
     # the GNOME keyring service is configured under home-manager.
     services.gnome.gnome-keyring.enable = lib.mkDefault true;
 
-    services.gnome.gnome-online-accounts.enable = lib.mkDefault true;
-    services.gnome.evolution-data-server.enable = lib.mkDefault true;
-
-    # Enable upower
+    # Enable upower for power management.
     services.upower = {
       enable = lib.mkDefault true;
       criticalPowerAction = lib.mkDefault "PowerOff";
@@ -32,9 +43,7 @@
     services.gvfs.enable = lib.mkDefault true;
 
     # Fixes issues with XDG portal definitions not being detected.
+    # ref; https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
     environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
-
-    # Add required packages to path.
-    environment.systemPackages = with pkgs; [pciutils];
   };
 }

@@ -53,18 +53,6 @@
       grim -t png -l 6 -g "$(slurp -o -r -c '#ff0000ff')" - | satty --fullscreen --filename - --copy-command wl-copy
     '';
   });
-
-  # Command used to set the systemd environment
-  systemdEnvironment = lib.getExe (pkgs.writeShellApplication {
-    name = "hyprland-systemd-environment";
-    runtimeInputs = with pkgs; [dbus];
-    text = ''
-      (
-        export PATH='/run/wrappers/bin:/nix/profile/bin:/etc/profiles/per-user/matthew/bin:/run/current-system/sw/bin'
-        dbus-update-activation-environment --systemd --all
-      )
-    '';
-  });
 in {
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "Hyprland";
@@ -82,16 +70,15 @@ in {
       enableXdgAutostart = true;
 
       extraCommands = [
-        systemdEnvironment
+        # https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#programs-dont-work-in-systemd-services-but-do-on-the-terminal
+        "${lib.getExe' pkgs.dbus "dbus-update-activation-environment"} --systemd --all"
         "${pkgs.systemd}/bin/systemctl --user stop hyprland-session.target"
         "${pkgs.systemd}/bin/systemctl --user start hyprland-session.target"
       ];
 
-      # Add additional variables that allow desktop portals to work properly.
-      variables = lib.mkDefault [
-        # https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#programs-dont-work-in-systemd-services-but-do-on-the-terminal
-        # "--all"
-      ];
+      # Disable the default `dbus-update-activation-environment` command
+      # generation since we do it ourselves via `extraCommands`.
+      variables = lib.mkDefault [];
     };
 
     settings = {
@@ -217,19 +204,19 @@ in {
         "float, title:(Friends List), class:(steam)"
 
         # Polkit
-        #"dimaround, class:(polkit-gnome-authentication-agent-1)"
+        "dimaround, class:(polkit-gnome-authentication-agent-1)"
         "center,    class:(polkit-gnome-authentication-agent-1)"
         "float,     class:(polkit-gnome-authentication-agent-1)"
         "pin,       class:(polkit-gnome-authentication-agent-1)"
 
         # Screenshare Portal
-        #"dimaround, title:(MainPicker)"
+        "dimaround, title:(MainPicker)"
         "center,    title:(MainPicker)"
         "float,     title:(MainPicker)"
         "pin,       title:(MainPicker)"
 
         # Keyring
-        #"dimaround, class:(gcr-prompter)"
+        "dimaround, class:(gcr-prompter)"
         "center,    class:(gcr-prompter)"
         "float,     class:(gcr-prompter)"
         "pin,       class:(gcr-prompter)"
@@ -293,7 +280,13 @@ in {
         "$mainMod Shift, 9, movetoworkspace, 9"
         "$mainMod Shift, 0, movetoworkspace, 10"
 
-        # Mute audio
+        # Move active window with arrow keys
+        "$mainMod, Left, movewindow, l"
+        "$mainMod, Right, movewindow, r"
+        "$mainMod, Up, movewindow, u"
+        "$mainMod, Down, movewindow, d"
+
+        # Mute audio (volume adjustment is bound under `binde`)
         ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
 
         # hyprlock keybinds
@@ -307,6 +300,11 @@ in {
         # bindl allows the bind to be used even when an input inhibitor is active
         "$mainMod, L, exec, ${pkgs.systemd}/bin/loginctl lock-session"
         "$mainMod Shift, L, exec, ${pkgs.systemd}/bin/systemctl suspend"
+
+        # Use Tab to switch between windows in a floating workspace
+        # TODO: is the trailing comma necessary here?
+        "$mainMod, Tab, cyclenext," # Change focus to another window
+        "$mainMod, Tab, bringactivetotop," # Bring it to the top
       ];
 
       # bindl allows the bind to be used even when an input inhibitor is active
@@ -321,6 +319,8 @@ in {
 
       binde = [
         # Volume up/down
+        # TODO: `${lib.getExe' config.services.pipewire.wireplumber.package "wpctl"}`
+        # (keep in mind the config we are referring to here is outside of home-manager).
         ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"
         ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-"
       ];

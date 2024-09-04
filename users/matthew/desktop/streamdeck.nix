@@ -25,7 +25,7 @@
         "${config.home.homeDirectory}/.cache/amberol"
         # Configuration location
         "${config.home.homeDirectory}/.config/streamdeck"
-        # Access to the binary since it's not packaged by Nix.
+        # Allow access to the binary since it's not packaged by Nix.
         "${config.home.homeDirectory}/code/matthewpi/streamdeck-local"
       ];
       ProtectHome = "tmpfs";
@@ -62,6 +62,6 @@
       DeviceAllow = "/dev/streamdeck";
     };
 
-    Install.WantedBy = ["dev-streamdeck.device" "hyprland-session.target"];
+    Install.WantedBy = ["hyprland-session.target"];
   };
 }
