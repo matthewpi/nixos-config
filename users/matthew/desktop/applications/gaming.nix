@@ -1,4 +1,19 @@
 {pkgs, ...}: {
+  home.packages = with pkgs; [
+    (prismlauncher.override {
+      # withWaylandGLFW = true;
+      jdks = with pkgs; [
+        jdk8
+        semeru-bin-8
+        temurin-bin-8
+        jdk17
+        jdk21
+        temurin-bin-21
+        jdk22
+      ];
+    })
+  ];
+
   programs.mangohud = {
     enable = true;
     settings = {
