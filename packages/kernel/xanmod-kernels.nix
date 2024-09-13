@@ -1,5 +1,5 @@
 {
-  applyPatches,
+  # applyPatches,
   buildLinux,
   fetchFromGitHub,
   lib,
@@ -10,8 +10,8 @@
   # NOTE: When updating these, please also take a look at the changes done to
   # kernel config in the xanmod version commit
   mainVariant = {
-    version = "6.10.8";
-    hash = "sha256-X1Go+5f8/pdsJFXcIIVXIQ3VIxHvoymMch4/pL0EuQY";
+    version = "6.10.10";
+    hash = "sha256-abxhlF0zmY9WvcQ+FnkR5fNMvrw+oTCIMaCs8DFJ+oA=";
   };
 
   xanmodKernelFor = {
@@ -25,18 +25,19 @@
         pname = "linux-xanmod";
         modDirVersion = lib.versions.pad 3 "${version}-${suffix}";
 
-        src = applyPatches {
-          src = fetchFromGitHub {
-            owner = "xanmod";
-            repo = "linux";
-            rev = modDirVersion;
-            inherit hash;
-          };
-          patches = [
-            ./oled_vrr.patch
-            ./90e3a855c922d0b8c4b18c886c5cf73223d69475.patch
-          ];
+        src = fetchFromGitHub {
+          owner = "xanmod";
+          repo = "linux";
+          rev = modDirVersion;
+          inherit hash;
         };
+
+        # src = applyPatches {
+        #   patches = [
+        #     ./oled_vrr.patch
+        #     ./90e3a855c922d0b8c4b18c886c5cf73223d69475.patch
+        #   ];
+        # };
 
         structuredExtraConfig = with lib.kernel; {
           # CPUFreq governor Performance
@@ -64,7 +65,7 @@
           RCU_BOOST_DELAY = freeform "0";
           RCU_EXP_KTHREAD = yes;
 
-          DRM_AMD_COLOR_STEAMDECK = yes;
+          # DRM_AMD_COLOR_STEAMDECK = yes;
         };
 
         extraMeta = {
