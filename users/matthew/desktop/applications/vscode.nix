@@ -272,6 +272,14 @@
         # For PHP we also want `$` and `-` as word separators.
         "editor.wordSeparators" = "`~!@#$%^&*()-=+[{]}\\|;:'\",.<>/?";
       };
+
+      #
+      # Other
+      #
+
+      # JavaScript
+
+      "javascript.updateImportsOnFileMove.enabled" = "never";
     };
   };
 
