@@ -10,7 +10,7 @@
       _1password-gui-beta = pkgs.callPackage ./1password-gui {channel = "beta";};
 
       catppuccin = pkgs.callPackage ./catppuccin {};
-      catppuccin-hyprcursors = pkgs.callPackage ./catppuccin/hyprcursors.nix {};
+      catppuccin-cursors = pkgs.callPackage ./catppuccin/cursors.nix {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
 
       cider2 = pkgs.callPackage ./cider2 {};
@@ -38,7 +38,7 @@
       inherit
         (_packages)
         catppuccin
-        catppuccin-hyprcursors
+        catppuccin-cursors
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting

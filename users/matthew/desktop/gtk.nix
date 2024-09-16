@@ -6,7 +6,7 @@
 }: let
   pointerCursor = {
     name = "Catppuccin-Mocha-Dark-Cursors";
-    package = pkgs.catppuccin-hyprcursors.mochaDark;
+    package = pkgs.catppuccin-cursors.mochaDark;
     size = 24;
 
     # Configure gtk.cursorTheme with the same options.
