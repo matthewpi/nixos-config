@@ -5,7 +5,7 @@
   ...
 }: let
   pointerCursor = {
-    name = "Catppuccin-Mocha-Dark-Cursors";
+    name = "catppuccin-mocha-dark-cursors";
     package = pkgs.catppuccin-cursors.mochaDark;
     size = 24;
 
@@ -238,9 +238,17 @@ in {
       default-folder-viewer = "list-view";
     };
 
-    "org/gtk/gtk4/settings/file-chooser" = {
-      show-hidden = true;
+    "org/gtk/settings/file-chooser" = {
       sort-directories-first = true;
+      show-hidden = true;
+    };
+
+    # TODO: are the `gtk4` settings necessary?
+    # These may be used by GNOME, but since I switched to Hyprland,
+    # they may not be necessary.
+    "org/gtk/gtk4/settings/file-chooser" = {
+      sort-directories-first = true;
+      show-hidden = true;
     };
   };
 }
