@@ -277,9 +277,26 @@
       # Other
       #
 
+      #
       # JavaScript
+      #
 
+      # Disable the annoying "update import" prompt whenever a (.js, .ts, .vue, etc) file is moved.
       "javascript.updateImportsOnFileMove.enabled" = "never";
+
+      #
+      # Kubernetes
+      #
+
+      "vs-kubernetes" = {
+        # Disable CRD code completion.
+        #
+        # Without this VSCode tries to treat almost every YAML file as a Kubernetes resource,
+        # which gets very annoying. I override this setting on a per-workspace basis since
+        # most of my projects don't contain Kubernetes CRDs, and if they do, very few contain
+        # YAML CRDs.
+        "vs-kubernetes.crd-code-completion" = "disabled";
+      };
     };
   };
 
