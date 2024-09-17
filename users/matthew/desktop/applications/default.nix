@@ -18,6 +18,7 @@
     openlens
     protonmail-desktop
     qFlipper
+    seabird
     slack
     switcheroo
     ungoogled-chromium
