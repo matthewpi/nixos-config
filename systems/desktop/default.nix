@@ -230,10 +230,6 @@
     dhcpV4Config.UseDNS = false;
     dhcpV6Config.UseDNS = false;
   };
-  systemd.network.networks."30-enp12s0" = {
-    matchConfig.Name = "enp12s0";
-    linkConfig.Unmanaged = true;
-  };
 
   # Disable default resolved config, we use an age encrypted one with NextDNS.
   environment.etc."systemd/resolved.conf".enable = false;
