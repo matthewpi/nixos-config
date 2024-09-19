@@ -28,7 +28,6 @@
           gnome-characters
           gnome-clocks
           gnome-contacts
-          gnome-dictionary
           gnome-disk-utility
           gnome-font-viewer
           gnome-logs
@@ -40,6 +39,7 @@
           seahorse
           sushi
           totem
+          wordbook
         ];
       } ''
         mkdir schemas
