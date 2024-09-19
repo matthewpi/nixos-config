@@ -25,6 +25,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -256,6 +261,7 @@
               inputs.nixos-hardware.nixosModules.common-gpu-amd
 
               inputs.agenix.nixosModules.default
+              inputs.disko.nixosModules.disko
               inputs.home-manager.nixosModules.home-manager
 
               # Right now, the `amd-ryzen` module enables zenpower which doesn't

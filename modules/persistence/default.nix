@@ -18,35 +18,32 @@
     ];
 
     # Setup a service that will automatically rollback the root subvolume to a fresh state.
-    boot.initrd.systemd.services.rollback = {
+    boot.initrd.systemd.services.rollback = let
+      luksName = "crypted";
+      rootSubvolume = "rootfs";
+    in {
       description = "Rollback BTRFS root subvolume to a fresh state";
       wantedBy = ["initrd.target"];
       before = ["sysroot.mount"];
-      after = ["systemd-cryptsetup@root.service"];
-
-      unitConfig = {
-        DefaultDependencies = "no";
-      };
-
-      serviceConfig = {
-        Type = "oneshot";
-      };
+      after = ["systemd-cryptsetup@${luksName}.service"];
+      unitConfig.DefaultDependencies = "no";
+      serviceConfig.Type = "oneshot";
 
       script = ''
         mkdir -p /btrfs
-        mount -t btrfs -o noatime,nodev,noexec,nosuid,discard=async /dev/mapper/root /btrfs
+        mount -t btrfs -o compress=zstd,noatime,nodev,noexec,nosuid,discard=async /dev/mapper/${luksName} /btrfs
 
-        echo "Cleaning subvolumes..."
-        btrfs subvolume list -o /btrfs/root | cut -f9 -d ' ' |
+        echo 'Cleaning subvolumes...'
+        btrfs subvolume list -o /btrfs/${rootSubvolume} | cut -f9 -d ' ' |
           while read subvolume; do
-            echo "Deleting /$subvolume subvolume..."
-            btrfs subvolume delete "/btrfs/$subvolume"
+            echo 'Deleting /'"$subvolume"' subvolume...'
+            btrfs subvolume delete /btrfs/"$subvolume"
           done &&
-          echo "Deleting /root subvolume..." &&
-          btrfs subvolume delete /btrfs/root
+          echo 'Deleting /${rootSubvolume} subvolume...' &&
+          btrfs subvolume delete /btrfs/${rootSubvolume}
 
-        echo "Restoring blank /root subvolume..."
-        btrfs subvolume snapshot /btrfs/root-blank /btrfs/root
+        echo 'Restoring blank /${rootSubvolume} subvolume...'
+        btrfs subvolume snapshot /btrfs/${rootSubvolume}-blank /btrfs/${rootSubvolume}
 
         umount /btrfs
         rm -d /btrfs
