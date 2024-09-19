@@ -201,10 +201,10 @@
           gofumpt = true,
         },
       })
-      --lspconfig.nixd.setup({
-      --  capabilities = capabilities,
-      --  cmd = { "''${lib.getExe pkgs.nixd}" },
-      --})
+      lspconfig.nixd.setup({
+        capabilities = capabilities,
+        cmd = { "${lib.getExe pkgs.nixd}" },
+      })
       lspconfig.rust_analyzer.setup({
         capabilities = capabilites,
         cmd = { "${lib.getExe pkgs.rust-analyzer}" },
