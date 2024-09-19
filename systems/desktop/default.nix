@@ -188,18 +188,23 @@
       initialize = false;
       user = "matthew";
       paths = [
-        "/home/matthew/code/matthewpi"
-        "/home/matthew/code/nexavo"
-        "/home/matthew/code/pterodactyl"
+        "/code/matthewpi"
+        "/code/nexavo"
+        "/code/pterodactyl"
         "/home/matthew/.local/share/obsidian"
       ];
       exclude = [
+        # Nix
+        ".devenv"
         ".direnv"
         "result*"
-        "node_modules"
-        ".output"
-        ".turbo"
+
+        # Nuxt and JavaScript
         ".nuxt"
+        ".output"
+        ".pnpm-store"
+        ".turbo"
+        "node_modules"
       ];
 
       environmentFile = config.age.secrets.restic-matthew-code.path;
