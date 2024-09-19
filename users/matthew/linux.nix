@@ -27,4 +27,8 @@
     CLUTTER_BACKEND = "wayland";
     GDK_BACKEND = "wayland,x11";
   };
+
+  systemd.user.tmpfiles.rules = [
+    "L %h/code 0755 - - - /code"
+  ];
 }

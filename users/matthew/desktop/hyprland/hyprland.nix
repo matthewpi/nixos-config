@@ -163,13 +163,13 @@ in {
       # Monitor configuration
       monitor = [
         "DP-3, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
-        "HDMI-A-1, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
+        "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
       ];
 
       workspace = [
         # Configure default workspaces for the monitors
         "1, monitor:DP-3, default:true"
-        "2, monitor:HDMI-A-1, default:true"
+        "2, monitor:DP-2, default:true"
 
         # Special workspaces that can be toggled on and off
         "special:terminal, on-created-empty:${alacritty}"

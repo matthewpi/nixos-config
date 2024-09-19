@@ -461,11 +461,6 @@
         "Music"
         "Pictures"
         "Videos"
-
-        {
-          directory = "code";
-          mode = "0700";
-        }
       ];
     };
   };

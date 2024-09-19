@@ -8,7 +8,7 @@
     };
 
     Service = {
-      ExecStart = "${config.home.homeDirectory}/code/matthewpi/streamdeck-local/streamdeck"; # TODO: package
+      ExecStart = "/code/matthewpi/streamdeck-local/streamdeck"; # TODO: package
       KillSignal = "SIGINT";
       Restart = "on-failure";
       Slice = "background.slice";
@@ -26,7 +26,7 @@
         # Configuration location
         "${config.home.homeDirectory}/.config/streamdeck"
         # Allow access to the binary since it's not packaged by Nix.
-        "${config.home.homeDirectory}/code/matthewpi/streamdeck-local"
+        "/code/matthewpi/streamdeck-local"
       ];
       ProtectHome = "tmpfs";
       ProtectSystem = "strict";
