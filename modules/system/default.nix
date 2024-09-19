@@ -6,6 +6,7 @@
       ./nix-daemon.nix
       ./openssh.nix
       ./security.nix
+      ./well-known-hosts.nix
       ./zram.nix
     ];
 
