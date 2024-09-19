@@ -209,7 +209,7 @@
         capabilities = capabilites,
         cmd = { "${lib.getExe pkgs.rust-analyzer}" },
       })
-      lspconfig.tsserver.setup({
+      lspconfig.ts_ls.setup({
         capabilities = capabilities,
         cmd = { "${lib.getExe pkgs.nodePackages.typescript-language-server}", "--stdio" },
       })
