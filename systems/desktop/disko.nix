@@ -100,7 +100,7 @@
 
                 "/persist/home" = {
                   mountpoint = "/persist/home";
-                  mountOptions = ["compress=no" "noexec"] ++ defaultOptions;
+                  mountOptions = ["compress=no"] ++ defaultOptions;
                 };
 
                 # Usually this would be done via impermanence, but logs are
