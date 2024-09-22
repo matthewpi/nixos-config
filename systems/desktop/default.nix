@@ -239,4 +239,7 @@
 
   # Disable default resolved config, we use an age encrypted one with NextDNS.
   environment.etc."systemd/resolved.conf".enable = false;
+
+  # Override the default time servers to use DHCP instead.
+  networking.timeServers = lib.mkForce [];
 }
