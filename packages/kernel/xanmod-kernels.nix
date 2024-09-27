@@ -1,5 +1,4 @@
 {
-  # applyPatches,
   buildLinux,
   fetchFromGitHub,
   lib,
@@ -10,8 +9,8 @@
   # NOTE: When updating these, please also take a look at the changes done to
   # kernel config in the xanmod version commit
   mainVariant = {
-    version = "6.10.10";
-    hash = "sha256-abxhlF0zmY9WvcQ+FnkR5fNMvrw+oTCIMaCs8DFJ+oA=";
+    version = "6.10.11";
+    hash = "sha256-FDWFpiN0VvzdXcS3nZHm1HFgASazNX5+pL/8UJ3hkI8=";
   };
 
   xanmodKernelFor = {
@@ -31,13 +30,6 @@
           rev = modDirVersion;
           inherit hash;
         };
-
-        # src = applyPatches {
-        #   patches = [
-        #     ./oled_vrr.patch
-        #     ./90e3a855c922d0b8c4b18c886c5cf73223d69475.patch
-        #   ];
-        # };
 
         structuredExtraConfig = with lib.kernel; {
           # CPUFreq governor Performance
@@ -64,8 +56,6 @@
           RCU_BOOST = yes;
           RCU_BOOST_DELAY = freeform "0";
           RCU_EXP_KTHREAD = yes;
-
-          # DRM_AMD_COLOR_STEAMDECK = yes;
         };
 
         extraMeta = {
