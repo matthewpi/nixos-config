@@ -158,7 +158,7 @@ in {
       };
 
       # Allow direct scanout.
-      render.direct_scanout = true;
+      render.direct_scanout = false;
 
       # Monitor configuration
       monitor = [
@@ -247,6 +247,7 @@ in {
         ", Print, exec, ${screenshot}"
 
         # Utility keybinds
+        ", F11, fullscreen"
         "$mainMod, Q, killactive"
 
         # Application keybinds
