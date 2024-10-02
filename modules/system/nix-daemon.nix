@@ -28,7 +28,7 @@
 
       # Basic trust settings
       require-sigs = lib.mkDefault true;
-      trusted-users = ["root" "@wheel"];
+      trusted-users = ["@wheel"];
       allowed-users = ["root" "@wheel"];
 
       # Enable experimental features
