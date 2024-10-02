@@ -56,6 +56,9 @@
     enable = lib.mkDefault config.xdg.mime.enable;
 
     associations.added = {
+      # Directory Browser
+      "inode/directory" = ["org.gnome.Nautilus.desktop"];
+
       # While firefox's .desktop file sets these, Junction tries to explicitly set these associations.
       "x-scheme-handler/http" = ["firefox.desktop"];
       "x-scheme-handler/https" = ["firefox.desktop"];
@@ -78,6 +81,9 @@
       defaultImageViewer = "org.gnome.eog.desktop";
       defaultTextEditor = "org.gnome.TextEditor.desktop";
     in {
+      # Directory Browser
+      "inode/directory" = ["org.gnome.Nautilus.desktop"];
+
       # Web Browser
       "x-scheme-handler/http" = [defaultBrowser];
       "x-scheme-handler/https" = [defaultBrowser];
@@ -125,6 +131,7 @@
 
       # Archives
       "application/zip" = ["org.gnome.FileRoller.desktop"];
+      "application/x-modrinth-modpack+zip" = ["org.gnome.FileRoller.desktop"];
 
       # Applications
       "x-scheme-handler/termius" = ["termius-app.desktop"];
