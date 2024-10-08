@@ -5,7 +5,8 @@
     system,
     ...
   }: let
-    _packages = {
+    wrapFirefox = pkgs.callPackage "${inputs.nixpkgs}/pkgs/applications/networking/browsers/firefox/wrapper.nix" { };
+    _packages = rec {
       _1password-gui = pkgs.callPackage ./1password-gui {};
       _1password-gui-beta = pkgs.callPackage ./1password-gui {channel = "beta";};
 
@@ -22,6 +23,8 @@
       monaspace = pkgs.callPackage ./monaspace.nix {};
 
       openlens = pkgs.callPackage ./openlens {};
+      zen-browser-unwrapped = pkgs.callPackage ./zen-browser {};
+      zen-browser = wrapFirefox zen-browser-unwrapped {};
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -45,6 +48,8 @@
         inter
         monaspace
         openlens
+        zen-browser-unwrapped
+        zen-browser
         zsh-titles
         ;
 
