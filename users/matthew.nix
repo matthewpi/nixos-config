@@ -153,6 +153,10 @@
           mode = "0700";
         }
         {
+          directory = ".cache/hoppscotch";
+          mode = "0700";
+        }
+        {
           directory = ".cache/mesa_shader_cache";
           mode = "0700";
         }
@@ -394,6 +398,10 @@
           mode = "0700";
         }
         {
+          directory = ".local/share/hoppscotch";
+          mode = "0700";
+        }
+        {
           directory = ".local/share/icc";
           mode = "0700";
         }
@@ -453,6 +461,11 @@
 
         {
           directory = ".mozilla/firefox";
+          mode = "0700";
+        }
+        # TODO: patch zen to allow using a different directory
+        {
+          directory = ".zen";
           mode = "0700";
         }
 

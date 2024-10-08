@@ -74,6 +74,10 @@
       "text/plain" = ["org.gnome.TextEditor.desktop"];
       "text/vnd.trolltech.linguist" = ["org.gnome.TextEditor.desktop"]; # TypeScript
       "text/x-csrc" = ["org.gnome.TextEditor.desktop"]; # .cfg
+
+      # # Hoppscotch
+      # "x-scheme-handler/io.hoppscotch.desktop" = ["hoppscotch.desktop"];
+      # "x-scheme-handler/hoppscotch" = ["hoppscotch.desktop"];
     };
 
     defaultApplications = let
@@ -135,6 +139,10 @@
 
       # Applications
       "x-scheme-handler/termius" = ["termius-app.desktop"];
+
+      # Hoppscotch
+      "x-scheme-handler/io.hoppscotch.desktop" = ["hoppscotch.desktop"];
+      "x-scheme-handler/hoppscotch" = ["hoppscotch.desktop"];
     };
   };
 }

@@ -19,17 +19,17 @@ in
     extraPkgs = appimageTools.defaultFhsEnvArgs.multiPkgs;
 
     extraInstallCommands = ''
-      mv "$out"/bin/${name} "$out"/bin/${pname}
+      mv "$out"/bin/${name} "$out"/bin/cider
 
       source '${makeWrapper}/nix-support/setup-hook'
 
-      wrapProgram "$out"/bin/${pname} \
+      wrapProgram "$out"/bin/cider \
         --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}" \
         --add-flags '--disable-seccomp-filter-sandbox --ignore-gpu-blocklist --enable-gpu-rasterization --enable-gpu --enable-features=Vulkan,UseSkiaRenderer,VaapiVideoDecoder,CanvasOopRasterization,VaapiVideoEncoder,RawDraw --disable-features=UseChromeOSDirectVideoDecoder --enable-zero-copy --enable-oop-rasterization --enable-raw-draw --enable-accelerated-mjpeg-decode --enable-accelerated-video --enable-native-gpu-memory-buffers'
 
-      install -Dm444 '${appimageContents}/usr/share/icons/hicolor/512x512/apps/${pname}.png' "$out"/share/icons/hicolor/512x512/apps/${pname}.png
-      install -Dm444 '${appimageContents}/${pname}.desktop' "$out"/share/applications/${pname}.desktop
-      substituteInPlace "$out"/share/applications/${pname}.desktop \
-        --replace-fail 'Exec=AppRun' 'Exec=${pname}'
+      install -Dm444 '${appimageContents}/usr/share/icons/hicolor/512x512/apps/cider.png' "$out"/share/icons/hicolor/512x512/apps/cider.png
+      install -Dm444 '${appimageContents}/cider.desktop' "$out"/share/applications/cider.desktop
+      substituteInPlace "$out"/share/applications/cider.desktop \
+        --replace-fail 'Exec=AppRun' 'Exec=cider'
     '';
   }
