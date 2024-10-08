@@ -9,11 +9,12 @@
     _packages = rec {
       _1password-gui = pkgs.callPackage ./1password-gui {};
       _1password-gui-beta = pkgs.callPackage ./1password-gui {channel = "beta";};
-
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-cursors = pkgs.callPackage ./catppuccin/cursors.nix {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
       cider2 = pkgs.callPackage ./cider2 {};
+      hoppscotch-unwrapped = pkgs.callPackage ./hoppscotch {};
+      hoppscotch = pkgs.callPackage ./hoppscotch/wrapper.nix {inherit hoppscotch-unwrapped;};
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
@@ -41,6 +42,8 @@
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
+        hoppscotch-unwrapped
+        hoppscotch
         inter
         monaspace
         openlens
