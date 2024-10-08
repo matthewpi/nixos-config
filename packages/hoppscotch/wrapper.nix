@@ -21,8 +21,8 @@ symlinkJoin rec {
   postBuild = ''
     gappsWrapperArgs+=(
       ${lib.optionalString stdenv.hostPlatform.isLinux ''
-        --prefix PATH : ${lib.makeBinPath [desktop-file-utils xdg-utils]}
-      ''}
+      --prefix PATH : ${lib.makeBinPath [desktop-file-utils xdg-utils]}
+    ''}
     )
 
     wrapGAppsHook

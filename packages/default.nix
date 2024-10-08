@@ -5,7 +5,7 @@
     system,
     ...
   }: let
-    wrapFirefox = pkgs.callPackage "${inputs.nixpkgs}/pkgs/applications/networking/browsers/firefox/wrapper.nix" { };
+    wrapFirefox = pkgs.callPackage "${inputs.nixpkgs}/pkgs/applications/networking/browsers/firefox/wrapper.nix" {};
     _packages = rec {
       _1password-gui = pkgs.callPackage ./1password-gui {};
       _1password-gui-beta = pkgs.callPackage ./1password-gui {channel = "beta";};

@@ -72,7 +72,6 @@
   udev,
   xcb-util-cursor,
   xorg,
-  xvfb-run,
   zlib,
   # Generic changes the compatibility mode of the final binaries.
   #
@@ -80,11 +79,9 @@
   # cost of disabling hardware-specific optimizations. It is highly recommended
   # to leave `generic` disabled.
   generic ? false,
-
   debugBuild ? false,
   # On 32bit platforms, we disable adding "-g" for easier linking.
   enableDebugSymbols ? !stdenv.hostPlatform.is32bit,
-
   alsaSupport ? stdenv.hostPlatform.isLinux,
   ffmpegSupport ? true,
   gssSupport ? true,
@@ -94,14 +91,9 @@
   pulseaudioSupport ? stdenv.hostPlatform.isLinux,
   sndioSupport ? stdenv.hostPlatform.isLinux,
   waylandSupport ? true,
-  pgoSupport ? (stdenv.hostPlatform.isLinux && stdenv.hostPlatform == stdenv.buildPlatform),
-  ltoSupport ? (stdenv.hostPlatform.isLinux && stdenv.hostPlatform.is64bit && !stdenv.hostPlatform.isRiscV),
-
   privacySupport ? false,
-
   # WARNING: NEVER set any of the options below to `true` by default.
   # Set to `!privacySupport` or `false`.
-
   crashreporterSupport ? !privacySupport && !stdenv.hostPlatform.isRiscV && !stdenv.hostPlatform.isMusl,
   geolocationSupport ? !privacySupport,
   # googleAPISupport ? geolocationSupport,
@@ -180,26 +172,27 @@ in
 
     SURFER_COMPAT = generic;
 
-    nativeBuildInputs = [
-      autoconf
-      cargo
-      git
-      gnum4
-      llvmPackagesBuildBuild.bintools
-      makeWrapper
-      nasm
-      nodejs
-      pkg-config
-      python3
-      rsync
-      rust-cbindgen
-      rustPlatform.bindgenHook
-      rustc
-      surfer
-      unzip
-      wrapGAppsHook3
-      xorg.xvfb
-    ]
+    nativeBuildInputs =
+      [
+        autoconf
+        cargo
+        git
+        gnum4
+        llvmPackagesBuildBuild.bintools
+        makeWrapper
+        nasm
+        nodejs
+        pkg-config
+        python3
+        rsync
+        rust-cbindgen
+        rustPlatform.bindgenHook
+        rustc
+        surfer
+        unzip
+        wrapGAppsHook3
+        xorg.xvfb
+      ]
       ++ lib.optionals crashreporterSupport [dump_syms patchelf];
 
     buildInputs =
@@ -269,42 +262,44 @@ in
       done
     '';
 
-    configureFlags = [
-      "--disable-bootstrap"
-      "--disable-updater"
-      "--enable-default-toolkit=cairo-gtk3${lib.optionalString waylandSupport "-wayland"}"
-      "--enable-system-pixman"
-      "--with-distribution-id=org.nixos"
-      "--with-libclang-path=${llvmPackagesBuildBuild.libclang.lib}/lib"
-      "--with-system-ffi"
-      "--with-system-icu"
-      "--with-system-jpeg"
-      "--with-system-libevent"
-      "--with-system-libvpx"
-      "--with-system-nspr"
-      "--with-system-nss"
-      "--with-system-png" # needs APNG support
-      "--with-system-webp"
-      "--with-system-zlib"
-      "--with-wasi-sysroot=${wasiSysRoot}"
-      "--host=${buildStdenv.buildPlatform.config}"
-      "--target=${buildStdenv.hostPlatform.config}"
-    ] ++ [
-      (lib.enableFeature alsaSupport "alsa")
-      (lib.enableFeature ffmpegSupport "ffmpeg")
-      (lib.enableFeature geolocationSupport "necko-wifi")
-      (lib.enableFeature gssSupport "negotiateauth")
-      (lib.enableFeature jackSupport "jack")
-      (lib.enableFeature jemallocSupport "jemalloc")
-      (lib.enableFeature pulseaudioSupport "pulseaudio")
-      (lib.enableFeature sndioSupport "sndio")
-      (lib.enableFeature webrtcSupport "webrtc")
-      # --enable-release adds -ffunction-sections & LTO that require a big amount
-      # of RAM, and the 32-bit memory space cannot handle that linking
-      (lib.enableFeature (!debugBuild && !stdenv.hostPlatform.is32bit) "release")
-      (lib.enableFeature enableDebugSymbols "debug-symbols")
-    ];
-      # ++ lib.optionals enableDebugSymbols ["--disable-strip" "--disable-install-strip"];
+    configureFlags =
+      [
+        "--disable-bootstrap"
+        "--disable-updater"
+        "--enable-default-toolkit=cairo-gtk3${lib.optionalString waylandSupport "-wayland"}"
+        "--enable-system-pixman"
+        "--with-distribution-id=org.nixos"
+        "--with-libclang-path=${llvmPackagesBuildBuild.libclang.lib}/lib"
+        "--with-system-ffi"
+        "--with-system-icu"
+        "--with-system-jpeg"
+        "--with-system-libevent"
+        "--with-system-libvpx"
+        "--with-system-nspr"
+        "--with-system-nss"
+        "--with-system-png" # needs APNG support
+        "--with-system-webp"
+        "--with-system-zlib"
+        "--with-wasi-sysroot=${wasiSysRoot}"
+        "--host=${buildStdenv.buildPlatform.config}"
+        "--target=${buildStdenv.hostPlatform.config}"
+      ]
+      ++ [
+        (lib.enableFeature alsaSupport "alsa")
+        (lib.enableFeature ffmpegSupport "ffmpeg")
+        (lib.enableFeature geolocationSupport "necko-wifi")
+        (lib.enableFeature gssSupport "negotiateauth")
+        (lib.enableFeature jackSupport "jack")
+        (lib.enableFeature jemallocSupport "jemalloc")
+        (lib.enableFeature pulseaudioSupport "pulseaudio")
+        (lib.enableFeature sndioSupport "sndio")
+        (lib.enableFeature webrtcSupport "webrtc")
+        # --enable-release adds -ffunction-sections & LTO that require a big amount
+        # of RAM, and the 32-bit memory space cannot handle that linking
+        (lib.enableFeature (!debugBuild && !stdenv.hostPlatform.is32bit) "release")
+        (lib.enableFeature enableDebugSymbols "debug-symbols")
+      ];
+    # ++ lib.optionals enableDebugSymbols ["--disable-strip" "--disable-install-strip"];
 
     preConfigure = ''
       export LLVM_PROFDATA=llvm-profdata
