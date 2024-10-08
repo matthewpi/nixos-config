@@ -4,7 +4,7 @@
   lib,
   stdenv,
 }: let
-  pname = "cider";
+  pname = "cider2";
   version = "2.5.0";
 
   # For anyone wondering, these files are locked behind firewall rules.
