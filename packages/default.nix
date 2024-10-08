@@ -13,18 +13,14 @@
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-cursors = pkgs.callPackage ./catppuccin/cursors.nix {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
-
       cider2 = pkgs.callPackage ./cider2 {};
-
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
-      zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
-
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
-
       openlens = pkgs.callPackage ./openlens {};
       zen-browser-unwrapped = pkgs.callPackage ./zen-browser {};
       zen-browser = wrapFirefox zen-browser-unwrapped {};
+      zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
