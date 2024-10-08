@@ -204,7 +204,7 @@
   in
     inputs.flake-parts.lib.mkFlake {inherit inputs;} (
       {self, ...}: {
-        systems = ["x86_64-darwin" "x86_64-linux"];
+        systems = ["x86_64-linux"];
 
         imports = [
           inputs.flake-parts.flakeModules.easyOverlay
@@ -310,20 +310,6 @@
               # ./builders
               ./systems/desktop
               ./users
-            ];
-          };
-
-          darwinConfigurations."Matthews-MBP" = inputs.darwin.lib.darwinSystem {
-            specialArgs = {
-              inherit inputs outputs;
-
-              flavour = "mocha";
-            };
-
-            modules = [
-              nixFlakeSettings
-              inputs.home-manager.darwinModules.home-manager
-              ./systems/mbp
             ];
           };
         };

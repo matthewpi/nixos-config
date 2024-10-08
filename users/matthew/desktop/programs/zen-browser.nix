@@ -1,8 +1,4 @@
-{
-  inputs,
-  lib,
-  ...
-}: let
+{inputs, ...}: let
   modulePath = ["programs" "zen-browser"];
   mkFirefoxModule = import "${inputs.home-manager}/modules/programs/firefox/mkFirefoxModule.nix";
 in {

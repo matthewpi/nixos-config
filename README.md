@@ -6,4 +6,3 @@ Coming Soon&trade;
 
 - agenix
 - home-manager
-- nix-darwin
