@@ -83,6 +83,7 @@
         hyprwayland-scanner.follows = "hyprwayland-scanner";
         xdph.follows = "xdph";
         nixpkgs.follows = "nixpkgs";
+        pre-commit-hooks.follows = "";
         systems.follows = "systems-linux";
       };
     };
