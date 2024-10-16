@@ -35,7 +35,7 @@ in {
 
     gtk3.extraConfig.gtk-application-prefer-dark-theme = 1;
     gtk3.bookmarks = [
-      "file://${config.home.homeDirectory}/code"
+      "file:///code"
       "file://${config.home.homeDirectory}/Documents"
       "file://${config.home.homeDirectory}/Downloads"
       "file://${config.home.homeDirectory}/Music"
