@@ -23,13 +23,13 @@
 in
   stdenvNoCC.mkDerivation rec {
     pname = "catppuccin-cursors";
-    version = "0.3.1";
+    version = "0.4.0";
 
     src = fetchFromGitHub {
       owner = "catppuccin";
       repo = "cursors";
       rev = "v${version}";
-      hash = "sha256-CuzD6O/RImFKLWzJoiUv7nlIdoXNvwwl+k5mTeVIY10=";
+      hash = "sha256-VxLwZkZdV1xH4jeqtszqSnhNrgF3uamEXBLPKIc4lXE=";
     };
 
     nativeBuildInputs = [hyprcursor inkscape just xcursorgen xcur2png];
