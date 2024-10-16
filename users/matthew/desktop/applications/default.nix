@@ -7,16 +7,16 @@
     ./terminal.nix
     ./virt-manager.nix
     ./vscode.nix
-    #./zen-browser.nix
+    # ./zen-browser.nix
 
-    #../programs/zen-browser.nix
+    # ../programs/zen-browser.nix
   ];
 
   home.packages = with pkgs; [
     amberol
     cider2
     libreoffice
-    hoppscotch
+    # hoppscotch
     impression
     obsidian
     openlens
