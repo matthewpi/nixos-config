@@ -50,7 +50,25 @@
     name = "hyprland-screenshot";
     runtimeInputs = with pkgs; [grim satty slurp wl-clipboard];
     text = ''
-      grim -t png -l 6 -g "$(slurp -o -r -c '#ff0000ff')" - | satty --fullscreen --filename - --copy-command wl-copy
+      grim -t png -l 0 -g "$(slurp -o -r -c '#ff0000ff')" - | satty --fullscreen --filename - --copy-command wl-copy
+    '';
+  });
+
+  screenshot-activeworkspace = lib.getExe (pkgs.writeShellApplication {
+    name = "hyprland-screenshot-activeworkspace";
+    runtimeInputs = with pkgs; [grim satty slurp wl-clipboard];
+    text = ''
+      grim -t png -l 0 -o "$(hyprctl -j activeworkspace | jq -r '.monitor')" - | satty --fullscreen --filename - --copy-command wl-copy
+    '';
+  });
+
+  screenshot-selectwindow = lib.getExe (pkgs.writeShellApplication {
+    name = "hyprland-screenshot-selectwindow";
+    runtimeInputs = with pkgs; [grim satty slurp wl-clipboard];
+    text = ''
+      activeWorkspaces=$(hyprctl -j monitors | jq -r '[.[] | .activeWorkspace.id, .specialWorkspace.id] | join(",")')
+      locations="$(hyprctl -j clients | jq -r '[.[] | select(.workspace as $w | ['"$activeWorkspaces"'] | index($w.id)) | "\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])"] | unique | .[]')"
+      grim -t png -l 0 -g "$(echo "$locations" | slurp -r -c '#ff0000ff')" - | satty --fullscreen --filename - --copy-command wl-copy
     '';
   });
 in {
@@ -244,7 +262,9 @@ in {
         "$mainMod Shift, D, movetoworkspace, special:discord"
 
         # Screenshot keybind
-        ", Print, exec, ${screenshot}"
+        ", Print, exec, ${screenshot-activeworkspace}"
+        "$mainMod, Print, exec, ${screenshot-selectwindow}"
+        "Shift, Print, exec, ${screenshot}"
 
         # Utility keybinds
         ", F11, fullscreen"
