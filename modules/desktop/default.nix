@@ -14,8 +14,57 @@
       ./gamemode.nix
       ./pipewire.nix
       ./plymouth.nix
-      #./printing.nix
+      # ./printing.nix
       ./ratbagd.nix
+    ];
+
+    # Packages
+    environment.systemPackages = with pkgs; [
+      bind
+      dig
+      fd
+      file
+      fzf
+      git
+      gnugrep
+      # (neovim.override {
+      #   configure = {
+      #     packages.myPlugins = with vimPlugins; {
+      #       start = [
+      #         vim-lastplace
+      #         vim-nix
+      #       ];
+      #       opt = [];
+      #     };
+      #
+      #     customRC = ''
+      #       filetype plugin indent on
+      #
+      #       set encoding=utf-8
+      #       set fileencoding=utf-8
+      #
+      #       syntax on
+      #
+      #       :set nu
+      #     '';
+      #   };
+      #
+      #   viAlias = true;
+      #   vimAlias = true;
+      # })
+      nmap
+      rclone
+      sbctl
+      tmux
+      traceroute
+      tree
+      unzip
+      wget
+      zip
+
+      libva-utils
+      usbutils
+      vulkan-tools
     ];
 
     boot.kernel.sysctl = {
@@ -64,13 +113,6 @@
       # Allow unprivileged users to ping.
       "net.ipv4.ping_group_range" = "0 2147483647";
     };
-
-    # Extra packages
-    environment.systemPackages = with pkgs; [
-      libva-utils
-      usbutils
-      vulkan-tools
-    ];
 
     # Set location provider to geoclue2.
     location.provider = lib.mkDefault "geoclue2";

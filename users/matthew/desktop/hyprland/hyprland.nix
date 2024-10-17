@@ -120,6 +120,13 @@ in {
         # Only focus windows when the mouse crosses a window boundary
         # NOTE: this seems to fix issues with pop-ups in JetBrains IDEs
         mouse_refocus = false;
+
+        touchpad = {
+          # Enable natural scrolling when using a touchpad.
+          natural_scroll = true;
+
+          scroll_factor = 0.50;
+        };
       };
 
       general = {
@@ -170,6 +177,7 @@ in {
 
         # Wake monitors on key presses
         key_press_enables_dpms = true;
+        mouse_move_enables_dpms = false;
 
         # Focus a window on `activate`
         focus_on_activate = true;
@@ -308,7 +316,8 @@ in {
         "$mainMod, Down, movewindow, d"
 
         # Mute audio (volume adjustment is bound under `binde`)
-        ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioMute, exec, volumectl toggle-mute" # wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+        ", XF86AudioMicMute, exec, volumectl -m toggle-mute"
 
         # hyprlock keybinds
         #
@@ -319,18 +328,29 @@ in {
         # and any other actions; such as DPMS.
         #
         # bindl allows the bind to be used even when an input inhibitor is active
-        "$mainMod, L, exec, ${pkgs.systemd}/bin/loginctl lock-session"
-        "$mainMod Shift, L, exec, ${pkgs.systemd}/bin/systemctl suspend"
+        "$mainMod, L, exec, loginctl lock-session"
+        "$mainMod Shift, L, exec, sleep 1 && hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
 
         # Use Tab to switch between windows in a floating workspace
         # TODO: is the trailing comma necessary here?
         "$mainMod, Tab, cyclenext," # Change focus to another window
         "$mainMod, Tab, bringactivetotop," # Bring it to the top
+
+        ", switch:Lid Switch, exec, hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
       ];
 
       # bindl allows the bind to be used even when an input inhibitor is active
       bindl = [
-        "$mainMod Shift, L, exec, ${pkgs.systemd}/bin/systemctl suspend"
+        "$mainMod Shift, L, exec, sleep 1 && hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
+
+        ", switch:Lid Switch, exec, hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
+
+        ", XF86AudioPlay, exec, playerctl play-pause"
+        ", XF86AudioPrev, exec, playerctl previous"
+        ", XF86AudioNext, exec, playerctl next"
+
+        ", XF86MonBrightnessDown, exec, lightctl down" # brightnessctl --device=amdgpu_bl1 set 5%-
+        ", XF86MonBrightnessUp, exec, lightctl up" # brightnessctl --device=amdgpu_bl1 set +5%
       ];
 
       bindm = [
@@ -340,11 +360,13 @@ in {
 
       binde = [
         # Volume up/down
-        # TODO: `${lib.getExe' config.services.pipewire.wireplumber.package "wpctl"}`
-        # (keep in mind the config we are referring to here is outside of home-manager).
-        ", XF86AudioRaiseVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"
-        ", XF86AudioLowerVolume, exec, wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-"
+        ", XF86AudioRaiseVolume, exec, volumectl -u up" # wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+        ", XF86AudioLowerVolume, exec, volumectl -u down" # wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-
       ];
     };
+  };
+
+  services.avizo = {
+    enable = true;
   };
 }

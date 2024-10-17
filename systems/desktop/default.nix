@@ -97,13 +97,6 @@
     enable = true;
     permitCertUid = "1000";
   };
-  systemd.services.tailscaled.serviceConfig.Environment = [
-    "TS_DEBUG_FIREWALL_MODE=${
-      if config.networking.nftables.enable
-      then "nftables"
-      else "iptables"
-    }"
-  ];
   networking.firewall.trustedInterfaces = ["tailscale0"];
 
   # Allow passwordless sudo
@@ -121,51 +114,6 @@
 
   # Editor
   environment.variables.EDITOR = lib.mkOverride 900 "nvim";
-
-  # Packages
-  environment.systemPackages = with pkgs; [
-    bind
-    dig
-    fd
-    file
-    fzf
-    git
-    gnugrep
-    (neovim.override {
-      configure = {
-        packages.myPlugins = with vimPlugins; {
-          start = [
-            vim-lastplace
-            vim-nix
-          ];
-          opt = [];
-        };
-
-        customRC = ''
-          filetype plugin indent on
-
-          set encoding=utf-8
-          set fileencoding=utf-8
-
-          syntax on
-
-          :set nu
-        '';
-      };
-
-      viAlias = true;
-      vimAlias = true;
-    })
-    nmap
-    rclone
-    sbctl
-    tmux
-    traceroute
-    tree
-    unzip
-    wget
-    zip
-  ];
 
   # Enable aarch64 emulation for Nix builds
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
@@ -223,9 +171,6 @@
 
   # Enable GNOME sysprof.
   services.sysprof.enable = true;
-
-  # Allow systemd to handle coredumps.
-  systemd.coredump.enable = true;
 
   # Configure default interfaces for DHCP and IPv6 RA, alongside jumbo frames.
   systemd.network.networks."40-en" = {

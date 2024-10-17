@@ -1,9 +1,4 @@
-{
-  config,
-  lib,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   boot.kernelModules = ["kvm-amd"];
 
   boot.initrd.availableKernelModules = ["ahci" "nvme" "usbhid" "xhci_pci"];
@@ -23,10 +18,7 @@
 
   swapDevices = [];
 
-  networking.useDHCP = lib.mkDefault true;
-
-  nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
-  hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  nixpkgs.hostPlatform = "x86_64-linux";
   hardware.graphics.enable = true;
 
   # Add a udev rule for Elgato Stream Deck(s)

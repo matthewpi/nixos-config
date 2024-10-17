@@ -33,8 +33,8 @@
     plugins = lib.mkForce [];
   };
 
-  # Forcefully disable wireless.
-  networking.wireless.enable = lib.mkForce false;
+  # Disable wireless by default.
+  networking.wireless.enable = lib.mkDefault false;
 
   # Enable systemd-resolved by default.
   services.resolved = {

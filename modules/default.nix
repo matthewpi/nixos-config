@@ -9,6 +9,7 @@
     ./podman
     ./secureboot
     ./system
+    ./tailscale
     ./virtualisation
   ];
 }

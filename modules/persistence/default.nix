@@ -7,6 +7,7 @@
       ./chrony.nix
       ./colord.nix
       ./flatpak.nix
+      ./fprint.nix
       ./fwupd.nix
       ./gnome.nix
       ./libvirtd.nix
@@ -15,6 +16,7 @@
       ./plymouth.nix
       ./podman.nix
       ./tailscale.nix
+      ./wireless.nix
     ];
 
     # Setup a service that will automatically rollback the root subvolume to a fresh state.

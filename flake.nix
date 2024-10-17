@@ -172,6 +172,8 @@
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
+    nur.url = "github:nix-community/NUR";
+
     systems.url = "github:nix-systems/default";
     systems-linux.url = "github:nix-systems/default-linux";
 
@@ -248,7 +250,6 @@
           nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
             specialArgs = {
               inherit inputs outputs;
-
               # Catppuccin flavour
               # https://github.com/catppuccin/catppuccin#-palette
               flavour = "mocha";
@@ -276,9 +277,11 @@
               self.nixosModules.podman
               self.nixosModules.secureboot
               self.nixosModules.system
+              self.nixosModules.tailscale
               self.nixosModules.virtualisation
 
               {
+                age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
                 age.secrets = {
                   passwordfile-matthew.file = secrets/passwordfile-matthew.age;
 
@@ -304,12 +307,57 @@
                     group = "root";
                   };
                 };
-
-                age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
               }
 
               # ./builders
               ./systems/desktop
+              ./users
+            ];
+          };
+
+          nixosConfigurations.nxb = inputs.nixpkgs.lib.nixosSystem {
+            specialArgs = {
+              inherit inputs outputs;
+              # Catppuccin flavour
+              # https://github.com/catppuccin/catppuccin#-palette
+              flavour = "mocha";
+            };
+
+            modules = [
+              nixFlakeSettings
+
+              inputs.nixos-hardware.nixosModules.framework-16-7040-amd
+
+              inputs.agenix.nixosModules.default
+              inputs.disko.nixosModules.disko
+              inputs.home-manager.nixosModules.home-manager
+
+              self.nixosModules.catppuccin
+              self.nixosModules.desktop
+              self.nixosModules.hyprland
+              self.nixosModules.persistence
+              self.nixosModules.podman
+              self.nixosModules.secureboot
+              self.nixosModules.system
+              self.nixosModules.tailscale
+              # self.nixosModules.virtualisation
+
+              {
+                age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+                age.secrets = {
+                  passwordfile-matthew.file = secrets/passwordfile-matthew.age;
+                  desktop-resolved = {
+                    file = secrets/desktop-resolved.age;
+                    path = "/etc/systemd/resolved.conf";
+                    mode = "444";
+                    owner = "root";
+                    group = "root";
+                  };
+                  networks.file = secrets/nxb-networks.age;
+                };
+              }
+
+              ./systems/nxb
               ./users
             ];
           };

@@ -10,7 +10,8 @@
     ./services
 
     ./gtk.nix
-    ./streamdeck.nix
+    # TODO: only for desktop.
+    # ./streamdeck.nix
   ];
 
   # https://nix-community.github.io/home-manager/options.xhtml#opt-systemd.user.startServices
@@ -49,7 +50,12 @@
         path = "${kanidm}/${name}";
       }
     ])
+
+    # Install attic
     attic-client
+
+    # Install playerctl
+    playerctl
   ];
 
   xdg.mimeApps = {
