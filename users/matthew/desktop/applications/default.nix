@@ -1,16 +1,22 @@
-{pkgs, ...}: {
-  imports = [
-    ./firefox.nix
-    ./gaming.nix
-    # ./obs-studio.nix
-    # ./signal.nix
-    ./terminal.nix
-    ./virt-manager.nix
-    ./vscode.nix
-    # ./zen-browser.nix
+{
+  isDesktop,
+  lib,
+  pkgs,
+  ...
+}: {
+  imports =
+    [
+      ./firefox.nix
+      ./gaming.nix
+      # ./obs-studio.nix
+      # ./signal.nix
+      ./terminal.nix
+      ./vscode.nix
+      # ./zen-browser.nix
 
-    # ../programs/zen-browser.nix
-  ];
+      # ../programs/zen-browser.nix
+    ]
+    ++ lib.optional isDesktop ./virt-manager.nix;
 
   home.packages = with pkgs; [
     amberol

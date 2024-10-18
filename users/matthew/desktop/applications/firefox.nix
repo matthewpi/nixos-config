@@ -1,6 +1,8 @@
 {
   config,
   inputs,
+  isDesktop,
+  lib,
   pkgs,
   ...
 }: {
@@ -14,7 +16,8 @@
     # package = pkgs.firefox-devedition;
     package = pkgs.firefox;
 
-    profiles.default = {
+    # Configure the default Firefox profile.
+    profiles.default = lib.mkIf (!isDesktop) {
       extensions = with config.nur.repos.rycee.firefox-addons; [
         decentraleyes
         firefox-color

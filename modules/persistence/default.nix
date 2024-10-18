@@ -10,6 +10,7 @@
       ./fprint.nix
       ./fwupd.nix
       ./gnome.nix
+      ./iwd.nix
       ./libvirtd.nix
       ./networkmanager.nix
       ./openssh.nix

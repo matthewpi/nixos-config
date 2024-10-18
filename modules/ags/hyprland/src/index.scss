@@ -2,6 +2,7 @@
 
 $primary: $peach;
 
+@import './components/battery/index';
 @import './components/clock/index';
 @import './components/launcher/index';
 @import './components/media/index';

@@ -49,6 +49,11 @@
 
     # clipboard
     wl-clipboard
+
+    (makeAutostartItem {
+      name = "1password";
+      package = _1password-gui;
+    })
   ];
 
   # QT Theming

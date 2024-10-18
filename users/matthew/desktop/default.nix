@@ -56,6 +56,8 @@
 
     # Install playerctl
     playerctl
+
+    overskride
   ];
 
   xdg.mimeApps = {

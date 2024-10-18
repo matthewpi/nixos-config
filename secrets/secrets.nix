@@ -15,6 +15,4 @@ in {
   "restic-matthew-code-password.age".publicKeys = hosts ++ users;
 
   "desktop-resolved.age".publicKeys = hosts ++ users;
-
-  "nxb-networks.age".publicKeys = [nxb] ++ users;
 }

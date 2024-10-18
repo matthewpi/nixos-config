@@ -18,13 +18,16 @@
 
   # Hostname and networking
   networking.hostName = "nxb";
-  networking.wireless = {
+  networking.wireless.iwd = {
     enable = true;
-    userControlled.enable = true;
-    allowAuxiliaryImperativeNetworks = true;
-    secretsFile = config.age.secrets.networks.path;
-    networks = {
-      Penner.pskRaw = "ext:psk_penner";
+    settings = {
+      Network = {
+        EnableIPv6 = true;
+        RoutePriorityOffset = 300;
+      };
+      Settings = {
+        AutoConnect = true;
+      };
     };
   };
 
@@ -89,5 +92,15 @@
 
   environment.systemPackages = with pkgs; [
     brightnessctl
+    easyeffects
+  ];
+
+  programs.corectrl.enable = false;
+  programs.gamemode.enable = false;
+  services.ratbagd.enable = false;
+
+  boot.kernelParams = [
+    # https://wiki.nixos.org/wiki/Hardware/Framework/Laptop_16#Fix_Color_accuracy_in_Power_Saving_modes
+    "amdgpu.abmlevel=0"
   ];
 }

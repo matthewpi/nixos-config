@@ -1,6 +1,7 @@
 {
   flavour,
   inputs,
+  isDesktop,
   outputs,
   ...
 }: {
@@ -13,7 +14,7 @@
     useUserPackages = true;
 
     extraSpecialArgs = {
-      inherit flavour inputs outputs;
+      inherit flavour inputs isDesktop outputs;
     };
   };
 

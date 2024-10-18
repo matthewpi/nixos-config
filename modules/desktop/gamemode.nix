@@ -1,7 +1,7 @@
-{
+{lib, ...}: {
   # Enable gamemode and the gamemoded service.
   programs.gamemode = {
-    enable = true;
+    enable = lib.mkDefault true;
     enableRenice = true;
     settings = {
       gpu = {

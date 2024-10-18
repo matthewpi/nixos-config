@@ -193,15 +193,6 @@
     };
   };
 
-  #nixConfig = {
-  #  extra-substituters = [
-  #    "https://cache.nicetry.lol"
-  #  ];
-  #  extra-trusted-public-keys = [
-  #    "cache.nicetry.lol-1:JnmGgdqevlSBH1ZpAemFGR+AChxgGcNKW9G3ThtW4bk="
-  #  ];
-  #};
-
   outputs = {self, ...} @ inputs: let
     inherit (self) outputs;
   in
@@ -253,6 +244,7 @@
               # Catppuccin flavour
               # https://github.com/catppuccin/catppuccin#-palette
               flavour = "mocha";
+              isDesktop = true;
             };
 
             modules = [
@@ -321,6 +313,7 @@
               # Catppuccin flavour
               # https://github.com/catppuccin/catppuccin#-palette
               flavour = "mocha";
+              isDesktop = false;
             };
 
             modules = [
@@ -340,7 +333,6 @@
               self.nixosModules.secureboot
               self.nixosModules.system
               self.nixosModules.tailscale
-              # self.nixosModules.virtualisation
 
               {
                 age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
@@ -353,7 +345,6 @@
                     owner = "root";
                     group = "root";
                   };
-                  networks.file = secrets/nxb-networks.age;
                 };
               }
 
