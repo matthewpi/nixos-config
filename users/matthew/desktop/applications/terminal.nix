@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [termius];
+  # home.packages = with pkgs; [termius];
 
   programs.alacritty = {
     enable = true;
