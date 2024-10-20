@@ -83,9 +83,9 @@ in {
     enable = true;
     package = pkgs.hyprland;
 
-    plugins = with pkgs.hyprlandPlugins; [
-      hyprspace
-    ];
+    # plugins = with pkgs.hyprlandPlugins; [
+    #   hyprspace
+    # ];
 
     xwayland.enable = true;
 
@@ -346,9 +346,11 @@ in {
 
         # Use Tab to switch between windows in a floating workspace
         # TODO: is the trailing comma necessary here?
-        # "$mainMod, Tab, cyclenext," # Change focus to another window
-        # "$mainMod, Tab, bringactivetotop," # Bring it to the top
-        "$mainMod, Tab, overview:toggle"
+        "$mainMod, Tab, cyclenext," # Change focus to another window
+        "$mainMod, Tab, bringactivetotop," # Bring it to the top
+
+        # Hyprspace
+        # "$mainMod, Tab, overview:toggle"
 
         ", switch:Lid Switch, exec, hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
       ];
