@@ -1,5 +1,6 @@
 {
   config,
+  isDesktop,
   lib,
   pkgs,
   ...
@@ -13,7 +14,7 @@
   hardware.flipperzero.enable = true;
 
   # Enable steam udev rules
-  hardware.steam-hardware.enable = true;
+  hardware.steam-hardware.enable = isDesktop;
 
   # Enable zsh
   programs.zsh = {
@@ -46,13 +47,13 @@
 
   # Configure gamescope.
   programs.gamescope = {
-    enable = true;
+    enable = isDesktop;
     capSysNice = true;
   };
 
   # Configure steam.
   programs.steam = {
-    enable = true;
+    enable = isDesktop;
     package = pkgs.steam.override {
       extraEnv = {
         # Manually set SDL_VIDEODRIVER to x11.

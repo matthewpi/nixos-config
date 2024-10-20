@@ -7,7 +7,6 @@
   imports =
     [
       ./firefox.nix
-      ./gaming.nix
       # ./obs-studio.nix
       # ./signal.nix
       ./terminal.nix
@@ -16,7 +15,10 @@
 
       # ../programs/zen-browser.nix
     ]
-    ++ lib.optional isDesktop ./virt-manager.nix;
+    ++ lib.optionals isDesktop [
+      ./gaming.nix
+      ./virt-manager.nix
+    ];
 
   home.packages = with pkgs; [
     amberol
