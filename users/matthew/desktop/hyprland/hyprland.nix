@@ -199,7 +199,7 @@ in {
           "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
         ]
         else [
-          "eDP-1, 2560x1600@165, 0x0, 1.6, vrr,0, bitdepth,8"
+          "eDP-1, 2560x1600@165, 0x0, 1.333333, vrr,0, bitdepth,8"
           # ", preferred, auto, 1, vrr,0, bitdepth,8"
         ];
 

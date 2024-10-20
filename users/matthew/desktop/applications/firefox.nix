@@ -5,7 +5,37 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  buildFirefoxXpiAddon = lib.makeOverridable ({
+    stdenv ? pkgs.stdenv,
+    fetchurl ? pkgs.fetchurl,
+    pname,
+    version,
+    addonId,
+    url,
+    hash,
+    meta,
+    ...
+  }:
+    stdenv.mkDerivation {
+      name = "${pname}-${version}";
+
+      inherit meta;
+
+      src = fetchurl {inherit url hash;};
+
+      preferLocalBuild = true;
+      allowSubstitutes = true;
+
+      passthru = {inherit addonId;};
+
+      buildCommand = ''
+        dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
+        mkdir -p "$dst"
+        install -v -m644 "$src" "$dst/${addonId}.xpi"
+      '';
+    });
+in {
   imports = [
     inputs.nur.hmModules.nur
   ];
@@ -20,11 +50,25 @@
     profiles.default = lib.mkIf (!isDesktop) {
       extensions = with config.nur.repos.rycee.firefox-addons; [
         decentraleyes
-        firefox-color
-        # onepassword-password-manager
+        onepassword-password-manager
         temporary-containers
         ublock-origin
         # vue-js-devtools
+
+        (buildFirefoxXpiAddon {
+          pname = "catppuccin-mocha-peach";
+          version = "2.0";
+          addonId = "{1cd0d6ef-d4bf-4fd1-9d80-4a9811a84647}";
+          url = "https://addons.mozilla.org/firefox/downloads/file/3954398/catppuccin_mocha_peach-2.0.xpi";
+          hash = "sha256-Bn8vUS0iuvcQdIV31L6rl3cKIFkkCXQ1FJFanK+Ad4M=";
+          meta = {
+            homepage = "https://github.com/catppuccin/firefox";
+            description = "Soothing pastel icons for Firefox!";
+            license = lib.licenses.mit;
+            mozPermissions = [];
+            platforms = lib.platforms.all;
+          };
+        })
       ];
 
       bookmarks = {};
@@ -32,21 +76,21 @@
       containersForce = true;
       containers = {
         personal = {
-          id = 0;
+          id = 1;
           color = "blue";
           icon = "fingerprint";
           name = "Personal";
         };
 
         work = {
-          id = 1;
+          id = 2;
           color = "yellow";
           icon = "briefcase";
           name = "Work";
         };
 
         rock = {
-          id = 2;
+          id = 3;
           color = "green";
           icon = "tree";
           name = "Rock";
