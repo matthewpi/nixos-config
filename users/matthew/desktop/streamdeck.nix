@@ -1,6 +1,7 @@
 {
   config,
   isDesktop,
+  lib,
   ...
 }: {
   systemd.user.services.streamdeck = lib.mkIf isDesktop {
