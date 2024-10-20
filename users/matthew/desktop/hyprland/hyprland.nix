@@ -158,10 +158,11 @@ in {
         # Round the corners of windows
         rounding = 8;
 
-        blur = {
-          # Disable window background blur
-          enabled = false;
-        };
+        # Disable drop shadows
+        drop_shadow = false;
+
+        # Disable window background blur
+        blur.enabled = false;
       };
 
       dwindle = {
@@ -170,6 +171,9 @@ in {
       };
 
       misc = {
+        # Ensure vfr is on.
+        vfr = true;
+
         # Disable auto-reloading
         disable_autoreload = true;
 
@@ -199,7 +203,7 @@ in {
           "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
         ]
         else [
-          "eDP-1, 2560x1600@165, 0x0, 1.333333, vrr,0, bitdepth,8"
+          "eDP-1, 2560x1600@165, 0x0, 1.333333, vrr,1, bitdepth,10"
           # ", preferred, auto, 1, vrr,0, bitdepth,8"
         ];
 
