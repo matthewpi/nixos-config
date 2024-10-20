@@ -199,23 +199,21 @@ in {
           "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
         ]
         else [
-          ", preferred, auto, 1, vrr,0, bitdepth,8"
+          "eDP-1, 2560x1600@165, 0x0, 1.6, vrr,0, bitdepth,8"
+          # ", preferred, auto, 1, vrr,0, bitdepth,8"
         ];
 
       workspace =
         [
-          # Configure default workspaces for the monitors
-          "1, monitor:DP-3, default:true"
-          "2, monitor:DP-2, default:true"
-
           # Special workspaces that can be toggled on and off
           "special:terminal, on-created-empty:${alacritty}"
           "special:discord,  on-created-empty:${discord}"
           "special:slack,    on-created-empty:${slack}"
         ]
         ++ lib.optionals isDesktop [
-          "DP-3, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
-          "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
+          # Configure default workspaces for the monitors
+          "1, monitor:DP-3, default:true"
+          "2, monitor:DP-2, default:true"
         ];
 
       windowrule = [

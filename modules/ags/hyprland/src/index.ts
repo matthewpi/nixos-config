@@ -7,7 +7,7 @@ import Notifications from 'resource:///com/github/Aylur/ags/service/notification
 
 import { Window } from 'resource:///com/github/Aylur/ags/widgets/window.js';
 
-import { BatteryProgress } from './components/battery';
+import { BatteryIcon } from './components/battery';
 import { Clock } from './components/clock';
 import { Window as LauncherWindow } from './components/launcher';
 import { Media } from './components/media';
@@ -34,7 +34,7 @@ function BarContent() {
 		// Right
 		endWidget: Widget.Box({
 			hpack: 'end',
-			children: [SysTray(), NotificationLabel(), NotificationButton(), BatteryProgress()],
+			children: [SysTray(), NotificationLabel(), NotificationButton(), BatteryIcon()],
 		}),
 	});
 }
