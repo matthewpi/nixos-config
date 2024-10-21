@@ -220,26 +220,16 @@ in {
           "2, monitor:DP-2, default:true"
         ];
 
-      windowrule = [
-        # Dialogs
-        "float, title:^(Open File)(.*)$"
-        "float, title:^(Select a File)(.*)$"
-        "float, title:^(Choose wallpaper)(.*)$"
-        "float, title:^(Open Folder)(.*)$"
-        "float, title:^(Save As)(.*)$"
-        "float, title:^(Library)(.*)$"
-        "float, title:^(Accounts)(.*)$"
-      ];
-
       windowrulev2 = [
-        # Fixes for JetBrains IDE pop-ups
-        # ref; https://github.com/hyprwm/Hyprland/issues/1947#issuecomment-1784909413
-        #"windowdance, class:^(jetbrains-.*)$"
-        #"dimaround, class:^(jetbrains-.*)$, floating:1, title:^(?!win)"
-        "center, class:^(jetbrains-.*)$, floating:1, title:^(?!win)"
-        "noanim, class:^(jetbrains-.*)$, title:^(win.*)$"
-        "noinitialfocus, class:^(jetbrains-.*)$, title:^(win.*)$"
-        "rounding 0, class:^(jetbrains-.*)$, title:^(win.*)$"
+        # Float dialogs
+        "float, title:^(Accounts)(.*)$"
+        "float, title:^(Choose wallpaper)(.*)$"
+        "float, title:^(Library)(.*)$"
+        "float, title:^(Save As)(.*)$"
+        "float, title:^(Save File)(.*)$"
+        "float, title:^(Select a File)(.*)$"
+        "float, title:^(Open File)(.*)$"
+        "float, title:^(Open Folder)(.*)$"
 
         # Steam
         "center, title:(Steam), class:(), floating:1"
@@ -272,6 +262,13 @@ in {
 
         # Inhibit idle whenever an application is fullscreened
         "idleinhibit always, fullscreen:1"
+
+        # Make VSCodium opaque
+        "opacity .97 .85, class:(codium-url-handler)"
+
+        # Picture in picture
+        "float, title:^(Picture-in-Picture)$"
+        "forcergbx, title:^(Picture-in-Picture)$"
       ];
 
       # Keybinds
@@ -286,7 +283,7 @@ in {
         "$mainMod Shift, C, movetoworkspace, special:terminal"
         "$mainMod Shift, D, movetoworkspace, special:discord"
 
-        # Screenshot keybind
+        # Screenshot keybinds
         ", Print, exec, ${screenshot-activeworkspace}"
         "$mainMod, Print, exec, ${screenshot-selectwindow}"
         "Shift, Print, exec, ${screenshot}"
@@ -356,6 +353,7 @@ in {
         # Hyprspace
         # "$mainMod, Tab, overview:toggle"
 
+        # Suspend on laptop lid close.
         ", switch:Lid Switch, exec, hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
       ];
 
