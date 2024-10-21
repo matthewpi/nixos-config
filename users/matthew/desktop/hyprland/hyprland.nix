@@ -343,7 +343,7 @@ in {
         #
         # bindl allows the bind to be used even when an input inhibitor is active
         "$mainMod, L, exec, loginctl lock-session"
-        "$mainMod Shift, L, exec, sleep 1 && hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
+        "$mainMod Shift, L, exec, systemctl suspend"
 
         # Use Tab to switch between windows in a floating workspace
         # TODO: is the trailing comma necessary here?
@@ -354,14 +354,13 @@ in {
         # "$mainMod, Tab, overview:toggle"
 
         # Suspend on laptop lid close.
-        ", switch:Lid Switch, exec, hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
+        ", switch:on:Lid Switch, exec, systemctl suspend"
       ];
 
       # bindl allows the bind to be used even when an input inhibitor is active
       bindl = [
-        "$mainMod Shift, L, exec, sleep 1 && hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
-
-        ", switch:Lid Switch, exec, hyprctl dispatch dpms off && loginctl lock-session && systemctl suspend"
+        "$mainMod Shift, L, exec, systemctl suspend"
+        ", switch:on:Lid Switch, exec, systemctl suspend"
 
         ", XF86AudioPlay, exec, playerctl play-pause"
         ", XF86AudioPrev, exec, playerctl previous"

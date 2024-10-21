@@ -45,5 +45,28 @@
     # Fixes issues with XDG portal definitions not being detected.
     # ref; https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
     environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
+
+    systemd.services."sleep@" = {
+      restartIfChanged = false;
+      description = "Call user sleep target";
+      after = ["sleep.target"];
+      wantedBy = ["sleep.target"];
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart = "systemctl --user --machine=%i@ start --wait sleep.target";
+      };
+    };
+
+    systemd.user.targets.sleep = {
+      description = "Sleep";
+      documentation = ["man:systemd.special(7)"];
+      unitConfig = {
+        DefaultDependencies = "no";
+        StopWhenUnneeded = "yes";
+      };
+    };
+
+    # TODO: move this to a per-user configuration.
+    systemd.targets.multi-user.wants = ["sleep@matthew.service"];
   };
 }
