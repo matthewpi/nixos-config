@@ -10,13 +10,13 @@
 stdenv.mkDerivation {
   inherit pname version src meta;
 
-  nativeBuildInputs = [unzip undmg];
+  nativeBuildInputs = [undmg unzip];
 
   sourceRoot = ".";
 
   installPhase = ''
-    mkdir -p $out/Applications
-    cp -r *.app $out/Applications
+    mkdir -p "$out"/Applications
+    cp -r *.app "$out"/Applications
   '';
 
   # 1Password is notarized.
