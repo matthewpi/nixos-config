@@ -28,13 +28,13 @@
 in
   rustPlatform.buildRustPackage rec {
     pname = "hoppscotch-unwrapped";
-    version = "2024.9.1";
+    version = "2024.9.3";
 
     src = fetchFromGitHub {
       owner = "hoppscotch";
       repo = "hoppscotch";
       rev = version;
-      hash = "sha256-jaVUJ1ymcOPM198DSAdK5G0fvuM1agUmpbk9rwM710Q=";
+      hash = "sha256-tPX4BDqs8lKRVOrsr/9oHg20hTQWaHBAFNIrx4o729k=";
     };
 
     cargoLock = {
@@ -44,15 +44,9 @@ in
         "tauri-plugin-store-0.0.0" = "sha256-Mf2/cnKotd751ZcSHfiSLNe2nxBfo4dMBdoCwQhe7yI=";
       };
     };
+    cargoRoot = "packages/hoppscotch-selfhost-desktop/src-tauri";
 
-    postPatch = ''
-      ln -s ${./Cargo.lock} Cargo.lock
-    '';
-
-    # TODO: cargoRoot = "packages/hoppscotch-selfhost-desktop/src-tauri";
-
-    # could not find `Cargo.toml` in `/build/source` or any parent directory
-    # probably need `cargoRoot`
+    # could not find `Cargo.toml` in `/build/source` or any parent directory.
     doCheck = false;
 
     pnpmDeps = pnpm.fetchDeps {
