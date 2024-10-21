@@ -148,8 +148,7 @@ function getMonitorByModel(model: string, display?: Gdk.Display): Gdk.Monitor | 
 	const numMonitors = display.get_n_monitors();
 	for (let i = 0; i < numMonitors; i++) {
 		const m = display.get_monitor(i);
-
-		if (m.model !== model) {
+		if (m === null || m.model !== model) {
 			continue;
 		}
 
