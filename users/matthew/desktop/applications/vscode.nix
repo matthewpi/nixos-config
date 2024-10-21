@@ -45,6 +45,7 @@
         rust-lang.rust-analyzer # rust-analyzer
         tailscale.vscode-tailscale # Tailscale
         bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
+        jgclark.vscode-todo-highlight # TODO Highlight v2
         # vue.volar # Vue - Official
         vscode-icons-team.vscode-icons # vscode-icons
         zxh404.vscode-proto3 # vscode-proto3
@@ -65,13 +66,6 @@
           publisher = "hangxingliu";
           version = "2.2.0";
           sha256 = "sha256-08pypB6PZk9diwVmHkwuW6SMlpTbw159seuaWALfMlE=";
-        }
-        # TODO Highlight v2
-        {
-          name = "vscode-todo-highlight";
-          publisher = "jgclark";
-          version = "2.0.8";
-          sha256 = "sha256-/CctaLcG+dA2Cf69/ACeDKdRLsu/VUGbAxUbyhI0VyA=";
         }
         # Toggle Quotes
         {
@@ -98,29 +92,29 @@
         {
           name = "sqltools";
           publisher = "mtxr";
-          version = "0.28.1";
-          sha256 = "sha256-PzDbH9pYeIzmMFOkPMsbo5pNGXI6qusaAlwM6sk9s10=";
+          version = "0.28.3";
+          sha256 = "sha256-bTrHAhj8uwzRIImziKsOizZf8+k3t+VrkOeZrFx7SH8=";
         }
         # SQLTools MySQL/MariaDB
         {
           name = "sqltools-driver-mysql";
           publisher = "mtxr";
-          version = "0.5.1";
-          sha256 = "sha256-RVPCjpIW/9T5TC8b0KQAHCCZnXNvTDJMjfsZWUe/nNg=";
+          version = "0.6.3";
+          sha256 = "sha256-CO+dcmvaSROX1ruxdrLfQhPF3HgEBtesE0JPyizD7io=";
         }
         # SQLTools PostgreSQL/Cockroach Driver
         {
           name = "sqltools-driver-pg";
           publisher = "mtxr";
-          version = "0.5.1";
-          sha256 = "sha256-TZ5KMjSafdJozKuUL6IatHyChk/b4b27JcuOe1Qtnyw=";
+          version = "0.5.4";
+          sha256 = "sha256-XnPTMFNgMGT2tJe8WlmhMB3DluvMZx9Ee2w7xMCzLYM=";
         }
         # SQLTools ClickHouse Driver
         {
           name = "sqltools-clickhouse-driver";
           publisher = "ultram4rine";
-          version = "0.5.0";
-          sha256 = "sha256-uvCTYDBKD/qCZmiGUQjxvUeT1KS9a8U9y/JIdnXhXxM=";
+          version = "0.7.0";
+          sha256 = "sha256-ZQy+reh4Wm6/XcnmGiTLMA/o/eptdUmgd2O6ybO1Bos=";
         }
         # Laravel Blade Snippets
         {
@@ -133,8 +127,8 @@
         {
           name = "volar";
           publisher = "vue";
-          version = "2.0.28";
-          sha256 = "sha256-f0nnmQemu6DxveQfJJrZGrj3dOTHhH1wYJGnNJlM6sU=";
+          version = "2.1.6";
+          sha256 = "sha256-Z5rFQBc6u14K8cugFzV5sekwRkEwtOoRESUvABOTpP8=";
         }
       ];
 
@@ -251,9 +245,9 @@
       };
 
       # Nix
-      # "nix.enableLanguageServer" = true;
-      # "nix.formatterPath" = ["nix" "fmt" "--" "-"];
-      # "nix.serverPath" = "${lib.getExe pkgs.nixd}";
+      "nix.enableLanguageServer" = true;
+      "nix.formatterPath" = ["nix" "fmt" "--" "-"];
+      "nix.serverPath" = lib.getExe pkgs.nixd;
       "nix.serverSettings" = {
         "nixd" = {};
       };
