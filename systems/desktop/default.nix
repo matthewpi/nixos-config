@@ -23,18 +23,8 @@
   # Use my local timezone instead of UTC
   time.timeZone = "America/Edmonton";
 
-  # Use the xanmod kernel
-  boot.kernelPackages = let
-    xanmodKernels = pkgs.callPackage ../../packages/kernel/xanmod-kernels.nix {
-      kernelPatches = [
-        pkgs.kernelPatches.bridge_stp_helper
-        pkgs.kernelPatches.request_key_helper
-      ];
-    };
-
-    linux_xanmod_main = xanmodKernels.main;
-  in
-    pkgs.linuxPackagesFor linux_xanmod_main;
+  # Use the latest xanmod kernel.
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   # Enable the v4l2loopback kernel module.
   boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
