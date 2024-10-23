@@ -30,6 +30,7 @@
     # lens
     protonmail-desktop
     qFlipper
+    remmina
     seabird
     slack
     switcheroo
