@@ -50,10 +50,10 @@
     # clipboard
     wl-clipboard
 
-    # (makeAutostartItem {
-    #   name = "1password";
-    #   package = _1password-gui;
-    # })
+    (makeAutostartItem {
+      name = "1password";
+      package = _1password-gui-beta;
+    })
   ];
 
   # QT Theming
