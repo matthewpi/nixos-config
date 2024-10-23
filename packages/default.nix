@@ -35,7 +35,6 @@
       inherit
         (_packages)
         catppuccin
-        catppuccin-cursors
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
