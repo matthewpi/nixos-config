@@ -3,10 +3,6 @@
   lib,
   ...
 }: {
-  # Auditing
-  security.audit.enable = lib.mkDefault true;
-  security.auditd.enable = lib.mkDefault true;
-
   # Blacklist kernel modules
   boot.blacklistedKernelModules = [
     # Obscure network protocols
