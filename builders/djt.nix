@@ -34,5 +34,5 @@
     }
   ];
 
-  nix.settings.trusted-substituters = ["ssh-ng://builder-djt"];
+  nix.settings.trusted-substituters = ["https://djt.moose-nase.ts.net"];
 }
