@@ -13,17 +13,22 @@ stdenvNoCC.mkDerivation rec {
     stripRoot = false;
   };
 
+  outputs = ["out" "otf" "ttf" "woff2"];
+
   installPhase = ''
     runHook preInstall
 
-    ls -lsA .
+    install -Dm644 Inter.ttc -t "$ttf"/share/fonts/truetype
+    install -Dm644 InterVariable.ttf InterVariable-Italic.ttf -t "$ttf"/share/fonts/truetype/Inter
 
-    install -Dm644 Inter.ttc -t "$out/share/fonts/truetype"
-    install -Dm644 InterVariable.ttf InterVariable-Italic.ttf -t "$out/share/fonts/truetype/Inter"
+    install -Dm644 extras/otf/*.otf -t "$otf"/share/fonts/opentype/Inter
+    install -Dm644 extras/ttf/*.ttf -t "$ttf"/share/fonts/truetype/Inter
+    install -Dm644 web/*.woff2 -t "$woff2"/share/fonts/woff2/Inter
 
-    install -Dm644 extras/otf/*.otf -t "$out/share/fonts/opentype/Inter"
-    install -Dm644 extras/ttf/*.ttf -t "$out/share/fonts/truetype/Inter"
-    install -Dm644 web/*.woff2 -t "$out/share/fonts/woff2/Inter"
+    mkdir -p "$out"/share/fonts
+    ln -s "$otf"/share/fonts/opentype "$out"/share/fonts/opentype
+    ln -s "$ttf"/share/fonts/truetype "$out"/share/fonts/truetype
+    ln -s "$woff2"/share/fonts/woff2 "$out"/share/fonts/woff2
 
     runHook postInstall
   '';

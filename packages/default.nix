@@ -9,7 +9,6 @@
       _1password-gui = pkgs.callPackage ./1password-gui {};
       _1password-gui-beta = pkgs.callPackage ./1password-gui {channel = "beta";};
       catppuccin = pkgs.callPackage ./catppuccin {};
-      catppuccin-cursors = pkgs.callPackage ./catppuccin/cursors.nix {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
       cider2 = pkgs.callPackage ./cider2 {};
       hoppscotch-unwrapped = pkgs.callPackage ./hoppscotch {};
@@ -17,7 +16,6 @@
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
-      openlens = pkgs.callPackage ./openlens {};
       zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
     };
   in {
@@ -25,7 +23,7 @@
 
     overlayAttrs = let
       _1passwordPreFixup = ''
-        makeShellWrapper $out/share/1password/1password $out/bin/1password \
+        makeShellWrapper "$out"/share/1password/1password "$out"/bin/1password \
           "''${gappsWrapperArgs[@]}" \
           --suffix PATH : ${lib.makeBinPath [pkgs.xdg-utils]} \
           --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \

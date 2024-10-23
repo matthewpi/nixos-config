@@ -1,6 +1,6 @@
 let
   validAccents = ["rosewater" "flamingo" "pink" "mauve" "red" "maroon" "peach" "yellow" "green" "teal" "sky" "sapphire" "blue" "lavender"];
-  validThemes = ["alacritty" "bat" "blackbox" "bottom" "btop" "hyprland" "k9s" "lazygit" "plymouth" "refind" "rofi" "starship" "waybar"];
+  validThemes = ["alacritty" "bat" "bottom" "btop" "hyprland" "k9s" "lazygit" "plymouth" "refind" "starship"];
   validVariants = ["latte" "frappe" "macchiato" "mocha"];
 in
   {
@@ -8,9 +8,6 @@ in
     lib,
     stdenvNoCC,
     jq,
-    # accents ? validAccents,
-    # themes ? validThemes,
-    # variants ? validVariants,
   }: let
     accents = validAccents;
     themes = validThemes;
@@ -20,29 +17,22 @@ in
       alacritty = fetchFromGitHub {
         owner = "catppuccin";
         repo = "alacritty";
-        rev = "ce476fb41f307d90f841c1a4fd7f0727c21248b2";
-        hash = "sha256-bpHznCqkNMbauDQjh98qj2+r1V8mXQIVmvKTldLcln0=";
+        rev = "343cf8d65459ac8f6449cc98dd3648bcbd7e3766";
+        hash = "sha256-5MUWHXs8vfl2/u6YXB4krT5aLutVssPBr+DiuOdMAto=";
       };
 
       bat = fetchFromGitHub {
         owner = "catppuccin";
         repo = "bat";
-        rev = "ba4d16880d63e656acced2b7d4e034e4a93f74b1";
-        hash = "sha256-6WVKQErGdaqb++oaXnY3i6/GuH2FhTgK0v4TN4Y0Wbw=";
-      };
-
-      blackbox = fetchFromGitHub {
-        owner = "catppuccin";
-        repo = "blackbox";
-        rev = "ba04186c5b722926b538a71b2186be5bf32894d1";
-        hash = "sha256-JkbJbdCP0ple0t7k/DlXtVKwluATCnf2kbRcryGlViM=";
+        rev = "d2bbee4f7e7d5bac63c054e4d8eca57954b31471";
+        hash = "sha256-x1yqPCWuoBSx/cI94eA+AWwhiSA42cLNUOFJl7qjhmw=";
       };
 
       bottom = fetchFromGitHub {
         owner = "catppuccin";
         repo = "bottom";
-        rev = "c0efe9025f62f618a407999d89b04a231ba99c92";
-        hash = "sha256-VaHX2I/Gn82wJWzybpWNqU3dPi3206xItOlt0iF6VVQ=";
+        rev = "ed09bd5a5dd78d83acdc8ff5fdec40a6340ed1c2";
+        hash = "sha256-Vi438I+YVvoD2xzq2t9hJ9R3a+2TlDdbakjFYFtjtXQ=";
       };
 
       btop = fetchFromGitHub {
@@ -55,29 +45,29 @@ in
       hyprland = fetchFromGitHub {
         owner = "catppuccin";
         repo = "hyprland";
-        rev = "v1.2";
-        hash = "sha256-07B5QmQmsUKYf38oWU3+2C6KO4JvinuTwmW1Pfk8CT8=";
+        rev = "v1.3";
+        hash = "sha256-jkk021LLjCLpWOaInzO4Klg6UOR4Sh5IcKdUxIn7Dis=";
       };
 
       k9s = fetchFromGitHub {
         owner = "catppuccin";
         repo = "k9s";
-        rev = "516f44dd1a6680357cb30d96f7e656b653aa5059";
-        hash = "sha256-PtBJRBNbLkj7D2ko7ebpEjbfK9Ywjs7zbE+Y8FQVEfA=";
+        rev = "fdbec82284744a1fc2eb3e2d24cb92ef87ffb8b4";
+        hash = "sha256-9h+jyEO4w0OnzeEKQXJbg9dvvWGZYQAO4MbgDn6QRzM=";
       };
 
       lazygit = fetchFromGitHub {
         owner = "catppuccin";
         repo = "lazygit";
-        rev = "0543c28e8af1a935f8c512ad9451facbcc17d8a8";
-        hash = "sha256-OVihY5E+elPKag2H4RyWiSv+MdIqHtfGNM3/1u2ik6U=";
+        rev = "v2.2.0";
+        hash = "sha256-mHB4Db71uKblCDab47eBIKd63ekYjvXOqUkY/ELMDQQ=";
       };
 
       plymouth = fetchFromGitHub {
         owner = "catppuccin";
         repo = "plymouth";
-        rev = "d4105cf336599653783c34c4a2d6ca8c93f9281c";
-        hash = "sha256-quBSH8hx3gD7y1JNWAKQdTk3CmO4t1kVo4cOGbeWlNE=";
+        rev = "e0f58d6fcf3dbc2d35dfc4fec394217fbfa92666";
+        hash = "sha256-He6ER1QNrJCUthFoBBGHBINouW/tozxQy3R79F5tsuo=";
       };
 
       refind = fetchFromGitHub {
@@ -87,25 +77,11 @@ in
         hash = "sha256-itUMo0lA23bJzH0Ndq7L2IaEYoVdNPYxbB/VWkRfRso=";
       };
 
-      rofi = fetchFromGitHub {
-        owner = "catppuccin";
-        repo = "rofi";
-        rev = "5350da41a11814f950c3354f090b90d4674a95ce";
-        hash = "sha256-DNorfyl3C4RBclF2KDgwvQQwixpTwSRu7fIvihPN8JY=";
-      };
-
       starship = fetchFromGitHub {
         owner = "catppuccin";
         repo = "starship";
-        rev = "3e3e54410c3189053f4da7a7043261361a1ed1bc";
-        hash = "sha256-soEBVlq3ULeiZFAdQYMRFuswIIhI9bclIU8WXjxd7oY=";
-      };
-
-      waybar = fetchFromGitHub {
-        owner = "catppuccin";
-        repo = "waybar";
-        rev = "v1.0";
-        hash = "sha256-vfwfBE3iqIN1cGoItSssR7h0z6tuJAhNarkziGFlNBw=";
+        rev = "3c4749512e7d552adf48e75e5182a271392ab176";
+        hash = "sha256-t/Hmd2dzBn0AbLUlbL8CBt19/we8spY5nMP0Z+VPMXA=";
       };
     };
 
@@ -120,14 +96,14 @@ in
     variants
     stdenvNoCC.mkDerivation {
       pname = "catppuccin";
-      version = "unstable-2023-10-09";
+      version = "unstable-2024-10-22";
 
       srcs = selectedSources;
 
       unpackPhase = ''
         for s in $selectedSources; do
-          b=$(basename $s)
-          cp $s ''${b#*-}
+          b=$(basename "$s")
+          cp "$s" ''${b#*-}
         done
       '';
 
@@ -141,99 +117,79 @@ in
 
         ''
         + lib.optionalString (lib.elem "alacritty" themes) ''
-          mkdir -p $out/alacritty
+          mkdir -p "$out"/alacritty
           for variant in $variants; do
-            cp "${sources.alacritty}/catppuccin-$variant.toml" "$out/alacritty/Catppuccin-$variant.toml"
+            cp ${sources.alacritty}/catppuccin-"$variant".toml "$out"/alacritty/Catppuccin-"$variant".toml
           done
 
         ''
         + lib.optionalString (lib.elem "bat" themes) ''
-          mkdir -p $out/bat
-          for variant in $variants; do
-            cp "${sources.bat}/Catppuccin-$variant.tmTheme" "$out/bat/"
-          done
-
-        ''
-        + lib.optionalString (lib.elem "blackbox" themes) ''
-          mkdir -p $out/blackbox
+          mkdir -p "$out"/bat
           for variant in $variants; do
             local capitalizedVariant=$(sed 's/^\(.\)/\U\1/' <<< "$variant")
-            cat "${sources.blackbox}/src/Catppuccin-$capitalizedVariant.json" | jq --arg name "Catppuccin-$variant" '.name = $name' > "$out/blackbox/Catppuccin-$variant.json"
+            cp '${sources.bat}/themes/Catppuccin '"$capitalizedVariant".tmTheme "$out"/bat/
           done
 
         ''
         + lib.optionalString (lib.elem "btop" themes) ''
-          mkdir -p $out/btop
+          mkdir -p "$out"/btop
           for variant in $variants; do
-            cp "${sources.btop}/themes/catppuccin_$variant.theme" "$out/btop/"
+            cp ${sources.btop}/themes/catppuccin_"$variant".theme "$out"/btop/
           done
 
         ''
         + lib.optionalString (lib.elem "bottom" themes) ''
-          mkdir -p $out/bottom
+          mkdir -p "$out"/bottom
           for variant in $variants; do
-            cp "${sources.bottom}/themes/$variant.toml" "$out/bottom/"
+            cp ${sources.bottom}/themes/"$variant".toml "$out"/bottom/
           done
 
         ''
         + lib.optionalString (lib.elem "hyprland" themes) ''
-          mkdir -p $out/hyprland
+          mkdir -p "$out"/hyprland
           for variant in $variants; do
-            cp "${sources.hyprland}/themes/$variant.conf" "$out/hyprland/"
+            cp ${sources.hyprland}/themes/"$variant".conf "$out"/hyprland/
           done
 
         ''
         + lib.optionalString (lib.elem "k9s" themes) ''
-          mkdir -p $out/k9s
+          mkdir -p "$out"/k9s
           for variant in $variants; do
-            cp "${sources.k9s}/dist/$variant.yml" "$out/k9s/$variant.yaml"
+            cp ${sources.k9s}/dist/catppuccin-"$variant".yaml "$out"/k9s/
+            cp ${sources.k9s}/dist/catppuccin-"$variant"-transparent.yaml "$out"/k9s/
           done
 
         ''
         + lib.optionalString (lib.elem "lazygit" themes) ''
-          mkdir -p $out/lazygit/{themes,themes-mergable}
+          mkdir -p "$out"/lazygit/{themes,themes-mergable}
           for variant in $variants; do
             for accent in $accents; do
-              cp "${sources.lazygit}/themes/$variant/$variant-$accent.yml" "$out/lazygit/themes/"
-              cp "${sources.lazygit}/themes-mergable/$variant/$variant-$accent.yml" "$out/lazygit/themes-mergable/"
+              cp ${sources.lazygit}/themes/"$variant"/"$accent".yml "$out"/lazygit/themes/"$variant"-"$accent".yaml
+              cp ${sources.lazygit}/themes-mergable/"$variant"/"$accent".yml "$out"/lazygit/themes-mergable/"$variant"-"$accent".yaml
             done
           done
 
         ''
         + lib.optionalString (lib.elem "plymouth" themes) ''
           for variant in $variants; do
-            mkdir -p $out/share/plymouth/themes/catppuccin-$variant
-            cp ${sources.plymouth}/themes/catppuccin-$variant/* $out/share/plymouth/themes/catppuccin-$variant
-            sed -i 's:\(^ImageDir=\)/usr:\1'"$out"':' $out/share/plymouth/themes/catppuccin-$variant/catppuccin-$variant.plymouth
-          done
-
-        ''
-        + lib.optionalString (lib.elem "rofi" themes) ''
-          mkdir -p $out/rofi
-          for variant in $variants; do
-            cp ${sources.rofi}/basic/.local/share/rofi/themes/catppuccin-$variant.rasi $out/rofi/
+            mkdir -p "$out"/share/plymouth/themes/catppuccin-"$variant"
+            cp ${sources.plymouth}/themes/catppuccin-$variant/* "$out"/share/plymouth/themes/catppuccin-"$variant"
+            sed -i 's:\(^ImageDir=\)/usr:\1'"$out"':' "$out"/share/plymouth/themes/catppuccin-"$variant"/catppuccin-"$variant".plymouth
           done
 
         ''
         + lib.optionalString (lib.elem "refind" themes) ''
-          mkdir -p $out/refind/assets
+          mkdir -p "$out"/refind/assets
           for variant in $variants; do
-            cp ${sources.refind}/$variant.conf $out/refind/
-            cp -r ${sources.refind}/assets/$variant $out/refind/assets/
+            cp ${sources.refind}/"$variant".conf "$out"/refind/
+            cp -r ${sources.refind}/assets/"$variant" "$out"/refind/assets/
           done
 
         ''
         + lib.optionalString (lib.elem "starship" themes) ''
-          mkdir -p $out/starship
+          mkdir -p "$out"/starship
           for variant in $variants; do
-            cp "${sources.starship}/palettes/$variant.toml" "$out/starship"
-          done
-
-        ''
-        + lib.optionalString (lib.elem "waybar" themes) ''
-          mkdir -p $out/waybar
-          for variant in $variants; do
-            cp ${sources.waybar}/$variant.css $out/waybar/
+            cp ${sources.starship}/themes/"$variant".toml "$out"/starship
           done
 
         ''

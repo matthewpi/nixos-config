@@ -13,19 +13,27 @@ stdenvNoCC.mkDerivation rec {
     stripRoot = false;
   };
 
+  outputs = ["out" "otf" "ttf" "woff" "woff2"];
+
   installPhase = ''
     runHook preInstall
 
     for family in Argon Krypton Neon Radon; do
-      install -Dm644 ${pname}-v${version}/fonts/otf/Monaspace''${family}-*.otf -t "$out/share/fonts/opentype/Monaspace''${family}"
+      install -Dm644 ${pname}-v${version}/fonts/otf/Monaspace"$family"-*.otf -t "$otf"/share/fonts/opentype/Monaspace"$family"
 
-      install -Dm644 "${pname}-v${version}/fonts/variable/Monaspace''${family}VarVF[wght,wdth,slnt].ttf" -t "$out/share/fonts/truetype"
+      install -Dm644 ${pname}-v${version}/fonts/variable/Monaspace"$family"VarVF'[wght,wdth,slnt]'.ttf -t "$ttf"/share/fonts/truetype
 
-      install -Dm644 ${pname}-v${version}/fonts/webfonts/Monaspace''${family}-*.woff -t "$out/share/fonts/woff/Monaspace''${family}"
-      install -Dm644 "${pname}-v${version}/fonts/webfonts/Monaspace''${family}VarVF[wght,wdth,slnt].woff" -t "$out/share/fonts/woff"
+      install -Dm644 ${pname}-v${version}/fonts/webfonts/Monaspace"$family"-*.woff -t "$woff"/share/fonts/woff/Monaspace"$family"
+      install -Dm644 ${pname}-v${version}/fonts/webfonts/Monaspace"$family"VarVF'[wght,wdth,slnt]'.woff -t "$woff"/share/fonts/woff
 
-      install -Dm644 "${pname}-v${version}/fonts/webfonts/Monaspace''${family}VarVF[wght,wdth,slnt].woff2" -t "$out/share/fonts/woff2"
+      install -Dm644 ${pname}-v${version}/fonts/webfonts/Monaspace"$family"VarVF'[wght,wdth,slnt]'.woff2 -t "$woff2"/share/fonts/woff2
     done
+
+    mkdir -p "$out"/share/fonts
+    ln -s "$otf"/share/fonts/opentype "$out"/share/fonts/opentype
+    ln -s "$ttf"/share/fonts/truetype "$out"/share/fonts/truetype
+    ln -s "$woff"/share/fonts/woff "$out"/share/fonts/woff
+    ln -s "$woff2"/share/fonts/woff2 "$out"/share/fonts/woff2
 
     runHook postInstall
   '';
