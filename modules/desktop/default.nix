@@ -13,7 +13,7 @@
       ./fwupd.nix
       ./gamemode.nix
       ./pipewire.nix
-      ./plymouth.nix
+      # ./plymouth.nix
       # ./printing.nix
       ./ratbagd.nix
     ];
