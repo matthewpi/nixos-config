@@ -16,9 +16,7 @@
     options = ["noatime" "nosuid" "nodev" "nofail" "x-gvfs-show" "rw" "uid=1000" "umask=000"];
   };
 
-  swapDevices = [];
-
-  nixpkgs.hostPlatform = "x86_64-linux";
+  # Enable graphics.
   hardware.graphics.enable = true;
 
   # Add a udev rule for Elgato Stream Deck(s)

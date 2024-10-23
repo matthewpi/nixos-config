@@ -20,6 +20,16 @@
       };
     };
 
+    aquamarine = {
+      url = "github:hyprwm/aquamarine";
+      inputs = {
+        hyprutils.follows = "hyprutils";
+        hyprwayland-scanner.follows = "hyprwayland-scanner";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -77,7 +87,9 @@
     hyprland = {
       url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
       inputs = {
+        aquamarine.follows = "aquamarine";
         hyprcursor.follows = "hyprcursor";
+        hyprland-protocols.follows = "hyprland-protocols";
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
@@ -121,15 +133,6 @@
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems-linux";
-      };
-    };
-
-    hyprpicker = {
-      url = "github:hyprwm/hyprpicker";
-      inputs = {
-        hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -189,12 +192,28 @@
         systems.follows = "systems-linux";
         hyprland-protocols.follows = "hyprland-protocols";
         hyprlang.follows = "hyprlang";
+        hyprutils.follows = "hyprutils";
+        hyprwayland-scanner.follows = "hyprwayland-scanner";
       };
     };
   };
 
   outputs = {self, ...} @ inputs: let
     inherit (self) outputs;
+
+    mkNixpkgs = system:
+      import inputs.nixpkgs {
+        localSystem = {inherit system;};
+
+        # Add our overlays.
+        overlays = builtins.attrValues outputs.overlays;
+
+        # Allow unfree packages
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate = _: true;
+        };
+      };
   in
     inputs.flake-parts.lib.mkFlake {inherit inputs;} (
       {self, ...}: {
@@ -210,9 +229,6 @@
 
         flake = let
           nixFlakeSettings = {
-            # Enable our overlays to replace built-in packages
-            nixpkgs.overlays = builtins.attrValues outputs.overlays;
-
             # Set nixpkgs to the one used by the flake. (affects legacy commands and comma)
             nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
 
@@ -222,23 +238,12 @@
             # Pre-fetch the flake-registry to prevent it from being re-downloaded.
             nix.settings.flake-registry = "${inputs.flake-registry}/flake-registry.json";
           };
-        in rec {
-          #hydraJobs = let
-          #  inherit (inputs.nixpkgs.lib) mapAttrs;
-          #  getCfg = _: cfg: cfg.config.system.build.toplevel;
-          #in {
-          #  hosts = mapAttrs getCfg self.nixosConfigurations;
-          #
-          #  checks = {
-          #    inherit (self.checks) x86_64-linux;
-          #  };
-          #
-          #  packages = {
-          #    inherit (self.packages) x86_64-linux;
-          #  };
-          #};
+        in {
+          lib = {inherit mkNixpkgs;};
 
           nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+
             specialArgs = {
               inherit inputs outputs;
               # Catppuccin flavour
@@ -248,6 +253,17 @@
             };
 
             modules = [
+              ({
+                lib,
+                outputs,
+                ...
+              }: {
+                nixpkgs = {
+                  config = lib.mkForce {};
+                  pkgs = outputs.lib.mkNixpkgs "x86_64-linux";
+                  hostPlatform = "x86_64-linux";
+                };
+              })
               nixFlakeSettings
 
               inputs.nixos-hardware.nixosModules.common-cpu-amd
@@ -308,6 +324,8 @@
           };
 
           nixosConfigurations.nxb = inputs.nixpkgs.lib.nixosSystem {
+            system = "x86_64-linux";
+
             specialArgs = {
               inherit inputs outputs;
               # Catppuccin flavour
@@ -317,6 +335,17 @@
             };
 
             modules = [
+              ({
+                lib,
+                outputs,
+                ...
+              }: {
+                nixpkgs = {
+                  config = lib.mkForce {};
+                  pkgs = outputs.lib.mkNixpkgs "x86_64-linux";
+                  hostPlatform = "x86_64-linux";
+                };
+              })
               nixFlakeSettings
 
               inputs.nixos-hardware.nixosModules.framework-16-7040-amd
@@ -360,12 +389,7 @@
           system,
           ...
         }: {
-          # Initialize pkgs with our overlays
-          _module.args.pkgs = import inputs.nixpkgs {
-            inherit system;
-            overlays = builtins.attrValues outputs.overlays;
-            config.allowUnfree = true;
-          };
+          _module.args.pkgs = mkNixpkgs system;
 
           devShells = {
             ci = pkgs.mkShellNoCC {buildInputs = [pkgs.gitsign];};

@@ -1,4 +1,8 @@
 {inputs, ...}: {
+  flake.overlays.util-linux-fix = _: super: {
+    utillinux = super.util-linux;
+  };
+
   perSystem = {
     lib,
     pkgs,
@@ -17,6 +21,7 @@
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
       zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
+      utillinux = pkgs.util-linux;
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -65,7 +70,6 @@
       hyprlang = inputs.hyprlang.packages.${system}.hyprlang;
       hyprlock = inputs.hyprlock.packages.${system}.hyprlock;
       hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
-      hyprpicker = inputs.hyprpicker.packages.${system}.hyprpicker;
       xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
     };
   };

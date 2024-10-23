@@ -44,9 +44,6 @@
     totem
     wordbook
 
-    # Hyprland
-    hyprpicker
-
     # clipboard
     wl-clipboard
 

@@ -1,19 +1,6 @@
-{
-  config,
-  outputs,
-  ...
-}: {
-  # Enable our overlays to replace built-in packages.
-  nixpkgs.overlays = builtins.attrValues outputs.overlays;
-
+{config, ...}: {
   # Enable home-manager.
   programs.home-manager.enable = true;
-
-  # Allow unfree nixpkgs.
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
 
   home = {
     stateVersion = "23.05";

@@ -1,20 +1,10 @@
-{
-  config,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   system.stateVersion = "24.11";
 
   imports = [
     ./disko.nix
     ./hardware-configuration.nix
   ];
-
-  # Allow unfree
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
 
   # Hostname and networking
   networking.hostName = "nxb";

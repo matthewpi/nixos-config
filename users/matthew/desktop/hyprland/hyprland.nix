@@ -290,7 +290,6 @@ in {
 
         # Application keybinds
         "$mainMod, Space, exec, ${lib.getExe' config.programs.ags.package "ags"} --toggle-window applauncher"
-        "$mainMod, P, exec, ${lib.getExe' pkgs.hyprpicker "hyprpicker"}" # Color Picker
         "$mainMod, T, exec, ${alacritty}" # Terminal
         "$mainMod, B, exec, ${firefox}" # Web Browser
         "$mainMod, M, exec, ${cider}" # Music

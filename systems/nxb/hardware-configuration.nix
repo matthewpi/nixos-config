@@ -10,6 +10,6 @@
   # Use systemd stage 1
   boot.initrd.systemd.enable = true;
 
-  nixpkgs.hostPlatform = "x86_64-linux";
+  # Enable graphics.
   hardware.graphics.enable = true;
 }

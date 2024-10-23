@@ -11,12 +11,6 @@
     ./hardware-configuration.nix
   ];
 
-  # Allow unfree
-  nixpkgs.config = {
-    allowUnfree = true;
-    allowUnfreePredicate = _: true;
-  };
-
   # Hostname
   networking.hostName = "matthew-desktop";
 
