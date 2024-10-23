@@ -20,7 +20,7 @@
         before_sleep_cmd = "${hyprlockExe} --immediate --immediate-render --no-fade-in";
         after_sleep_cmd = "hyprctl dispatch dpms on";
         ignore_dbus_inhibit = false;
-        ignore_systemd_inhibit = false;
+        # ignore_systemd_inhibit = false;
       };
 
       listener = [

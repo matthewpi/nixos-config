@@ -10,7 +10,7 @@
   };
 in {
   # grim and slurp are wanted by XDPH.
-  home.packages = with pkgs; [glib xdg-utils grim slurp];
+  home.packages = with pkgs; [glib grim slurp xdg-utils];
 
   xdg.portal = {
     enable = lib.mkDefault true;
