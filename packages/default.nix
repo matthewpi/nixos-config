@@ -43,7 +43,6 @@
         hoppscotch
         inter
         monaspace
-        openlens
         zsh-titles
         ;
 

@@ -27,7 +27,7 @@
     hoppscotch
     impression
     obsidian
-    openlens
+    # lens
     protonmail-desktop
     qFlipper
     seabird
