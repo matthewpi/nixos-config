@@ -5,7 +5,7 @@
 }: {
   nix = {
     # Use the latest version of Nix
-    package = pkgs.nixVersions.nix_2_23;
+    package = pkgs.nixVersions.nix_2_24;
 
     settings = {
       # Auto-scale builders
@@ -41,7 +41,7 @@
       ];
       auto-allocate-uids = lib.mkDefault true;
       use-cgroups = lib.mkDefault true;
-      accept-flake-config = lib.mkDefault true;
+      # accept-flake-config = lib.mkDefault true;
 
       # Configure Nix to follow the XDG base directory spec.
       use-xdg-base-directories = lib.mkDefault true;
