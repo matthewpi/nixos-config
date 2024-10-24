@@ -24,8 +24,14 @@
       DefaultEnvironment="PATH=/run/wrappers/bin:/nix/profile/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:$PATH"
     '';
 
-    # Enable hyprlock PAM (and gnome-keyring integration)
-    security.pam.services.hyprlock.enableGnomeKeyring = lib.mkDefault config.services.gnome.gnome-keyring.enable;
+    # Configure hyprlock PAM.
+    security.pam.services.hyprlock = {
+      # Enable gnome-keyring integration if enabled.
+      enableGnomeKeyring = lib.mkDefault config.services.gnome.gnome-keyring.enable;
+
+      # Disable fprint auth since hyprlock supports accessing fprintd using DBUS.
+      fprintAuth = false;
+    };
 
     # Enable GNOME keyring.
     #

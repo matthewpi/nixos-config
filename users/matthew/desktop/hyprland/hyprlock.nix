@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  nixosConfig,
+  pkgs,
+  ...
+}: {
   # https://wiki.hyprland.org/Hypr-Ecosystem/hyprlock/
   programs.hyprlock = {
     enable = true;
@@ -8,6 +12,10 @@
         hide_cursor = true;
         grace = 5;
         ignore_empty_input = true;
+
+        enable_fingerprint = nixosConfig.services.fprintd.enable;
+        fingerprint_ready_message = "(Scan fingerprint to unlock)";
+        fingerprint_present_message = "Scanning fingerprint";
       };
 
       background = [
