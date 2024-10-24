@@ -1,5 +1,6 @@
 {
   flavour,
+  lib,
   pkgs,
   ...
 }: {
@@ -7,25 +8,25 @@
     enable = true;
 
     config = {
-      theme = "Catppuccin-${flavour}";
+      theme = "Catppuccin ${lib.strings.toUpper (builtins.substring 0 1 flavour)}${builtins.substring 1 (-1) flavour}";
     };
 
     themes = {
-      Catppuccin-frappe = {
+      "Catppuccin Frappe" = {
         src = pkgs.catppuccin;
-        file = "bat/Catppuccin-frappe.tmTheme";
+        file = "bat/Catppuccin Frappe.tmTheme";
       };
-      Catppuccin-latte = {
+      "Catppuccin Latte" = {
         src = pkgs.catppuccin;
-        file = "bat/Catppuccin-latte.tmTheme";
+        file = "bat/Catppuccin Latte.tmTheme";
       };
-      Catppuccin-macchiato = {
+      "Catppuccin Macchiato" = {
         src = pkgs.catppuccin;
-        file = "bat/Catppuccin-macchiato.tmTheme";
+        file = "bat/Catppuccin Macchiato.tmTheme";
       };
-      Catppuccin-mocha = {
+      "Catppuccin Mocha" = {
         src = pkgs.catppuccin;
-        file = "bat/Catppuccin-mocha.tmTheme";
+        file = "bat/Catppuccin Mocha.tmTheme";
       };
     };
   };
