@@ -37,7 +37,6 @@
         hashicorp.terraform # HashiCorp Terraform
         ms-kubernetes-tools.vscode-kubernetes-tools # Kubernetes
         davidanson.vscode-markdownlint # markdownlint
-        jnoortheen.nix-ide # Nix IDE
         christian-kohler.npm-intellisense # npm Intellisense
         christian-kohler.path-intellisense # Path Intellisense
         bmewburn.vscode-intelephense-client # PHP Intelephense
@@ -80,6 +79,13 @@
           publisher = "Nuxt";
           version = "0.2.0";
           sha256 = "sha256-M/29ZDg1sva9msGgRe6xqpCYDpW6X/BqKxmiJhzeVXQ=";
+        }
+        # Nix IDE
+        {
+          name = "nix-ide";
+          publisher = "jnoortheen";
+          version = "0.3.5";
+          hash = "sha256-hiyFZVsZkxpc2Kh0zi3NGwA/FUbetAS9khWxYesxT4s=";
         }
         # Nuxtr
         {
@@ -251,6 +257,10 @@
       "nix.serverSettings" = {
         "nixd" = {};
       };
+      "nix.hiddenLanguageServerErrors" = [
+        # Supress "Request textDocument/definition failed." errors.
+        "textDocument/definition"
+      ];
 
       # Red Hat Commons
       "redhat.telemetry.enabled" = false;
