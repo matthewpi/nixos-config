@@ -21,7 +21,7 @@
   prisma-engines,
   rustPlatform,
   stdenv,
-  webkitgtk,
+  webkitgtk_4_0,
   wrapGAppsHook3,
 }: let
   pnpm = pnpm_9;
@@ -51,7 +51,7 @@ in
 
     pnpmDeps = pnpm.fetchDeps {
       inherit pname version src;
-      hash = "sha256-xjctC1GucynVkm2HSlFC7XfocQpHUffQmQ/+Ali8GR8=";
+      hash = "sha256-uGEQ1Hmz1XDvQ+coHM8ejvsPjs86+sPtn0GtczkquYA=";
     };
 
     nativeBuildInputs = [
@@ -82,7 +82,7 @@ in
         libayatana-appindicator
         libsoup
         gtk3
-        webkitgtk
+        webkitgtk_4_0
       ]
       ++ lib.optionals stdenv.hostPlatform.isDarwin (
         with darwin.apple_sdk.frameworks; [
