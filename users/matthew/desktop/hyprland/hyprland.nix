@@ -259,12 +259,13 @@ in {
         # Inhibit idle whenever an application is fullscreened
         "idleinhibit always, fullscreen:1"
 
-        # Make VSCodium opaque
-        "opacity .97 .85, class:(codium-url-handler)"
-
         # Picture in picture
         "float, title:^(Picture-in-Picture)$"
         "forcergbx, title:^(Picture-in-Picture)$"
+
+        # Make some applications opaque
+        "opacity .97 .88, class:(codium-url-handler)" # VSCodium
+        "opacity .97 .88, class:(vesktop)" # Vesktop
       ];
 
       # Keybinds
