@@ -12,7 +12,6 @@
     ./hyprland.nix
     ./hyprlock.nix
     ./hyprpaper.nix
-    ./polkit.nix
     ./xdg.nix
 
     ../../../../modules/ags
@@ -58,5 +57,10 @@
     enable = true;
     platformTheme.name = "gtk3";
     style.name = "adwaita-dark";
+  };
+
+  services.polkit = {
+    enable = true;
+    agent = "gnome";
   };
 }
