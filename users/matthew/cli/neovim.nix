@@ -1,5 +1,5 @@
 {
-  flavour,
+  config,
   lib,
   pkgs,
   ...
@@ -36,7 +36,7 @@
       require("catppuccin").setup({
         compile_path = vim.fn.stdpath "cache" .. "/catppuccin",
 
-        flavour = "${flavour}",
+        flavour = "${config.catppuccin.flavor}",
         term_colors = true,
         transparent_background = true,
 

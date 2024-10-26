@@ -1,7 +1,5 @@
 {
   imports = [
-    ./amd-ryzen
-    ./catppuccin
     ./desktop
     ./gnome
     ./hyprland

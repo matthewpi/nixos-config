@@ -1,6 +1,5 @@
 {
   config,
-  flavour,
   isDesktop,
   lib,
   pkgs,
@@ -101,9 +100,6 @@ in {
     };
 
     settings = {
-      # Load catppuccin color variables so we can have a nice color scheme
-      source = ["${pkgs.catppuccin}/hyprland/${flavour}.conf"];
-
       xwayland = {
         # https://wiki.hyprland.org/Configuring/XWayland/#hidpi-xwayland
         force_zero_scaling = true;
@@ -232,11 +228,17 @@ in {
         "float, title:(Steam Settings), class:(steam)"
         "float, title:(Friends List), class:(steam)"
 
-        # Polkit
+        # Polkit (GNOME)
         "dimaround, class:(polkit-gnome-authentication-agent-1)"
         "center,    class:(polkit-gnome-authentication-agent-1)"
         "float,     class:(polkit-gnome-authentication-agent-1)"
         "pin,       class:(polkit-gnome-authentication-agent-1)"
+
+        # Polkit (hyprpolkitagent)
+        "dimaround, title:(Hyprland Polkit Agent)"
+        "center,    title:(Hyprland Polkit Agent)"
+        "float,     title:(Hyprland Polkit Agent)"
+        "pin,       title:(Hyprland Polkit Agent)"
 
         # Screenshare Portal
         "dimaround, title:(MainPicker)"

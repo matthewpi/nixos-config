@@ -3,31 +3,12 @@
   lib,
   pkgs,
   ...
-}: let
-  pointerCursor = {
-    name = "catppuccin-mocha-dark-cursors";
-    package = pkgs.catppuccin-cursors.mochaDark;
-    size = 24;
-
-    # Configure gtk.cursorTheme with the same options.
-    gtk.enable = true;
-  };
-in {
+}: {
   home.sessionVariables = {
     # Use gsettings to check for dark mode
     # https://gitlab.gnome.org/GNOME/libadwaita/-/commit/e715fae6a509db006a805af816f9d163f81011ef
     ADW_DISABLE_PORTAL = "1";
-
-    # Set XCURSOR environment variables.
-    XCURSOR_THEME = pointerCursor.name;
-    XCURSOR_SIZE = toString pointerCursor.size;
-
-    HYPRCURSOR_THEME = pointerCursor.name;
-    HYPRCURSOR_SIZE = toString pointerCursor.size;
   };
-
-  # Configure the "pointer" (cursor) theme.
-  home.pointerCursor = pointerCursor;
 
   gtk = {
     enable = true;

@@ -1,16 +1,8 @@
 {
-  flavour,
-  pkgs,
-  ...
-}: {
-  # home.packages = with pkgs; [termius];
-
   programs.alacritty = {
     enable = true;
 
     settings = {
-      import = ["${pkgs.catppuccin}/alacritty/Catppuccin-${flavour}.toml"];
-
       env = {
         TERM_PROGRAM = "alacritty";
         TERM = "xterm-256color";

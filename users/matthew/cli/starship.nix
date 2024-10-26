@@ -1,39 +1,12 @@
 {
-  flavour,
   lib,
   pkgs,
   ...
-}: let
-  # This clusterfuck is used to avoid a little problem in Nix called IFD (Import From Deriviation).
-  #
-  # Previously, this config was just able to use IFD to import an additional TOML file and append it
-  # to our custom settings, however since we are now building this system using Hydra, IFD is not
-  # allowed, hence we need to do some black magic to make it work.
-  runPythonScriptWith = {
-    # name of the resulting derivation
-    name,
-    python ? pkgs.python3,
-  }: pythonScript:
-    pkgs.runCommand name {
-      nativeBuildInputs = [
-        python
-      ];
-      passAsFile = [
-        "pythonScript"
-      ];
-      inherit pythonScript;
-    } ''
-      exec python3 "$pythonScriptPath"
-    '';
-in {
+}: {
   programs.starship = {
     enable = true;
-  };
 
-  xdg.configFile."starship.toml".source = let
     settings = {
-      palette = "catppuccin_${flavour}";
-
       format = lib.concatStrings [
         "$all"
         "$hostname"
@@ -452,26 +425,5 @@ in {
         disabled = true;
       };
     };
-
-    settingsFormat = pkgs.formats.toml {};
-    settingsFile = settingsFormat.generate "starship.toml" settings;
-  in
-    runPythonScriptWith {
-      name = "starship.toml";
-      python = pkgs.python3.withPackages (pp: [
-        pp.jsonmerge
-        pp.toml
-      ]);
-    } ''
-      from jsonmerge import merge
-      import os
-      import toml
-      with open("${settingsFile}") as settings_file:
-        settings = toml.load(settings_file)
-      with open("${pkgs.catppuccin}/starship/${flavour}.toml") as palette_file:
-        palette = toml.load(palette_file)
-      merged = merge(settings, palette)
-      with open(os.environ["out"], "w") as out:
-        toml.dump(merged, out)
-    '';
+  };
 }

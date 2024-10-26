@@ -52,15 +52,9 @@
     })
   ];
 
-  # QT Theming
-  qt = {
-    enable = true;
-    platformTheme.name = "gtk3";
-    style.name = "adwaita-dark";
-  };
-
   services.polkit = {
     enable = true;
+    # TODO: switch to `hypr` once we can figure out why it isn't sized correctly.
     agent = "gnome";
   };
 }

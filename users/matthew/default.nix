@@ -1,4 +1,8 @@
 {config, ...}: {
+  imports = [
+    ./catppuccin.nix
+  ];
+
   # Enable home-manager.
   programs.home-manager.enable = true;
 

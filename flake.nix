@@ -30,6 +30,8 @@
       };
     };
 
+    catppuccin.url = "github:catppuccin/nix";
+
     darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -133,6 +135,15 @@
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
+    hyprpolkitagent = {
+      url = "github:hyprwm/hyprpolkitagent";
+      inputs = {
+        hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -246,9 +257,6 @@
 
             specialArgs = {
               inherit inputs outputs;
-              # Catppuccin flavour
-              # https://github.com/catppuccin/catppuccin#-palette
-              flavour = "mocha";
               isDesktop = true;
             };
 
@@ -274,11 +282,6 @@
               inputs.disko.nixosModules.disko
               inputs.home-manager.nixosModules.home-manager
 
-              # Right now, the `amd-ryzen` module enables zenpower which doesn't
-              # support Zen 4. I just upgraded from Zen 3 to Zen 4, hence why this
-              # is now disabled.
-              # self.nixosModules.amd-ryzen
-              self.nixosModules.catppuccin
               self.nixosModules.desktop
               self.nixosModules.hyprland
               self.nixosModules.persistence
@@ -328,9 +331,6 @@
 
             specialArgs = {
               inherit inputs outputs;
-              # Catppuccin flavour
-              # https://github.com/catppuccin/catppuccin#-palette
-              flavour = "mocha";
               isDesktop = false;
             };
 
@@ -354,7 +354,6 @@
               inputs.disko.nixosModules.disko
               inputs.home-manager.nixosModules.home-manager
 
-              self.nixosModules.catppuccin
               self.nixosModules.desktop
               self.nixosModules.hyprland
               self.nixosModules.persistence

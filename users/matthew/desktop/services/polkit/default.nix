@@ -44,8 +44,7 @@ in {
 
       hypr = lib.mkOption {
         type = lib.types.package;
-        default = pkgs.polkit_gnome;
-        # default = pkgs.hyprpolkitagent;
+        default = pkgs.hyprpolkitagent;
       };
     };
   };

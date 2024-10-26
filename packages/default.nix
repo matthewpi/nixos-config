@@ -70,6 +70,7 @@
       hyprlang = inputs.hyprlang.packages.${system}.hyprlang;
       hyprlock = inputs.hyprlock.packages.${system}.hyprlock;
       hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
+      hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent;
       xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
     };
   };
