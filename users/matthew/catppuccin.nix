@@ -6,11 +6,12 @@
   catppuccin = {
     accent = "peach";
     flavor = "mocha";
+  };
 
-    pointerCursor = {
-      enable = true;
-      accent = "dark";
-    };
+  home.pointerCursor.size = 24;
+  catppuccin.pointerCursor = {
+    enable = true;
+    accent = "dark";
   };
 
   programs.alacritty.catppuccin.enable = true;
