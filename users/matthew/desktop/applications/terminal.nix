@@ -21,7 +21,7 @@
 
       cursor.style.shape = "Beam";
 
-      ipc_socket = false;
+      general.ipc_socket = false;
 
       keyboard.bindings = [
         {
