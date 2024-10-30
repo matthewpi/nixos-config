@@ -51,6 +51,7 @@ in {
       extensions = with config.nur.repos.rycee.firefox-addons; [
         decentraleyes
         onepassword-password-manager
+        stylus
         temporary-containers
         ublock-origin
         # vue-js-devtools
