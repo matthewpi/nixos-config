@@ -34,7 +34,7 @@
           --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \
           --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
       '';
-    in {
+    in rec {
       inherit
         (_packages)
         catppuccin
@@ -72,6 +72,30 @@
       hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
       hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent;
       xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
+
+      # Override linux_xanmod with the `netfilter-typo-fix` patch.
+      linux_xanmod = pkgs.callPackage "${inputs.nixpkgs}/pkgs/os-specific/linux/kernel/xanmod-kernels.nix" {
+        variant = "lts";
+        kernelPatches = [
+          pkgs.kernelPatches.bridge_stp_helper
+          pkgs.kernelPatches.request_key_helper
+          pkgs.kernelPatches.netfilter-typo-fix
+        ];
+      };
+      linuxPackages_xanmod = pkgs.linuxPackagesFor linux_xanmod;
+
+      linux_xanmod_latest = pkgs.callPackage "${inputs.nixpkgs}/pkgs/os-specific/linux/kernel/xanmod-kernels.nix" {
+        variant = "main";
+        kernelPatches = [
+          pkgs.kernelPatches.bridge_stp_helper
+          pkgs.kernelPatches.request_key_helper
+          pkgs.kernelPatches.netfilter-typo-fix
+        ];
+      };
+      linuxPackages_xanmod_latest = pkgs.linuxPackagesFor linux_xanmod_latest;
+
+      linux_xanmod_stable = linux_xanmod_latest;
+      inuxPackages_xanmod_stable = pkgs.linuxPackagesFor linux_xanmod_stable;
     };
   };
 }
