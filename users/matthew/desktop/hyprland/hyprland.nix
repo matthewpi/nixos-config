@@ -379,5 +379,24 @@ in {
 
   services.avizo = {
     enable = true;
+    settings.default = {
+      time = 1.0;
+      width = 192;
+      height = 192;
+      padding = 16;
+      y-offset = 0.75;
+      x-offset = 0.5;
+      border-radius = 16;
+      border-width = 1;
+      block-height = 10;
+      block-spacing = 2;
+      block-count = 20;
+      fade-in = 0.1;
+      fade-out = 0.2;
+      background = "rgba(49, 50, 68, 0.75)"; # Surface 0
+      border-color = "rgba(69, 71, 90, 1.0)"; # Surface 1
+      bar-bg-color = "rgba(88, 91, 112, 1.0)"; # Surface 2
+      bar-fg-color = "rgb(250, 179, 135, 1.0)"; # Peach
+    };
   };
 }
