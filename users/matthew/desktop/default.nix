@@ -16,7 +16,7 @@
   # https://nix-community.github.io/home-manager/options.xhtml#opt-systemd.user.startServices
   systemd.user.startServices = "sd-switch";
 
-  services.ssh-agent.enable = true;
+  # services.ssh-agent.enable = true;
 
   home.sessionVariables.STEPPATH = "${config.home.sessionVariables.XDG_DATA_HOME}/step";
 
