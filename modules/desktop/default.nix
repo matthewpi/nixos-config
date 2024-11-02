@@ -12,6 +12,7 @@
       ./fonts.nix
       ./fwupd.nix
       ./gamemode.nix
+      ./geoclue.nix
       ./pipewire.nix
       # ./plymouth.nix
       # ./printing.nix
@@ -114,9 +115,12 @@
       "net.ipv4.ping_group_range" = "0 2147483647";
     };
 
-    # Set location provider to geoclue2.
-    location.provider = lib.mkDefault "geoclue2";
-    systemd.user.services.geoclue-agent.serviceConfig.Slice = "background.slice";
+    # Set location provider to manual.
+    location.provider = lib.mkDefault "manual";
+    location = {
+      latitude = 51.05011;
+      longitude = -114.08529;
+    };
 
     # Disable NixOS documentation.
     documentation.nixos.enable = false;
