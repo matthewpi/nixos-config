@@ -73,6 +73,16 @@
       hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent;
       xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
 
+      catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (_: rec {
+        version = "1.0.1";
+        src = pkgs.fetchFromGitHub {
+          owner = "catppuccin";
+          repo = "cursors";
+          rev = "v${version}";
+          hash = "sha256-l01L0UiE9bgUOMHhs74Bndarw2b6TaJGW/xU/8rfoAk=";
+        };
+      });
+
       # Override linux_xanmod with the `netfilter-typo-fix` patch.
       linux_xanmod = pkgs.callPackage "${inputs.nixpkgs}/pkgs/os-specific/linux/kernel/xanmod-kernels.nix" {
         variant = "lts";
