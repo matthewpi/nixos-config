@@ -12,7 +12,7 @@
 
   fileSystems."/mnt/games" = {
     device = "/dev/disk/by-uuid/CE3E37913E377197";
-    fsType = "ntfs-3g";
+    fsType = "ntfs3";
     options = ["noatime" "nosuid" "nodev" "nofail" "x-gvfs-show" "rw" "uid=1000" "umask=000"];
   };
 
