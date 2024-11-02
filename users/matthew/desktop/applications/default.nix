@@ -11,9 +11,7 @@
       # ./signal.nix
       ./terminal.nix
       ./vscode.nix
-      # ./zen-browser.nix
-
-      # ../programs/zen-browser.nix
+      ./zed-editor.nix
     ]
     ++ lib.optionals isDesktop [
       ./gaming.nix
@@ -38,6 +36,5 @@
     vesktop
     video-trimmer
     wireshark
-    zed-editor
   ];
 }
