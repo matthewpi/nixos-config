@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   ...
 }: {
@@ -7,7 +8,11 @@
     enable = true;
     enableVteIntegration = true;
 
-    autosuggestion.enable = true;
+    autosuggestion = {
+      enable = true;
+      highlight = "fg=8";
+      strategy = lib.mkForce ["completion"];
+    };
 
     defaultKeymap = "emacs";
     dotDir = ".config/zsh";
@@ -23,8 +28,6 @@
     initExtraBeforeCompInit = ''
       bindkey "\e[3~" delete-char
 
-      ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=8'
-      ZSH_AUTOSUGGEST_STRATEGY=('completion')
       ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE='48'
       ZSH_AUTOSUGGEST_USE_ASYNC='true'
       ZSH_AUTOSUGGEST_MANUAL_REBIND='true'
