@@ -399,4 +399,5 @@ in {
       bar-fg-color = "rgb(250, 179, 135, 1.0)"; # Peach
     };
   };
+  systemd.user.services.avizo.Service.Slice = "background.slice";
 }
