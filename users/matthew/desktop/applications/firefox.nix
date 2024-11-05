@@ -195,7 +195,7 @@ in {
         "dom.security.https_only_mode" = true;
         "dom.security.https_only_mode_ever_enabled" = true;
 
-        "extensions.activeThemeID" = "default-theme@mozilla.org";
+        "extensions.activeThemeID" = "{1cd0d6ef-d4bf-4fd1-9d80-4a9811a84647}";
         "extensions.formautofill.addresses.enabled" = false;
         "extensions.formautofill.creditCards.enabled" = false;
 
