@@ -9,7 +9,6 @@
         jdk17
         jdk21
         temurin-bin-21
-        jdk22
       ];
     })
   ];
