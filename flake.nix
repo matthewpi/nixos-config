@@ -87,7 +87,7 @@
     };
 
     hyprland = {
-      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
+      url = "github:hyprwm/Hyprland";
       inputs = {
         aquamarine.follows = "aquamarine";
         hyprcursor.follows = "hyprcursor";
