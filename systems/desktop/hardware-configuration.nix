@@ -13,7 +13,19 @@
   fileSystems."/mnt/games" = {
     device = "/dev/disk/by-uuid/CE3E37913E377197";
     fsType = "ntfs3";
-    options = ["noatime" "nosuid" "nodev" "nofail" "x-gvfs-show" "rw" "uid=1000" "umask=000"];
+    options = [
+      "noatime"
+      "nosuid"
+      "nodev"
+      "nofail"
+      "x-gvfs-show"
+      "uid=1000"
+      "gid=1000"
+      "rw"
+      "user"
+      "exec"
+      "umask=000"
+    ];
   };
 
   # Enable graphics.

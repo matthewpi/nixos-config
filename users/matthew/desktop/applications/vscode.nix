@@ -4,6 +4,20 @@
   pkgs,
   ...
 }: {
+  home.packages = with pkgs; [
+    d2
+    delve
+    golangci-lint
+    gopls
+    go-tools
+    nixd
+    rust-analyzer
+    vue-language-server
+    yaml-language-server
+    typescript-language-server
+    tailwindcss-language-server
+  ];
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
@@ -14,9 +28,8 @@
 
     extensions = with pkgs.vscode-extensions;
       [
-        # formulahendry.auto-close-tag # Auto Close Tag
         formulahendry.auto-rename-tag # Auto Rename Tag
-        mads-hartmann.bash-ide-vscode # Bash IDE
+        # mads-hartmann.bash-ide-vscode # Bash IDE (disabled due to high CPU usage)
         bungcip.better-toml # Better TOML
         matthewpi.caddyfile-support # Caddyfile Support
         catppuccin.catppuccin-vsc # Catppuccin for VSCode
@@ -29,9 +42,6 @@
         editorconfig.editorconfig # EditorConfig for VS Code
         # usernamehw.errorlens # Error Lens
         dbaeumer.vscode-eslint # ESLint
-        file-icons.file-icons # file-icons
-        #github.copilot # GitHub Copilot; TODO: enable?
-        #github.vscode-github-actions # GitHub Actions
         eamodio.gitlens # GitLens — Git supercharged
         golang.go # Go
         hashicorp.terraform # HashiCorp Terraform
@@ -39,13 +49,11 @@
         davidanson.vscode-markdownlint # markdownlint
         christian-kohler.npm-intellisense # npm Intellisense
         christian-kohler.path-intellisense # Path Intellisense
-        bmewburn.vscode-intelephense-client # PHP Intelephense
         esbenp.prettier-vscode # Prettier - Code formatter
         rust-lang.rust-analyzer # rust-analyzer
         tailscale.vscode-tailscale # Tailscale
         bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
         jgclark.vscode-todo-highlight # TODO Highlight v2
-        # vue.volar # Vue - Official
         vscode-icons-team.vscode-icons # vscode-icons
         zxh404.vscode-proto3 # vscode-proto3
         redhat.vscode-xml # XML
@@ -57,28 +65,28 @@
           name = "vscode-buf";
           publisher = "bufbuild";
           version = "0.6.2";
-          sha256 = "sha256-x2yk3J0peTMMV1VuF+eRCOM+I2lWPzwnBch7s4xJ3yA=";
+          hash = "sha256-x2yk3J0peTMMV1VuF+eRCOM+I2lWPzwnBch7s4xJ3yA=";
         }
-        # Systemd Helper
+        # D2
         {
-          name = "vscode-systemd-support";
-          publisher = "hangxingliu";
-          version = "2.2.0";
-          sha256 = "sha256-08pypB6PZk9diwVmHkwuW6SMlpTbw159seuaWALfMlE=";
+          name = "d2";
+          publisher = "terrastruct";
+          version = "0.8.6";
+          hash = "sha256-Xq25/03P5Jf8XiTBaC7vj3m9G+UvBd8P18Lpzk8ZRzU=";
         }
-        # Toggle Quotes
+        # Laravel Blade Snippets
         {
-          name = "vscode-toggle-quotes";
-          publisher = "britesnow";
-          version = "0.3.6";
-          sha256 = "sha256-Hn3Mk224ePAAnNtkhKMcCil/kTgbonweb1i884Q62rs=";
+          name = "laravel-blade";
+          publisher = "onecentlin";
+          version = "1.36.1";
+          hash = "sha256-zOjUrdoBBtSz59/b/n63QByGyQRcOJFe+TMfosktEss=";
         }
         # MDC - Markdown Components
         {
           name = "mdc";
           publisher = "Nuxt";
           version = "0.2.0";
-          sha256 = "sha256-M/29ZDg1sva9msGgRe6xqpCYDpW6X/BqKxmiJhzeVXQ=";
+          hash = "sha256-M/29ZDg1sva9msGgRe6xqpCYDpW6X/BqKxmiJhzeVXQ=";
         }
         # Nix IDE
         {
@@ -92,49 +100,63 @@
           name = "nuxtr-vscode";
           publisher = "nuxtr";
           version = "0.2.16";
-          sha256 = "sha256-DVoq8zdlJ2ch8PCG34f1PRkILym9XdclUHQ9s2B5OME=";
+          hash = "sha256-DVoq8zdlJ2ch8PCG34f1PRkILym9XdclUHQ9s2B5OME=";
+        }
+        # PHP Intelephense
+        {
+          name = "vscode-intelephense-client";
+          publisher = "bmewburn";
+          version = "1.12.6";
+          hash = "sha256-PBshvtO7NDMfKK482GN8qSyGw7OEeExEwr1/whH9yUA=";
         }
         # SQLTools
         {
           name = "sqltools";
           publisher = "mtxr";
           version = "0.28.3";
-          sha256 = "sha256-bTrHAhj8uwzRIImziKsOizZf8+k3t+VrkOeZrFx7SH8=";
+          hash = "sha256-bTrHAhj8uwzRIImziKsOizZf8+k3t+VrkOeZrFx7SH8=";
         }
         # SQLTools MySQL/MariaDB
         {
           name = "sqltools-driver-mysql";
           publisher = "mtxr";
           version = "0.6.3";
-          sha256 = "sha256-CO+dcmvaSROX1ruxdrLfQhPF3HgEBtesE0JPyizD7io=";
+          hash = "sha256-CO+dcmvaSROX1ruxdrLfQhPF3HgEBtesE0JPyizD7io=";
         }
         # SQLTools PostgreSQL/Cockroach Driver
         {
           name = "sqltools-driver-pg";
           publisher = "mtxr";
           version = "0.5.4";
-          sha256 = "sha256-XnPTMFNgMGT2tJe8WlmhMB3DluvMZx9Ee2w7xMCzLYM=";
+          hash = "sha256-XnPTMFNgMGT2tJe8WlmhMB3DluvMZx9Ee2w7xMCzLYM=";
         }
         # SQLTools ClickHouse Driver
         {
           name = "sqltools-clickhouse-driver";
           publisher = "ultram4rine";
           version = "0.7.0";
-          sha256 = "sha256-ZQy+reh4Wm6/XcnmGiTLMA/o/eptdUmgd2O6ybO1Bos=";
+          hash = "sha256-ZQy+reh4Wm6/XcnmGiTLMA/o/eptdUmgd2O6ybO1Bos=";
         }
-        # Laravel Blade Snippets
+        # Systemd Helper
         {
-          name = "laravel-blade";
-          publisher = "onecentlin";
-          version = "1.36.1";
-          sha256 = "sha256-zOjUrdoBBtSz59/b/n63QByGyQRcOJFe+TMfosktEss=";
+          name = "vscode-systemd-support";
+          publisher = "hangxingliu";
+          version = "2.2.0";
+          hash = "sha256-08pypB6PZk9diwVmHkwuW6SMlpTbw159seuaWALfMlE=";
+        }
+        # Toggle Quotes
+        {
+          name = "vscode-toggle-quotes";
+          publisher = "britesnow";
+          version = "0.3.6";
+          hash = "sha256-Hn3Mk224ePAAnNtkhKMcCil/kTgbonweb1i884Q62rs=";
         }
         # Vue - Official
         {
           name = "volar";
           publisher = "vue";
           version = "2.1.6";
-          sha256 = "sha256-Z5rFQBc6u14K8cugFzV5sekwRkEwtOoRESUvABOTpP8=";
+          hash = "sha256-Z5rFQBc6u14K8cugFzV5sekwRkEwtOoRESUvABOTpP8=";
         }
       ];
 
@@ -236,7 +258,7 @@
       "go.lintTool" = "golangci-lint";
       "go.lintOnSave" = "off";
       "go.gopath" = config.home.sessionVariables.GOPATH;
-      "go.goroot" = "${pkgs.go_1_22}/share/go";
+      "go.goroot" = "${pkgs.go_1_23}/share/go";
       "go.toolsManagement.checkForUpdates" = "off";
       "go.toolsManagement.autoUpdate" = false;
       "go.alternateTools" = {
@@ -245,10 +267,23 @@
         "gopls" = lib.getExe pkgs.gopls;
         "staticcheck" = lib.getExe' pkgs.go-tools "staticcheck";
       };
+      "go.inlayHints" = {
+        "assignVariableTypes" = true;
+        "compositeLiteralFields" = true;
+        "compositeLiteralTypes" = true;
+        "constantValues" = true;
+        "functionTypeParameters" = true;
+        "parameterNames" = true;
+        "rangeVariableTypes" = true;
+      };
       "gopls" = {
         "format.gofumpt" = true;
         "ui.semanticTokens" = true;
       };
+      # Disable prompts about Go Surveys.
+      "go.survey.prompt" = false;
+      # Don't show the Go welcome page for new installs.
+      "go.showWelcome" = false;
 
       # Nix
       "nix.enableLanguageServer" = true;

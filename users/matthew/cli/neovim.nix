@@ -3,7 +3,51 @@
   lib,
   pkgs,
   ...
-}: {
+}: let
+  grammars = {
+    tree-sitter-caddyfile = rec {
+      url = "https://github.com/matthewpi/tree-sitter-caddyfile";
+      rev = "7f96eba5c8555d6db39f55e9a54bf0992468b7cf";
+      hash = "sha256-VJJ1NDIFUFZAG75pr1e9riN7y05mrhzIBw4CyKiwKBg=";
+      fetchSubmodules = false;
+      src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
+      generate = true;
+    };
+
+    tree-sitter-d2 = rec {
+      url = "https://git.pleshevski.ru/pleshevskiy/tree-sitter-d2";
+      rev = "1e6d8ca3d85c0031ff010759bb60804dd47b95f2";
+      hash = "sha256-ld9zlJ7tXl/SyrHJXwPKviDHePbw/jhI9WPT3aNntt8=";
+      fetchSubmodules = false;
+      src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
+    };
+  };
+
+  builtGrammars = lib.mapAttrs (name: grammar:
+    pkgs.tree-sitter.buildGrammar {
+      language = grammar.language or name;
+      version = "0.24.3";
+      src = grammar.src;
+      location = grammar.location or null;
+      generate = grammar.generate or false;
+    })
+  grammars;
+
+  linkedGrammars = pkgs.runCommand "grammars" {} ("mkdir \"$out\"\n"
+    + (
+      lib.concatStrings (
+        lib.mapAttrsToList (name: grammar: "ln -s ${grammar.src} \"$out\"/${name}\n")
+        grammars
+      )
+    ));
+in {
+  xdg.configFile."tree-sitter/config.json".source = (pkgs.formats.json {}).generate "tree-sitter-config.json" {
+    parser-directories = [
+      pkgs.tree-sitter.grammars
+      linkedGrammars
+    ];
+  };
+
   programs.neovim = {
     enable = true;
 
@@ -107,7 +151,6 @@
             CmpItemKindEvent = { fg = C.base, bg = C.blue },
             CmpItemKindOperator = { fg = C.base, bg = C.blue },
             CmpItemKindTypeParameter = { fg = C.base, bg = C.blue },
-            --CmpItemKindCopilot = { fg = C.base, bg = C.teal },
           }
         end,
       })
@@ -125,15 +168,6 @@
       vim.opt.runtimepath:append("/home/matthew/.cache/tree-sitter")
 
       local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-      parser_config.caddyfile = {
-        install_info = {
-          url = "~/code/caddyserver/tree-sitter-caddyfile",
-          files = {"src/parser.c"},
-          branch = "master",
-          generate_requires_npm = false,
-          requires_generate_from_grammar = false,
-        },
-      }
 
       vim.filetype.add({
         filename = {
@@ -142,6 +176,12 @@
         extension = {
           caddyfile = "caddyfile",
           Caddyfile = "caddyfile",
+        },
+      })
+
+      vim.filetype.add({
+        extension = {
+          d2 = "d2",
         },
       })
 
@@ -305,8 +345,6 @@
         },
       })
 
-      --require("mini.comment").setup()
-
       require("barbar").setup({
         animation = false,
         sidebar_filetypes = {
@@ -342,21 +380,19 @@
       cmp-nvim-lsp
       cmp-nvim-lsp-signature-help
       cmp-path
-      # dropbar requires neovim 0.10 (aka nightly)
       dropbar-nvim
       editorconfig-vim
       indent-blankline-nvim
       lspkind-nvim
       lualine-nvim
       luasnip
-      #mini-nvim
       nvim-cmp
       nvim-lspconfig
       nvim-notify
       nvim-web-devicons
       nvim-tree-lua
       nvim-treesitter
-      nvim-treesitter.withAllGrammars
+      (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars ++ (lib.attrValues builtGrammars)))
       nvim-treesitter-context
       plenary-nvim
       telescope-nvim
@@ -365,10 +401,10 @@
     ];
 
     extraPackages = with pkgs; [
-      gcc
-      tree-sitter
       fd
+      gcc
       ripgrep
+      tree-sitter
     ];
 
     withNodeJs = true;
