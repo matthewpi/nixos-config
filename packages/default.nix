@@ -89,7 +89,13 @@
         kernelPatches = [
           pkgs.kernelPatches.bridge_stp_helper
           pkgs.kernelPatches.request_key_helper
-          pkgs.kernelPatches.netfilter-typo-fix
+          {
+            name = "netfilter-typo-fix";
+            patch = pkgs.fetchpatch {
+              url = "https://lore.kernel.org/netdev/20241021094536.81487-3-pablo@netfilter.org/raw";
+              hash = "sha256-ZGc1xAIjf+MlV02jhIWZ4jHC742+z/WpN7RenqpU7e4=";
+            };
+          }
         ];
       };
       linuxPackages_xanmod = pkgs.linuxPackagesFor linux_xanmod;
@@ -99,7 +105,13 @@
         kernelPatches = [
           pkgs.kernelPatches.bridge_stp_helper
           pkgs.kernelPatches.request_key_helper
-          pkgs.kernelPatches.netfilter-typo-fix
+          {
+            name = "netfilter-typo-fix";
+            patch = pkgs.fetchpatch {
+              url = "https://lore.kernel.org/netdev/20241021094536.81487-3-pablo@netfilter.org/raw";
+              hash = "sha256-ZGc1xAIjf+MlV02jhIWZ4jHC742+z/WpN7RenqpU7e4=";
+            };
+          }
         ];
       };
       linuxPackages_xanmod_latest = pkgs.linuxPackagesFor linux_xanmod_latest;
