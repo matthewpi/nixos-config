@@ -267,15 +267,13 @@
         "gopls" = lib.getExe pkgs.gopls;
         "staticcheck" = lib.getExe' pkgs.go-tools "staticcheck";
       };
-      "go.inlayHints" = {
-        "assignVariableTypes" = true;
-        "compositeLiteralFields" = true;
-        "compositeLiteralTypes" = true;
-        "constantValues" = true;
-        "functionTypeParameters" = true;
-        "parameterNames" = true;
-        "rangeVariableTypes" = true;
-      };
+      "go.inlayHints.assignVariableTypes" = false;
+      "go.inlayHints.compositeLiteralFields" = true;
+      "go.inlayHints.compositeLiteralTypes" = true;
+      "go.inlayHints.constantValues" = true;
+      "go.inlayHints.functionTypeParameters" = true;
+      "go.inlayHints.parameterNames" = true;
+      "go.inlayHints.rangeVariableTypes" = true;
       "gopls" = {
         "format.gofumpt" = true;
         "ui.semanticTokens" = true;
