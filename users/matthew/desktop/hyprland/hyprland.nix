@@ -151,7 +151,7 @@ in {
         rounding = 8;
 
         # Disable drop shadows
-        drop_shadow = false;
+        shadow.enabled = false;
 
         # Disable window background blur
         blur.enabled = false;
