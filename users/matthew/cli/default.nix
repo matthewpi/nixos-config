@@ -8,6 +8,7 @@
     ./bat.nix
     ./bottom.nix
     ./direnv.nix
+    ./eza.nix
     ./fzf.nix
     ./gh.nix
     ./git.nix
