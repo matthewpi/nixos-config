@@ -82,42 +82,6 @@
           hash = "sha256-l01L0UiE9bgUOMHhs74Bndarw2b6TaJGW/xU/8rfoAk=";
         };
       });
-
-      # Override linux_xanmod with the `netfilter-typo-fix` patch.
-      linux_xanmod = pkgs.callPackage "${inputs.nixpkgs}/pkgs/os-specific/linux/kernel/xanmod-kernels.nix" {
-        variant = "lts";
-        kernelPatches = [
-          pkgs.kernelPatches.bridge_stp_helper
-          pkgs.kernelPatches.request_key_helper
-          {
-            name = "netfilter-typo-fix";
-            patch = pkgs.fetchpatch {
-              url = "https://lore.kernel.org/netdev/20241021094536.81487-3-pablo@netfilter.org/raw";
-              hash = "sha256-ZGc1xAIjf+MlV02jhIWZ4jHC742+z/WpN7RenqpU7e4=";
-            };
-          }
-        ];
-      };
-      linuxPackages_xanmod = pkgs.linuxPackagesFor linux_xanmod;
-
-      linux_xanmod_latest = pkgs.callPackage "${inputs.nixpkgs}/pkgs/os-specific/linux/kernel/xanmod-kernels.nix" {
-        variant = "main";
-        kernelPatches = [
-          pkgs.kernelPatches.bridge_stp_helper
-          pkgs.kernelPatches.request_key_helper
-          {
-            name = "netfilter-typo-fix";
-            patch = pkgs.fetchpatch {
-              url = "https://lore.kernel.org/netdev/20241021094536.81487-3-pablo@netfilter.org/raw";
-              hash = "sha256-ZGc1xAIjf+MlV02jhIWZ4jHC742+z/WpN7RenqpU7e4=";
-            };
-          }
-        ];
-      };
-      linuxPackages_xanmod_latest = pkgs.linuxPackagesFor linux_xanmod_latest;
-
-      linux_xanmod_stable = linux_xanmod_latest;
-      inuxPackages_xanmod_stable = pkgs.linuxPackagesFor linux_xanmod_stable;
     };
   };
 }
