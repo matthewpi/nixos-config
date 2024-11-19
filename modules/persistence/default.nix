@@ -1,5 +1,9 @@
 {inputs, ...}: {
   flake.nixosModules.persistence = {
+    isDesktop,
+    lib,
+    ...
+  }: {
     imports = [
       inputs.impermanence.nixosModules.impermanence
 
@@ -65,45 +69,42 @@
 
     # Persistence
     environment.persistence."/persist" = {
-      directories = [
-        "/etc/nixos"
-        {
-          directory = "/etc/secureboot";
-          mode = "0700";
-        }
+      directories =
+        [
+          {
+            directory = "/etc/nixos";
+            mode = "0755";
+          }
+          {
+            directory = "/var/lib/nixos";
+            mode = "0755";
+          }
 
-        "/var/lib/nixos"
-        {
-          directory = "/var/lib/private";
-          mode = "0700";
-        }
+          {
+            directory = "/etc/secureboot";
+            mode = "0700";
+          }
 
-        {
+          {
+            directory = "/var/lib/private";
+            mode = "0700";
+          }
+          {
+            directory = "/var/cache/private";
+            mode = "0700";
+          }
+
+          {
+            directory = "/root";
+            mode = "0700";
+          }
+        ]
+        ++ lib.optional isDesktop {
           directory = "/var/cache/restic-backups-matthew-code";
           mode = "0700";
           user = "matthew";
           group = "users";
-        }
-        {
-          directory = "/var/cache/regreet";
-          mode = "0750";
-          user = "greeter";
-          group = "greeter";
-        }
-        {
-          directory = "/var/cache/tailscale";
-          mode = "0750";
-        }
-        {
-          directory = "/var/cache/private";
-          mode = "0700";
-        }
-
-        {
-          directory = "/root";
-          mode = "0700";
-        }
-      ];
+        };
 
       files = [
         "/etc/machine-id"
