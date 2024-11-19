@@ -75,7 +75,6 @@ in {
   home.sessionVariables = {
     XDG_CURRENT_DESKTOP = "Hyprland";
     XDG_SESSION_DESKTOP = "Hyprland";
-    WLR_NO_HARDWARE_CURSORS = "1";
   };
 
   wayland.windowManager.hyprland = {

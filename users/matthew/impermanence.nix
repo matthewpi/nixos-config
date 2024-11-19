@@ -75,10 +75,16 @@ in {
       directory = ".local/share/Steam";
       mode = "0700";
     }
-    ++ lib.optional isDesktop {
-      directory = ".config/streamdeck";
-      mode = "0700";
-    }
+    ++ lib.optionals isDesktop [
+      {
+        directory = ".config/streamdeck";
+        mode = "0700";
+      }
+      {
+        directory = "Games";
+        mode = "0700";
+      }
+    ]
     ++ [
       {
         directory = ".cache/ags";

@@ -580,6 +580,31 @@
         "type": "github"
       }
     },
+    "nix-gaming": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "umu": "umu"
+      },
+      "locked": {
+        "lastModified": 1730910302,
+        "narHash": "sha256-xX2OHnEkMIafga0wCRHqJFdh8WvLkUDpITUvUKgPKRA=",
+        "owner": "LovingMelody",
+        "repo": "nix-gaming",
+        "rev": "81b850f79d5ecd71c02a6e6832bfeb711522a6d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "LovingMelody",
+        "ref": "update-star-citizen",
+        "repo": "nix-gaming",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -671,6 +696,7 @@
         "hyprwayland-scanner": "hyprwayland-scanner",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
+        "nix-gaming": "nix-gaming",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs",
@@ -754,6 +780,31 @@
         "owner": "numtide",
         "repo": "treefmt-nix",
         "type": "github"
+      }
+    },
+    "umu": {
+      "inputs": {
+        "nixpkgs": [
+          "nix-gaming",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "dir": "packaging/nix",
+        "lastModified": 1730836236,
+        "narHash": "sha256-8jrg1DQrgYVaO4hpPRxRTAVluo8cE1Lcuvyv2EXuXpA=",
+        "ref": "refs/heads/main",
+        "rev": "90352466d502c40e147cfd11a428dde6c2899ab3",
+        "revCount": 833,
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging/nix"
+      },
+      "original": {
+        "dir": "packaging/nix",
+        "submodules": true,
+        "type": "git",
+        "url": "https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging/nix"
       }
     },
     "xdph": {
