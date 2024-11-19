@@ -38,7 +38,13 @@
   # TODO: use catppuccin theming instead.
   qt = {
     enable = true;
-    platformTheme.name = "gtk3";
-    style.name = "adwaita-dark";
+    # platformTheme.name = "gtk3";
+    # style.name = "adwaita-dark";
+    style.name = "kvantum";
+    platformTheme.name = "kvantum";
+    style.catppuccin = {
+      enable = true;
+      apply = true;
+    };
   };
 }
