@@ -3,6 +3,81 @@
     utillinux = super.util-linux;
   };
 
+  flake.overlays.pyside6-fix = _: super: {
+    python312 = super.python312.override {
+      packageOverrides = _: python-super: {
+        pyside6 = python-super.pyside6.overrideAttrs (_: let
+          packages = with python-super.pkgs.qt6; [
+            # required
+            python-super.ninja
+            python-super.packaging
+            python-super.setuptools
+            qtbase
+
+            # optional
+            qt3d
+            qtcharts
+            qtconnectivity
+            qtdatavis3d
+            qtdeclarative
+            qthttpserver
+            qtmultimedia
+            qtnetworkauth
+            qtquick3d
+            qtremoteobjects
+            qtscxml
+            qtsensors
+            qtspeech
+            qtsvg
+            qtwebchannel
+            qtwebsockets
+            qtpositioning
+            qtlocation
+            qtshadertools
+            qtserialport
+            qtserialbus
+            qtgraphs
+            qttools
+          ];
+
+          qt_linked = super.symlinkJoin {
+            name = "qt_linked";
+            paths = packages;
+          };
+        in {
+          buildInputs = (
+            if super.stdenv.hostPlatform.isLinux
+            then
+              # qtwebengine fails under darwin
+              # see https://github.com/NixOS/nixpkgs/pull/312987
+              packages ++ [python-super.pkgs.qt6.qtwebengine]
+            else
+              python-super.pkgs.qt6.darwinVersionInputs
+              ++ [
+                qt_linked
+                super.cups
+              ]
+          );
+        });
+
+        shiboken6 = python-super.shiboken6.overrideAttrs (_: {
+          buildInputs =
+            [
+              super.llvmPackages.llvm
+              super.llvmPackages.libclang
+              python-super.pkgs.qt6.qtbase
+              python-super.ninja
+              python-super.packaging
+              python-super.setuptools
+            ]
+            ++ super.lib.optionals super.stdenv.hostPlatform.isDarwin [
+              python-super.pkgs.qt6.darwinVersionInputs
+            ];
+        });
+      };
+    };
+  };
+
   perSystem = {
     lib,
     pkgs,
@@ -34,7 +109,7 @@
           --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \
           --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
       '';
-    in rec {
+    in {
       inherit
         (_packages)
         catppuccin
@@ -72,16 +147,6 @@
       hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
       hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent;
       xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
-
-      catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (_: rec {
-        version = "1.0.1";
-        src = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "cursors";
-          rev = "v${version}";
-          hash = "sha256-l01L0UiE9bgUOMHhs74Bndarw2b6TaJGW/xU/8rfoAk=";
-        };
-      });
     };
   };
 }
