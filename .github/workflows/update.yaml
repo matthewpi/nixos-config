@@ -21,9 +21,13 @@ jobs:
 
             - name: Install Nix
               uses: DeterminateSystems/nix-installer-action@e50d5f73bfe71c2dd0aa4218de8f4afa59f8f81d # v16
+              with:
+                kvm: false
 
             - name: Nix Cache
               uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+              with:
+                use-flakehub: false
 
             - name: nix develop .#ci
               uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # v1.1.0
