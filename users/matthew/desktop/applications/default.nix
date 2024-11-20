@@ -22,7 +22,7 @@
     amberol
     cider2
     libreoffice
-    # hoppscotch
+    hoppscotch
     impression
     obsidian
     # lens
