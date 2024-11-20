@@ -90,8 +90,9 @@
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
       cider2 = pkgs.callPackage ./cider2 {};
-      hoppscotch-unwrapped = pkgs.callPackage ./hoppscotch {};
-      hoppscotch = pkgs.callPackage ./hoppscotch/wrapper.nix {inherit hoppscotch-unwrapped;};
+      hoppscotch = pkgs.callPackage ./hoppscotch {};
+      hoppscotch-desktop-unwrapped = pkgs.callPackage ./hoppscotch-desktop {inherit hoppscotch;};
+      hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/wrapper.nix {inherit hoppscotch-desktop-unwrapped;};
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
@@ -116,8 +117,8 @@
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
-        hoppscotch-unwrapped
-        hoppscotch
+        hoppscotch-desktop-unwrapped
+        hoppscotch-desktop
         inter
         monaspace
         zsh-titles

@@ -1,6 +1,6 @@
 {
   desktop-file-utils,
-  hoppscotch-unwrapped,
+  hoppscotch-desktop-unwrapped,
   lib,
   stdenv,
   symlinkJoin,
@@ -9,10 +9,10 @@
 }:
 symlinkJoin rec {
   name = "${pname}-${version}";
-  pname = "hoppscotch";
-  inherit (hoppscotch-unwrapped) version;
+  pname = "hoppscotch-desktop";
+  inherit (hoppscotch-desktop-unwrapped) version;
 
-  paths = [hoppscotch-unwrapped];
+  paths = [hoppscotch-desktop-unwrapped];
 
   nativeBuildInputs = [
     wrapGAppsHook3
@@ -28,5 +28,5 @@ symlinkJoin rec {
     wrapGAppsHook
   '';
 
-  inherit (hoppscotch-unwrapped) meta;
+  inherit (hoppscotch-desktop-unwrapped) meta;
 }
