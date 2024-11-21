@@ -35,7 +35,6 @@
         catppuccin.catppuccin-vsc # Catppuccin for VSCode
         catppuccin.catppuccin-vsc-icons # Catppuccin Icons for VSCode
         # streetsidesoftware.code-spell-checker # Code Spell Checker
-        asdine.cue # Cue
         ms-azuretools.vscode-docker # Docker
         mikestead.dotenv # DotENV
         mkhl.direnv # direnv
@@ -66,6 +65,13 @@
           publisher = "bufbuild";
           version = "0.6.2";
           hash = "sha256-x2yk3J0peTMMV1VuF+eRCOM+I2lWPzwnBch7s4xJ3yA=";
+        }
+        # Cue
+        {
+          name = "vscode-cue";
+          publisher = "cuelangorg";
+          version = "0.0.3";
+          hash = "sha256-dxkgtGbucLL1FDQBm7/DIvBELXrs/MxOQuCnWFH47Co=";
         }
         # D2
         {
