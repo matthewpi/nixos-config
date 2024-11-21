@@ -342,29 +342,4 @@
       };
     };
   };
-
-  # For whatever reason the default StartupWMClass is set incorrectly, causing duplicate icons
-  # to appear in the taskbar.
-  xdg.desktopEntries.codium = {
-    actions = {
-      "new-empty-window" = {
-        exec = "codium --new-window %F";
-        icon = "vscodium";
-        name = "New Empty Window";
-      };
-    };
-
-    categories = ["Utility" "TextEditor" "Development" "IDE"];
-    comment = "Code Editing. Redefined.";
-    exec = "codium %F";
-    genericName = "Text Editor";
-    icon = "vscodium";
-    mimeType = ["text/plain" "inode/directory"];
-    name = "VSCodium";
-    settings = {
-      Keywords = "vscode";
-      StartupWMClass = "codium-url-handler";
-    };
-    startupNotify = true;
-  };
 }

@@ -265,7 +265,7 @@ in {
         "forcergbx, title:^(Picture-in-Picture)$"
 
         # Make some applications opaque
-        "opacity .97 .88, class:(codium-url-handler)" # VSCodium
+        "opacity .97 .88, class:(codium)" # VSCodium
         "opacity .97 .88, class:(vesktop)" # Vesktop
       ];
 
