@@ -17,6 +17,9 @@
   # Enable flipperzero udev rules
   hardware.flipperzero.enable = true;
 
+  # Enable ledger udev rules
+  hardware.ledger.enable = true;
+
   # Enable steam udev rules
   hardware.steam-hardware.enable = isDesktop;
 

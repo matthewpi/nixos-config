@@ -25,6 +25,7 @@
     hoppscotch-desktop
     impression
     obsidian
+    ledger-live-desktop
     # lens
     protonmail-desktop
     qFlipper

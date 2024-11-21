@@ -171,10 +171,10 @@ in {
         directory = ".config/Flipper Devices Inc";
         mode = "0700";
       }
-      # {
-      #   directory = ".config/Ledger Live";
-      #   mode = "0700";
-      # }
+      {
+        directory = ".config/Ledger Live";
+        mode = "0700";
+      }
       {
         directory = ".config/OpenLens";
         mode = "0700";
