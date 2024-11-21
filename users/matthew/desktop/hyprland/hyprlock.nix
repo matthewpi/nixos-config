@@ -21,7 +21,7 @@
       background = [
         {
           monitor = ""; # All monitors
-          path = "${pkgs.catppuccin-wallpapers}/nix-black-4k.png";
+          path = "${pkgs.catppuccin-wallpapers}/CatppuccinMocha-Kurzgesagt-CloudyQuasar1.png";
           # Blur the background
           blur_passes = 2;
           # Dim the background so we can tell the difference when the system is locked.

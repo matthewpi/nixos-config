@@ -1,19 +1,24 @@
 {
+  fetchFromGitHub,
   lib,
   stdenv,
 }:
-stdenv.mkDerivation rec {
+stdenv.mkDerivation {
   pname = "catppuccin-wallpapers";
   version = "1.0.0";
 
-  src = lib.cleanSource ./.;
+  src = fetchFromGitHub {
+    owner = "DragonDev07";
+    repo = "Wallpapers";
+    rev = "45cf2505cc6523f1d17d378e23c577839732f971";
+    hash = "sha256-ztErvSKkcvB7KjzvejMisClS6Kcak9ZPuHNmxO0zUbs=";
+  };
 
   strictDeps = true;
 
   installPhase = ''
-    install -D nix-black-4k.png $out/nix-black-4k.png
-    install -D nix-magenta-blue-1920x1080.png $out/nix-magenta-blue-1920x1080.png
-    install -D nix-magenta-pink-1920x1080.png $out/nix-magenta-pink-1920x1080.png
+    mkdir -p "$out"
+    install -Dm444 Catppuccin/Mocha/CatppuccinMocha-Kurzgesagt-*.png "$out"
   '';
 
   meta = {

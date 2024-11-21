@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  wallpaper = "${pkgs.catppuccin-wallpapers}/nix-black-4k.png";
+  wallpaper = "${pkgs.catppuccin-wallpapers}/CatppuccinMocha-Kurzgesagt-CloudyQuasar1.png";
 in {
   services.hyprpaper = {
     enable = true;
