@@ -60,7 +60,7 @@
       traceroute
       tree
       unzip
-      wget
+      wget2
       zip
 
       libva-utils
