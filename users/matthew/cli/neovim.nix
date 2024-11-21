@@ -225,9 +225,9 @@ in {
 
       local lspconfig = require('lspconfig')
 
-      lspconfig.bufls.setup({
+      lspconfig.buf_ls.setup({
         capabilities = capabilities,
-        cmd = { "${lib.getExe' pkgs.buf-language-server "buf-language-server"}" },
+        cmd = { "${lib.getExe pkgs.buf}", "beta", "lsp" },
       })
       lspconfig.gopls.setup({
         capabilities = capabilities,
