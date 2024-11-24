@@ -16,7 +16,7 @@
       ];
     })
 
-    inputs.nix-gaming.packages.${pkgs.system}.star-citizen
+    (inputs.nix-gaming.packages.${pkgs.system}.star-citizen.override {wine = inputs.nix-gaming.packages.${pkgs.system}.wine-tkg;})
   ];
 
   programs.mangohud = {

@@ -591,16 +591,16 @@
         "umu": "umu"
       },
       "locked": {
-        "lastModified": 1730910302,
-        "narHash": "sha256-xX2OHnEkMIafga0wCRHqJFdh8WvLkUDpITUvUKgPKRA=",
-        "owner": "LovingMelody",
+        "lastModified": 1732394875,
+        "narHash": "sha256-a3V7WWHesY0bk/J4NmoeYU1QUcdo29o97++E82TbJuM=",
+        "owner": "matthewpi",
         "repo": "nix-gaming",
-        "rev": "81b850f79d5ecd71c02a6e6832bfeb711522a6d6",
+        "rev": "4868489ce498ec13ee507ea8c4f02c2d78dc6d2a",
         "type": "github"
       },
       "original": {
-        "owner": "LovingMelody",
-        "ref": "update-star-citizen",
+        "owner": "matthewpi",
+        "ref": "updates",
         "repo": "nix-gaming",
         "type": "github"
       }
@@ -791,11 +791,11 @@
       },
       "locked": {
         "dir": "packaging/nix",
-        "lastModified": 1730559589,
-        "narHash": "sha256-o4NT2Kt7yEA63j38Ic5mrh2U/iQjs3YSNvIbCccIYP0=",
+        "lastModified": 1731556042,
+        "narHash": "sha256-eUFmLbf06Dph//IbB9KsJio3dJNADt+EhcfNFXjiJjU=",
         "ref": "refs/heads/main",
-        "rev": "70645c290dfc6ed10282bf4d2ae38c0bf7b1a3fb",
-        "revCount": 830,
+        "rev": "66a1088194bb13c2d86d2c0af316b280a7235640",
+        "revCount": 839,
         "submodules": true,
         "type": "git",
         "url": "https://github.com/Open-Wine-Components/umu-launcher/?dir=packaging/nix"

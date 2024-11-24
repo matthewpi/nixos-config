@@ -184,7 +184,7 @@
     };
 
     nix-gaming = {
-      url = "github:LovingMelody/nix-gaming/update-star-citizen";
+      url = "github:matthewpi/nix-gaming/updates";
       inputs = {
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
