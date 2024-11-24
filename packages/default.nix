@@ -18,6 +18,7 @@
       hoppscotch = pkgs.callPackage ./hoppscotch {};
       hoppscotch-desktop-unwrapped = pkgs.callPackage ./hoppscotch-desktop {inherit hoppscotch;};
       hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/wrapper.nix {inherit hoppscotch-desktop-unwrapped;};
+      package-version-server = pkgs.callPackage ./package-version-server {};
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
@@ -44,6 +45,7 @@
         fast-syntax-highlighting
         hoppscotch-desktop-unwrapped
         hoppscotch-desktop
+        package-version-server
         inter
         monaspace
         zsh-titles

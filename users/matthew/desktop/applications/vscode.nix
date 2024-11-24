@@ -10,12 +10,17 @@
     golangci-lint
     gopls
     go-tools
+    (pkgs.runCommand "json-language-server" {} ''
+      mkdir -p "$out"/bin
+      ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/json-language-server
+    '')
     nixd
+    package-version-server
     rust-analyzer
+    tailwindcss-language-server
+    typescript-language-server
     vue-language-server
     yaml-language-server
-    typescript-language-server
-    tailwindcss-language-server
   ];
 
   programs.vscode = {

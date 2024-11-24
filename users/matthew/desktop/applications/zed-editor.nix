@@ -1,6 +1,6 @@
 {
   programs.zed-editor = {
-    enable = false;
+    enable = true;
 
     extensions = [
       "assembly"
