@@ -25,7 +25,7 @@
 
   programs.vscode = {
     enable = true;
-    package = pkgs.vscodium;
+    package = pkgs.vscode;
 
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = false;
@@ -35,7 +35,6 @@
       [
         formulahendry.auto-rename-tag # Auto Rename Tag
         # mads-hartmann.bash-ide-vscode # Bash IDE (disabled due to high CPU usage)
-        bungcip.better-toml # Better TOML
         matthewpi.caddyfile-support # Caddyfile Support
         catppuccin.catppuccin-vsc # Catppuccin for VSCode
         catppuccin.catppuccin-vsc-icons # Catppuccin Icons for VSCode
@@ -46,6 +45,7 @@
         editorconfig.editorconfig # EditorConfig for VS Code
         # usernamehw.errorlens # Error Lens
         dbaeumer.vscode-eslint # ESLint
+        tamasfe.even-better-toml # Even Better TOML
         eamodio.gitlens # GitLens — Git supercharged
         golang.go # Go
         hashicorp.terraform # HashiCorp Terraform
@@ -54,6 +54,9 @@
         christian-kohler.npm-intellisense # npm Intellisense
         christian-kohler.path-intellisense # Path Intellisense
         esbenp.prettier-vscode # Prettier - Code formatter
+        ms-vscode-remote.remote-containers # Dev Containers
+        ms-vscode-remote.remote-ssh # Remote - SSH
+        ms-vscode-remote.remote-ssh-edit # Remote - SSH: Editing Configuration Files
         rust-lang.rust-analyzer # rust-analyzer
         tailscale.vscode-tailscale # Tailscale
         bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
@@ -308,6 +311,9 @@
 
       # Red Hat Commons
       "redhat.telemetry.enabled" = false;
+
+      # Remote - SSH
+      "remote.SSH.configFile" = "/home/matthew/.vscode/ssh/config";
 
       # vscode-icons
       "vsicons.dontShowNewVersionMessage" = true;
