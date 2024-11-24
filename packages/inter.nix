@@ -5,11 +5,11 @@
 }:
 stdenvNoCC.mkDerivation rec {
   pname = "inter";
-  version = "4.0";
+  version = "4.1";
 
   src = fetchzip {
     url = "https://github.com/rsms/inter/releases/download/v${version}/Inter-${version}.zip";
-    hash = "sha256-hFK7xFJt69n+98+juWgMvt+zeB9nDkc8nsR8vohrFIc=";
+    hash = "sha256-5vdKKvHAeZi6igrfpbOdhZlDX2/5+UvzlnCQV6DdqoQ=";
     stripRoot = false;
   };
 
