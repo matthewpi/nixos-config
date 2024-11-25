@@ -25,7 +25,7 @@
 
   programs.vscode = {
     enable = true;
-    package = pkgs.vscode;
+    package = pkgs.vscodium;
 
     enableExtensionUpdateCheck = true;
     enableUpdateCheck = false;
@@ -54,9 +54,6 @@
         christian-kohler.npm-intellisense # npm Intellisense
         christian-kohler.path-intellisense # Path Intellisense
         esbenp.prettier-vscode # Prettier - Code formatter
-        ms-vscode-remote.remote-containers # Dev Containers
-        ms-vscode-remote.remote-ssh # Remote - SSH
-        ms-vscode-remote.remote-ssh-edit # Remote - SSH: Editing Configuration Files
         rust-lang.rust-analyzer # rust-analyzer
         tailscale.vscode-tailscale # Tailscale
         bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
@@ -311,9 +308,6 @@
 
       # Red Hat Commons
       "redhat.telemetry.enabled" = false;
-
-      # Remote - SSH
-      "remote.SSH.configFile" = "/home/matthew/.vscode/ssh/config";
 
       # vscode-icons
       "vsicons.dontShowNewVersionMessage" = true;
