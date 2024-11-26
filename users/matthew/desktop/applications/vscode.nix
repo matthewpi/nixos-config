@@ -61,8 +61,6 @@
         jgclark.vscode-todo-highlight # TODO Highlight v2
         vscode-icons-team.vscode-icons # vscode-icons
         zxh404.vscode-proto3 # vscode-proto3
-        redhat.vscode-xml # XML
-        redhat.vscode-yaml # YAML
       ]
       ++ pkgs.vscode-utils.extensionsFromVscodeMarketplace [
         # Buf
@@ -169,6 +167,20 @@
           publisher = "vue";
           version = "2.1.6";
           hash = "sha256-Z5rFQBc6u14K8cugFzV5sekwRkEwtOoRESUvABOTpP8=";
+        }
+        # XML
+        {
+          name = "vscode-xml";
+          publisher = "redhat";
+          version = "0.27.2024112508";
+          hash = "sha256-ft+/biITwMK3u3VMmletpGLN1vgy1mAoOnQYXqxQJkQ=";
+        }
+        # YAML
+        {
+          name = "vscode-yaml";
+          publisher = "redhat";
+          version = "1.15.0";
+          hash = "sha256-NhlLNYJryKKRv+qPWOj96pT2wfkiQeqEip27rzl2C0M=";
         }
       ];
 
@@ -312,6 +324,13 @@
 
       # vscode-icons
       "vsicons.dontShowNewVersionMessage" = true;
+
+      # XML
+      "xml.server.binary.path" = lib.getExe pkgs.lemminx;
+      # TODO: find a way around this being necessary for the extension.
+      "xml.server.binary.trustedHashes" = [
+        "e4140bee6e3f1523f000823f529208458304fad94d23e28fc21d91ef8db19eaf"
+      ];
 
       #
       # Language Overrides
