@@ -15,6 +15,7 @@
       ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/json-language-server
     '')
     nixd
+    nodejs
     package-version-server
     rust-analyzer
     tailwindcss-language-server
