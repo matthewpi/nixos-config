@@ -23,7 +23,20 @@
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
       zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
-      utillinux = pkgs.util-linux;
+
+      catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (_: {
+        outputs = ["mochaDark" "out"];
+
+        buildPhase = ''
+          runHook preBuild
+
+          patchShebangs .
+
+          just build_with_hyprcursor mocha dark
+
+          runHook postBuild
+        '';
+      });
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -40,6 +53,7 @@
       inherit
         (_packages)
         catppuccin
+        catppuccin-cursors
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
