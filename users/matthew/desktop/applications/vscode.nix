@@ -4,26 +4,6 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
-    d2
-    delve
-    golangci-lint
-    gopls
-    go-tools
-    (pkgs.runCommand "json-language-server" {} ''
-      mkdir -p "$out"/bin
-      ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/json-language-server
-    '')
-    nixd
-    nodejs
-    package-version-server
-    rust-analyzer
-    tailwindcss-language-server
-    typescript-language-server
-    vue-language-server
-    yaml-language-server
-  ];
-
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;
