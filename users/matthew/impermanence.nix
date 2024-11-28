@@ -63,6 +63,10 @@ in {
       directory = ".config/VSCodium";
       mode = "0700";
     }
+    ++ lib.optional hmConfig.programs.zed-editor.enable {
+      directory = ".local/share/zed";
+      mode = "0700";
+    }
     ++ lib.optional hmConfig.programs.zsh.enable {
       directory = ".local/share/zsh";
       mode = "0700";
