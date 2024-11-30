@@ -38,6 +38,34 @@
           runHook postBuild
         '';
       });
+
+      zed-editor = pkgs.zed-editor.overrideAttrs (oldAttrs: rec {
+        pname = "zed-editor";
+        version = "0.163.2";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "zed-industries";
+          repo = "zed";
+          rev = "refs/tags/v${version}";
+          hash = "sha256-Bt6xbtkBYBuZW7hQ40UZwOjZJ7tqc9xL6XTvaD3KQjs=";
+        };
+
+        cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+          inherit src;
+          name = "${pname}-${version}";
+          hash = "sha256-QvvuVyPc+8Km8psdLQFc4PnSWFZsfkKuxzRK17HjEvE=";
+        };
+
+        env = {
+          FONTCONFIG_FILE = pkgs.makeFontsConf {
+            fontDirectories = [
+              "${src}/assets/fonts/plex-mono"
+              "${src}/assets/fonts/plex-sans"
+            ];
+          };
+          RELEASE_VERSION = version;
+        };
+      });
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -64,6 +92,7 @@
         simple-completion-language-server
         inter
         monaspace
+        zed-editor
         zsh-titles
         ;
 

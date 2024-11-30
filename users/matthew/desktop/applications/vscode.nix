@@ -4,6 +4,8 @@
   pkgs,
   ...
 }: {
+  home.packages = with pkgs; [d2];
+
   programs.vscode = {
     enable = true;
     package = pkgs.vscodium;

@@ -8,7 +8,11 @@
     flavor = "mocha";
   };
 
-  home.pointerCursor.size = 24;
+  home.pointerCursor = {
+    size = 24;
+    gtk.enable = true;
+  };
+
   catppuccin.pointerCursor = {
     enable = true;
     accent = "dark";
@@ -35,11 +39,8 @@
   wayland.windowManager.hyprland.catppuccin.enable = true;
 
   # QT Theming
-  # TODO: use catppuccin theming instead.
   qt = {
     enable = true;
-    # platformTheme.name = "gtk3";
-    # style.name = "adwaita-dark";
     style.name = "kvantum";
     platformTheme.name = "kvantum";
     style.catppuccin = {
