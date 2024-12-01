@@ -123,6 +123,16 @@
       url = "github:hyprwm/hyprlock";
       inputs = {
         hyprlang.follows = "hyprlang";
+        hyprgraphics.follows = "hyprgraphics";
+        hyprutils.follows = "hyprutils";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
+    hyprgraphics = {
+      url = "github:hyprwm/hyprgraphics";
+      inputs = {
         hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
@@ -133,6 +143,7 @@
       url = "github:hyprwm/hyprpaper";
       inputs = {
         hyprlang.follows = "hyprlang";
+        hyprgraphics.follows = "hyprgraphics";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
         nixpkgs.follows = "nixpkgs";

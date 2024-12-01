@@ -22,9 +22,8 @@
       inter
       hack-font
       monaspace
-      (nerdfonts.override {
-        fonts = ["Hack" "Monaspace"];
-      })
+      nerd-fonts.hack
+      nerd-fonts.monaspace
     ];
   };
 }

@@ -39,7 +39,7 @@
         '';
       });
 
-      zed-editor = pkgs.zed-editor.overrideAttrs (oldAttrs: rec {
+      zed-editor = pkgs.zed-editor.overrideAttrs (_: rec {
         pname = "zed-editor";
         version = "0.163.2";
 
