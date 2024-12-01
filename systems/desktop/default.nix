@@ -20,9 +20,6 @@
   # Use the latest xanmod kernel.
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
-  # Enable the v4l2loopback kernel module.
-  boot.extraModulePackages = with config.boot.kernelPackages; [v4l2loopback];
-
   # https://criu.org/Linux_kernel
   # boot.kernelPatches = lib.singleton {
   #   name = "criu";

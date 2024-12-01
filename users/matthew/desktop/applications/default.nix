@@ -30,6 +30,7 @@
     protonmail-desktop
     qFlipper
     remmina
+    resources
     seabird
     slack
     switcheroo

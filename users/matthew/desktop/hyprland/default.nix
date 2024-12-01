@@ -34,7 +34,6 @@
     gnome-font-viewer
     gnome-logs
     gnome-maps
-    gnome-system-monitor
     gnome-text-editor
     gnome-weather
     nautilus
