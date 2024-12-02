@@ -1,7 +1,7 @@
 import App from 'resource:///com/github/Aylur/ags/app.js';
 import Service from 'resource:///com/github/Aylur/ags/service.js';
-import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 import { execAsync, lookUpIcon } from 'resource:///com/github/Aylur/ags/utils.js';
+import Widget from 'resource:///com/github/Aylur/ags/widget.js';
 
 import type { Application } from 'resource:///com/github/Aylur/ags/service/applications.js';
 
@@ -34,15 +34,29 @@ function getRandomNumber(max: number): number {
 }
 
 async function launch(app: Application): Promise<void> {
+	const appName = app.app.get_name();
 	const cmd = [
 		'systemd-run',
 		'--user',
 		'--collect',
 		'--no-block',
 		'--slice=app',
-		`--unit=app-${app.app.get_name()}@${getRandomNumber(32767)}`,
-		...app.executable.split(/\s+/).filter(str => !str.startsWith('%') && !str.startsWith('@')),
+		`--unit=app-${appName}@${getRandomNumber(32767)}`,
 	];
+
+	// If the application is VSCodium or Zed, set `Type=forking`.
+	//
+	// Both these editors fork themselves so they can provide multiple windows
+	// and manage their child processes.
+	switch (appName) {
+		case 'VSCodium':
+		case 'Zed':
+			cmd.push('--property=Type=forking');
+			break;
+	}
+
+	// Add the app's executable and flags to the command.
+	cmd.push(...app.executable.split(/\s+/).filter(str => !str.startsWith('%') && !str.startsWith('@')));
 
 	await execAsync(cmd).catch(err => {
 		print(err);
