@@ -25,7 +25,16 @@
       monaspace = pkgs.callPackage ./monaspace.nix {};
       zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
 
-      catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (_: {
+      catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (oldAttrs: {
+        src = pkgs.fetchFromGitHub {
+          owner = "Covkie";
+          repo = "cursors";
+          rev = "62dc182f95ad65aea65ddd45f6cf8a11db4d0cff";
+          hash = "sha256-NEDS0HNkXtyz8HyN5B01npFx7Xt+ZDktoFUBgyx9L78=";
+        };
+
+        nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.zip];
+
         outputs = ["mochaDark" "out"];
 
         buildPhase = ''
@@ -33,7 +42,8 @@
 
           patchShebangs .
 
-          just build_with_hyprcursor mocha dark
+          just clean
+          just build mocha dark
 
           runHook postBuild
         '';
