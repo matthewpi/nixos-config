@@ -27,10 +27,10 @@
 
       catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (oldAttrs: {
         src = pkgs.fetchFromGitHub {
-          owner = "Covkie";
+          owner = "catppuccin";
           repo = "cursors";
-          rev = "62dc182f95ad65aea65ddd45f6cf8a11db4d0cff";
-          hash = "sha256-NEDS0HNkXtyz8HyN5B01npFx7Xt+ZDktoFUBgyx9L78=";
+          rev = "fc88cfb1f01d8dc19849d4ccb331e1ade704afa4";
+          hash = "sha256-PJtSWAa7QexKtOkqPwq3GUJjQvy4PIY9tWInE4ukmdU=";
         };
 
         nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.zip];
