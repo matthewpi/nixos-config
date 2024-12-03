@@ -119,8 +119,6 @@
           '';
       });
 
-      vesktop = pkgs.vesktop.override {electron = pkgs.electron_32;};
-
       # Flake overlays
       hyprcursor = inputs.hyprcursor.packages.${system}.hyprcursor;
       hypridle = inputs.hypridle.packages.${system}.hypridle;
