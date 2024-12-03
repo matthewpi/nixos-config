@@ -51,19 +51,19 @@
 
       zed-editor = pkgs.zed-editor.overrideAttrs (_: rec {
         pname = "zed-editor";
-        version = "0.163.2";
+        version = "0.164.1-pre";
 
         src = pkgs.fetchFromGitHub {
           owner = "zed-industries";
           repo = "zed";
           rev = "refs/tags/v${version}";
-          hash = "sha256-Bt6xbtkBYBuZW7hQ40UZwOjZJ7tqc9xL6XTvaD3KQjs=";
+          hash = "sha256-Cl2WYHteVQEx4uUFK4TyztFarNO8K4uUaCm5sZXAKyk=";
         };
 
         cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
           inherit src;
           name = "${pname}-${version}";
-          hash = "sha256-QvvuVyPc+8Km8psdLQFc4PnSWFZsfkKuxzRK17HjEvE=";
+          hash = "sha256-Whr9voVNmhPpjbx1XObQf1omUahyJ+bxtqkdeFaOD10=";
         };
 
         env = {
