@@ -29,7 +29,7 @@
   };
 
   meta = {
-    mainProgram = "cider";
+    mainProgram = "cider2";
     description = "Cross-platform Apple Music client";
     homepage = "https://cider.sh/";
     license = lib.licenses.unfree;
