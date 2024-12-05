@@ -91,6 +91,7 @@
       inputs = {
         aquamarine.follows = "aquamarine";
         hyprcursor.follows = "hyprcursor";
+        hyprgraphics.follows = "hyprgraphics";
         hyprland-protocols.follows = "hyprland-protocols";
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
