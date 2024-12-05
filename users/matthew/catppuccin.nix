@@ -1,4 +1,8 @@
-{inputs, ...}: {
+{
+  inputs,
+  isDesktop,
+  ...
+}: {
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
@@ -9,7 +13,10 @@
   };
 
   home.pointerCursor = {
-    size = 32;
+    size =
+      if isDesktop
+      then 32
+      else 24;
     gtk.enable = true;
   };
 
