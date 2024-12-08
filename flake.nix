@@ -42,6 +42,14 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs = {
+        flake-utils.follows = "flake-utils";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
+
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -93,6 +101,7 @@
         hyprcursor.follows = "hyprcursor";
         hyprgraphics.follows = "hyprgraphics";
         hyprland-protocols.follows = "hyprland-protocols";
+        hyprland-qtutils.follows = "hyprland-qtutils";
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
@@ -106,6 +115,15 @@
     hyprland-protocols = {
       url = "github:hyprwm/hyprland-protocols";
       inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
+    hyprland-qtutils = {
+      url = "github:hyprwm/hyprland-qtutils";
+      inputs = {
+        hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -205,9 +223,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-    nur.url = "github:nix-community/NUR";
-
     systems.url = "github:nix-systems/default";
     systems-linux.url = "github:nix-systems/default-linux";
 

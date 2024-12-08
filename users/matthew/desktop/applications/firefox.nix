@@ -1,76 +1,85 @@
 {
-  config,
   inputs,
   isDesktop,
   lib,
   pkgs,
   ...
-}: let
-  buildFirefoxXpiAddon = lib.makeOverridable ({
-    stdenv ? pkgs.stdenv,
-    fetchurl ? pkgs.fetchurl,
-    pname,
-    version,
-    addonId,
-    url,
-    hash,
-    meta,
-    ...
-  }:
-    stdenv.mkDerivation {
-      name = "${pname}-${version}";
-
-      inherit meta;
-
-      src = fetchurl {inherit url hash;};
-
-      preferLocalBuild = true;
-      allowSubstitutes = true;
-
-      passthru = {inherit addonId;};
-
-      buildCommand = ''
-        dst="$out/share/mozilla/extensions/{ec8030f7-c20a-464f-9b0e-13a3a9e97384}"
-        mkdir -p "$dst"
-        install -v -m644 "$src" "$dst/${addonId}.xpi"
-      '';
-    });
-in {
-  imports = [
-    inputs.nur.hmModules.nur
-  ];
+}: {
   home.sessionVariables.BROWSER = "firefox";
 
   programs.firefox = {
     enable = true;
-    # package = pkgs.firefox-devedition;
     package = pkgs.firefox;
 
     # Configure the default Firefox profile.
     profiles.default = lib.mkIf (!isDesktop) {
-      extensions = with config.nur.repos.rycee.firefox-addons; [
-        decentraleyes
-        onepassword-password-manager
-        stylus
-        temporary-containers
-        ublock-origin
-        # vue-js-devtools
+      extensions = let
+        # While the flake directly outputs packages, it does so using it's own
+        # nixpkgs instance which doesn't have `allowUnfree` enabled, which is
+        # necessary for us to be able to use `night-eye-dark-mode` and
+        # `onepassword-password-manager`.
+        addons = import "${inputs.firefox-addons}/default.nix" {inherit (pkgs) fetchurl lib stdenv;};
+      in
+        with addons; [
+          # 7tv
+          decentraleyes
+          # hoppscotch
+          no-pdf-download
+          onepassword-password-manager
+          stylus
+          temporary-containers
+          ublock-origin
+          # react-devtools
+          # vue-js-devtools
 
-        (buildFirefoxXpiAddon {
-          pname = "catppuccin-mocha-peach";
-          version = "2.0";
-          addonId = "{1cd0d6ef-d4bf-4fd1-9d80-4a9811a84647}";
-          url = "https://addons.mozilla.org/firefox/downloads/file/3954398/catppuccin_mocha_peach-2.0.xpi";
-          hash = "sha256-Bn8vUS0iuvcQdIV31L6rl3cKIFkkCXQ1FJFanK+Ad4M=";
-          meta = {
-            homepage = "https://github.com/catppuccin/firefox";
-            description = "Soothing pastel icons for Firefox!";
-            license = lib.licenses.mit;
-            mozPermissions = [];
-            platforms = lib.platforms.all;
-          };
-        })
-      ];
+          # Catppuccin Mocha Peach
+          (buildFirefoxXpiAddon {
+            pname = "catppuccin-mocha-peach";
+            version = "2.0";
+            addonId = "{1cd0d6ef-d4bf-4fd1-9d80-4a9811a84647}";
+            url = "https://addons.mozilla.org/firefox/downloads/file/3954398/catppuccin_mocha_peach-2.0.xpi";
+            sha256 = "sha256-Bn8vUS0iuvcQdIV31L6rl3cKIFkkCXQ1FJFanK+Ad4M=";
+            meta = {
+              homepage = "https://github.com/catppuccin/firefox";
+              description = "Soothing pastel icons for Firefox";
+              license = lib.licenses.mit;
+              mozPermissions = [];
+              platforms = lib.platforms.all;
+            };
+          })
+
+          # Dark Mode - Night Eye
+          (buildFirefoxXpiAddon {
+            pname = "night-eye-dark-mode";
+            version = "5.2.3";
+            addonId = "{7c6d56ed-2616-48f2-bfde-d1830f1cf2ed}";
+            url = "https://addons.mozilla.org/firefox/downloads/file/4367130/night_eye_dark_mode-5.2.3.xpi";
+            sha256 = "sha256-AQu4VTsO+GlWdaSytzCebY7QjVUkmRWms3SN7fTn6ew=";
+            meta = {
+              homepage = "https://nighteye.app/";
+              description = "Dark Mode on nearly all websites, improving readability and reducing eye strain in low light environments";
+              license = lib.licenses.unfree;
+              # mozPermissions = [];
+              platforms = lib.platforms.all;
+            };
+          })
+
+          # Disable WebRTC
+          (buildFirefoxXpiAddon {
+            pname = "happy-bonobo-disable-webrtc";
+            version = "1.0.23";
+            addonId = "jid1-5Fs7iTLscUaZBgwr@jetpack";
+            url = "https://addons.mozilla.org/firefox/downloads/file/3551985/happy_bonobo_disable_webrtc-1.0.23.xpi";
+            sha256 = "sha256-sUTzAyoJiMAYUUbfWgNQgYGzsiz9JqP2xNEy4viD5Ps=";
+            meta = {
+              homepage = "https://github.com/ChrisAntaki/disable-webrtc-firefox";
+              description = "";
+              license = lib.licenses.mpl20;
+              # mozPermissions = [];
+              platforms = lib.platforms.all;
+            };
+          })
+        ];
 
       bookmarks = {};
 
