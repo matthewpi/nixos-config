@@ -15,6 +15,7 @@
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
       cider2 = pkgs.callPackage ./cider2 {};
+      gauntlet = pkgs.callPackage ./gauntlet/package.nix {};
       hoppscotch = pkgs.callPackage ./hoppscotch {};
       hoppscotch-desktop-unwrapped = pkgs.callPackage ./hoppscotch-desktop {inherit hoppscotch;};
       hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/wrapper.nix {inherit hoppscotch-desktop-unwrapped;};
@@ -96,6 +97,7 @@
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
+        gauntlet
         hoppscotch-desktop-unwrapped
         hoppscotch-desktop
         package-version-server

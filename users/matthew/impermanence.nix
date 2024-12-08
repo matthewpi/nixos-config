@@ -123,6 +123,10 @@ in {
         mode = "0700";
       }
       {
+        directory = ".cache/gauntlet";
+        mode = "0700";
+      }
+      {
         directory = ".cache/golangci-lint";
         mode = "0700";
       }
@@ -224,6 +228,10 @@ in {
         mode = "0700";
       }
       {
+        directory = ".config/gauntlet";
+        mode = "0700";
+      }
+      {
         directory = ".config/go";
         mode = "0700";
       }
@@ -316,6 +324,10 @@ in {
         mode = "0700";
       }
       {
+        directory = ".local/share/gauntlet";
+        mode = "0700";
+      }
+      {
         directory = ".local/share/gnome-settings-daemon";
         mode = "0700";
       }
@@ -372,6 +384,10 @@ in {
         mode = "0700";
       }
 
+      {
+        directory = ".local/state/gauntlet";
+        mode = "0700";
+      }
       {
         directory = ".local/state/home-manager";
         mode = "0700";

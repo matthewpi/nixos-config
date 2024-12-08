@@ -291,7 +291,8 @@ in {
         "$mainMod, Q, killactive"
 
         # Application keybinds
-        "$mainMod, Space, exec, ${lib.getExe' config.programs.ags.package "ags"} --toggle-window applauncher"
+        "$mainMod, Space, exec, ${lib.getExe pkgs.gauntlet} open"
+        "$mainMod Shift, Space, exec, ${lib.getExe' config.programs.ags.package "ags"} --toggle-window applauncher"
         "$mainMod, T, exec, ${alacritty}" # Terminal
         "$mainMod, B, exec, ${firefox}" # Web Browser
         "$mainMod, M, exec, ${cider}" # Music

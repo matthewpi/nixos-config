@@ -17,6 +17,7 @@
     };
 
     Service = {
+      Type = "exec";
       ExecStart = "/code/matthewpi/streamdeck-local/streamdeck"; # TODO: package
       KillSignal = "SIGINT";
       Restart = "on-failure";
