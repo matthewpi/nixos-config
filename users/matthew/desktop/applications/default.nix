@@ -11,6 +11,7 @@
       # ./obs-studio.nix
       # ./signal.nix
       ./terminal.nix
+      ./vesktop.nix
       ./vscode.nix
       ./zed-editor.nix
     ]
@@ -36,7 +37,6 @@
     slack
     switcheroo
     ungoogled-chromium
-    vesktop
     video-trimmer
     wireshark
   ];

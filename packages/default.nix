@@ -24,6 +24,7 @@
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
+      vesktop = pkgs.callPackage ./vesktop/package.nix {vesktop = pkgs.vesktop;};
       zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
 
       catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (oldAttrs: {
@@ -104,6 +105,7 @@
         simple-completion-language-server
         inter
         monaspace
+        vesktop
         zed-editor
         zsh-titles
         ;

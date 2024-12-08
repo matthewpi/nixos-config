@@ -1,0 +1,26 @@
+From e2994de0a44719ebb4b8e62ffd2442a02e7656fa Mon Sep 17 00:00:00 2001
+From: Matthew Penner <me@matthewp.io>
+Date: Sun, 8 Dec 2024 13:33:31 -0700
+Subject: [PATCH 1/5] chore: enable electron options for better hardware
+ decoding
+
+Signed-off-by: Matthew Penner <me@matthewp.io>
+---
+ src/main/index.ts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/main/index.ts b/src/main/index.ts
+index 4eb863d..3d74a55 100644
+--- a/src/main/index.ts
++++ b/src/main/index.ts
+@@ -35,7 +35,7 @@ function init() {
+     if (hardwareAcceleration === false) {
+         app.disableHardwareAcceleration();
+     } else {
+-        enabledFeatures.push("VaapiVideoDecodeLinuxGL", "VaapiVideoEncoder", "VaapiVideoDecoder");
++        enabledFeatures.push("VaapiVideoDecodeLinuxGL", "VaapiVideoEncoder", "VaapiVideoDecoder", "VulkanFromANGLE", "DefaultANGLEVulkan", "VaapiIgnoreDriverChecks", "PlatformHEVCDecoderSupport", "VaapiVP8Encoder", "VaapiVP9Encoder", "VaapiAV1Encoder", "UseOzonePlatform", "WebRTCPipeWireCapturer");
+     }
+
+     if (disableSmoothScroll) {
+--
+2.47.0
