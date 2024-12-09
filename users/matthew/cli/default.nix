@@ -29,6 +29,7 @@
     jq
     minicom
     nix-output-monitor
+    numbat
     whois
     yq-go
   ];
