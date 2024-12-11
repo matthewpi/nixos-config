@@ -28,31 +28,6 @@
       fzf
       git
       gnugrep
-      # (neovim.override {
-      #   configure = {
-      #     packages.myPlugins = with vimPlugins; {
-      #       start = [
-      #         vim-lastplace
-      #         vim-nix
-      #       ];
-      #       opt = [];
-      #     };
-      #
-      #     customRC = ''
-      #       filetype plugin indent on
-      #
-      #       set encoding=utf-8
-      #       set fileencoding=utf-8
-      #
-      #       syntax on
-      #
-      #       :set nu
-      #     '';
-      #   };
-      #
-      #   viAlias = true;
-      #   vimAlias = true;
-      # })
       nmap
       rclone
       sbctl
@@ -127,5 +102,8 @@
 
     # Override XCURSOR_PATH to only use the full XDG path.
     environment.sessionVariables.XCURSOR_PATH = lib.mkForce ["$HOME/.local/share/icons"];
+
+    # Enable tcpdump
+    programs.tcpdump.enable = true;
   };
 }

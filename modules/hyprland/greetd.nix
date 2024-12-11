@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -16,8 +17,14 @@
     # For those wondering how this triggers Hyprland, it detects a list of
     # available sessions from `config.services.displayManager.sessionPackages`.
     settings.default_session = {
-      command = "${lib.getExe pkgs.greetd.tuigreet} --time";
       user = "greeter";
+      command = ''
+        ${lib.getExe pkgs.greetd.tuigreet} \
+          --time \
+          --remember-user-session \
+          --power-shutdown systemctl poweroff \
+          --power-reboot systemctl reboot
+      '';
     };
   };
 
@@ -30,4 +37,15 @@
   # A fingerprint can still be used with other services once the user session
   # has been started.
   security.pam.services.greetd.fprintAuth = false;
+
+  systemd.services.greetd.serviceConfig = lib.mkIf config.services.greetd.enable {
+    StandardInput = "tty";
+    StandardOutput = "tty";
+    # Without this errors will spam on screen
+    StandardError = "journal";
+    # Without these bootlogs will spam on screen
+    TTYReset = true;
+    TTYVHangup = true;
+    TTYVTDisallocate = true;
+  };
 }

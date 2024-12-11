@@ -23,15 +23,15 @@
   home.packages = with pkgs; [
     amberol
     cider2
-    libreoffice
+    kooha
     hoppscotch-desktop
     impression
-    obsidian
+    libreoffice
     ledger-live-desktop
     # lens
-    protonmail-desktop
+    obsidian
+    overskride
     qFlipper
-    remmina
     resources
     seabird
     slack
