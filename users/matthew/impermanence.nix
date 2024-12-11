@@ -155,6 +155,10 @@ in {
         mode = "0700";
       }
       {
+        directory = ".cache/npm";
+        mode = "0700";
+      }
+      {
         directory = ".cache/pnpm";
         mode = "0700";
       }
@@ -357,6 +361,10 @@ in {
       }
       {
         directory = ".local/share/nautilus";
+        mode = "0700";
+      }
+      {
+        directory = ".local/share/npm";
         mode = "0700";
       }
       {
