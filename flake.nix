@@ -13,11 +13,16 @@
     };
 
     ags = {
-      url = "github:Aylur/ags/v1";
+      url = "github:Aylur/ags";
       inputs = {
+        astal.follows = "astal";
         nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems-linux";
       };
+    };
+
+    astal = {
+      url = "path:/code/github/astal";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     aquamarine = {
@@ -440,7 +445,10 @@
                   nodejs_20
                   nodePackages.pnpm
                 ])
-                ++ lib.optional (system == "x86_64-linux") inputs.agenix.packages."${system}".default;
+                ++ lib.optionals (system == "x86_64-linux") [
+                  inputs.agenix.packages."${system}".default
+                  inputs.ags.packages."${system}".agsFull
+                ];
             };
           };
 
@@ -448,8 +456,16 @@
             projectRootFile = "flake.nix";
 
             programs = {
+              # Enable actionlint, a GitHub Actions static checker.
+              actionlint.enable = true;
+
+              # Enable alejandra, a Nix formatter.
               alejandra.enable = true;
+
+              # Enable deadnix, a Nix linter/formatter that removes un-used Nix code.
               deadnix.enable = true;
+
+              # Enable prettier, a... TODO
               prettier = {
                 enable = true;
                 includes = [
@@ -461,18 +477,29 @@
                   "*.yaml"
                 ];
               };
+
+              # Enable shellcheck, a shell script linter.
               shellcheck.enable = true;
+
+              # Enable shfmt, a shell script formatter.
               shfmt = {
                 enable = true;
-                # https://flake.parts/options/treefmt-nix.html#opt-perSystem.treefmt.programs.shfmt.indent_size
-                # 0 causes shfmt to use tabs
-                indent_size = 0;
+                indent_size = 0; # 0 causes shfmt to use tabs
+              };
+
+              # Enable yamlfmt, a YAML formatter.
+              yamlfmt = {
+                enable = true;
+                settings.formatter = {
+                  type = "basic";
+                  retain_line_breaks_single = true;
+                };
               };
             };
 
+            # Ensure no files within `node_modules` get formatted.
             settings.global.excludes = [
               "**/node_modules"
-              "pnpm-lock.yaml"
             ];
           };
         };

@@ -37,6 +37,7 @@
       tailwindcss-language-server
       taplo
       # typescript-language-server
+      uncrustify
       vala-language-server
       vtsls
       vue-language-server

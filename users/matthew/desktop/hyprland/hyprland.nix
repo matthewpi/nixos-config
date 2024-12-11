@@ -306,7 +306,7 @@ in {
 
         # Application keybinds
         "$mainMod Shift, Space, exec, ${lib.getExe pkgs.gauntlet} open"
-        "$mainMod, Space, exec, ${lib.getExe' config.programs.ags.package "ags"} --toggle-window applauncher"
+        "$mainMod, Space, exec, ${lib.getExe' config.programs.ags.package "ags"} toggle launcher"
         "$mainMod, T, exec, ${alacritty}" # Terminal
         "$mainMod, B, exec, ${firefox}" # Web Browser
         "$mainMod, M, exec, ${cider}" # Music

@@ -1,9 +1,9 @@
 {
 	"$schema": "https://json.schemastore.org/tsconfig",
 	"compilerOptions": {
-		"allowJs": true,
+		"allowJs": false,
 		"allowSyntheticDefaultImports": true,
-		"checkJs": true,
+		"checkJs": false,
 		"composite": false,
 		"declaration": true,
 		"declarationMap": true,
@@ -11,7 +11,6 @@
 		"forceConsistentCasingInFileNames": true,
 		"inlineSources": false,
 		"isolatedModules": true,
-		"moduleResolution": "Node",
 		"newLine": "lf",
 		"noEmit": true,
 		"noFallthroughCasesInSwitch": true,
@@ -30,16 +29,17 @@
 		"stripInternal": true,
 		"useDefineForClassFields": true,
 
-		"lib": ["ESNext"],
-		"module": "ESNext",
-		"target": "ESNext",
-
 		"baseUrl": ".",
+		"jsx": "react-jsx",
+		"jsxImportSource": "/nix/store/36kxv4nh9kcsjcjdjv3xsvqnpk53xja4-astal-gjs/share/astal/gjs/gtk3",
+		"experimentalDecorators": true,
+		"module": "ES2022",
+		"target": "ES2022",
+		"moduleResolution": "Bundler",
 
-		"typeRoots": [
-			"./types",
-			"./node_modules/@girs"
-		]
-	},
-	"include": ["node_modules", "types"]
+		"paths": {
+			"astal": ["/nix/store/36kxv4nh9kcsjcjdjv3xsvqnpk53xja4-astal-gjs/share/astal/gjs"],
+			"astal/*": ["/nix/store/36kxv4nh9kcsjcjdjv3xsvqnpk53xja4-astal-gjs/share/astal/gjs/*"]
+		}
+	}
 }

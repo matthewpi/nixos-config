@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -7,25 +8,35 @@
   # Enable ags.
   programs.ags = {
     enable = true;
-    configDir = ./hyprland;
-  };
+    configDir = builtins.filterSource (path: type: path != "default.nix") ./.;
 
-  # Used by AGS.
-  #
-  # Ideally we wouldn't install these globally and instead would add it to the path of the AGS
-  # service, but overwriting the PATH of the service causes issues when listing applications
-  # in the app launcher.
-  home.packages = with pkgs; [bun sass];
+    extraPackages = with inputs.ags.packages.${pkgs.system}; [
+      apps
+      battery
+      bluetooth
+      hyprland
+      # iwd
+      mpris
+      # networkd
+      notifd
+      tray
+      wireplumber
+    ];
+  };
 
   # Configure a systemd user service for AGS.
   systemd.user.services.ags = {
     Unit = {
       Description = "AGS";
+      Documentation = "https://github.com/Aylur/ags";
     };
 
     Service = {
-      ExecStart = lib.getExe' config.programs.ags.package "ags";
+      ExecStart = "${lib.getExe' config.programs.ags.finalPackage "ags"} run";
       Slice = "session.slice";
+
+      Restart = "on-failure";
+      KillMode = "mixed";
 
       # Capabilities
       CapabilityBoundingSet = "";
@@ -74,8 +85,6 @@
       DevicePolicy = "closed";
     };
 
-    Install = {
-      WantedBy = ["hyprland-session.target"];
-    };
+    Install.WantedBy = ["hyprland-session.target"];
   };
 }

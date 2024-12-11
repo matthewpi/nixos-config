@@ -31,7 +31,9 @@
     },
     "ags": {
       "inputs": {
-        "astal": "astal",
+        "astal": [
+          "astal"
+        ],
         "nixpkgs": [
           "nixpkgs"
         ]
@@ -82,22 +84,18 @@
     "astal": {
       "inputs": {
         "nixpkgs": [
-          "ags",
           "nixpkgs"
         ]
       },
       "locked": {
-        "lastModified": 1733520119,
-        "narHash": "sha256-6K07ZJTnFu1xASBCMtVc9cFTbBEauwSc7gGBmjLkLSk=",
-        "owner": "aylur",
-        "repo": "astal",
-        "rev": "4c19d8d06fa25cc6389f37abe8839b4d8be5c0d6",
-        "type": "github"
+        "lastModified": 1734140514,
+        "narHash": "sha256-YvZoCTDAXyYuHK+O4H7P0fib7AXF1HOsEwtsqKx7jrU=",
+        "path": "/code/github/astal",
+        "type": "path"
       },
       "original": {
-        "owner": "aylur",
-        "repo": "astal",
-        "type": "github"
+        "path": "/code/github/astal",
+        "type": "path"
       }
     },
     "catppuccin": {
@@ -768,6 +766,7 @@
         "agenix": "agenix",
         "ags": "ags",
         "aquamarine": "aquamarine",
+        "astal": "astal",
         "catppuccin": "catppuccin",
         "darwin": "darwin",
         "disko": "disko",

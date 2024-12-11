@@ -6,14 +6,13 @@
   imports = [
     inputs.hyprland.homeManagerModules.default
 
-    inputs.ags.homeManagerModules.default
-
     ./hypridle.nix
     ./hyprland.nix
     ./hyprlock.nix
     ./hyprpaper.nix
     ./xdg.nix
 
+    inputs.ags.homeManagerModules.default
     ../../../../modules/ags
   ];
 
