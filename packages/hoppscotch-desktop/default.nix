@@ -7,7 +7,7 @@
   gtk3,
   lib,
   libayatana-appindicator,
-  libsoup,
+  libsoup_2_4,
   nodejs,
   openssl,
   perl,
@@ -55,7 +55,7 @@ rustPlatform.buildRustPackage {
     ]
     ++ lib.optionals stdenv.hostPlatform.isLinux [
       libayatana-appindicator
-      libsoup
+      libsoup_2_4
       gtk3
       webkitgtk_4_0
     ]
