@@ -21,7 +21,7 @@ vesktop.overrideAttrs (oldAttrs: rec {
 
   patches = [
     ./0001-chore-enable-electron-options-for-better-hardware-de.patch
-    ./0002-chore-enable-electron-options-for-better-hardware-ac.patch
+    # ./0002-chore-enable-electron-options-for-better-hardware-ac.patch
     ./0003-chore-increase-screensharing-bitrate.patch
     ./0004-fix-ignore-errors-related-to-read-only-config-files.patch
     ./0005-chore-disable-update-checking.patch
