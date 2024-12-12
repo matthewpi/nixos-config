@@ -53,28 +53,56 @@
 
       zed-editor = pkgs.zed-editor.overrideAttrs (_: rec {
         pname = "zed-editor";
-        version = "0.165.1-pre";
+        version = "0.166.0-pre";
 
         src = pkgs.fetchFromGitHub {
           owner = "zed-industries";
           repo = "zed";
           rev = "refs/tags/v${version}";
-          hash = "sha256-FkYlFlAA84F9UUXcwIbffXyDwOXouaT7H54HtzxI79Q=";
+          hash = "sha256-ihK5VFZ0NDR+f+23DhccUsZk5pDZYjpCE9psYYc+be0=";
         };
 
         cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
           inherit src;
           name = "${pname}-${version}";
-          hash = "sha256-axLihUufEG3d5UThko1/x05K8cMG8Nr78/opLxyswhg=";
+          hash = "sha256-Of9WQ2f9fKwjUQuoSeJMH64Y35VL+xgIf6H5r+MKtAE=";
         };
 
         env = {
+          LK_CUSTOM_WEBRTC = pkgs.fetchzip (let
+            version = "webrtc-dac8015-6";
+
+            os =
+              if pkgs.stdenv.isLinux
+              then "linux"
+              else
+                (
+                  if pkgs.stdenv.isDarwin
+                  then "mac"
+                  else throw "unknown os"
+                );
+            arch =
+              if pkgs.stdenv.isx86_64
+              then "x64"
+              else
+                (
+                  if pkgs.stdenv.isAarch64
+                  then "arm64"
+                  else throw "unknown arch"
+                );
+          in {
+            url = "https://github.com/livekit/rust-sdks/releases/download/${version}/webrtc-${os}-${arch}-release.zip";
+            hash = "sha256-fMTNBML90awpJroxIFsADQ6owCEQeQTAUZOLbBcycGo=";
+            stripRoot = true;
+          });
+
           FONTCONFIG_FILE = pkgs.makeFontsConf {
             fontDirectories = [
               "${src}/assets/fonts/plex-mono"
               "${src}/assets/fonts/plex-sans"
             ];
           };
+
           RELEASE_VERSION = version;
         };
       });
