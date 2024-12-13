@@ -23,6 +23,9 @@
   # Enable steam udev rules
   hardware.steam-hardware.enable = isDesktop;
 
+  # Allow non-root access to QMK keyboards.
+  hardware.keyboard.qmk.enable = true;
+
   # Enable zsh
   programs.zsh = {
     enable = true;
