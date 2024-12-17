@@ -17,6 +17,7 @@
       golangci-lint
       gopls
       go-tools
+      intelephense
       (pkgs.runCommand "json-language-server" {} ''
         mkdir -p "$out"/bin
         ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/json-language-server
@@ -26,7 +27,7 @@
       nixd
       nodejs
       package-version-server
-      phpactor
+      # phpactor
       protols
       nodePackages.prettier
       rust-analyzer
@@ -188,6 +189,8 @@
             "source.organizeImports" = true;
           };
         };
+
+        PHP.language_servers = ["intelephense" "!phpactor"];
       };
 
       # Disable AI assistant.
