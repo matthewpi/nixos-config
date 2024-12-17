@@ -9,6 +9,7 @@
 
     extraPackages = with pkgs; [
       alejandra
+      clang-tools
       cue
       d2
       delve
@@ -30,11 +31,13 @@
       # phpactor
       protols
       nodePackages.prettier
+      python312Packages.python-lsp-server
       rust-analyzer
       simple-completion-language-server
       tailwindcss-language-server
       taplo
       # typescript-language-server
+      vala-language-server
       vtsls
       vue-language-server
       yaml-language-server

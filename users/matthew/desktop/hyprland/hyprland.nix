@@ -136,8 +136,17 @@ in {
       };
 
       cursor = {
+        # Disable gsettings sync
+        sync_gsettings_theme = false;
+
         # Disable cursor warping.
         no_warps = true;
+
+        # Move the cursor to the last focused window when switching workspaces.
+        # 2 allows this to work even if `no_warps` is enabled.
+        warp_on_change_workspace = 2;
+
+        default_monitor = if isDesktop then "DP-1" else "eDP-1";
       };
 
       animations = {
@@ -183,15 +192,20 @@ in {
         focus_on_activate = true;
       };
 
-      # Allow direct scanout.
-      render.direct_scanout = false;
+      render = {
+        # Disable direct scanout as it causes artifacting in fullscreen games.
+        direct_scanout = false;
+
+        # Disable explicit sync.
+        # explicit_sync = 0;
+      };
 
       # Monitor configuration
       monitor =
         if isDesktop
         then [
-          "DP-1, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
-          "DP-2, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
+          "DP-1, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
+          "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
         ]
         else [
           "eDP-1, 2560x1600@165, 0x0, 1.333333, vrr,0, bitdepth,8"
@@ -207,8 +221,8 @@ in {
         ]
         ++ lib.optionals isDesktop [
           # Configure default workspaces for the monitors
-          "1, monitor:DP-2, default:true"
-          "2, monitor:DP-1, default:true"
+          "1, monitor:DP-1, default:true"
+          "2, monitor:DP-2, default:true"
         ];
 
       windowrulev2 = [
