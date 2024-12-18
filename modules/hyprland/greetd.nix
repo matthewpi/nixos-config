@@ -18,13 +18,7 @@
     # available sessions from `config.services.displayManager.sessionPackages`.
     settings.default_session = {
       user = "greeter";
-      command = ''
-        ${lib.getExe pkgs.greetd.tuigreet} \
-          --time \
-          --remember-user-session \
-          --power-shutdown systemctl poweroff \
-          --power-reboot systemctl reboot
-      '';
+      command = "${lib.getExe pkgs.greetd.tuigreet} --time";
     };
   };
 
