@@ -155,10 +155,14 @@
       hyprcursor = inputs.hyprcursor.packages.${system}.hyprcursor;
       hypridle = inputs.hypridle.packages.${system}.hypridle;
       hyprland = inputs.hyprland.packages.${system}.hyprland;
+      hyprland-protocols = inputs.hyprland-protocols.packages.${system}.hyprland-protocols;
+      hyprland-qtutils = inputs.hyprland-qtutils.packages.${system}.hyprland-qtutils;
       hyprlang = inputs.hyprlang.packages.${system}.hyprlang;
       hyprlock = inputs.hyprlock.packages.${system}.hyprlock;
+      hyprgraphics = inputs.hyprgraphics.packages.${system}.hyprgraphics;
       hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
       hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent;
+      hyprutils = inputs.hyprutils.packages.${system}.hyprutils;
       xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
     };
   };
