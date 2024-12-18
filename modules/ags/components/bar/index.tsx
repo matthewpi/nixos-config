@@ -12,7 +12,39 @@ import Wireplumber from 'gi://AstalWp';
 
 type PollFn<T> = (prev: T) => T | Promise<T>;
 
-function Media({ player }: { player: Mpris.Player }) {
+function Media() {
+	const mpris = Mpris.get_default();
+
+	// This hacky code allows us to only show one player.
+	// TODO: how should we handle multiple players? The first player may not be
+	// the one we want to display.
+	return bind(mpris, 'players').as(players => {
+		const player = players.slice(0, 1).map(player => <MediaPlayer player={player} />)?.[0];
+		if (player === undefined) {
+			return <NoPlayer />;
+		}
+
+		return player;
+	});
+}
+
+function NoPlayer() {
+	return (
+		<button className="media">
+			<box valign={Gtk.Align.CENTER}>
+				<box className="media-label" vertical homogeneous={false} valign={Gtk.Align.CENTER}>
+					<label className="nothing" label="Nothing is playing" />
+				</box>
+			</box>
+		</button>
+	);
+}
+
+interface MediaPlayerProps {
+	player: Mpris.Player;
+}
+
+function MediaPlayer({ player }: MediaPlayerProps) {
 	const playIcon = bind(player, 'playbackStatus').as(s =>
 		s === Mpris.PlaybackStatus.PLAYING ? 'media-playback-start-symbolic' : 'media-playback-pause-symbolic',
 	);
@@ -310,10 +342,6 @@ function VolumeIndicator() {
 }
 
 function Bar(monitor: Gdk.Monitor) {
-	const mpris = Mpris.get_default();
-
-	const player = mpris.get_players()?.[0] ?? undefined;
-
 	return (
 		<window
 			className="bar"
@@ -323,7 +351,7 @@ function Bar(monitor: Gdk.Monitor) {
 		>
 			<centerbox>
 				<box hexpand halign={Gtk.Align.START}>
-					{player && <Media player={player} />}
+					<Media />
 					<Workspaces />
 				</box>
 

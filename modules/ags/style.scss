@@ -173,15 +173,15 @@ button.media {
 		font-size: 0.75rem;
 
 		// Change the color when nothing is playing.
-		&.nothing {
+		& label.nothing {
 			color: $overlay2;
 		}
 
-		& .media-title {
+		& label.media-title {
 			color: $text;
 		}
 
-		& .media-artists {
+		& label.media-artists {
 			color: $overlay1;
 		}
 	}
