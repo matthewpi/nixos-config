@@ -1,5 +1,6 @@
 {
   config,
+  inputs,
   lib,
   pkgs,
   ...
@@ -72,5 +73,12 @@ in {
   xdg.userDirs = {
     enable = true;
     # createDirectories = true;
+  };
+
+  xdg.configFile."hypr/xdph.conf".text = inputs.home-manager.lib.hm.generators.toHyprconf {
+    attrs.screencopy = {
+      max_fps = 60;
+      allow_token_by_default = true;
+    };
   };
 }
