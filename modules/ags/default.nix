@@ -8,7 +8,7 @@
   # Enable ags.
   programs.ags = {
     enable = true;
-    configDir = builtins.filterSource (path: type: path != "default.nix") ./.;
+    configDir = builtins.filterSource (path: _type: path != "default.nix") ./.;
 
     extraPackages = with inputs.ags.packages.${pkgs.system}; [
       apps

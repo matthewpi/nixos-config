@@ -1,77 +1,77 @@
 name: Update
 
 on:
-    workflow_dispatch:
-    schedule:
-        - cron: '20 4 * * *' # "At 04:20."
+  workflow_dispatch:
+  schedule:
+    - cron: '20 4 * * *' # "At 04:20."
 
 jobs:
-    nix-flake-lock:
-        name: Nix (flake.lock)
-        runs-on: ubuntu-22.04
-        permissions:
-            id-token: write
-            pull-requests: write
-            contents: write
-        steps:
-            - name: Code checkout
-              uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
-              with:
-                  ref: master
+  nix-flake-lock:
+    name: Nix (flake.lock)
+    runs-on: ubuntu-22.04
+    permissions:
+      id-token: write
+      pull-requests: write
+      contents: write
+    steps:
+      - name: Code checkout
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          ref: master
 
-            - name: Install Nix
-              uses: DeterminateSystems/nix-installer-action@e50d5f73bfe71c2dd0aa4218de8f4afa59f8f81d # v16
-              with:
-                  kvm: false
+      - name: Install Nix
+        uses: DeterminateSystems/nix-installer-action@e50d5f73bfe71c2dd0aa4218de8f4afa59f8f81d # v16
+        with:
+          kvm: false
 
-            - name: Nix Cache
-              uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
-              with:
-                  use-flakehub: false
+      - name: Nix Cache
+        uses: DeterminateSystems/magic-nix-cache-action@87b14cf437d03d37989d87f0fa5ce4f5dc1a330b # v8
+        with:
+          use-flakehub: false
 
-            - name: nix develop .#ci
-              uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # v1.1.0
-              with:
-                  devShell: .#ci
+      - name: nix develop .#ci
+        uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # v1.1.0
+        with:
+          devShell: .#ci
 
-            - name: Configure gitsign
-              run: |
-                  git config --global commit.gpgsign true       # Sign all commits
-                  git config --global tag.gpgsign true          # Sign all tags
-                  git config --global gpg.x509.program gitsign  # Use gitsign for signing
-                  git config --global gpg.format x509           # gitsign expects x509 args
+      - name: Configure gitsign
+        run: |
+          git config --global commit.gpgsign true       # Sign all commits
+          git config --global tag.gpgsign true          # Sign all tags
+          git config --global gpg.x509.program gitsign  # Use gitsign for signing
+          git config --global gpg.format x509           # gitsign expects x509 args
 
-                  # Use workflow name as the username
-                  git config --global user.name "${{ github.workflow }}"
-                  # This email identifies the commit as GitHub Actions - see https://github.com/orgs/community/discussions/26560
-                  git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          # Use workflow name as the username
+          git config --global user.name "${{ github.workflow }}"
+          # This email identifies the commit as GitHub Actions - see https://github.com/orgs/community/discussions/26560
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
 
-            - name: nix flake update
-              run: |
-                  nix flake update --commit-lock-file --commit-lock-file-summary 'nix: update flake.lock'
+      - name: nix flake update
+        run: |
+          nix flake update --commit-lock-file --commit-lock-file-summary 'nix: update flake.lock'
 
-            # This is used to bypass GitHub's restriction on actions that create pull requests not
-            # triggering any other action runs.  I would like for the PR created by this action to
-            # be ran through our CI checks to ensure it builds correctly before it gets merged.
-            #
-            # See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
-            # for more information.
-            - name: Generate GitHub App Token
-              id: generate-token
-              uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
-              with:
-                  app_id: ${{ secrets.APP_ID }}
-                  private_key: ${{ secrets.APP_PRIVATE_KEY }}
+      # This is used to bypass GitHub's restriction on actions that create pull requests not
+      # triggering any other action runs.  I would like for the PR created by this action to
+      # be ran through our CI checks to ensure it builds correctly before it gets merged.
+      #
+      # See https://github.com/peter-evans/create-pull-request/blob/main/docs/concepts-guidelines.md#authenticating-with-github-app-generated-tokens
+      # for more information.
+      - name: Generate GitHub App Token
+        id: generate-token
+        uses: tibdex/github-app-token@3beb63f4bd073e61482598c45c71c1019b59b73a # v2.1.0
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_PRIVATE_KEY }}
 
-            - name: Create pull request
-              uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7.0.5
-              with:
-                  token: ${{ steps.generate-token.outputs.token }}
-                  branch: nix-flake-update
-                  commit-message: ''
-                  delete-branch: true
-                  title: 'nix: update flake.lock'
-                  labels: dependencies
-                  assignees: matthewpi
-                  reviewers: matthewpi
-                  body: ''
+      - name: Create pull request
+        uses: peter-evans/create-pull-request@5e914681df9dc83aa4e4905692ca88beb2f9e91f # v7.0.5
+        with:
+          token: ${{ steps.generate-token.outputs.token }}
+          branch: nix-flake-update
+          commit-message: ''
+          delete-branch: true
+          title: 'nix: update flake.lock'
+          labels: dependencies
+          assignees: matthewpi
+          reviewers: matthewpi
+          body: ''

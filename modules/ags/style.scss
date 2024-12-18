@@ -6,10 +6,10 @@
 // This file is copied into our repository due to the way
 // we compile SCSS and not having access to any node_modules.
 
-@use "sass:string";
+@use 'sass:string';
 
 @function gtkalpha($c, $a) {
-    @return string.unquote("alpha(#{$c},#{$a})");
+	@return string.unquote('alpha(#{$c},#{$a})');
 }
 
 $rosewater: #f5e0dc;
@@ -44,7 +44,7 @@ $crust: #11111b;
 $primary: $peach;
 
 // https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
-$fg-color: #{"@theme_fg_color"};
+$fg-color: #{'@theme_fg_color'};
 
 * {
 	font-family: 'MonaspiceNe Nerd Font', monospace;
@@ -52,11 +52,11 @@ $fg-color: #{"@theme_fg_color"};
 }
 
 window.bar {
-    background: $mantle;
-    border-bottom: 0.125rem solid $crust;
-    color: $text;
+	background: $mantle;
+	border-bottom: 0.125rem solid $crust;
+	color: $text;
 
-    button {
+	button {
 		background: transparent;
 		border: none;
 		box-shadow: none;
@@ -70,7 +70,7 @@ window.bar {
 		&:active {
 			background: $crust;
 		}
-    }
+	}
 }
 
 .battery {
@@ -117,7 +117,9 @@ window.bar {
 		min-width: 36px;
 		min-height: 36px;
 
-		transition: 250ms background, 250ms border-radius;
+		transition:
+			250ms background,
+			250ms border-radius;
 
 		> .circle {
 			color: $surface2;
@@ -186,166 +188,166 @@ button.media {
 }
 
 window.launcher {
-    all: unset;
+	all: unset;
 
-    box.launcher {
-   		background: $mantle;
-        border-radius: 0.75rem;
-        margin: 1rem;
-        padding: 0.8rem;
+	box.launcher {
+		background: $mantle;
+		border-radius: 0.75rem;
+		margin: 1rem;
+		padding: 0.8rem;
 
-        entry {
-        	background: $base;
-            margin-bottom: 0.8rem;
-        }
+		entry {
+			background: $base;
+			margin-bottom: 0.8rem;
+		}
 
-        button {
-            min-width: 0;
-            min-height: 0;
-            padding: 0.5rem;
-            background: $surface0;
+		button {
+			min-width: 0;
+			min-height: 0;
+			padding: 0.5rem;
+			background: $surface0;
 
-            icon {
-                font-size: 2.25em;
-                margin-right: 0.5rem;
-            }
+			icon {
+				font-size: 2.25em;
+				margin-right: 0.5rem;
+			}
 
-            label.name {
-                font-weight: bold;
-                font-size: 1.1em;
-            }
+			label.name {
+				font-weight: bold;
+				font-size: 1.1em;
+			}
 
-            &:focus {
-            	box-shadow: 0 0 0 1px $primary;
-            }
-        }
+			&:focus {
+				box-shadow: 0 0 0 1px $primary;
+			}
+		}
 
-        box.not-found {
-            padding: 1rem;
+		box.not-found {
+			padding: 1rem;
 
-            icon {
-                font-size: 6em;
-            }
+			icon {
+				font-size: 6em;
+			}
 
-            label {
-                font-size: 1.2em;
-            }
-        }
-    }
+			label {
+				font-size: 1.2em;
+			}
+		}
+	}
 }
 
 window.notifications {
-    all: unset;
+	all: unset;
 }
 
 eventbox.notification {
-    &:first-child > box {
-        margin-top: 1rem;
-    }
+	&:first-child > box {
+		margin-top: 1rem;
+	}
 
-    &:last-child > box {
-        margin-bottom: 1rem;
-    }
+	&:last-child > box {
+		margin-bottom: 1rem;
+	}
 
-    // eventboxes can not take margins so we style its inner box instead
-    > box {
-        min-width: 400px;
-        border-radius: 13px;
-        background-color: $mantle;
-        margin: .5rem 1rem .5rem 1rem;
-        box-shadow: 2px 3px 8px 0 gtkalpha(black, .4);
-        border: 1pt solid $base;
-    }
+	// eventboxes can not take margins so we style its inner box instead
+	> box {
+		min-width: 400px;
+		border-radius: 13px;
+		background-color: $mantle;
+		margin: 0.5rem 1rem 0.5rem 1rem;
+		box-shadow: 2px 3px 8px 0 gtkalpha(black, 0.4);
+		border: 1pt solid $base;
+	}
 
-    &.critical > box {
-        border: 1pt solid $red; // gtkalpha($error, .4)
+	&.critical > box {
+		border: 1pt solid $red; // gtkalpha($error, .4)
 
-        .header {
-            .app-name {
-                color: $red; // gtkalpha($error, .8)
-            }
+		.header {
+			.app-name {
+				color: $red; // gtkalpha($error, .8)
+			}
 
-            .app-icon {
-                color: $red; // gtkalpha($error, .6)
-            }
-        }
-    }
+			.app-icon {
+				color: $red; // gtkalpha($error, .6)
+			}
+		}
+	}
 
-    .header {
-        padding: .5rem;
-        color: $text;
+	.header {
+		padding: 0.5rem;
+		color: $text;
 
-        .app-icon {
-            margin: 0 .4rem;
-        }
+		.app-icon {
+			margin: 0 0.4rem;
+		}
 
-        .app-name {
-            margin-right: .3rem;
-            font-weight: bold;
+		.app-name {
+			margin-right: 0.3rem;
+			font-weight: bold;
 
-            &:first-child {
-                margin-left: .4rem;
-            }
-        }
+			&:first-child {
+				margin-left: 0.4rem;
+			}
+		}
 
-        .time {
-            margin: 0 .4rem;
-        }
+		.time {
+			margin: 0 0.4rem;
+		}
 
-        button {
-            padding: .2rem;
-            min-width: 0;
-            min-height: 0;
-        }
-    }
+		button {
+			padding: 0.2rem;
+			min-width: 0;
+			min-height: 0;
+		}
+	}
 
-    separator {
-        margin: 0 .4rem;
-        background-color: $surface0;
-    }
+	separator {
+		margin: 0 0.4rem;
+		background-color: $surface0;
+	}
 
-    .content {
-        margin: 1rem;
-        margin-top: .5rem;
+	.content {
+		margin: 1rem;
+		margin-top: 0.5rem;
 
-        .summary {
-            font-size: 1.2em;
-            color: $text;
-        }
+		.summary {
+			font-size: 1.2em;
+			color: $text;
+		}
 
-        .body {
-            color: $subtext1;
-        }
+		.body {
+			color: $subtext1;
+		}
 
-        .image {
-            border: 1px solid gtkalpha($fg-color, .02);
-            margin-right: .5rem;
-            border-radius: 9px;
-            min-width: 100px;
-            min-height: 100px;
-            background-size: cover;
-            background-position: center;
-        }
-    }
+		.image {
+			border: 1px solid gtkalpha($fg-color, 0.02);
+			margin-right: 0.5rem;
+			border-radius: 9px;
+			min-width: 100px;
+			min-height: 100px;
+			background-size: cover;
+			background-position: center;
+		}
+	}
 
-    .actions {
-        margin: 1rem;
-        margin-top: 0;
+	.actions {
+		margin: 1rem;
+		margin-top: 0;
 
-        button {
-            margin: 0 .3rem;
+		button {
+			margin: 0 0.3rem;
 
-            &:first-child {
-                margin-left: 0;
-            }
+			&:first-child {
+				margin-left: 0;
+			}
 
-            &:last-child {
-                margin-right: 0;
-            }
-        }
-    }
+			&:last-child {
+				margin-right: 0;
+			}
+		}
+	}
 
-    button {
+	button {
 		background: $base;
 		border: none;
 		box-shadow: none;
@@ -359,5 +361,5 @@ eventbox.notification {
 		&:active {
 			background: $crust;
 		}
-    }
+	}
 }

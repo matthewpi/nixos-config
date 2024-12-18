@@ -146,7 +146,10 @@ in {
         # 2 allows this to work even if `no_warps` is enabled.
         warp_on_change_workspace = 2;
 
-        default_monitor = if isDesktop then "DP-1" else "eDP-1";
+        default_monitor =
+          if isDesktop
+          then "DP-1"
+          else "eDP-1";
       };
 
       animations = {
