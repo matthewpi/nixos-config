@@ -6,7 +6,7 @@
   fetchLibrustyV8 = args:
     fetchurl {
       name = "librusty_v8-${args.version}";
-      url = "https://github.com/denoland/rusty_v8/releases/download/v${args.version}/librusty_v8_release_${stdenv.hostPlatform.rust.rustcTarget}.a";
+      url = "https://github.com/denoland/rusty_v8/releases/download/v${args.version}/librusty_v8_release_${stdenv.hostPlatform.rust.rustcTarget}.a.gz";
       hash = args.shas.${stdenv.hostPlatform.system};
       meta = {
         inherit (args) version;
@@ -15,11 +15,11 @@
     };
 in
   fetchLibrustyV8 {
-    version = "0.74.3";
+    version = "130.0.2";
     shas = {
-      x86_64-linux = "sha256-8pa8nqA6rbOSBVnp2Q8/IQqh/rfYQU57hMgwU9+iz4A=";
-      aarch64-linux = "sha256-3kXOV8rlCNbNBdXgOtd3S94qO+JIKyOByA4WGX+XVP0=";
-      x86_64-darwin = "sha256-iBBVKZiSoo08YEQ8J/Rt1/5b7a+2xjtuS6QL/Wod5nQ=";
-      aarch64-darwin = "sha256-Djnuc3l/jQKvBf1aej8LG5Ot2wPT0m5Zo1B24l1UHsM=";
+      x86_64-linux = "sha256-ew2WZhdsHfffRQtif076AWAlFohwPo/RbmW/6D3LzkU=";
+      aarch64-linux = lib.fakeHash;
+      x86_64-darwin = lib.fakeHash;
+      aarch64-darwin = lib.fakeHash;
     };
   }
