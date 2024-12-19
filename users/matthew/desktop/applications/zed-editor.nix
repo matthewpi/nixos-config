@@ -90,7 +90,11 @@
       auto_update = false;
       base_keymap = "VSCode";
 
-      theme = "Catppuccin Mocha";
+      theme = {
+        mode = "system";
+        light = "Catppuccin Latte";
+        dark = "Catppuccin Mocha";
+      };
 
       buffer_font_family = "MonaspiceNe Nerd Font";
       buffer_font_size = 12;
