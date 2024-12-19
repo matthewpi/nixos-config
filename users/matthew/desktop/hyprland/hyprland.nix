@@ -81,7 +81,8 @@ in {
     enable = true;
     package = pkgs.hyprland;
 
-    xwayland.enable = true;
+    # Disable xwayland since we don't need it for any applications.
+    xwayland.enable = false;
 
     systemd = {
       enableXdgAutostart = true;
