@@ -21,7 +21,7 @@
     };
 
     astal = {
-      url = "path:/code/github/astal";
+      url = "github:Aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
