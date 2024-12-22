@@ -1,6 +1,7 @@
 {
   flake.nixosModules.hyprland = {
     config,
+    inputs,
     lib,
     pkgs,
     ...
@@ -8,7 +9,11 @@
     imports = [
       ./greetd.nix
       ./gsettings.nix
+
+      inputs.catppuccin.nixosModules.catppuccin
     ];
+
+    catppuccin.tty.enable = true;
 
     # TODO: not reference home-manager for the package.
     programs.hyprland.package = config.home-manager.users.matthew.wayland.windowManager.hyprland.finalPackage;
