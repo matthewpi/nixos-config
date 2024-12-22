@@ -173,29 +173,15 @@ function SysTray() {
 }
 
 function TrayItem(item: Tray.TrayItem) {
-	if (item.iconThemePath) {
-		App.add_icons(item.iconThemePath);
-	}
-
-	const menu = item.create_menu();
-
 	return (
-		<button
+		<menubutton
 			tooltipMarkup={bind(item, 'tooltipMarkup')}
-			onDestroy={() => menu?.destroy()}
-			onClickRelease={(self, event) => {
-				switch (event.button) {
-					case Astal.MouseButton.PRIMARY:
-						menu?.activate();
-						break;
-					case Astal.MouseButton.SECONDARY:
-						menu?.popup_at_widget(self, Gdk.Gravity.SOUTH, Gdk.Gravity.NORTH, null);
-						break;
-				}
-			}}
+			actionGroup={bind(item, 'action-group').as(ag => ['dbusmenu', ag])}
+			menuModel={bind(item, 'menu-model')}
+			usePopover={false}
 		>
-			<icon gIcon={bind(item, 'gicon')} />
-		</button>
+			<icon gicon={bind(item, 'gicon')} />
+		</menubutton>
 	);
 }
 
