@@ -7,7 +7,7 @@
   imports =
     [
       ./firefox.nix
-      ./gauntlet.nix
+      # ./gauntlet.nix
       # ./obs-studio.nix
       # ./signal.nix
       ./terminal.nix
