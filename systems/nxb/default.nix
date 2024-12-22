@@ -2,6 +2,7 @@
   system.stateVersion = "24.11";
 
   imports = [
+    ./captive.nix
     ./disko.nix
     ./hardware-configuration.nix
   ];
