@@ -15,5 +15,8 @@
   home.packages = with pkgs; [
     # Install nvtop
     nvtopPackages.amd
+
+    # Install kind
+    kind
   ];
 }

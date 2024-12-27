@@ -15,6 +15,7 @@
       delve
       emmet-language-server
       eslint
+      go
       golangci-lint
       gopls
       go-tools
@@ -199,6 +200,8 @@
         };
 
         PHP.language_servers = ["intelephense" "!phpactor"];
+
+        "Vue.js".language_servers = ["!tailwindcss-language-server" "vue-language-server"];
       };
 
       # Disable AI assistant.

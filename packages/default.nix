@@ -19,6 +19,7 @@
       hoppscotch = pkgs.callPackage ./hoppscotch {};
       hoppscotch-desktop-unwrapped = pkgs.callPackage ./hoppscotch-desktop {inherit hoppscotch;};
       hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/wrapper.nix {inherit hoppscotch-desktop-unwrapped;};
+      kind = pkgs.callPackage ./kind {};
       package-version-server = pkgs.callPackage ./package-version-server {};
       simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server {};
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
@@ -132,6 +133,7 @@
         package-version-server
         simple-completion-language-server
         inter
+        kind
         monaspace
         vesktop
         zed-editor

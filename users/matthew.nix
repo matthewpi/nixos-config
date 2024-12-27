@@ -99,12 +99,13 @@
     shell = pkgs.zsh;
     extraGroups =
       ["wheel" "audio" "video" "systemd-journal"]
-      ++ lib.optionals config.programs.corectrl.enable ["corectrl"]
-      ++ lib.optionals config.programs.wireshark.enable ["wireshark"]
-      ++ lib.optionals config.networking.networkmanager.enable ["networkmanager"]
+      ++ lib.optional config.programs.corectrl.enable "corectrl"
+      ++ lib.optional config.programs.wireshark.enable "wireshark"
+      ++ lib.optional config.networking.networkmanager.enable "networkmanager"
       ++ lib.optionals config.virtualisation.libvirtd.enable ["libvirtd" "qemu-libvirtd"]
-      ++ lib.optionals config.systemd.network.enable ["systemd-network"]
-      ++ lib.optionals config.services.resolved.enable ["systemd-resolve"];
+      ++ lib.optional config.systemd.network.enable "systemd-network"
+      ++ lib.optional config.services.resolved.enable "systemd-resolve"
+      ++ lib.optional config.virtualisation.podman.enable "podman";
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJ30VI7vAdrs2MDgkNHSQMJt2xBtBLrirVhinSyteeU"];
     hashedPasswordFile = config.age.secrets.passwordfile-matthew.path;
   };

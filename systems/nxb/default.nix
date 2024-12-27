@@ -29,8 +29,8 @@
     extraRemotes = ["lvfs-testing"];
   };
 
-  # Use my local timezone instead of UTC
-  time.timeZone = "America/Edmonton";
+  # Allow runtime reconfiguration of the timezone, defaulting to UTC if unset.
+  time.timeZone = null;
 
   # Use the xanmod kernel.
   boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
@@ -73,7 +73,7 @@
   security.lockKernelModules = false;
 
   # Disable default resolved config, we use an age encrypted one with NextDNS.
-  environment.etc."systemd/resolved.conf".enable = false;
+  # environment.etc."systemd/resolved.conf".enable = false;
 
   # Disable fstrim since we use btrfs async discard.
   services.fstrim.enable = false;
@@ -94,4 +94,7 @@
     # https://wiki.nixos.org/wiki/Hardware/Framework/Laptop_16#Fix_Color_accuracy_in_Power_Saving_modes
     "amdgpu.abmlevel=0"
   ];
+
+  # kind
+  networking.nameservers = ["1.1.1.1" "1.0.0.1"];
 }
