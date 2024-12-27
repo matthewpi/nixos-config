@@ -481,7 +481,9 @@
                 includes = [
                   "*.css"
                   "*.js"
+                  "*.json"
                   "*.ts"
+                  "*.tsx"
                   "*.md"
                   "*.scss"
                   "*.yaml"
@@ -510,6 +512,7 @@
             # Ensure no files within `node_modules` get formatted.
             settings.global.excludes = [
               "**/node_modules"
+              "secrets/*.age"
             ];
           };
         };
