@@ -1,17 +1,14 @@
 {
-  lib,
-  pkgs,
-  ...
-}: {
-  home.packages = with pkgs; [gauntlet];
-
-  systemd.user.services.gauntlet = {
-    Unit.Description = "Gauntlet";
+  systemd.user.services.tailscale-systray = {
+    Unit.Description = "Tailscale Systray";
     Install.WantedBy = ["hyprland-session.target"];
 
     Service = {
       Type = "exec";
-      ExecStart = "${lib.getExe pkgs.gauntlet} --minimized";
+      # TODO: package
+      # Right now this comes from a local Tailscale clone as the systray binary
+      # isn't available in `pkgs.tailscale`.
+      ExecStart = "/code/github/tailscale/dist/systray";
       KillSignal = "SIGINT";
       Restart = "no";
       Slice = "background.slice";
@@ -21,14 +18,14 @@
       NoNewPrivileges = true;
 
       # Filesystem
-      # TODO: figure out what Gauntlet needs access to.
-      # BindPaths = [
-      #   # Access to /run/user/<uid> is required for DBus.
-      #   "/run/user"
-      # ];
-      # BindReadOnlyPaths = ["${config.home.homeDirectory}/.local/share/gauntlet"];
-      # ProtectHome = "tmpfs";
-      # ProtectSystem = "strict";
+      BindPaths = [
+        # Access to /run/user/<uid> is required for DBus.
+        "/run/user"
+        # Access to /run/tailscale/tailscale.sock is required.
+        "/run/tailscale"
+      ];
+      ProtectHome = "tmpfs"; # Required to allow access to `/run/user/<uid>`.
+      ProtectSystem = "strict";
       PrivateDevices = true;
       PrivateMounts = true;
       PrivateTmp = true;
@@ -45,16 +42,16 @@
       ProtectKernelModules = true;
       ProtectKernelTunables = true;
       SystemCallArchitectures = "native";
-      # SystemCallFilter = "@system-service"; # TODO
+      SystemCallFilter = "@system-service";
 
       # Networking
-      RestrictAddressFamilies = ["AF_UNIX" "AF_INET" "AF_INET6"];
+      RestrictAddressFamilies = ["AF_UNIX"];
 
       # Misc
       LockPersonality = true;
       ProtectHostname = true;
       RestrictRealtime = true;
-      MemoryDenyWriteExecute = false; # We cannot set this to true due to the way Gauntlet works.
+      MemoryDenyWriteExecute = true;
       RestrictNamespaces = true;
       PrivateUsers = true;
       KeyringMode = "private";

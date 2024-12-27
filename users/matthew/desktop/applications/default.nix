@@ -10,6 +10,7 @@
       # ./gauntlet.nix
       # ./obs-studio.nix
       # ./signal.nix
+      ./tailscale.nix
       ./terminal.nix
       ./vesktop.nix
       ./vscode.nix
