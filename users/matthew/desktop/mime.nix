@@ -4,7 +4,7 @@
   ...
 }: let
   defaultBrowser = "firefox.desktop";
-  defaultImageViewer = "org.gnome.eog.desktop";
+  defaultImageViewer = "org.gnome.Loupe.desktop";
   defaultTextEditor = "org.gnome.TextEditor.desktop";
   defaultFileBrowser = "org.gnome.Nautilus.desktop";
 in {

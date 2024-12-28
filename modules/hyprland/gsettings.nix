@@ -20,7 +20,6 @@
           epiphany
           evince
           dconf-editor
-          eog
           file-roller
           geary
           gnome-calculator
@@ -34,6 +33,7 @@
           gnome-maps
           gnome-text-editor
           gnome-weather
+          loupe
           nautilus
           seahorse
           sushi
