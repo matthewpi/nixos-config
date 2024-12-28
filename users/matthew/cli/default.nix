@@ -27,7 +27,6 @@
     diskonaut
     gnmic
     jq
-    minicom
     nix-output-monitor
     numbat
     whois
