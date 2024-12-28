@@ -32,7 +32,7 @@
         src = pkgs.fetchFromGitHub {
           owner = "catppuccin";
           repo = "cursors";
-          rev = "refs/tags/v1.0.2";
+          tag = "v1.0.2";
           hash = "sha256-Mm0fRh/Shem65E/Cl0yyw+efEHOEt/OJ+MzL+3Mcbwc=";
         };
 
@@ -50,62 +50,6 @@
 
           runHook postBuild
         '';
-      });
-
-      zed-editor = pkgs.zed-editor.overrideAttrs (_: rec {
-        pname = "zed-editor";
-        version = "0.167.0-pre";
-
-        src = pkgs.fetchFromGitHub {
-          owner = "zed-industries";
-          repo = "zed";
-          rev = "refs/tags/v${version}";
-          hash = "sha256-VbvDTrd2mlD6nfdLe4jmUGus4ocIBfVJjNtI67cX+2I=";
-        };
-
-        cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-          inherit src;
-          name = "${pname}-${version}";
-          hash = "sha256-dgrFPQb5R8pX1gKj+JUmtrxDhFTM3wyvJApr9Gcbixc=";
-        };
-
-        env = {
-          LK_CUSTOM_WEBRTC = pkgs.fetchzip (let
-            version = "webrtc-dac8015-6";
-
-            os =
-              if pkgs.stdenv.isLinux
-              then "linux"
-              else
-                (
-                  if pkgs.stdenv.isDarwin
-                  then "mac"
-                  else throw "unknown os"
-                );
-            arch =
-              if pkgs.stdenv.isx86_64
-              then "x64"
-              else
-                (
-                  if pkgs.stdenv.isAarch64
-                  then "arm64"
-                  else throw "unknown arch"
-                );
-          in {
-            url = "https://github.com/livekit/rust-sdks/releases/download/${version}/webrtc-${os}-${arch}-release.zip";
-            hash = "sha256-fMTNBML90awpJroxIFsADQ6owCEQeQTAUZOLbBcycGo=";
-            stripRoot = true;
-          });
-
-          FONTCONFIG_FILE = pkgs.makeFontsConf {
-            fontDirectories = [
-              "${src}/assets/fonts/plex-mono"
-              "${src}/assets/fonts/plex-sans"
-            ];
-          };
-
-          RELEASE_VERSION = version;
-        };
       });
     };
   in {
@@ -136,7 +80,6 @@
         kind
         monaspace
         vesktop
-        zed-editor
         zsh-titles
         ;
 
