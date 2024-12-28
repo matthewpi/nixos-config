@@ -13,20 +13,20 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hoppscotch";
-  version = "2024.11.0";
+  version = "2024.12.0";
 
   src = fetchFromGitHub {
     owner = "hoppscotch";
     repo = "hoppscotch";
-    rev = finalAttrs.version;
-    hash = "sha256-tFwmqJDkjAqC+9n0CMi5qh12Rxw1xIVt+hLXuvBt+js=";
+    tag = finalAttrs.version;
+    hash = "sha256-Y2DILCccbmP7BaJEU9mSTj9tjMRafGji46rOLoVmWmk=";
   };
 
   doCheck = false;
 
   pnpmDeps = pnpm_9.fetchDeps {
     inherit (finalAttrs) pname version src;
-    hash = "sha256-LRkGQoVLaThfGE0xhzQlTJTfsfiWdo9r/qdPYGXDtW4=";
+    hash = "sha256-9uvN2OtM9xNQXdbxzYneZoxGbwmOWt418fIFIvd6EQY=";
   };
 
   nativeBuildInputs = [
