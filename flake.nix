@@ -158,6 +158,7 @@
       inputs = {
         hyprlang.follows = "hyprlang";
         hyprgraphics.follows = "hyprgraphics";
+        hyprwayland-scanner.follows = "hyprwayland-scanner";
         hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
