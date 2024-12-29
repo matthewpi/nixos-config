@@ -1,4 +1,5 @@
 {
+  lib,
   nixosConfig,
   pkgs,
   ...
@@ -38,20 +39,48 @@
         }
       ];
 
-      label = [
+      label =
+        [
+          {
+            monitor = "";
+            # TODO: how can we get this?
+            text = "cmd[update:60000] date '+%A, %B %d'";
+            # text = "Saturday, December 28th";
+            text_align = "center";
+            color = "$text";
+            font_family = "Inter";
+            font_size = 24;
+            rotate = 0;
+            position = "0, -104";
+            halign = "center";
+            valign = "top";
+          }
+          {
+            monitor = "";
+            text = "$TIME";
+            text_align = "center";
+            color = "$text";
+            font_family = "Inter, Semibold";
+            font_size = 120;
+            rotate = 0;
+            position = "0, -128";
+            halign = "center";
+            valign = "top";
+          }
+        ]
+        ++ lib.optional nixosConfig.services.fprintd.enable
         {
           monitor = "";
-          text = "Hello, $USER";
+          text = "$FPRINTMESSAGE";
           text_align = "center";
-          color = "$text";
+          color = "$subtext0";
           font_family = "Inter";
-          font_size = 25;
+          font_size = 20;
           rotate = 0;
           position = "0, 80";
           halign = "center";
-          valign = "center";
-        }
-      ];
+          valign = "bottom";
+        };
 
       input-field = [
         {
@@ -71,6 +100,7 @@
           hide_input = false;
           rounding = -1;
           check_color = "$accent";
+          fail_text = "<i>$FAIL <b>($ATTEMPTS)</b></i>";
           fail_color = "$red";
           fail_transition = 300;
           capslock_color = "-1";
@@ -79,9 +109,9 @@
           invert_numlock = false;
           swap_font_color = false;
 
-          position = "0, -20";
+          position = "0, 128";
           halign = "center";
-          valign = "center";
+          valign = "bottom";
         }
       ];
     };
