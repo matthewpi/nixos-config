@@ -6,12 +6,6 @@
 // This file is copied into our repository due to the way
 // we compile SCSS and not having access to any node_modules.
 
-@use 'sass:string';
-
-@function gtkalpha($c, $a) {
-	@return string.unquote('alpha(#{$c},#{$a})');
-}
-
 $rosewater: #f5e0dc;
 $flamingo: #f2cdcd;
 $pink: #f5c2e7;
@@ -240,7 +234,7 @@ window.notifications {
 	all: unset;
 }
 
-eventbox.notification {
+box.notification {
 	&:first-child > box {
 		margin-top: 1rem;
 	}
@@ -255,7 +249,7 @@ eventbox.notification {
 		border-radius: 13px;
 		background-color: $mantle;
 		margin: 0.5rem 1rem 0.5rem 1rem;
-		box-shadow: 2px 3px 8px 0 gtkalpha(black, 0.4);
+		/* box-shadow: 2px 3px 8px 0 gtkalpha(black, 0.4); */
 		border: 1pt solid $base;
 	}
 
@@ -320,7 +314,7 @@ eventbox.notification {
 		}
 
 		.image {
-			border: 1px solid gtkalpha($fg-color, 0.02);
+			/* border: 1px solid gtkalpha($fg-color, 0.02); */
 			margin-right: 0.5rem;
 			border-radius: 9px;
 			min-width: 100px;

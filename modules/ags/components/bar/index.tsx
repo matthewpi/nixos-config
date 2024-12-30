@@ -1,5 +1,5 @@
 import { bind, GLib, Variable } from 'astal';
-import { App, Astal, Gdk, Gtk } from 'astal/gtk3';
+import { Astal, astalify, Gdk, Gtk } from 'astal/gtk4';
 import Cairo from 'cairo';
 import Battery from 'gi://AstalBattery';
 import Bluetooth from 'gi://AstalBluetooth';
@@ -11,6 +11,9 @@ import Tray from 'gi://AstalTray';
 import Wireplumber from 'gi://AstalWp';
 
 type PollFn<T> = (prev: T) => T | Promise<T>;
+
+// type DrawingAreaProps = ConstructProps<Gtk.DrawingArea, Gtk.DrawingArea.ConstructorProps>;
+const DrawingArea = astalify<Gtk.DrawingArea, Gtk.DrawingArea.ConstructorProps>(Gtk.DrawingArea);
 
 function Media() {
 	const mpris = Mpris.get_default();
@@ -30,10 +33,10 @@ function Media() {
 
 function NoPlayer() {
 	return (
-		<button className="media">
+		<button cssClasses={['media']}>
 			<box valign={Gtk.Align.CENTER}>
-				<box className="media-label" vertical homogeneous={false} valign={Gtk.Align.CENTER}>
-					<label className="nothing" label="Nothing is playing" />
+				<box cssClasses={['media-label']} vertical homogeneous={false} valign={Gtk.Align.CENTER}>
+					<label cssClasses={['nothing']} label="Nothing is playing" />
 				</box>
 			</box>
 		</button>
@@ -51,22 +54,18 @@ function MediaPlayer({ player }: MediaPlayerProps) {
 
 	return (
 		<button
-			className="media"
-			onClickRelease={(_, event) => {
-				switch (event.button) {
-					case Astal.MouseButton.PRIMARY:
-						player.play_pause();
-						break;
-				}
+			cssClasses={['media']}
+			onClicked={() => {
+				player.play_pause();
 			}}
 		>
 			<box valign={Gtk.Align.CENTER}>
-				<box className="media-icon">
-					<icon icon={playIcon} iconSize={20} />
+				<box cssClasses={['media-icon']}>
+					<image iconName={playIcon} iconSize={20} />
 				</box>
-				<box className="media-label" vertical homogeneous={false} valign={Gtk.Align.CENTER}>
-					<label className="media-title" label={bind(player, 'title')} />
-					<label className="media-artists" label={bind(player, 'artist')} />
+				<box cssClasses={['media-label']} vertical homogeneous={false} valign={Gtk.Align.CENTER}>
+					<label cssClasses={['media-title']} label={bind(player, 'title')} />
+					<label cssClasses={['media-artists']} label={bind(player, 'artist')} />
 				</box>
 			</box>
 		</button>
@@ -97,7 +96,7 @@ function Workspaces() {
 		return components;
 	});
 
-	return <box className="workspaces">{workspaces}</box>;
+	return <box cssClasses={['workspaces']}>{workspaces}</box>;
 }
 
 /**
@@ -108,34 +107,38 @@ function Workspace(hypr: Hyprland.Hyprland, id: number, w?: Hyprland.Workspace) 
 	const thickness = 4;
 	const radius = (size - thickness) / 2;
 
+	function draw(self: Gtk.DrawingArea, cr: Cairo.Context, _width: number, _height: number): void {
+		const fg = self.get_style_context().get_color();
+
+		cr.setLineWidth(thickness);
+		cr.setSourceRGBA(fg.red, fg.green, fg.blue, fg.alpha);
+		cr.arc(size / 2, size / 2, radius, 0, 2 * Math.PI);
+		cr.stroke();
+	}
+
 	return (
 		<button
-			className={bind(hypr, 'focusedWorkspace').as(fw =>
-				['workspace', w === undefined ? 'empty' : w === fw ? 'focused' : '']
-					.filter(v => typeof v === 'string' && v.length > 0)
-					.join(' '),
+			cssClasses={bind(hypr, 'focusedWorkspace').as(fw =>
+				['workspace', w === undefined ? 'empty' : w === fw ? 'focused' : ''].filter(
+					v => typeof v === 'string' && v.length > 0,
+				),
 			)}
 			onClicked={() => w?.focus()}
 			tooltipText={id.toString()}
 		>
-			<drawingarea
-				className={bind(hypr, 'focusedWorkspace').as(fw =>
-					['circle', w === undefined ? 'empty' : w === fw ? 'focused' : '']
-						.filter(v => typeof v === 'string' && v.length > 0)
-						.join(' '),
+			<DrawingArea
+				cssClasses={bind(hypr, 'focusedWorkspace').as(fw =>
+					['circle', w === undefined ? 'empty' : w === fw ? 'focused' : ''].filter(
+						v => typeof v === 'string' && v.length > 0,
+					),
 				)}
 				halign={Gtk.Align.CENTER}
 				valign={Gtk.Align.CENTER}
 				widthRequest={size}
 				heightRequest={size}
-				// @ts-expect-error go away
-				onDraw={(self: Gtk.DrawingArea, cr: Cairo.Context) => {
-					const fg = self.get_style_context().get_property('color', Gtk.StateFlags.NORMAL) as Gdk.RGBA;
-
-					cr.setLineWidth(thickness);
-					cr.setSourceRGBA(fg.red, fg.green, fg.blue, fg.alpha);
-					cr.arc(size / 2, size / 2, radius, 0, 2 * Math.PI);
-					cr.stroke();
+				setup={(self: Gtk.DrawingArea) => {
+					// @ts-expect-error go away
+					self.set_draw_func(draw);
 				}}
 			/>
 		</button>
@@ -144,7 +147,7 @@ function Workspace(hypr: Hyprland.Hyprland, id: number, w?: Hyprland.Workspace) 
 
 function Clock() {
 	return (
-		<box className="clock">
+		<box cssClasses={['clock']}>
 			<Time />
 			<Time fn={() => GLib.DateTime.new_now_utc()} />
 		</box>
@@ -159,9 +162,12 @@ function Time({ fn }: { fn?: PollFn<GLib.DateTime | undefined> }) {
 	const time = Variable<GLib.DateTime | undefined>(undefined).poll(1000, fn);
 
 	return (
-		<box className="time-display" onDestroy={() => time.drop()}>
-			<label className="time" label={bind(time).as(time => time?.format('%H:%M:%S') ?? '')} />
-			<label className="timezone" label={bind(time).as(time => ` ${time?.get_timezone_abbreviation() ?? ''}`)} />
+		<box cssClasses={['time-display']} onDestroy={() => time.drop()}>
+			<label cssClasses={['time']} label={bind(time).as(time => time?.format('%H:%M:%S') ?? '')} />
+			<label
+				cssClasses={['timezone']}
+				label={bind(time).as(time => ` ${time?.get_timezone_abbreviation() ?? ''}`)}
+			/>
 		</box>
 	);
 }
@@ -176,11 +182,10 @@ function TrayItem(item: Tray.TrayItem) {
 	return (
 		<menubutton
 			tooltipMarkup={bind(item, 'tooltipMarkup')}
-			actionGroup={bind(item, 'action-group').as(ag => ['dbusmenu', ag])}
-			menuModel={bind(item, 'menu-model')}
-			usePopover={false}
+			// actionGroup={bind(item, 'action_group').as(ag => ['dbusmenu', ag])}
+			menuModel={bind(item, 'menu_model')}
 		>
-			<icon gicon={bind(item, 'gicon')} />
+			<image gicon={bind(item, 'gicon')} />
 		</menubutton>
 	);
 }
@@ -222,21 +227,24 @@ function BluetoothIndicator() {
 	return (
 		<box>
 			<button
-				className="bluetooth"
+				cssClasses={['bluetooth']}
 				tooltipText={bind(adapter, 'name').as(String)}
-				onClickRelease={(_, event) => {
-					switch (event.button) {
-						case Astal.MouseButton.PRIMARY:
-							App.get_window('bluetooth')?.show();
-							break;
-						case Astal.MouseButton.SECONDARY:
-							// bluetooth.toggle();
-							break;
-					}
+				onClicked={() => {
+					bluetooth.toggle();
 				}}
+				// onClickRelease={(_, event) => {
+				// 	switch (event.button) {
+				// 		case Astal.MouseButton.PRIMARY:
+				// 			// TODO: Open Overskride?
+				// 			break;
+				// 		case Astal.MouseButton.SECONDARY:
+				// 			bluetooth.toggle();
+				// 			break;
+				// 	}
+				// }}
 			>
-				<icon
-					icon={bind(bluetooth, 'is_powered').as(powered =>
+				<image
+					iconName={bind(bluetooth, 'is_powered').as(powered =>
 						powered ? 'bluetooth-active-symbolic' : 'bluetooth-disabled-symbolic',
 					)}
 				/>
@@ -245,36 +253,13 @@ function BluetoothIndicator() {
 	);
 }
 
-function BluetoothWindow() {
-	return (
-		<window
-			// `name` must go before `application`.
-			name="bluetooth"
-			application={App}
-			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
-			marginTop={36}
-			marginRight={36}
-			exclusivity={Astal.Exclusivity.IGNORE}
-			// Required for `onKeyPressEvent` to work.
-			keymode={Astal.Keymode.ON_DEMAND}
-			onKeyPressEvent={(self, event) => {
-				if (event.get_keyval()[1] === Gdk.KEY_Escape) {
-					self.hide();
-				}
-			}}
-		>
-			<label label="Hello, world!" />
-		</window>
-	);
-}
-
 function BatteryLevel() {
 	const battery = Battery.get_default();
 	const percentageText = bind(battery, 'percentage').as(p => `${Math.floor(p * 100)}%`);
 
 	return (
-		<box visible={bind(battery, 'isPresent')} className="battery" tooltipText={percentageText}>
-			<icon icon={bind(battery, 'batteryIconName')} />
+		<box visible={bind(battery, 'isPresent')} cssClasses={['battery']} tooltipText={percentageText}>
+			<image iconName={bind(battery, 'batteryIconName')} />
 			{/* <label label={percentageText} /> */}
 		</box>
 	);
@@ -287,27 +272,20 @@ function VolumeIndicator() {
 	const scrollRevealed = Variable(false);
 
 	return (
-		<eventbox
-			className="volume"
+		<box
+			cssClasses={['volume']}
 			tooltipText={bind(speaker, 'volume').as(p => `${Math.floor(p * 100)}%`)}
-			onHover={() => scrollRevealed.set(true)}
-			onHoverLost={() => scrollRevealed.set(false)}
+			onHoverEnter={() => scrollRevealed.set(true)}
+			onHoverLeave={() => scrollRevealed.set(false)}
 			onDestroy={() => scrollRevealed.drop()}
 		>
 			<box>
 				<button
-					onClickRelease={(_, event) => {
-						switch (event.button) {
-							case Astal.MouseButton.PRIMARY:
-								speaker.mute = !speaker.mute;
-								break;
-							case Astal.MouseButton.SECONDARY:
-								// TODO: open output selection menu
-								break;
-						}
+					onClicked={() => {
+						speaker.mute = !speaker.mute;
 					}}
 				>
-					<icon icon={bind(speaker, 'volumeIcon')} />
+					<image iconName={bind(speaker, 'volumeIcon')} />
 				</button>
 
 				<revealer
@@ -316,24 +294,25 @@ function VolumeIndicator() {
 					valign={Gtk.Align.CENTER}
 				>
 					<slider
-						className="volume-slider"
-						onDragged={self => (speaker.volume = self.value)}
+						cssClasses={['volume-slider']}
+						onChangeValue={self => (speaker.volume = self.value)}
 						value={bind(speaker, 'volume')}
 						hexpand
 					/>
 				</revealer>
 			</box>
-		</eventbox>
+		</box>
 	);
 }
 
 function Bar(monitor: Gdk.Monitor) {
 	return (
 		<window
-			className="bar"
+			cssClasses={['bar']}
 			gdkmonitor={monitor}
 			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT}
 			exclusivity={Astal.Exclusivity.EXCLUSIVE}
+			visible
 		>
 			<centerbox>
 				<box hexpand halign={Gtk.Align.START}>
@@ -358,4 +337,4 @@ function Bar(monitor: Gdk.Monitor) {
 	);
 }
 
-export { Bar, BluetoothWindow };
+export { Bar };

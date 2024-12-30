@@ -1,6 +1,6 @@
 import { bind, timeout, Variable } from 'astal';
 import type { Subscribable } from 'astal/binding';
-import { App, Astal, Gtk } from 'astal/gtk3';
+import { App, Astal, Gtk } from 'astal/gtk4';
 import Notifd from 'gi://AstalNotifd';
 
 import { Notification } from './Notification';
@@ -46,7 +46,7 @@ class NotifiationMap implements Subscribable {
 					// so that it acts as a "popup" and we can still display it
 					// in a notification center like widget
 					// but clicking on the close button will close it
-					onHoverLost: () => {}, // this.delete(id)
+					onHoverLeave: () => {}, // this.delete(id)
 
 					// notifd by default does not close notifications
 					// until user input or the timeout specified by sender
@@ -65,13 +65,15 @@ class NotifiationMap implements Subscribable {
 
 	private set(key: number, value: Gtk.Widget) {
 		// in case of replacecment destroy previous widget
-		this.map.get(key)?.destroy();
+		// TODO: fix destroy
+		// this.map.get(key)?.emit('destroy');
 		this.map.set(key, value);
 		this.notifiy();
 	}
 
 	private delete(key: number) {
-		this.map.get(key)?.destroy();
+		// TODO: fix destroy
+		// this.map.get(key)?.emit('destroy');
 		this.map.delete(key);
 		this.notifiy();
 	}
@@ -92,11 +94,13 @@ function NotificationPopups() {
 
 	return (
 		<window
+			// `name` must go before `application`.
 			name="notifications"
-			className="notifications"
+			application={App}
+			cssClasses={['notifications']}
 			exclusivity={Astal.Exclusivity.EXCLUSIVE}
 			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
-			application={App}
+			visible
 		>
 			<box vertical>{bind(notifications)}</box>
 		</window>

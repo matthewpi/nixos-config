@@ -1,10 +1,11 @@
 import { GLib } from 'astal';
-import { Astal, Gtk } from 'astal/gtk3';
-import type { EventBox } from 'astal/gtk3/widget';
+import { Astal, astalify, Gtk, type ConstructProps } from 'astal/gtk4';
 import Notifd from 'gi://AstalNotifd';
 
-function isIcon(icon: string) {
-	return !!Astal.Icon.lookup_icon(icon);
+function isIcon(_icon: string): boolean {
+	// TODO: fix after Gtk4 update.
+	// return !!Astal.Icon.lookup_icon(icon);
+	return true;
 }
 
 function fileExists(path: string) {
@@ -28,64 +29,77 @@ function urgency(n: Notifd.Notification) {
 }
 
 interface NotificationProps {
-	setup(self: EventBox): void;
-	onHoverLost(self: EventBox): void;
+	setup(self: Astal.Box): void;
+	onHoverLeave(self: Astal.Box): void;
 	notification: Notifd.Notification;
 }
 
+type SeparatorProps = ConstructProps<Gtk.Separator, Gtk.Separator.ConstructorProps>;
+const Separator = astalify<Gtk.Separator, Gtk.Separator.ConstructorProps>(Gtk.Separator, {});
+
 function Notification(props: NotificationProps) {
-	const { notification: n, onHoverLost, setup } = props;
+	const { notification: n, onHoverLeave, setup } = props;
 
 	return (
-		<eventbox className={`notification ${urgency(n)}`} setup={setup} onHoverLost={onHoverLost}>
+		<box cssClasses={['notification', urgency(n)]} setup={setup} onHoverLeave={onHoverLeave}>
 			<box vertical>
 				<box className="header">
-					{(n.appIcon || n.desktopEntry) && (
-						<icon
-							className="app-icon"
-							visible={Boolean(n.appIcon || n.desktopEntry)}
-							icon={n.appIcon || n.desktopEntry}
-						/>
-					)}
-					<label className="app-name" halign={Gtk.Align.START} truncate label={n.appName || 'Unknown'} />
-					<label className="time" hexpand halign={Gtk.Align.END} label={time(n.time)} />
+					{n.appIcon ||
+						(n.desktopEntry && (
+							<image
+								cssClasses={['app-icon']}
+								visible={Boolean(n.appIcon || n.desktopEntry)}
+								iconName={n.appIcon || n.desktopEntry}
+							/>
+						))}
+					{/* TODO: truncate */}
+					<label cssClasses={['app-name']} halign={Gtk.Align.START} label={n.appName || 'Unknown'} />
+					<label cssClasses={['time']} hexpand halign={Gtk.Align.END} label={time(n.time)} />
 					<button onClicked={() => n.dismiss()}>
-						<icon icon="window-close-symbolic" />
+						<image iconName="window-close-symbolic" />
 					</button>
 				</box>
-				<Gtk.Separator visible />
-				<box className="content">
+				<Separator visible />
+				<box cssClasses={['content']}>
 					{n.image && fileExists(n.image) && (
 						<box
 							valign={Gtk.Align.START}
-							className="image"
+							cssClasses={['image']}
 							css={`
 								background-image: url('${n.image}');
 							`}
 						/>
 					)}
 					{n.image && isIcon(n.image) && (
-						<box expand={false} valign={Gtk.Align.START} className="icon-image">
-							<icon icon={n.image} expand halign={Gtk.Align.CENTER} valign={Gtk.Align.CENTER} />
+						<box vexpand={false} hexpand={false} valign={Gtk.Align.START} cssClasses={['icon-image']}>
+							<image
+								iconName={n.image}
+								hexpand
+								vexpand
+								halign={Gtk.Align.CENTER}
+								valign={Gtk.Align.CENTER}
+							/>
 						</box>
 					)}
 					<box vertical>
-						<label className="summary" halign={Gtk.Align.START} xalign={0} label={n.summary} truncate />
+						{/* TODO: truncate? */}
+						<label cssClasses={['summary']} halign={Gtk.Align.START} xalign={0} label={n.summary} />
 						{n.body && (
+							// TOOD: justifyFill?
 							<label
-								className="body"
+								cssClasses={['body']}
 								wrap
 								useMarkup
 								halign={Gtk.Align.START}
 								xalign={0}
-								justifyFill
+								// justifyFill
 								label={n.body}
 							/>
 						)}
 					</box>
 				</box>
 				{n.get_actions().length > 0 && (
-					<box className="actions">
+					<box cssClasses={['actions']}>
 						{n.get_actions().map(({ label, id }) => (
 							<button hexpand onClicked={() => n.invoke(id)}>
 								<label label={label} halign={Gtk.Align.CENTER} hexpand />
@@ -94,7 +108,7 @@ function Notification(props: NotificationProps) {
 					</box>
 				)}
 			</box>
-		</eventbox>
+		</box>
 	);
 }
 

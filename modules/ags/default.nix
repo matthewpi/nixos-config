@@ -32,7 +32,7 @@
     };
 
     Service = {
-      ExecStart = "${lib.getExe' config.programs.ags.finalPackage "ags"} run";
+      ExecStart = "${lib.getExe' config.programs.ags.finalPackage "ags"} run --gtk4";
       Slice = "session.slice";
 
       Restart = "on-failure";
@@ -44,17 +44,17 @@
 
       # Filesystem
       # TODO: figure out how to protect home and system without breaking themes and styles.
-      BindPaths = [
-        # Required to access Hyprland IPC
-        "/run/user/1000/hypr"
-      ];
+      # BindPaths = [
+      #   # Required to access Hyprland IPC
+      #   "/run/user/1000/hypr"
+      # ];
       # BindReadOnlyPaths = [
       #   "/etc/profiles/per-user/matthew"
       #   "${config.home.homeDirectory}/.config/ags"
       # ];
       # ProtectHome = "tmpfs";
       # ProtectSystem = "strict";
-      PrivateDevices = true;
+      PrivateDevices = false;
       PrivateMounts = true;
       PrivateTmp = true;
       ProtectControlGroups = true;
