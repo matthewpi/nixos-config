@@ -196,6 +196,8 @@ in {
         focus_on_activate = true;
       };
 
+      ecosystem.no_update_news = true;
+
       render = {
         # Disable direct scanout as it causes artifacting in fullscreen games.
         direct_scanout = false;
