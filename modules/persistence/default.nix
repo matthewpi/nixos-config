@@ -20,6 +20,7 @@
       ./openssh.nix
       ./plymouth.nix
       ./podman.nix
+      ./power-profiles-daemon.nix
       ./tailscale.nix
       ./wireless.nix
     ];
@@ -108,7 +109,6 @@
 
       files = [
         "/etc/machine-id"
-        "/var/lib/power-profiles-daemon/state.ini"
       ];
 
       hideMounts = true;
