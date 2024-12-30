@@ -73,7 +73,7 @@
   security.lockKernelModules = false;
 
   # Disable default resolved config, we use an age encrypted one with NextDNS.
-  # environment.etc."systemd/resolved.conf".enable = false;
+  environment.etc."systemd/resolved.conf".enable = false;
 
   # Disable fstrim since we use btrfs async discard.
   services.fstrim.enable = false;
@@ -96,5 +96,5 @@
   ];
 
   # kind
-  networking.nameservers = ["1.1.1.1" "1.0.0.1"];
+  # networking.nameservers = ["1.1.1.1" "1.0.0.1"];
 }

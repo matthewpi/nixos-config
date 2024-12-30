@@ -366,13 +366,13 @@
                     group = "users";
                   };
 
-                  #desktop-resolved = {
-                  #  file = secrets/desktop-resolved.age;
-                  #  path = "/etc/systemd/resolved.conf";
-                  #  mode = "444";
-                  #  owner = "root";
-                  #  group = "root";
-                  #};
+                  desktop-resolved = {
+                    file = secrets/desktop-resolved.age;
+                    path = "/etc/systemd/resolved.conf";
+                    mode = "444";
+                    owner = "root";
+                    group = "root";
+                  };
                 };
               }
 
