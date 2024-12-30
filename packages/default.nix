@@ -32,8 +32,8 @@
         src = pkgs.fetchFromGitHub {
           owner = "catppuccin";
           repo = "cursors";
-          tag = "v1.0.2";
-          hash = "sha256-Mm0fRh/Shem65E/Cl0yyw+efEHOEt/OJ+MzL+3Mcbwc=";
+          rev = "47de593602cd78ffd0d659fbe8b61b3e9f13eefe";
+          hash = "sha256-LHYiw9QYws8Iz5RJenMLiawPiNTMnGxjevcDk5ZY1uc=";
         };
 
         nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.zip];
