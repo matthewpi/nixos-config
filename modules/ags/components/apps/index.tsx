@@ -46,7 +46,11 @@ async function launch(app: Apps.Application): Promise<void> {
 	app.frequency++;
 }
 
-function AppButton({ app }: { app: Apps.Application }) {
+interface AppButtonProps {
+	app: Apps.Application;
+}
+
+function AppButton({ app }: AppButtonProps) {
 	return (
 		<button
 			cssClasses={['app']}
@@ -56,7 +60,7 @@ function AppButton({ app }: { app: Apps.Application }) {
 			}}
 		>
 			<box>
-				<image iconName={app.iconName} />
+				<image iconName={app.iconName} iconSize={Gtk.IconSize.LARGE} />
 				<box valign={Gtk.Align.CENTER} vertical>
 					{/* TODO: truncate? */}
 					<label cssClasses={['name']} xalign={0} label={app.name} />
@@ -97,6 +101,7 @@ function Launcher() {
 			cssClasses={['launcher']}
 			anchor={Astal.WindowAnchor.TOP}
 			exclusivity={Astal.Exclusivity.IGNORE}
+			// TODO: re-enable
 			// onShow={() => text.set('')}
 			keymode={Astal.Keymode.ON_DEMAND}
 			onKeyPressed={(self, keyval) => {
@@ -112,8 +117,9 @@ function Launcher() {
 					<box widthRequest={500} cssClasses={['launcher']} vertical>
 						<entry
 							placeholderText="Search applications..."
-							text={text()}
-							onChanged={self => text.set(self.text)}
+							// TODO: figure out why binding text causes cursor issues and lag on gtk4.
+							// text={text()}
+							onNotifyText={self => text.set(self.text)}
 							onActivate={onEnter}
 						/>
 						<box spacing={6} vertical>

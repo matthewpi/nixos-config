@@ -192,23 +192,33 @@ window.launcher {
 
 		entry {
 			background: $base;
+			border: 2px solid $surface0;
+			color: $text;
 			margin-bottom: 0.8rem;
+			outline: none;
 		}
 
-		button {
+		button.app {
+			background: $surface0;
+			border: none;
+			outline: none;
 			min-width: 0;
 			min-height: 0;
 			padding: 0.5rem;
-			background: $surface0;
 
-			icon {
-				font-size: 2.25em;
+			image {
 				margin-right: 0.5rem;
 			}
 
 			label.name {
-				font-weight: bold;
-				font-size: 1.1em;
+				color: $text;
+				font-weight: 600;
+				font-size: 1rem;
+			}
+
+			label.description {
+				color: $subtext0;
+				font-size: 0.75rem;
 			}
 
 			&:focus {
@@ -219,7 +229,7 @@ window.launcher {
 		box.not-found {
 			padding: 1rem;
 
-			icon {
+			image {
 				font-size: 6em;
 			}
 
