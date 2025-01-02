@@ -96,6 +96,11 @@
           }
 
           {
+            directory = "/var/lib/systemd";
+            mode = "0755";
+          }
+
+          {
             directory = "/root";
             mode = "0700";
           }
