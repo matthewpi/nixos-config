@@ -82,7 +82,7 @@
           }
 
           {
-            directory = "/etc/secureboot";
+            directory = "/var/lib/sbctl";
             mode = "0700";
           }
 

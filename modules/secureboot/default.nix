@@ -25,7 +25,7 @@
     boot.lanzaboote = {
       enable = lib.mkDefault true;
       configurationLimit = 5;
-      pkiBundle = lib.mkDefault "/persist/etc/secureboot";
+      pkiBundle = lib.mkDefault "/persist/var/lib/sbctl";
     };
   };
 }
