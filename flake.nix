@@ -243,7 +243,7 @@
     systems-linux.url = "github:nix-systems/default-linux";
 
     treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
+      url = "github:numtide/treefmt-nix/56c0ecd79f7ba01a0ec027da015df751d6ca3ae7";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
