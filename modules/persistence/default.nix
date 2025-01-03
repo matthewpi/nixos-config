@@ -99,6 +99,10 @@
             directory = "/var/lib/systemd";
             mode = "0755";
           }
+          {
+            directory = "/var/lib/pcrlock.d";
+            mode = "0755";
+          }
 
           {
             directory = "/root";
