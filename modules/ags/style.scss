@@ -37,9 +37,6 @@ $crust: #11111b;
 
 $primary: $peach;
 
-// https://gitlab.gnome.org/GNOME/gtk/-/blob/gtk-3-24/gtk/theme/Adwaita/_colors-public.scss
-$fg-color: #{'@theme_fg_color'};
-
 * {
 	font-family: 'MonaspiceNe Nerd Font', monospace;
 	font-weight: 400;
@@ -47,7 +44,7 @@ $fg-color: #{'@theme_fg_color'};
 
 window.bar {
 	background: $mantle;
-	border-bottom: 0.125rem solid $crust;
+	border: none;
 	color: $text;
 
 	button {
@@ -130,8 +127,12 @@ window.bar {
 	}
 }
 
+.systray {
+	margin-right: 1rem;
+}
+
 .volume {
-	margin-right: 2rem;
+	margin-right: 1rem;
 
 	.volume-slider {
 		min-width: 8rem;
@@ -149,11 +150,6 @@ window.bar {
 		}
 	}
 }
-
-/* button.bluetooth {
-	margin-left: 1rem;
-	margin-right: 1rem;
-} */
 
 button.media {
 	margin-right: 1rem;

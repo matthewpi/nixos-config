@@ -148,17 +148,13 @@ function Workspace(hypr: Hyprland.Hyprland, id: number, w?: Hyprland.Workspace) 
 function Clock() {
 	return (
 		<box cssClasses={['clock']}>
-			<Time />
+			<Time fn={() => GLib.DateTime.new_now_local()} />
 			<Time fn={() => GLib.DateTime.new_now_utc()} />
 		</box>
 	);
 }
 
-function Time({ fn }: { fn?: PollFn<GLib.DateTime | undefined> }) {
-	if (fn === undefined) {
-		fn = () => GLib.DateTime.new_now_local();
-	}
-
+function Time({ fn }: { fn: PollFn<GLib.DateTime | undefined> }) {
 	const time = Variable<GLib.DateTime | undefined>(undefined).poll(1000, fn);
 
 	return (
@@ -175,14 +171,14 @@ function Time({ fn }: { fn?: PollFn<GLib.DateTime | undefined> }) {
 function SysTray() {
 	const tray = Tray.get_default();
 
-	return <box>{bind(tray, 'items').as(items => items.map(TrayItem))}</box>;
+	return <box cssClasses={['systray']}>{bind(tray, 'items').as(items => items.map(TrayItem))}</box>;
 }
 
 function TrayItem(item: Tray.TrayItem) {
 	return (
 		<menubutton
+			cssClasses={['systray-item']}
 			tooltipMarkup={bind(item, 'tooltipMarkup')}
-			// actionGroup={bind(item, 'action_group').as(ag => ['dbusmenu', ag])}
 			menuModel={bind(item, 'menu_model')}
 		>
 			<image gicon={bind(item, 'gicon')} />

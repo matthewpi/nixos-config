@@ -74,12 +74,28 @@ function AppButton({ app }: AppButtonProps) {
 function Launcher() {
 	const apps = new Apps.Apps();
 
+	// Since we updated to Gtk4, we need to use a EntryBuffer to control the
+	// content of the entry widget. If we just use `onNotifyText`, we can get
+	// the content as it changes, but we cannot change the content ourselves, like
+	// to clear the entry whenever the window is closed for example.
+	//
+	// So instead we use an EntryBuffer and "watch" it's text property, updating
+	// the `text` variable so we can live filter applications.
 	const text = Variable('');
+	const buffer = new Gtk.EntryBuffer();
+	buffer.connect('inserted-text', self => text.set(self.text));
+	buffer.connect('deleted-text', (self, position) => text.set(self.text.substring(0, position)));
+
 	const list = text(text => searchApps(text).slice(0, MAX_ITEMS));
 
 	function searchApps(query: string) {
-		// Filter out terminal applications.
-		return apps.fuzzy_query(query).filter(app => app.get_key('Terminal') !== 'true');
+		return (
+			apps
+				// Filter apps using the search query.
+				.fuzzy_query(query)
+				// Filter out terminal applications.
+				.filter(app => app.get_key('Terminal') !== 'true')
+		);
 	}
 
 	function onEnter() {
@@ -99,10 +115,9 @@ function Launcher() {
 			name="launcher"
 			application={App}
 			cssClasses={['launcher']}
-			anchor={Astal.WindowAnchor.TOP}
+			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
 			exclusivity={Astal.Exclusivity.IGNORE}
-			// TODO: re-enable
-			// onShow={() => text.set('')}
+			onShow={() => (buffer.text = '')}
 			keymode={Astal.Keymode.ON_DEMAND}
 			onKeyPressed={(self, keyval) => {
 				if (keyval === Gdk.KEY_Escape) {
@@ -115,13 +130,7 @@ function Launcher() {
 				<box hexpand={false} vertical>
 					{/* <eventbox heightRequest={100} onClick={hide} /> */}
 					<box widthRequest={500} cssClasses={['launcher']} vertical>
-						<entry
-							placeholderText="Search applications..."
-							// TODO: figure out why binding text causes cursor issues and lag on gtk4.
-							// text={text()}
-							onNotifyText={self => text.set(self.text)}
-							onActivate={onEnter}
-						/>
+						<entry buffer={buffer} placeholderText="Search applications..." onActivate={onEnter} />
 						<box spacing={6} vertical>
 							{list.as(list => list.map(app => <AppButton app={app} />))}
 						</box>
