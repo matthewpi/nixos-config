@@ -1,5 +1,5 @@
 {
-  inputs,
+  # inputs,
   pkgs,
   ...
 }: {
@@ -16,7 +16,7 @@
       ];
     })
 
-    (inputs.nix-gaming.packages.${pkgs.system}.star-citizen.override {wine = inputs.nix-gaming.packages.${pkgs.system}.wine-tkg;})
+    # (inputs.nix-gaming.packages.${pkgs.system}.star-citizen.override {wine = inputs.nix-gaming.packages.${pkgs.system}.wine-tkg;})
   ];
 
   programs.mangohud = {
