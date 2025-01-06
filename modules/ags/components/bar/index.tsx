@@ -61,7 +61,7 @@ function MediaPlayer({ player }: MediaPlayerProps) {
 		>
 			<box valign={Gtk.Align.CENTER}>
 				<box cssClasses={['media-icon']}>
-					<image iconName={playIcon} iconSize={20} />
+					<image iconName={playIcon} />
 				</box>
 				<box cssClasses={['media-label']} vertical homogeneous={false} valign={Gtk.Align.CENTER}>
 					<label cssClasses={['media-title']} label={bind(player, 'title')} />
