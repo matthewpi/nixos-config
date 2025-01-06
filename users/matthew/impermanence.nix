@@ -276,6 +276,10 @@ in {
         mode = "0700";
       }
       {
+        directory = ".config/sh.cider.genten";
+        mode = "0700";
+      }
+      {
         directory = ".config/turborepo";
         mode = "0700";
       }
