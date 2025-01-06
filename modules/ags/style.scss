@@ -113,13 +113,26 @@ window.bar {
 			250ms border-radius;
 
 		> .circle {
+			// Default color for inactive workspaces with windows.
 			color: $surface2;
 			transition: 250ms color;
 
+			// Applies to workspaces that are inactive and have no windows
 			&.empty {
 				color: $surface0;
 			}
 
+			// Applies to workspaces assigned to the monitor the widget is being rendered on.
+			&.local-monitor:not(.focused) {
+				color: $overlay2;
+			}
+
+			// Applies to the active workspace displayed on unfocused monitors.
+			&.active:not(.focused) {
+				color: $blue;
+			}
+
+			// Applies to the single focused workspace across all monitors.
 			&.focused {
 				color: $primary;
 			}

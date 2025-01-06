@@ -67,7 +67,11 @@ function MediaPlayer({ player }: MediaPlayerProps) {
 	);
 }
 
-function Workspaces() {
+interface WorkspacesProps {
+	monitor?: string;
+}
+
+function Workspaces({ monitor }: WorkspacesProps) {
 	const hypr = Hyprland.get_default();
 
 	const workspaces = bind(hypr, 'workspaces').as(workspaces => {
@@ -81,10 +85,8 @@ function Workspaces() {
 		const components: Gtk.Widget[] = [];
 		components.length = 10;
 		for (let i = 1; i <= components.length; i++) {
-			components[i - 1] = Workspace(
-				hypr,
-				i,
-				hyprWorkspaces.find(w => w.id === i),
+			components[i - 1] = (
+				<Workspace hypr={hypr} id={i} w={hyprWorkspaces.find(w => w.id === i)} monitor={monitor} />
 			);
 		}
 
@@ -94,10 +96,14 @@ function Workspaces() {
 	return <box cssClasses={['workspaces']}>{workspaces}</box>;
 }
 
-/**
- * TODO: monitor indicator (change color depending on if the workspace is on the local monitor or not)
- */
-function Workspace(hypr: Hyprland.Hyprland, id: number, w?: Hyprland.Workspace) {
+interface WorkspaceProps {
+	hypr: Hyprland.Hyprland;
+	id: number;
+	w?: Hyprland.Workspace;
+	monitor?: string;
+}
+
+function Workspace({ hypr, id, w, monitor }: WorkspaceProps) {
 	const size = 16;
 	const thickness = 4;
 	const radius = (size - thickness) / 2;
@@ -111,22 +117,33 @@ function Workspace(hypr: Hyprland.Hyprland, id: number, w?: Hyprland.Workspace) 
 		cr.stroke();
 	}
 
+	// Using the focused workspace and local monitor, generate classes for the workspace.
+	const fw = bind(hypr, 'focusedWorkspace');
+	const hm = bind(hypr, 'monitors').as(monitors => monitors.find(m => m.name === monitor));
+	const classes = Variable.derive([fw, hm], (fw, hm) => {
+		return [
+			w === undefined ? 'empty' : '',
+			// Only a single workspace across all monitors can be focused.
+			w === fw ? 'focused' : '',
+			// Each monitor can have an active workspace, at least one workspace will be both active and focused.
+			hm?.activeWorkspace?.id === id ? 'active' : '',
+			w === undefined || monitor === undefined
+				? ''
+				: monitor === w.monitor.name
+					? 'local-monitor'
+					: 'other-monitor',
+		].filter(v => typeof v === 'string' && v.length > 0);
+	});
+
 	return (
 		<button
-			cssClasses={bind(hypr, 'focusedWorkspace').as(fw =>
-				['workspace', w === undefined ? 'empty' : w === fw ? 'focused' : ''].filter(
-					v => typeof v === 'string' && v.length > 0,
-				),
-			)}
+			cssClasses={bind(classes).as(classes => ['workspace', ...classes])}
 			onClicked={() => w?.focus()}
 			tooltipText={id.toString()}
 		>
+			{/* @ts-expect-error go away */}
 			<DrawingArea
-				cssClasses={bind(hypr, 'focusedWorkspace').as(fw =>
-					['circle', w === undefined ? 'empty' : w === fw ? 'focused' : ''].filter(
-						v => typeof v === 'string' && v.length > 0,
-					),
-				)}
+				cssClasses={bind(classes).as(classes => ['circle', ...classes])}
 				halign={Gtk.Align.CENTER}
 				valign={Gtk.Align.CENTER}
 				widthRequest={size}
@@ -307,8 +324,10 @@ function Bar(monitor: Gdk.Monitor) {
 		>
 			<centerbox>
 				<box hexpand halign={Gtk.Align.START}>
+					{/* @ts-expect-error Media returns `Binding<Gtk.Widget>` instead of just `Gtk.Widget`, which still works perfectly fine */}
 					<Media />
-					<Workspaces />
+					{/* NOTE: for anyone wondering, `get_connector` is only available in Gtk4 */}
+					<Workspaces monitor={monitor.get_connector() ?? ''} />
 				</box>
 
 				<box>
