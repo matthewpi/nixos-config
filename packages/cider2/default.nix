@@ -5,22 +5,22 @@
   stdenv,
 }: let
   pname = "cider2";
-  version = "2.5.0";
+  version = "2.6.0";
 
   # For anyone wondering, these files are locked behind firewall rules.
   # If you want Cider2, go buy it yourself.
   sources = {
     aarch64-darwin = {
       url = "https://r2.matthewp.io/cider/${version}/Cider-${version}-aarch64.dmg";
-      hash = "sha256-3dwEuRR8t9Wq3jaJM+ywZmbTBlBbLgX+04kzn+xPq50=";
+      hash = "sha256-zeKUUySH/+KjC3Tf+kpmoffa4tvccfYxObAoWjYBZWI=";
     };
     x86_64-darwin = {
       url = "https://r2.matthewp.io/cider/${version}/Cider-${version}-x86_64.dmg";
-      hash = "sha256-km0N+xRV3ot+4d524oP0wb/vti5P/v3GIvSXMhbuy+E=";
+      hash = "sha256-5zeicHOWRu5BTnud9wh0GQ3v2BHAcwOob5HmQ0QT20g=";
     };
     x86_64-linux = {
       url = "https://r2.matthewp.io/cider/${version}/Cider-${version}.AppImage";
-      hash = "sha256-HwfByY8av1AvI+t7wnaNbhDLXBxgzRKYiLG1hPUto9o=";
+      hash = "sha256-XdyW2O5LC+/dGosSYVz5IkAxi2taVBrXXHTbWZCNnn8=";
     };
   };
 
