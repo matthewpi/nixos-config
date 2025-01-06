@@ -53,19 +53,14 @@ function MediaPlayer({ player }: MediaPlayerProps) {
 	);
 
 	return (
-		<button
-			cssClasses={['media']}
-			onClicked={() => {
-				player.play_pause();
-			}}
-		>
+		<button cssClasses={['media']} onClicked={() => player.play_pause()}>
 			<box valign={Gtk.Align.CENTER}>
 				<box cssClasses={['media-icon']}>
 					<image iconName={playIcon} />
 				</box>
 				<box cssClasses={['media-label']} vertical homogeneous={false} valign={Gtk.Align.CENTER}>
-					<label cssClasses={['media-title']} label={bind(player, 'title')} />
-					<label cssClasses={['media-artists']} label={bind(player, 'artist')} />
+					<label cssClasses={['media-title']} label={bind(player, 'title').as(l => l ?? '')} />
+					<label cssClasses={['media-artists']} label={bind(player, 'artist').as(l => l ?? '')} />
 				</box>
 			</box>
 		</button>
