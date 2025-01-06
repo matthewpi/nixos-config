@@ -1,5 +1,5 @@
 import { GLib } from 'astal';
-import { Astal, astalify, Gtk, type ConstructProps } from 'astal/gtk4';
+import { Astal, astalify, Gtk } from 'astal/gtk4';
 import Notifd from 'gi://AstalNotifd';
 
 function isIcon(_icon: string): boolean {
@@ -34,7 +34,7 @@ interface NotificationProps {
 	notification: Notifd.Notification;
 }
 
-type SeparatorProps = ConstructProps<Gtk.Separator, Gtk.Separator.ConstructorProps>;
+// type SeparatorProps = ConstructProps<Gtk.Separator, Gtk.Separator.ConstructorProps>;
 const Separator = astalify<Gtk.Separator, Gtk.Separator.ConstructorProps>(Gtk.Separator, {});
 
 function Notification(props: NotificationProps) {
@@ -43,31 +43,30 @@ function Notification(props: NotificationProps) {
 	return (
 		<box cssClasses={['notification', urgency(n)]} setup={setup} onHoverLeave={onHoverLeave}>
 			<box vertical>
-				<box className="header">
-					{n.appIcon ||
-						(n.desktopEntry && (
-							<image
-								cssClasses={['app-icon']}
-								visible={Boolean(n.appIcon || n.desktopEntry)}
-								iconName={n.appIcon || n.desktopEntry}
-							/>
-						))}
-					{/* TODO: truncate */}
+				<box cssClasses={['header']}>
+					<image
+						cssClasses={['app-icon']}
+						visible={Boolean(n.appIcon || n.desktopEntry)}
+						iconName={n.appIcon || n.desktopEntry}
+					/>
+					{/* TODO: truncate? */}
 					<label cssClasses={['app-name']} halign={Gtk.Align.START} label={n.appName || 'Unknown'} />
 					<label cssClasses={['time']} hexpand halign={Gtk.Align.END} label={time(n.time)} />
 					<button onClicked={() => n.dismiss()}>
 						<image iconName="window-close-symbolic" />
 					</button>
 				</box>
+				{/* @ts-expect-error go away */}
 				<Separator visible />
 				<box cssClasses={['content']}>
 					{n.image && fileExists(n.image) && (
 						<box
 							valign={Gtk.Align.START}
 							cssClasses={['image']}
-							css={`
-								background-image: url('${n.image}');
-							`}
+							// TODO: does the `css` property still work?
+							// css={`
+							// 	background-image: url('${n.image}');
+							// `}
 						/>
 					)}
 					{n.image && isIcon(n.image) && (
