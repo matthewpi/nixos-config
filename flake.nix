@@ -345,7 +345,7 @@
               self.nixosModules.secureboot
               self.nixosModules.system
               self.nixosModules.tailscale
-              self.nixosModules.virtualisation
+              # self.nixosModules.virtualisation
 
               {
                 age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];

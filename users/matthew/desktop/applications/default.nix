@@ -18,7 +18,7 @@
     ]
     ++ lib.optionals isDesktop [
       ./gaming.nix
-      ./virt-manager.nix
+      # ./virt-manager.nix
     ];
 
   home.packages = with pkgs; [
