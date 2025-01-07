@@ -15,6 +15,9 @@
 
     catppuccin.tty.enable = true;
 
+    # HDR
+    hardware.graphics.extraPackages = [pkgs.vulkan-hdr-layer];
+
     # TODO: not reference home-manager for the package.
     programs.hyprland.package = config.home-manager.users.matthew.wayland.windowManager.hyprland.finalPackage;
 

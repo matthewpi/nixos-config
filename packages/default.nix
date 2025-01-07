@@ -26,6 +26,7 @@
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
       vesktop = pkgs.callPackage ./vesktop/package.nix {vesktop = pkgs.vesktop;};
+      vulkan-hdr-layer = pkgs.callPackage ./vulkan-hdr-layer {};
       zsh-titles = pkgs.callPackage ./zsh/zsh-titles.nix {};
 
       catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (oldAttrs: {
@@ -80,6 +81,7 @@
         kind
         monaspace
         vesktop
+        vulkan-hdr-layer
         zsh-titles
         ;
 
