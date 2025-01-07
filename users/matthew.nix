@@ -1,6 +1,5 @@
 {
   config,
-  isDesktop,
   lib,
   pkgs,
   ...
@@ -21,7 +20,7 @@
   hardware.ledger.enable = true;
 
   # Enable steam udev rules
-  hardware.steam-hardware.enable = isDesktop;
+  hardware.steam-hardware.enable = config.programs.steam.enable;
 
   # Allow non-root access to QMK keyboards.
   hardware.keyboard.qmk.enable = true;
@@ -55,15 +54,9 @@
   # This allows us to call dumpcap without using separate privilege escalation.
   programs.wireshark.enable = true;
 
-  # Configure gamescope.
-  programs.gamescope = {
-    enable = isDesktop;
-    capSysNice = true;
-  };
-
   # Configure steam.
   programs.steam = {
-    enable = isDesktop;
+    enable = false;
     package = pkgs.steam.override {
       extraEnv = {
         # Manually set SDL_VIDEODRIVER to x11.
