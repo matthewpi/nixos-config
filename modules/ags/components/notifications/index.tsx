@@ -1,4 +1,4 @@
-import { bind, timeout, Variable } from 'astal';
+import { bind, timeout } from 'astal';
 import type { Subscribable } from 'astal/binding';
 import { App, Astal, Gtk } from 'astal/gtk4';
 import Notifd from 'gi://AstalNotifd';
@@ -8,23 +8,60 @@ import { Notification } from './Notification';
 // see comment below in constructor
 const TIMEOUT_DELAY = 5000;
 
-// The purpose if this class is to replace Variable<Array<Widget>>
-// with a Map<number, Widget> type in order to track notification widgets
-// by their id, while making it conviniently bindable as an array
-class NotifiationMap implements Subscribable {
-	// the underlying map to keep track of id widget pairs
-	private map: Map<number, Gtk.Widget> = new Map();
+// https://aylur.github.io/astal/guide/typescript/binding#example-custom-subscribable
+export class VarMap<K, T = Gtk.Widget> implements Subscribable {
+	#subs = new Set<(v: Array<[K, T]>) => void>();
+	#map: Map<K, T>;
 
-	// it makes sense to use a Variable under the hood and use its
-	// reactivity implementation instead of keeping track of subscribers ourselves
-	private var: Variable<Array<Gtk.Widget>> = Variable([]);
-
-	// notify subscribers to rerender when state changes
-	private notifiy() {
-		this.var.set([...this.map.values()].reverse());
+	constructor(initial?: Iterable<[K, T]>) {
+		this.#map = new Map(initial);
 	}
 
+	get(): [K, T][] {
+		return [...this.#map.entries()];
+	}
+
+	set(key: K, value: T): void {
+		this.#delete(key);
+		this.#map.set(key, value);
+		this.#notify();
+	}
+
+	#delete(key: K): void {
+		const v = this.#map.get(key);
+
+		if (v instanceof Gtk.Widget) {
+			// v.unparent();
+			// v.run_dispose();
+			// v.emit('destroy');
+		}
+
+		this.#map.delete(key);
+	}
+
+	delete(key: K): void {
+		console.log('delete', key);
+		this.#delete(key);
+		this.#notify();
+	}
+
+	subscribe(callback: (v: Array<[K, T]>) => void): () => boolean {
+		this.#subs.add(callback);
+		return () => this.#subs.delete(callback);
+	}
+
+	#notify(): void {
+		const value = this.get();
+		for (const sub of this.#subs) {
+			sub(value);
+		}
+	}
+}
+
+class NotificationMap extends VarMap<number> {
 	constructor() {
+		super();
+
 		const notifd = Notifd.get_default();
 
 		/**
@@ -39,7 +76,7 @@ class NotifiationMap implements Subscribable {
 			this.set(
 				id,
 				Notification({
-					notification: notifd.get_notification(id)!,
+					notification: notifd.get_notification(id),
 
 					// once hovering over the notification is done
 					// destroy the widget without calling notification.dismiss()
@@ -62,35 +99,10 @@ class NotifiationMap implements Subscribable {
 			this.delete(id);
 		});
 	}
-
-	private set(key: number, value: Gtk.Widget) {
-		// in case of replacement destroy previous widget
-		// TODO: fix destroy
-		// this.map.get(key)?.emit('destroy');
-		this.map.set(key, value);
-		this.notifiy();
-	}
-
-	private delete(key: number) {
-		// TODO: fix destroy
-		// this.map.get(key)?.emit('destroy');
-		this.map.delete(key);
-		this.notifiy();
-	}
-
-	// needed by the Subscribable interface
-	get() {
-		return this.var.get();
-	}
-
-	// needed by the Subscribable interface
-	subscribe(callback: (list: Array<Gtk.Widget>) => void) {
-		return this.var.subscribe(callback);
-	}
 }
 
 function NotificationPopups() {
-	const notifications = new NotifiationMap();
+	const notifications = new NotificationMap();
 
 	return (
 		<window

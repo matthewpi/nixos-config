@@ -1,6 +1,7 @@
-import { GLib } from 'astal';
+import { bind, GLib } from 'astal';
 import { Astal, astalify, Gtk } from 'astal/gtk4';
 import Notifd from 'gi://AstalNotifd';
+import Pango from 'gi://Pango';
 
 function isIcon(_icon: string): boolean {
 	// TODO: fix after Gtk4 update.
@@ -84,27 +85,31 @@ function Notification(props: NotificationProps) {
 						{/* TODO: truncate? */}
 						<label cssClasses={['summary']} halign={Gtk.Align.START} xalign={0} label={n.summary} />
 						{n.body && (
-							// TOOD: justifyFill?
+							// TODO: justifyFill?
 							<label
 								cssClasses={['body']}
-								wrap
-								useMarkup
 								halign={Gtk.Align.START}
 								xalign={0}
-								// justifyFill
+								wrap
+								wrapMode={Pango.WrapMode.WORD_CHAR}
+								// maxWidthChars={80}
+								useMarkup
 								label={n.body}
+								// justifyFill
 							/>
 						)}
 					</box>
 				</box>
-				{n.get_actions().length > 0 && (
-					<box cssClasses={['actions']}>
-						{n.get_actions().map(({ label, id }) => (
-							<button hexpand onClicked={() => n.invoke(id)}>
-								<label label={label} halign={Gtk.Align.CENTER} hexpand />
-							</button>
-						))}
-					</box>
+				{bind(n, 'actions').as(actions =>
+					actions.length < 1 ? undefined : (
+						<box cssClasses={['actions']}>
+							{actions.map(({ label, id }) => (
+								<button onClicked={() => n.invoke(id)} hexpand>
+									<label label={label} halign={Gtk.Align.CENTER} hexpand />
+								</button>
+							))}
+						</box>
+					),
 				)}
 			</box>
 		</box>
