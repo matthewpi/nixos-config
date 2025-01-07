@@ -4,7 +4,7 @@
   ...
 }: {
   # Disable pulseaudio
-  hardware.pulseaudio.enable = lib.mkForce false;
+  services.pulseaudio.enable = lib.mkForce false;
 
   # Enable real-time kit
   security.rtkit.enable = lib.mkDefault config.services.pipewire.enable;
