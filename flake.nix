@@ -135,9 +135,19 @@
       };
     };
 
+    hyprland-qt-support = {
+      url = "github:hyprwm/hyprland-qt-support";
+      inputs = {
+        hyprlang.follows = "hyprlang";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
     hyprland-qtutils = {
       url = "github:hyprwm/hyprland-qtutils";
       inputs = {
+        hyprland-qt-support.follows = "hyprland-qt-support";
         hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
@@ -189,6 +199,7 @@
     hyprpolkitagent = {
       url = "github:hyprwm/hyprpolkitagent";
       inputs = {
+        hyprland-qt-support.follows = "hyprland-qt-support";
         hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
