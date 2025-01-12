@@ -12,15 +12,15 @@
   sources = {
     aarch64-darwin = {
       url = "https://r2.matthewp.io/cider/${version}/Cider-${version}-aarch64.dmg";
-      hash = "sha256-zeKUUySH/+KjC3Tf+kpmoffa4tvccfYxObAoWjYBZWI=";
+      hash = "sha256-Id68REE2BsH0VSCokKQ4TMo7kDseudgctzpvntf59iI=";
     };
     x86_64-darwin = {
       url = "https://r2.matthewp.io/cider/${version}/Cider-${version}-x86_64.dmg";
-      hash = "sha256-5zeicHOWRu5BTnud9wh0GQ3v2BHAcwOob5HmQ0QT20g=";
+      hash = "sha256-5R71A8DBYyZ7LHJits1OQgH2Dri95P1PjaZ+mTkQjyM=";
     };
     x86_64-linux = {
       url = "https://r2.matthewp.io/cider/${version}/Cider-${version}.AppImage";
-      hash = "sha256-XdyW2O5LC+/dGosSYVz5IkAxi2taVBrXXHTbWZCNnn8=";
+      hash = "sha256-OMsLuqJPEPzjDjyEqq+y0c3gdAvFxiCLasa7X2MhbYY=";
     };
   };
 
