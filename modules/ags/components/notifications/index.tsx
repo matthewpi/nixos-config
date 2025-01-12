@@ -31,16 +31,13 @@ export class VarMap<K, T = Gtk.Widget> implements Subscribable {
 		const v = this.#map.get(key);
 
 		if (v instanceof Gtk.Widget) {
-			// v.unparent();
-			// v.run_dispose();
-			// v.emit('destroy');
+			v.unparent();
 		}
 
 		this.#map.delete(key);
 	}
 
 	delete(key: K): void {
-		console.log('delete', key);
 		this.#delete(key);
 		this.#notify();
 	}
@@ -58,11 +55,11 @@ export class VarMap<K, T = Gtk.Widget> implements Subscribable {
 	}
 }
 
-class NotificationMap extends VarMap<number> {
+class NotificationMap extends VarMap<number, Gtk.Widget> {
+	#notifd = Notifd.get_default();
+
 	constructor() {
 		super();
-
-		const notifd = Notifd.get_default();
 
 		/**
 		 * uncomment this if you want to
@@ -70,38 +67,50 @@ class NotificationMap extends VarMap<number> {
 		 * note that if the notification has any actions
 		 * they might not work, since the sender already treats them as resolved
 		 */
-		// notifd.ignoreTimeout = true;
+		// Ignore timeouts set by notification senders so we can enforce our own
+		this.#notifd.ignoreTimeout = true;
 
-		notifd.connect('notified', (_, id) => {
+		this.#notifd.connect('notified', (_, id) => {
 			this.set(
 				id,
 				Notification({
-					notification: notifd.get_notification(id),
-
-					// once hovering over the notification is done
-					// destroy the widget without calling notification.dismiss()
-					// so that it acts as a "popup" and we can still display it
-					// in a notification center like widget
-					// but clicking on the close button will close it
-					onHoverLeave: () => {}, // this.delete(id)
-
-					// notifd by default does not close notifications
-					// until user input or the timeout specified by sender
-					// which we set to ignore above
+					notification: this.#notifd.get_notification(id),
+					// Remove the notification after the timeout has passed.
 					setup: () => timeout(TIMEOUT_DELAY, () => this.delete(id)),
+					// onHoverLeave: () => this.delete(id).
 				}),
 			);
 		});
 
 		// notifications can be closed by the outside before
 		// any user input, which have to be handled too
-		notifd.connect('resolved', (_, id) => {
+		this.#notifd.connect('resolved', (_, id) => {
 			this.delete(id);
 		});
 	}
+
+	override set(key: number, value: Gtk.Widget): void {
+		super.set(key, value);
+
+		// If a notification was added, ensure the window is visible.
+		const window = App.get_window('notifications') ?? undefined;
+		if (window !== undefined && !window.visible) {
+			window.show();
+		}
+	}
+
+	override delete(id: number): void {
+		super.delete(id);
+
+		// If all notifications have been removed, hide the window.
+		const window = App.get_window('notifications') ?? undefined;
+		if (window !== undefined && this.get().length < 1) {
+			window.hide();
+		}
+	}
 }
 
-function NotificationPopups() {
+function NotificationsWindow() {
 	const notifications = new NotificationMap();
 
 	return (
@@ -112,11 +121,10 @@ function NotificationPopups() {
 			cssClasses={['notifications']}
 			exclusivity={Astal.Exclusivity.EXCLUSIVE}
 			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
-			visible
 		>
 			<box vertical>{bind(notifications)}</box>
 		</window>
 	);
 }
 
-export { NotificationPopups };
+export { NotificationsWindow };

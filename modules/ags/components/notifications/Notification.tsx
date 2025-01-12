@@ -3,12 +3,6 @@ import { Astal, astalify, Gtk } from 'astal/gtk4';
 import Notifd from 'gi://AstalNotifd';
 import Pango from 'gi://Pango';
 
-function isIcon(_icon: string): boolean {
-	// TODO: fix after Gtk4 update.
-	// return !!Astal.Icon.lookup_icon(icon);
-	return true;
-}
-
 function fileExists(path: string) {
 	return GLib.file_test(path, GLib.FileTest.EXISTS);
 }
@@ -29,27 +23,37 @@ function urgency(n: Notifd.Notification) {
 	}
 }
 
-interface NotificationProps {
-	setup(self: Astal.Box): void;
-	onHoverLeave(self: Astal.Box): void;
-	notification: Notifd.Notification;
-}
-
 // type SeparatorProps = ConstructProps<Gtk.Separator, Gtk.Separator.ConstructorProps>;
 const Separator = astalify<Gtk.Separator, Gtk.Separator.ConstructorProps>(Gtk.Separator, {});
 
-function Notification(props: NotificationProps) {
-	const { notification: n, onHoverLeave, setup } = props;
+function NotificationIcon({ notification }: { notification: Notifd.Notification }) {
+	// if (notification.image) {
+	// 	return <image iconName={bind(notification, 'image')} cssClasses={['app-icon']} />;
+	// }
 
+	if (notification.appIcon) {
+		return <image iconName={bind(notification, 'appIcon')} cssClasses={['app-icon']} />;
+	}
+
+	if (notification.desktopEntry) {
+		return <image iconName={bind(notification, 'desktopEntry')} cssClasses={['app-icon']} />;
+	}
+
+	return <image iconName="dialog-information-symbolic" cssClasses={['app-icon']} />;
+}
+
+interface NotificationProps {
+	notification: Notifd.Notification;
+	setup?(self: Astal.Box): void;
+	onHoverLeave?(self: Astal.Box): void;
+}
+
+function Notification({ notification: n, ...props }: NotificationProps) {
 	return (
-		<box cssClasses={['notification', urgency(n)]} setup={setup} onHoverLeave={onHoverLeave}>
+		<box cssClasses={['notification', urgency(n)]} setup={props.setup} onHoverLeave={props.onHoverLeave}>
 			<box vertical>
 				<box cssClasses={['header']}>
-					<image
-						cssClasses={['app-icon']}
-						visible={Boolean(n.appIcon || n.desktopEntry)}
-						iconName={n.appIcon || n.desktopEntry}
-					/>
+					<NotificationIcon notification={n} />
 					{/* TODO: truncate? */}
 					<label cssClasses={['app-name']} halign={Gtk.Align.START} label={n.appName || 'Unknown'} />
 					<label cssClasses={['time']} hexpand halign={Gtk.Align.END} label={time(n.time)} />
@@ -60,25 +64,25 @@ function Notification(props: NotificationProps) {
 				{/* @ts-expect-error go away */}
 				<Separator visible />
 				<box cssClasses={['content']}>
-					{n.image && fileExists(n.image) && (
-						<box
-							valign={Gtk.Align.START}
-							cssClasses={['image']}
-							// TODO: does the `css` property still work?
-							// css={`
-							// 	background-image: url('${n.image}');
-							// `}
-						/>
-					)}
-					{n.image && isIcon(n.image) && (
-						<box vexpand={false} hexpand={false} valign={Gtk.Align.START} cssClasses={['icon-image']}>
-							<image
-								iconName={n.image}
-								hexpand
-								vexpand
-								halign={Gtk.Align.CENTER}
-								valign={Gtk.Align.CENTER}
-							/>
+					{n.image && (
+						<box vexpand={false} hexpand={false} valign={Gtk.Align.START} cssClasses={['image']}>
+							{fileExists(n.image) ? (
+								<image
+									file={n.image}
+									hexpand
+									vexpand
+									halign={Gtk.Align.CENTER}
+									valign={Gtk.Align.CENTER}
+								/>
+							) : (
+								<image
+									iconName={n.image}
+									hexpand
+									vexpand
+									halign={Gtk.Align.CENTER}
+									valign={Gtk.Align.CENTER}
+								/>
+							)}
 						</box>
 					)}
 					<box vertical>

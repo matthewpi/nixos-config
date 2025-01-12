@@ -1,4 +1,4 @@
-import { bind, GLib, Variable } from 'astal';
+import { bind, execAsync, GLib, Variable } from 'astal';
 import { Astal, astalify, Gdk, Gtk } from 'astal/gtk4';
 import Cairo from 'cairo';
 import Battery from 'gi://AstalBattery';
@@ -7,8 +7,10 @@ import Hyprland from 'gi://AstalHyprland';
 // import IWD from 'gi://AstalIWD';
 import Mpris from 'gi://AstalMpris';
 // import Networkd from 'gi://AstalNetworkd';
+import Notifd from 'gi://AstalNotifd';
 import Tray from 'gi://AstalTray';
 import Wireplumber from 'gi://AstalWp';
+import Gio from 'gi://Gio';
 
 type PollFn<T> = (prev: T) => T | Promise<T>;
 
@@ -186,14 +188,21 @@ function SysTray() {
 	return <box cssClasses={['systray']}>{bind(tray, 'items').as(items => items.map(TrayItem))}</box>;
 }
 
+// export type PopoverMenuProps = ConstructProps<Gtk.PopoverMenu, Gtk.PopoverMenu.ConstructorProps>
+export const PopoverMenu = astalify<Gtk.PopoverMenu, Gtk.PopoverMenu.ConstructorProps>(Gtk.PopoverMenu, {});
+
 function TrayItem(item: Tray.TrayItem) {
 	return (
-		<menubutton
-			cssClasses={['systray-item']}
-			tooltipMarkup={bind(item, 'tooltipMarkup')}
-			menuModel={bind(item, 'menu_model')}
-		>
+		<menubutton cssClasses={['systray-item']} tooltipMarkup={bind(item, 'tooltipMarkup')}>
 			<image gicon={bind(item, 'gicon')} />
+
+			{/* @ts-expect-error go away */}
+			<PopoverMenu
+				menuModel={bind(item, 'menuModel')}
+				setup={(self: Gtk.PopoverMenu) => {
+					self.insert_action_group('dbusmenu', item.actionGroup);
+				}}
+			/>
 		</menubutton>
 	);
 }
@@ -273,6 +282,27 @@ function BatteryLevel() {
 	);
 }
 
+function NotificationsIndicator() {
+	const notifd = Notifd.get_default();
+
+	return (
+		<box>
+			<button
+				cssClasses={['notification-indicator']}
+				onClicked={() => {
+					notifd.dontDisturb = !notifd.dontDisturb;
+				}}
+			>
+				<image
+					iconName={bind(notifd, 'dontDisturb').as(dnd =>
+						dnd ? 'notifications-disabled-symbolic' : 'user-available-symbolic',
+					)}
+				/>
+			</button>
+		</box>
+	);
+}
+
 function VolumeIndicator() {
 	const wireplumber = Wireplumber.get_default();
 
@@ -313,6 +343,124 @@ function VolumeIndicator() {
 	);
 }
 
+interface ActionItemProps {
+	name: string;
+	text: string;
+	iconName?: string;
+	onActivate: () => Promise<void> | void;
+}
+
+function createActionItem({ name, text, iconName, onActivate }: ActionItemProps): [Gio.SimpleAction, Gio.MenuItem] {
+	const action = new Gio.SimpleAction({
+		enabled: true,
+		name: name,
+	});
+	action.connect('activate', onActivate);
+
+	const item = Gio.MenuItem.new(text, 'pm.' + name);
+	if (iconName !== undefined) {
+		// TODO: figure out if this even works.
+		const icon = Gio.Icon.new_for_string(iconName);
+		item.set_icon(icon);
+	}
+
+	return [action, item];
+}
+
+function Actions() {
+	const actions = new Gio.SimpleActionGroup();
+	const menuModel = new Gio.Menu();
+
+	const addItem = ([action, item]: [Gio.SimpleAction, Gio.MenuItem]) => {
+		actions.add_action(action);
+		menuModel.append_item(item);
+	};
+
+	addItem(
+		createActionItem({
+			name: 'shutdown',
+			text: 'Shutdown',
+			iconName: 'system-shutdown-symbolic',
+			onActivate: async () => {
+				await execAsync(['systemctl', 'poweroff']);
+			},
+		}),
+	);
+
+	addItem(
+		createActionItem({
+			name: 'reboot',
+			text: 'Reboot',
+			iconName: 'system-reboot-symbolic',
+			onActivate: async () => {
+				await execAsync(['systemctl', 'reboot']);
+			},
+		}),
+	);
+
+	addItem(
+		createActionItem({
+			name: 'suspend',
+			text: 'Suspend',
+			iconName: 'weather-clear-night-symbolic',
+			onActivate: async () => {
+				await execAsync(['systemctl', 'suspend']);
+			},
+		}),
+	);
+
+	// TODO: what one of these logouts do we want to keep?
+	// NOTE: it might be better to put these in a submenu.
+	addItem(
+		createActionItem({
+			name: 'logout-session',
+			text: 'Logout (Session)',
+			iconName: 'system-log-out-symbolic',
+			onActivate: async () => {
+				// TODO: either wrap command in bash or get `XDG_SESSION_ID` from within JS.
+				await execAsync(['loginctl', 'terminate-session', '$XDG_SESSION_ID']);
+			},
+		}),
+	);
+	addItem(
+		createActionItem({
+			name: 'logout-user',
+			text: 'Logout (User)',
+			iconName: 'system-log-out-symbolic',
+			onActivate: async () => {
+				// TODO: either wrap command in bash or get `USER` from within JS.
+				await execAsync(['loginctl', 'terminate-user', '$USER']);
+			},
+		}),
+	);
+
+	addItem(
+		createActionItem({
+			name: 'lock',
+			text: 'Lock',
+			iconName: 'system-lock-screen-symbolic',
+			onActivate: async () => {
+				await execAsync(['loginctl', 'lock-session']);
+			},
+		}),
+	);
+
+	return (
+		<menubutton>
+			<image iconName="system-shutdown-symbolic" />
+			{/* @ts-expect-error go away */}
+			<PopoverMenu
+				menuModel={menuModel}
+				// TODO: might be nice to map this as an astal property to avoid
+				// needing to use setup.
+				setup={(self: Gtk.PopoverMenu) => {
+					self.insert_action_group('pm', actions);
+				}}
+			/>
+		</menubutton>
+	);
+}
+
 function Bar(monitor: Gdk.Monitor) {
 	return (
 		<window
@@ -338,9 +486,11 @@ function Bar(monitor: Gdk.Monitor) {
 					<SysTray />
 					{/* <WirelessIndicator /> */}
 					{/* <NetworkIndicator /> */}
-					<BluetoothIndicator />
+					{/* <BluetoothIndicator /> */}
 					<VolumeIndicator />
-					<BatteryLevel />
+					{/* <BatteryLevel /> */}
+					<NotificationsIndicator />
+					<Actions />
 				</box>
 			</centerbox>
 		</window>

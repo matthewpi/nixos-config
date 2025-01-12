@@ -2,7 +2,7 @@ import { App, Gdk, Gtk } from 'astal/gtk4';
 
 import { Launcher } from './components/apps';
 import { Bar } from './components/bar';
-import { NotificationPopups } from './components/notifications';
+import { NotificationsWindow } from './components/notifications';
 import style from './style.scss';
 
 function main() {
@@ -21,7 +21,7 @@ function main() {
 	// 	bars.delete(monitor);
 	// });
 
-	NotificationPopups();
+	NotificationsWindow();
 
 	Launcher();
 }
