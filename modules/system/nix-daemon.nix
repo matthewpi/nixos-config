@@ -7,6 +7,9 @@
     # Use the latest version of Nix
     package = pkgs.nixVersions.nix_2_24;
 
+    # Disable nix channels since we don't use them.
+    channel.enable = false;
+
     settings = {
       # Auto-scale builders
       max-jobs = lib.mkDefault "auto";
