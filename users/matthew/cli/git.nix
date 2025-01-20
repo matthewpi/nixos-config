@@ -58,5 +58,19 @@
       color = "auto";
       display = "side-by-side";
     };
+
+    aliases = {
+      a = "add";
+      aa = "add -A";
+
+      c = "commit";
+      cs = "commit -s";
+      ca = "commit --amend";
+      amend = "commit --amend --no-edit";
+
+      s = "stash";
+      sp = "stash push -S";
+      sa = "stash apply";
+    };
   };
 }
