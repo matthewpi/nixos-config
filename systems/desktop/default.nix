@@ -68,6 +68,12 @@
     "gccarch-x86-64-v4"
     "gccarch-znver3"
     "gccarch-znver4"
+
+    "keys"
+    "kernel-module-keys"
+    "secureboot"
+    "pcr-keys"
+    "verity-keys"
   ];
 
   # Configure restic to backup important directories
@@ -127,4 +133,21 @@
 
   # Override the default time servers to use DHCP instead.
   networking.timeServers = lib.mkForce [];
+
+  programs.nix-required-mounts = {
+    enable = true;
+    allowedPatterns = {
+      keys.paths = ["/var/lib/keys"];
+      kernel-module-keys.paths = ["/var/lib/keys/kernel"];
+      secureboot.paths = ["/var/lib/keys/secureboot"];
+      pcr-keys.paths = ["/var/lib/keys/pcr"];
+      verity-keys.paths = ["/var/lib/keys/verity"];
+    };
+  };
+  environment.persistence."/persist".directories = [
+    {
+      directory = "/var/lib/keys";
+      mode = "0755";
+    }
+  ];
 }
