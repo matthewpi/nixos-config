@@ -51,6 +51,10 @@
       cp = "cp -i";
       mv = "mv -i";
       rm = "rm -i";
+
+      g = "git";
+
+      n = "nix";
     };
   };
 }
