@@ -38,6 +38,7 @@
             settings = {
               allowDiscards = true;
               bypassWorkqueues = true;
+              crypttabExtraOpts = ["tpm2-device=auto" "tpm2-measure-pcr=yes"];
             };
             content = let
               defaultOptions = [
