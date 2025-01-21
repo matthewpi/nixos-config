@@ -24,6 +24,8 @@
       "file://${config.home.homeDirectory}/Videos"
     ];
 
+    gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+
     iconTheme = {
       name = "WhiteSur-dark";
       package = pkgs.whitesur-icon-theme;

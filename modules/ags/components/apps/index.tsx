@@ -2,6 +2,7 @@ import { Variable } from 'astal';
 import { App, Astal, Gdk, Gtk } from 'astal/gtk4';
 import { execAsync } from 'astal/process';
 import Apps from 'gi://AstalApps';
+import Pango from 'gi://Pango';
 
 const MAX_ITEMS = 12;
 
@@ -62,8 +63,7 @@ function AppButton({ app }: AppButtonProps) {
 			<box>
 				<image iconName={app.iconName} iconSize={Gtk.IconSize.LARGE} />
 				<box valign={Gtk.Align.CENTER} vertical>
-					{/* TODO: truncate? */}
-					<label cssClasses={['name']} xalign={0} label={app.name} />
+					<label cssClasses={['name']} xalign={0} label={app.name} ellipsize={Pango.EllipsizeMode.END} />
 					{app.description && <label cssClasses={['description']} wrap xalign={0} label={app.description} />}
 				</box>
 			</box>

@@ -1,5 +1,5 @@
 import { bind, execAsync, GLib, Variable } from 'astal';
-import { Astal, astalify, Gdk, Gtk } from 'astal/gtk4';
+import { Astal, astalify, Gdk, Gtk, hook } from 'astal/gtk4';
 import Cairo from 'cairo';
 import Battery from 'gi://AstalBattery';
 import Bluetooth from 'gi://AstalBluetooth';
@@ -161,10 +161,16 @@ function Workspace({ hypr, id, w, monitor }: WorkspaceProps) {
 
 function Clock() {
 	return (
-		<box cssClasses={['clock']}>
-			<Time fn={() => GLib.DateTime.new_now_local()} />
-			<Time fn={() => GLib.DateTime.new_now_utc()} />
-		</box>
+		<menubutton cssClasses={['clock']}>
+			<box spacing={16}>
+				<Time fn={() => GLib.DateTime.new_now_local()} />
+				<Time fn={() => GLib.DateTime.new_now_utc()} />
+			</box>
+
+			<popover>
+				<Gtk.Calendar />
+			</popover>
+		</menubutton>
 	);
 }
 
@@ -192,19 +198,30 @@ function SysTray() {
 export const PopoverMenu = astalify<Gtk.PopoverMenu, Gtk.PopoverMenu.ConstructorProps>(Gtk.PopoverMenu, {});
 
 function TrayItem(item: Tray.TrayItem) {
-	return (
-		<menubutton cssClasses={['systray-item']} tooltipMarkup={bind(item, 'tooltipMarkup')}>
+	const button = (
+		<menubutton
+			cssClasses={['systray-item']}
+			tooltipMarkup={bind(item, 'tooltipMarkup')}
+			setup={(self: Gtk.MenuButton) => {
+				self.insert_action_group('dbusmenu', item.actionGroup);
+			}}
+		>
 			<image gicon={bind(item, 'gicon')} />
 
 			{/* @ts-expect-error go away */}
-			<PopoverMenu
-				menuModel={bind(item, 'menuModel')}
-				setup={(self: Gtk.PopoverMenu) => {
-					self.insert_action_group('dbusmenu', item.actionGroup);
-				}}
-			/>
+			<PopoverMenu menuModel={bind(item, 'menuModel')} flags={Gtk.PopoverMenuFlags.SLIDING} />
 		</menubutton>
 	);
+
+	// Ensure the action group gets updated on the menu button even if it changes.
+	//
+	// TODO: ideally we could use a property and bind this instead of needing to
+	// manually call `insert_action_group`.
+	hook(button, item, 'notify::action-group', self => {
+		self.insert_action_group('dbusmenu', item.actionGroup);
+	});
+
+	return button;
 }
 
 // function NetworkIndicator() {
