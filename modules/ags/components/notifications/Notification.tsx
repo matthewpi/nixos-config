@@ -54,8 +54,12 @@ function Notification({ notification: n, ...props }: NotificationProps) {
 			<box vertical>
 				<box cssClasses={['header']}>
 					<NotificationIcon notification={n} />
-					{/* TODO: truncate? */}
-					<label cssClasses={['app-name']} halign={Gtk.Align.START} label={n.appName || 'Unknown'} />
+					<label
+						cssClasses={['app-name']}
+						halign={Gtk.Align.START}
+						label={n.appName || 'Unknown'}
+						ellipsize={Pango.EllipsizeMode.END}
+					/>
 					<label cssClasses={['time']} hexpand halign={Gtk.Align.END} label={time(n.time)} />
 					<button onClicked={() => n.dismiss()}>
 						<image iconName="window-close-symbolic" />
@@ -86,26 +90,35 @@ function Notification({ notification: n, ...props }: NotificationProps) {
 						</box>
 					)}
 					<box vertical>
-						{/* TODO: truncate? */}
-						<label cssClasses={['summary']} halign={Gtk.Align.START} xalign={0} label={n.summary} />
+						<label
+							cssClasses={['summary']}
+							halign={Gtk.Align.START}
+							xalign={0}
+							label={n.summary}
+							ellipsize={Pango.EllipsizeMode.END}
+						/>
 						{n.body && (
-							// TODO: justifyFill?
 							<label
 								cssClasses={['body']}
 								halign={Gtk.Align.START}
 								xalign={0}
 								wrap
 								wrapMode={Pango.WrapMode.WORD_CHAR}
-								// maxWidthChars={80}
+								maxWidthChars={80}
 								useMarkup
 								label={n.body}
-								// justifyFill
+								justify={Gtk.Justification.FILL}
 							/>
 						)}
 					</box>
 				</box>
-				{bind(n, 'actions').as(actions =>
-					actions.length < 1 ? undefined : (
+
+				{bind(n, 'actions').as(actions => {
+					if (actions.length < 1) {
+						return;
+					}
+
+					return (
 						<box cssClasses={['actions']}>
 							{actions.map(({ label, id }) => (
 								<button onClicked={() => n.invoke(id)} hexpand>
@@ -113,8 +126,8 @@ function Notification({ notification: n, ...props }: NotificationProps) {
 								</button>
 							))}
 						</box>
-					),
-				)}
+					);
+				})}
 			</box>
 		</box>
 	);
