@@ -505,7 +505,7 @@ function Bar(monitor: Gdk.Monitor) {
 					{/* <NetworkIndicator /> */}
 					{/* <BluetoothIndicator /> */}
 					<VolumeIndicator />
-					{/* <BatteryLevel /> */}
+					<BatteryLevel />
 					<NotificationsIndicator />
 					<Actions />
 				</box>
