@@ -225,7 +225,7 @@
     impermanence.url = "github:nix-community/impermanence";
 
     lanzaboote = {
-      url = "github:nix-community/lanzaboote/64d20cb2afaad8b73f4e38de41d27fb30a782bb5";
+      url = "github:nix-community/lanzaboote/v0.4.2";
       inputs = {
         flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
