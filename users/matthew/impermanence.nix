@@ -360,6 +360,10 @@ in {
         mode = "0700";
       }
       {
+        directory = ".local/share/io.hoppscotch.desktop";
+        mode = "0700";
+      }
+      {
         directory = ".local/share/icc";
         mode = "0700";
       }
