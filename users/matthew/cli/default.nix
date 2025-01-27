@@ -24,7 +24,6 @@
   home.packages = with pkgs; [
     attic-client
     bgpq4
-    diskonaut
     gnmic
     jq
     nix-output-monitor
