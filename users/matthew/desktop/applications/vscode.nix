@@ -101,6 +101,13 @@
           version = "1.12.6";
           hash = "sha256-PBshvtO7NDMfKK482GN8qSyGw7OEeExEwr1/whH9yUA=";
         }
+        # Smarty Template Support
+        {
+          name = "smarty-template-support";
+          publisher = "aswinkumar863";
+          version = "2.1.0";
+          hash = "sha256-JS4HqnZBf9PAHcU0DpxVt4U9paoCc1LZn1iKDl7XVrc=";
+        }
         # SQLTools
         {
           name = "sqltools";
