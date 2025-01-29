@@ -18,7 +18,6 @@
       hoppscotch = pkgs.callPackage ./hoppscotch {};
       hoppscotch-desktop-unwrapped = pkgs.callPackage ./hoppscotch-desktop {inherit hoppscotch;};
       hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/wrapper.nix {inherit hoppscotch-desktop-unwrapped;};
-      package-version-server = pkgs.callPackage ./package-version-server {};
       simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server {};
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
@@ -73,7 +72,6 @@
         hoppscotch-desktop
         inter
         monaspace
-        package-version-server
         simple-completion-language-server
         vesktop
         vulkan-hdr-layer
