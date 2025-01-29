@@ -15,11 +15,9 @@
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
       cider2 = pkgs.callPackage ./cider2 {};
-      gauntlet = pkgs.callPackage ./gauntlet/package.nix {};
       hoppscotch = pkgs.callPackage ./hoppscotch {};
       hoppscotch-desktop-unwrapped = pkgs.callPackage ./hoppscotch-desktop {inherit hoppscotch;};
       hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/wrapper.nix {inherit hoppscotch-desktop-unwrapped;};
-      kind = pkgs.callPackage ./kind {};
       package-version-server = pkgs.callPackage ./package-version-server {};
       simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server {};
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
@@ -72,14 +70,12 @@
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
-        gauntlet
         hoppscotch-desktop-unwrapped
         hoppscotch-desktop
+        inter
+        monaspace
         package-version-server
         simple-completion-language-server
-        inter
-        kind
-        monaspace
         vesktop
         vulkan-hdr-layer
         zsh-titles

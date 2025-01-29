@@ -232,14 +232,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nix-gaming = {
-      url = "github:matthewpi/nix-gaming/updates";
-      inputs = {
-        flake-parts.follows = "flake-parts";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
-
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
@@ -335,11 +327,6 @@
               inputs.agenix.nixosModules.default
               inputs.disko.nixosModules.disko
               inputs.home-manager.nixosModules.home-manager
-
-              inputs.nix-gaming.nixosModules.platformOptimizations
-              {
-                programs.steam.platformOptimizations.enable = true;
-              }
 
               self.nixosModules.desktop
               self.nixosModules.hyprland

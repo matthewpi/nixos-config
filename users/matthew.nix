@@ -19,9 +19,6 @@
   # Enable ledger udev rules
   hardware.ledger.enable = true;
 
-  # Enable steam udev rules
-  hardware.steam-hardware.enable = config.programs.steam.enable;
-
   # Allow non-root access to QMK keyboards.
   hardware.keyboard.qmk.enable = true;
 
@@ -31,14 +28,10 @@
     vteIntegration = true;
   };
 
-  # Allow matthew access to 1Password
+  # Allow matthew access to 1Password.
   programs._1password-gui.polkitPolicyOwners = ["matthew"];
 
-  # Enable yubikey-agent
-  # Temporarily disabled due to breaking things.
-  #services.yubikey-agent.enable = true;
-  #systemd.user.services."yubikey-agent".serviceConfig.Slice = "background.slice";
-  programs.gnupg.agent.pinentryPackage = with pkgs; pinentry-gnome3;
+  # Configure SSH to use 1Password SSH Agent.
   environment.extraInit = let
     sshAuthSock =
       if pkgs.stdenv.isDarwin
@@ -53,38 +46,6 @@
   # Enable the wireshark dumpcap security wrapper.
   # This allows us to call dumpcap without using separate privilege escalation.
   programs.wireshark.enable = true;
-
-  # Configure steam.
-  programs.steam = {
-    enable = false;
-    package = pkgs.steam.override {
-      extraEnv = {
-        # Manually set SDL_VIDEODRIVER to x11.
-        #
-        # This fixes the `gldriverquery` segfault and issues with EAC crashing on games like Rust,
-        # rather than gracefully disabling itself.
-        SDL_VIDEODRIVER = "x11";
-      };
-
-      extraPkgs = pkgs:
-        with pkgs; [
-          xorg.libXcursor
-          xorg.libXi
-          xorg.libXinerama
-          xorg.libXScrnSaver
-          libpng
-          libpulseaudio
-          libvorbis
-          stdenv.cc.cc.lib
-          libkrb5
-          keyutils
-        ];
-    };
-    extraCompatPackages = with pkgs; [proton-ge-bin];
-    extraPackages = with pkgs; [gamescope];
-    localNetworkGameTransfers.openFirewall = true;
-    protontricks.enable = true;
-  };
 
   # Configure the matthew user.
   users.users.matthew = {

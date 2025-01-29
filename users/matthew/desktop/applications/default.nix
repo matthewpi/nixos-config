@@ -7,9 +7,6 @@
   imports =
     [
       ./firefox.nix
-      # ./gauntlet.nix
-      # ./obs-studio.nix
-      # ./signal.nix
       ./tailscale.nix
       ./terminal.nix
       ./vesktop.nix
@@ -29,7 +26,6 @@
     impression
     libreoffice
     ledger-live-desktop
-    # lens
     obsidian
     overskride
     qFlipper

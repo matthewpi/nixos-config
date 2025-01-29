@@ -1,8 +1,4 @@
-{
-  # inputs,
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.packages = with pkgs; [
     (prismlauncher.override {
       # withWaylandGLFW = true;
@@ -15,8 +11,6 @@
         temurin-bin-21
       ];
     })
-
-    # (inputs.nix-gaming.packages.${pkgs.system}.star-citizen.override {wine = inputs.nix-gaming.packages.${pkgs.system}.wine-tkg;})
   ];
 
   programs.mangohud = {
