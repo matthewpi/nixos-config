@@ -25,7 +25,7 @@
       vesktop = pkgs.callPackage ./vesktop/package.nix {vesktop = pkgs.vesktop;};
       vulkan-hdr-layer = pkgs.callPackage ./vulkan-hdr-layer {};
 
-      catppuccin-cursors = pkgs.catppuccin-cursors.overrideAttrs (oldAttrs: {
+      catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs (oldAttrs: {
         src = pkgs.fetchFromGitHub {
           owner = "catppuccin";
           repo = "cursors";
@@ -48,6 +48,25 @@
           runHook postBuild
         '';
       });
+
+      zed-editor = pkgs.zed-editor.overrideAttrs (oldAttrs: {
+        # I have no idea why but if I use `oldAttrs.patches ++ []` somehow my
+        # patch gets added twice.
+        patches = [
+          # Zed uses cargo-install to install cargo-about during the script execution.
+          # We provide cargo-about ourselves and can skip this step.
+          # Until https://github.com/zed-industries/zed/issues/19971 is fixed,
+          # we also skip any crate for which the license cannot be determined.
+          "${inputs.nixpkgs}/pkgs/by-name/ze/zed-editor/0001-generate-licenses.patch"
+          # See https://github.com/zed-industries/zed/pull/21661#issuecomment-2524161840
+          "script/patches/use-cross-platform-livekit.patch"
+          ./0001-Enable-package-version-server-lookup-in-PATH.patch
+        ];
+      });
+
+      # zed-editor = inputs.nixpkgs.legacyPackages.${system}.zed-editor.overrideAttrs (oldAttrs: {
+      #   patches = oldAttrs.patches ++ [./0001-Enable-package-version-server-lookup-in-PATH.patch];
+      # });
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -75,6 +94,7 @@
         simple-completion-language-server
         vesktop
         vulkan-hdr-layer
+        zed-editor
         ;
 
       _1password-gui = _packages._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
