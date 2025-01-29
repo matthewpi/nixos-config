@@ -34,22 +34,21 @@
       tag.gpgSign = true;
 
       # Use SSH for GitHub, even if a HTTP url is used.
-      # TODO: disabled due to slowing Cargo git clones down dramatically.
-      # url = {
-      #   "git@github.com:" = {
-      #     insteadOf = "https://github.com/";
-      #   };
-      # };
+      url = {
+        "git@github.com:" = {
+          insteadOf = "https://github.com/";
+        };
+      };
 
       # Enable the manyFiles feature.
-      feature.manyFiles = false; # TODO: true (this option seems to piss of Cargo when dealing with submodules)
+      feature.manyFiles = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
 
       # Enable the commit graph.
-      core.commitgraph = false; # true (this option seems to piss of Cargo when dealing with submodules)
+      core.commitgraph = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
 
       # Write the commit graph persistently.
-      feature.writeCommitGraph = false; # true (this option seems to piss of Cargo when dealing with submodules)
-      fetch.writeCommitGraph = false; # true (this option seems to piss of Cargo when dealing with submodules)
+      feature.writeCommitGraph = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
+      fetch.writeCommitGraph = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
     };
 
     difftastic = {
