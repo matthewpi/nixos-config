@@ -35,6 +35,8 @@
         "${config.home.homeDirectory}/.cache/amberol"
         # Configuration location
         "${config.home.homeDirectory}/.config/streamdeck"
+        # Firefox assets
+        "${config.home.homeDirectory}/.mozilla/firefox/firefox-mpris"
         # Allow access to the binary since it's not packaged by Nix.
         "/code/matthewpi/streamdeck-local"
       ];
