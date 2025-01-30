@@ -40,7 +40,7 @@ in {
       "systemd-pcrlock-firmware-code.service"
       "systemd-pcrlock-firmware-config.service"
       "systemd-pcrlock-machine-id.service"
-      "systemd-pcrlock-make-policy.service"
+      # "systemd-pcrlock-make-policy.service"
       "systemd-pcrlock-secureboot-authority.service"
       "systemd-pcrlock-secureboot-policy.service"
       # "systemd-pcrlock@.service"
@@ -71,11 +71,5 @@ in {
       # JQ is useful for parsing the output of `systemd-pcrlock`.
       pkgs.jq
     ];
-
-    # systemd.tmpfiles.settings."20-pcrlock" = {
-    #   # "/var/lib/pcrlock.d/560-boot-loader.pcrlock.d/generated.pcrlock"."C+".argument = builtins.toString (pkgs.writeText "generated.pcrlock" ''
-    #   #   {"records":[{"pcr":4,"digests":[{"hashAlg":"sha1","digest":"19e2b51dfa4f3e27a7f8c1e9b1b2e9afb3e76d4f"},{"hashAlg":"sha256","digest":"f72dd667a2bd510147926ab8a5699f55150bd547465126defa00e5cca5268db8"},{"hashAlg":"sha384","digest":"c70650eb4969ad0a3a51a4a1072d3d8eaacbded3eb00aac4c41527523f05d2b506a9e31c688b9680980963159e0ca1bc"},{"hashAlg":"sha512","digest":"f838710b675a522783b57a421eac003ce00c1d26c72144d87a773c8d34218faf5eb1252e6a7d28548697db26f2036f71af1c9fa1a7864bf5d697e61eed4cf4ae"}]}]}
-    #   # '');
-    # };
   });
 }
