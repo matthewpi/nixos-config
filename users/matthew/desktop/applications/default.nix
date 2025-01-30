@@ -6,7 +6,7 @@
 }: {
   imports =
     [
-      ./firefox.nix
+      ./firefox
       ./tailscale.nix
       ./terminal.nix
       ./vesktop.nix

@@ -21,9 +21,7 @@
         addons = import "${inputs.firefox-addons}/default.nix" {inherit (pkgs) fetchurl lib stdenv;};
       in
         with addons; [
-          # 7tv
           decentraleyes
-          # hoppscotch
           no-pdf-download
           onepassword-password-manager
           stylus
@@ -126,8 +124,7 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://cdn.search.brave.com/serp/v2/_app/immutable/assets/brave-search-icon.CsIFM2aN.svg";
-            updateInterval = 24 * 60 * 60 * 1000; # every day
+            icon = "${./brave-search-icon.svg}";
             definedAliases = ["@brave"];
           };
 
@@ -143,9 +140,24 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://bgp.tools/favicon.ico";
-            updateInterval = 24 * 60 * 60 * 1000; # every day
+            icon = "${./bgp-tools.ico}";
             definedAliases = ["@bgp"];
+          };
+
+          "MDN Web Docs" = {
+            urls = [
+              {
+                template = "https://developer.mozilla.org/en-US/search";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = "${./mdn.svg}";
+            definedAliases = ["@mdn"];
           };
 
           "Nix Packages" = {
@@ -184,8 +196,25 @@
                 ];
               }
             ];
-            iconUpdateURL = "https://pkg.go.dev/favicon.ico";
-            updateInterval = 24 * 60 * 60 * 1000; # every day
+            # iconUpdateURL = "https://pkg.go.dev/favicon.ico";
+            # updateInterval = 24 * 60 * 60 * 1000; # every day
+            icon = "${./go.ico}";
+            definedAliases = ["@go"];
+          };
+
+          "Simple Icons" = {
+            urls = [
+              {
+                template = "https://simpleicons.org";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = "${./simpleicons.svg}";
             definedAliases = ["@go"];
           };
 
@@ -204,7 +233,6 @@
         "dom.security.https_only_mode" = true;
         "dom.security.https_only_mode_ever_enabled" = true;
 
-        "extensions.activeThemeID" = "{1cd0d6ef-d4bf-4fd1-9d80-4a9811a84647}";
         "extensions.formautofill.addresses.enabled" = false;
         "extensions.formautofill.creditCards.enabled" = false;
 
@@ -235,15 +263,9 @@
         "browser.protections_panel.infoMessage.seen" = true;
         "browser.translations.panelShown" = true;
 
-        # "browser.uiCustomization.state" = ''
-        #   {"placements":{"widget-overflow-fixed-list":[],"unified-extensions-area":["_7cc17731-b734-4c98-a154-51d2bf266ef4_-browser-action","_7ef0f00c-2ebe-4626-8ed7-3185847fcfad_-browser-action","ublock0_raymondhill_net-browser-action","jid1-5fs7itlscuazbgwr_jetpack-browser-action","jid1-bofifl9vbdl2zq_jetpack-browser-action","_5caff8cc-3d2e-4110-a88a-003cc85b3858_-browser-action"],"nav-bar":["back-button","forward-button","stop-reload-button","customizableui-special-spring1","urlbar-container","customizableui-special-spring2","downloads-button","bookmarks-menu-button","developer-button","_c607c8df-14a7-4f28-894f-29e8722976af_-browser-action","_25fc87fa-4d31-4fee-b5c1-c32a7844c063_-browser-action","_7c6d56ed-2616-48f2-bfde-d1830f1cf2ed_-browser-action","unified-extensions-button","78272b6fa58f4a1abaac99321d503a20_proton_me-browser-action"],"toolbar-menubar":["menubar-items"],"TabsToolbar":["tabbrowser-tabs","new-tab-button","alltabs-button"],"PersonalToolbar":["import-button","personal-bookmarks"]},"seen":["save-to-pocket-button","developer-button","_25fc87fa-4d31-4fee-b5c1-c32a7844c063_-browser-action","ublock0_raymondhill_net-browser-action","jid1-5fs7itlscuazbgwr_jetpack-browser-action","jid1-bofifl9vbdl2zq_jetpack-browser-action","_c607c8df-14a7-4f28-894f-29e8722976af_-browser-action","_7ef0f00c-2ebe-4626-8ed7-3185847fcfad_-browser-action","_7cc17731-b734-4c98-a154-51d2bf266ef4_-browser-action","_5caff8cc-3d2e-4110-a88a-003cc85b3858_-browser-action","_7c6d56ed-2616-48f2-bfde-d1830f1cf2ed_-browser-action","78272b6fa58f4a1abaac99321d503a20_proton_me-browser-action"],"dirtyAreaCache":["nav-bar","PersonalToolbar","toolbar-menubar","TabsToolbar","unified-extensions-area"],"currentVersion":19,"newElementCount":7}
-        # '';
-
         "browser.warnOnQuitShortcut" = false;
 
         "datareporting.healthreport.uploadEnabled" = false;
-
-        # "devtools.everOpened" = true;
 
         "font.name.serif.x-western" = "Inter";
       };
