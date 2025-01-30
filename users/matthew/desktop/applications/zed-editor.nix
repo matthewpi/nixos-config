@@ -6,6 +6,7 @@
   programs.zed-editor = {
     enable = true;
     package = pkgs.zed-editor;
+    installRemoteServer = true;
 
     extraPackages = with pkgs; [
       alejandra
