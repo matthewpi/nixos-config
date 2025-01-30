@@ -49,7 +49,7 @@
         '';
       });
 
-      zed-editor = pkgs.zed-editor.overrideAttrs (oldAttrs: {
+      zed-editor = pkgs.zed-editor.overrideAttrs (_oldAttrs: {
         # I have no idea why but if I use `oldAttrs.patches ++ []` somehow my
         # patch gets added twice.
         patches = [

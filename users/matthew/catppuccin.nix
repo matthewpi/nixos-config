@@ -10,7 +10,7 @@
   ];
 
   catppuccin = {
-    accent = "peach";
+    accent = "mauve";
     flavor = "mocha";
 
     alacritty.enable = true;

@@ -7,8 +7,8 @@
   grammars = {
     tree-sitter-caddyfile = rec {
       url = "https://github.com/matthewpi/tree-sitter-caddyfile";
-      rev = "7f96eba5c8555d6db39f55e9a54bf0992468b7cf";
-      hash = "sha256-VJJ1NDIFUFZAG75pr1e9riN7y05mrhzIBw4CyKiwKBg=";
+      rev = "2c74f94ca43748e01f336b774324b98f93aa0de4";
+      hash = "sha256-6pEARNakyj5ajlvIrMeq18DejZKEvw0yAh/0mSqZmwk=";
       fetchSubmodules = false;
       src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
       generate = true;
@@ -25,8 +25,8 @@
 
   builtGrammars = lib.mapAttrs (name: grammar:
     pkgs.tree-sitter.buildGrammar {
+      inherit (pkgs.tree-sitter) version;
       language = grammar.language or name;
-      version = "0.24.3";
       src = grammar.src;
       location = grammar.location or null;
       generate = grammar.generate or false;

@@ -416,7 +416,7 @@ in {
       background = "rgba(49, 50, 68, 0.75)"; # Surface 0
       border-color = "rgba(69, 71, 90, 1.0)"; # Surface 1
       bar-bg-color = "rgba(88, 91, 112, 1.0)"; # Surface 2
-      bar-fg-color = "rgb(250, 179, 135, 1.0)"; # Peach
+      bar-fg-color = "rgba(203, 166, 247, 1.0)"; # Mauve
     };
   };
   systemd.user.services.avizo.Service.Slice = "background.slice";

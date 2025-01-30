@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   home.packages = with pkgs; [vesktop];
 
   xdg.configFile = let
@@ -24,8 +28,8 @@
       autoUpdateNotification = false;
       useQuickCss = true;
       themeLinks = [
-        "@light https://catppuccin.github.io/discord/dist/catppuccin-latte-peach.theme.css"
-        "@dark https://catppuccin.github.io/discord/dist/catppuccin-mocha-peach.theme.css"
+        "@light https://catppuccin.github.io/discord/dist/catppuccin-latte-${config.catppuccin.accent}.theme.css"
+        "@dark https://catppuccin.github.io/discord/dist/catppuccin-${config.catppuccin.flavor}-${config.catppuccin.accent}.theme.css"
       ];
       enabledThemes = [];
       enableReactDevtools = false;
