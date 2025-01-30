@@ -32,16 +32,16 @@
           # react-devtools
           # vue-js-devtools
 
-          # Catppuccin Mocha Peach
+          # Catppuccin Selector
           (buildFirefoxXpiAddon {
-            pname = "catppuccin-mocha-peach";
-            version = "2.0";
-            addonId = "{1cd0d6ef-d4bf-4fd1-9d80-4a9811a84647}";
-            url = "https://addons.mozilla.org/firefox/downloads/file/3954398/catppuccin_mocha_peach-2.0.xpi";
-            sha256 = "sha256-Bn8vUS0iuvcQdIV31L6rl3cKIFkkCXQ1FJFanK+Ad4M=";
+            pname = "catppuccin-selector";
+            version = "1.1";
+            addonId = "catppuccin@federicoscodelaro.com";
+            url = "https://addons.mozilla.org/firefox/downloads/file/4279013/catppuccin_selector-1.1.xpi";
+            sha256 = "sha256-fuBLp4z7SQbRV67mO3015W3YucrM6xQfts9Un1lPODY=";
             meta = {
-              homepage = "https://github.com/catppuccin/firefox";
-              description = "Soothing pastel icons for Firefox";
+              homepage = "https://github.com/pudymody/firefox-catppuccin";
+              description = "Soothing pastel themes for Firefox";
               license = lib.licenses.mit;
               mozPermissions = [];
               platforms = lib.platforms.all;
