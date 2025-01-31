@@ -79,7 +79,6 @@ in {
       ".config/sh.cider.genten"
       ".config/turborepo"
       ".config/vesktop"
-      ".config/zed"
 
       # Kubernetes
       {
