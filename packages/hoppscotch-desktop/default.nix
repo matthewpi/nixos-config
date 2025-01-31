@@ -23,16 +23,9 @@ rustPlatform.buildRustPackage {
 
   src = hoppscotch;
 
-  cargoLock = {
-    lockFile = ./Cargo.lock;
-    outputHashes = {
-      "curl-0.4.47" = "sha256-qC4pZxKhQqKXPhid1OYhX/Fx6buFUMHLwySV0C0GhIo=";
-      "curl-sys-0.4.77+curl-8.10.1" = lib.fakeHash;
-      "tauri-plugin-deep-link-0.1.2" = "sha256-RlMTfUTcM2FAuQ5GNyUrtQK0WZ+kBk+FGzTuSAVdf0c=";
-      "tauri-plugin-store-0.0.0" = "sha256-rWk9Qz1XmByqPRIgR+f12743uYvnEGTHno9RrxmT8JE=";
-    };
-  };
   cargoRoot = "packages/hoppscotch-selfhost-desktop/src-tauri";
+  cargoHash = "sha256-N7Dm0pknmAJrgvlajTJ+KBsXmaJKylQ+qffuBTZ5U4w=";
+  useFetchCargoVendor = true;
 
   # could not find `Cargo.toml` in `/build/source` or any parent directory.
   doCheck = false;
