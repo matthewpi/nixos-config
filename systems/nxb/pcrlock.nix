@@ -40,7 +40,7 @@ in {
       "systemd-pcrlock-firmware-code.service"
       "systemd-pcrlock-firmware-config.service"
       "systemd-pcrlock-machine-id.service"
-      # "systemd-pcrlock-make-policy.service"
+      "systemd-pcrlock-make-policy.service"
       "systemd-pcrlock-secureboot-authority.service"
       "systemd-pcrlock-secureboot-policy.service"
       # "systemd-pcrlock@.service"
@@ -52,7 +52,7 @@ in {
       "systemd-pcrlock-firmware-code.service"
       "systemd-pcrlock-firmware-config.service"
       "systemd-pcrlock-machine-id.service"
-      "systemd-pcrlock-make-policy.service"
+      # "systemd-pcrlock-make-policy.service"
       "systemd-pcrlock-secureboot-authority.service"
       "systemd-pcrlock-secureboot-policy.service"
     ];
