@@ -1,5 +1,6 @@
 {
   lib,
+  nixosConfig,
   pkgs,
   ...
 }: {
@@ -88,138 +89,171 @@
 
     userKeymaps = [];
 
-    userSettings = {
-      auto_update = false;
-      base_keymap = "VSCode";
+    userSettings =
+      {
+        auto_update = false;
+        base_keymap = "VSCode";
 
-      theme = {
-        mode = "system";
-        light = "Catppuccin Latte";
-        dark = "Catppuccin Mocha";
-      };
-
-      buffer_font_family = "MonaspiceNe Nerd Font";
-      buffer_font_size = 12;
-
-      ui_font_family = ".SystemUIFont";
-      ui_font_size = 14;
-
-      wrap_guides = [80 100 120];
-
-      load_direnv = "shell_hook";
-
-      # Ensure files always end with a newline.
-      ensure_final_newline_on_save = true;
-
-      # Disable formatting on save by default.
-      format_on_save = "off";
-
-      # Use language servers for formatting.
-      formatter = "language_server";
-
-      # Fix file type associations.
-      file_types = {
-        # https://github.com/bajrangCoder/zed-laravel-blade
-        Blade = ["*.blade.php"];
-      };
-
-      lsp = {
-        # emmet-language-server.binary.path_lookup = true; # This option is ignored.
-        eslint.binary.path_lookup = true;
-        nil = {
-          binary.path_lookup = true;
-          settings.formatting.command = ["alejandra"];
+        theme = {
+          mode = "system";
+          light = "Catppuccin Latte";
+          dark = "Catppuccin Mocha";
         };
-        nixd.binary.path_lookup = true;
-        package-version-server.binary.path_lookup = true;
-        phpactor.binary.path_lookup = true;
-        # prettier.binary.path_lookup = true;
-        protobuf-language-server.binary.path = "protols"; # Use `protols` instead of `protobuf-language-server`.
-        simple-completion-language-server.binary.path_lookup = true;
-        rust-analyzer.binary.path_lookup = true;
-        taplo.binary.path_lookup = true;
-        # tailwindcss-language-server.binary.path_lookup = true; # This option is ignored.
-        # typescript-language-server.binary.path_lookup = true; # This option is ignored.
 
-        # Using the `vtsls` path_lookup option causes a binary in the format of
-        # `${pkgs.nodejs} ${pkgs.vtsls} ${pkgs.vtsls} --stdio` to get spawned which
-        # is very incorrect.
-        #
-        # ref; https://github.com/zed-industries/zed/blob/597e5f8304ee3ffc74c7a312edf70108e93d59e2/crates/languages/src/vtsls.rs#L279
-        # vtsls.binary.path_lookup = true;
+        buffer_font_family = "MonaspiceNe Nerd Font";
+        buffer_font_size = 12;
 
-        yaml-language-server = {
-          # binary.path_lookup = true; # This option is ignored.
-          settings.yaml = {
-            # Allow yaml-language-server to pull schemas from [JSON Schema Store](https://www.schemastore.org/json/).
-            schemaStore.enable = true;
+        ui_font_family = ".SystemUIFont";
+        ui_font_size = 14;
+
+        wrap_guides = [80 100 120];
+
+        load_direnv = "shell_hook";
+
+        # Ensure files always end with a newline.
+        ensure_final_newline_on_save = true;
+
+        # Disable formatting on save by default.
+        format_on_save = "off";
+
+        # Use language servers for formatting.
+        formatter = "language_server";
+
+        # Fix file type associations.
+        file_types = {
+          # https://github.com/bajrangCoder/zed-laravel-blade
+          Blade = ["*.blade.php"];
+        };
+
+        lsp = {
+          # emmet-language-server.binary.path_lookup = true; # This option is ignored.
+          eslint.binary.path_lookup = true;
+          nil = {
+            binary.path_lookup = true;
+            settings.formatting.command = ["alejandra"];
           };
-          settings.editor.tabSize = 2;
-          settings."[yaml]".editor.tabSize = 2;
-        };
+          nixd.binary.path_lookup = true;
+          package-version-server.binary.path_lookup = true;
+          phpactor.binary.path_lookup = true;
+          # prettier.binary.path_lookup = true;
+          protobuf-language-server.binary.path = "protols"; # Use `protols` instead of `protobuf-language-server`.
+          simple-completion-language-server.binary.path_lookup = true;
+          rust-analyzer.binary.path_lookup = true;
+          taplo.binary.path_lookup = true;
+          # tailwindcss-language-server.binary.path_lookup = true; # This option is ignored.
+          # typescript-language-server.binary.path_lookup = true; # This option is ignored.
 
-        # json-language-server.binary.path_lookup = true; # This option is ignored.
-        # vscode-json-languageserver.binary.path_lookup = true; # This option is ignored.
-      };
+          # Using the `vtsls` path_lookup option causes a binary in the format of
+          # `${pkgs.nodejs} ${pkgs.vtsls} ${pkgs.vtsls} --stdio` to get spawned which
+          # is very incorrect.
+          #
+          # ref; https://github.com/zed-industries/zed/blob/597e5f8304ee3ffc74c7a312edf70108e93d59e2/crates/languages/src/vtsls.rs#L279
+          # vtsls.binary.path_lookup = true;
 
-      # Language settings
-      languages = let
-        prettier = {
-          command = "prettier";
-          arguments = ["--stdin-filepath" "{buffer_path}"];
-        };
-      in {
-        Go.format_on_save = "on";
-        JSON.format_on_save = "on";
-
-        JavaScript = {
-          format_on_save = "on";
-          formatter.external = prettier;
-        };
-
-        JSX = {
-          format_on_save = "on";
-          formatter.external = prettier;
-        };
-
-        # Nix.format_on_save = "on";
-
-        TypeScript = {
-          format_on_save = "on";
-          formatter.external = prettier;
-          code_actions_on_format = {
-            "source.organizeImports" = true;
+          yaml-language-server = {
+            # binary.path_lookup = true; # This option is ignored.
+            settings.yaml = {
+              # Allow yaml-language-server to pull schemas from [JSON Schema Store](https://www.schemastore.org/json/).
+              schemaStore.enable = true;
+            };
+            settings.editor.tabSize = 2;
+            settings."[yaml]".editor.tabSize = 2;
           };
+
+          # json-language-server.binary.path_lookup = true; # This option is ignored.
+          # vscode-json-languageserver.binary.path_lookup = true; # This option is ignored.
         };
 
-        TSX = {
-          format_on_save = "on";
-          formatter.external = prettier;
-          code_actions_on_format = {
-            "source.organizeImports" = true;
+        # Language settings
+        languages = let
+          prettier = {
+            command = "prettier";
+            arguments = ["--stdin-filepath" "{buffer_path}"];
           };
+        in {
+          Go.format_on_save = "on";
+          JSON.format_on_save = "on";
+
+          JavaScript = {
+            format_on_save = "on";
+            formatter.external = prettier;
+          };
+
+          JSX = {
+            format_on_save = "on";
+            formatter.external = prettier;
+          };
+
+          # Nix.format_on_save = "on";
+
+          TypeScript = {
+            format_on_save = "on";
+            formatter.external = prettier;
+            code_actions_on_format = {
+              "source.organizeImports" = true;
+            };
+          };
+
+          TSX = {
+            format_on_save = "on";
+            formatter.external = prettier;
+            code_actions_on_format = {
+              "source.organizeImports" = true;
+            };
+          };
+
+          PHP.language_servers = ["intelephense" "!phpactor"];
+
+          "Vue.js".language_servers = ["!tailwindcss-language-server" "vue-language-server"];
         };
 
-        PHP.language_servers = ["intelephense" "!phpactor"];
+        # Disable AI completions.
+        features.inline_completion_provider = "none";
 
-        "Vue.js".language_servers = ["!tailwindcss-language-server" "vue-language-server"];
-      };
+        # Disable telemetry.
+        telemetry = {
+          diagnostics = false;
+          metrics = false;
+        };
+      }
+      // (
+        if nixosConfig.services.ollama.enable
+        then {
+          # Disable AI assistant.
+          assistant = {
+            version = "2";
+            enabled = true;
+            button = true;
+            default_model = {
+              provider = "ollama";
+              model = "qwen2.5-coder:7b";
+            };
+          };
 
-      # Disable AI assistant.
-      assistant = {
-        version = "2";
-        enabled = false;
-        button = false;
-      };
-
-      # Disable AI completions.
-      features.inline_completion_provider = "none";
-
-      # Disable telemetry.
-      telemetry = {
-        diagnostics = false;
-        metrics = false;
-      };
-    };
+          language_models.ollama = {
+            api_url = "http://localhost:${toString nixosConfig.services.ollama.port}";
+            available_models = [
+              {
+                name = "mistral";
+                display_name = "mistral 16K";
+                max_tokens = 16384;
+              }
+              {
+                name = "qwen2.5-coder:7b";
+                display_name = "qwen 2.5 coder 16K";
+                max_tokens = 16384;
+              }
+            ];
+          };
+        }
+        else {
+          # Disable AI assistant.
+          assistant = {
+            version = "2";
+            enabled = false;
+            button = false;
+          };
+        }
+      );
   };
 }

@@ -269,6 +269,7 @@
         config = {
           allowUnfree = true;
           allowUnfreePredicate = _: true;
+          rocmSupport = true;
         };
       };
   in
