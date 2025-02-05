@@ -366,7 +366,7 @@
                 };
               }
 
-              # ./builders
+              ./builders
               ./systems/desktop
               ./users
             ];

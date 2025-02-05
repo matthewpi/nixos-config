@@ -34,5 +34,8 @@
     }
   ];
 
-  nix.settings.trusted-substituters = ["https://djt.moose-nase.ts.net"];
+  nix.settings = {
+    trusted-substituters = ["https://djt.moose-nase.ts.net"];
+    trusted-public-keys = ["djt.nxpkgs.dev-1:IPbZL4PYlQ99i9GKE+ZN6IhK/NlLZJw0wBVVweipaOI"];
+  };
 }
