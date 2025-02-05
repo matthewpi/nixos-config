@@ -14,7 +14,7 @@
       ./zed-editor.nix
     ]
     ++ lib.optionals isDesktop [
-      ./gaming.nix
+      ./gaming
       # ./virt-manager.nix
     ];
 

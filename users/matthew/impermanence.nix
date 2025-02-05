@@ -35,6 +35,7 @@ in {
     ++ lib.optionals isDesktop [
       ".config/streamdeck"
       ".local/share/PrismLauncher"
+      "Games"
     ]
     ++ lib.optional config.services.gvfs.enable ".local/share/gvfs-metadata"
     ++ [

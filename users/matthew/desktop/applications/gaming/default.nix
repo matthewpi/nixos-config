@@ -11,6 +11,21 @@
         temurin-bin-21
       ];
     })
+
+    (pkgs.callPackage ./star-citizen.nix {
+      wine = pkgs.wineWowPackages.staging;
+      winetricks = pkgs.winetricks.overrideAttrs (_: let
+        rev = "8cf82b3c08567fff6d3fb440cbbf61ac5cc9f9aa";
+      in {
+        version = "git+${rev}";
+        src = pkgs.fetchFromGitHub {
+          owner = "winetricks";
+          repo = "winetricks";
+          inherit rev;
+          hash = "sha256-VV/rKeZo1lupUdEVdswC1niwaIEmhe/8gvxVbbwlWig=";
+        };
+      });
+    })
   ];
 
   programs.mangohud = {

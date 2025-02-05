@@ -72,10 +72,17 @@
     '';
   });
 in {
-  home.sessionVariables = {
-    XDG_CURRENT_DESKTOP = "Hyprland";
-    XDG_SESSION_DESKTOP = "Hyprland";
-  };
+  home.sessionVariables =
+    {
+      XDG_CURRENT_DESKTOP = "Hyprland";
+      XDG_SESSION_DESKTOP = "Hyprland";
+    }
+    // lib.optionalAttrs isDesktop {
+      # ENABLE_HDR_WSI = "1";
+      # DXVK_HDR = "1";
+
+      AMD_DEBUG = "lowlatencyenc";
+    };
 
   wayland.windowManager.hyprland = {
     enable = true;
@@ -100,6 +107,12 @@ in {
     };
 
     settings = {
+      # experimental = {
+      #   # hdr = isDesktop;
+      #   wide_color_gamut = true;
+      #   xx_color_management_v4 = true;
+      # };
+
       xwayland = {
         # https://wiki.hyprland.org/Configuring/XWayland/#hidpi-xwayland
         force_zero_scaling = true;
@@ -107,6 +120,9 @@ in {
 
       input = {
         kb_layout = "us";
+
+        # Enable numlock by default.
+        numlock_by_default = true;
 
         # Disable mouse acceleration
         accel_profile = "flat";
@@ -210,7 +226,8 @@ in {
       monitor =
         if isDesktop
         then [
-          "DP-1, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
+          # TODO: vrr,2?
+          "DP-1, 3840x2160@240, 0x0, 1.5, vrr,2, bitdepth,10"
           "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
         ]
         else [
