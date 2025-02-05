@@ -226,8 +226,7 @@ in {
       monitor =
         if isDesktop
         then [
-          # TODO: vrr,2?
-          "DP-1, 3840x2160@240, 0x0, 1.5, vrr,2, bitdepth,10"
+          "DP-1, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
           "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
         ]
         else [
