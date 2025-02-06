@@ -23,7 +23,7 @@ in {
       system = "x86_64-linux";
       protocol = "ssh-ng";
       maxJobs = 16;
-      speedFactor = 2;
+      speedFactor = 1;
       supportedFeatures = [
         "benchmark"
         "big-parallel"
@@ -35,14 +35,14 @@ in {
         "gccarch-znver3"
       ];
       mandatoryFeatures = [];
-      publicHostKey = "";
+      publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUoyR1FiaGVPQ09kN1FqbFRDRkxDMlpKekltYzBJMTRsOGNqNWZBc1MrYUsgcm9vdEBibGFoYWoK";
     }
     {
       hostName = sshAlias;
       system = "i686-linux";
       protocol = "ssh-ng";
       maxJobs = 16;
-      speedFactor = 2;
+      speedFactor = 1;
       supportedFeatures = [
         "benchmark"
         "big-parallel"
@@ -54,7 +54,7 @@ in {
         "gccarch-znver3"
       ];
       mandatoryFeatures = [];
-      publicHostKey = "";
+      publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUoyR1FiaGVPQ09kN1FqbFRDRkxDMlpKekltYzBJMTRsOGNqNWZBc1MrYUsgcm9vdEBibGFoYWoK";
     }
   ];
 

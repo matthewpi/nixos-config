@@ -7,7 +7,5 @@
   nix.distributedBuilds = true;
 
   # Useful when the builder has a faster internet connection than yours
-  nix.extraOptions = ''
-    builders-use-substitutes = true
-  '';
+  nix.settings.builders-use-substitutes = true;
 }
