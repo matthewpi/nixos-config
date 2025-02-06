@@ -22,6 +22,7 @@
       in
         with addons; [
           decentraleyes
+          kagi-search
           no-pdf-download
           onepassword-password-manager
           stylus
