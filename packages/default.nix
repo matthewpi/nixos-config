@@ -64,7 +64,7 @@
         ];
       });
 
-      # TODO: remove once https://github.com/NixOS/nixpkgs/issues/380266 is merged.
+      # TODO: remove once https://github.com/NixOS/nixpkgs/issues/380266 is fixed.
       eslint = pkgs.eslint.overrideAttrs (_: {
         postFixup = ''
           # Remove broken symlink
@@ -75,6 +75,18 @@
       # TODO: remove once https://github.com/NixOS/nixpkgs/issues/380427 is fixed.
       prisma = pkgs.prisma.overrideAttrs (_: {
         dontCheckForBrokenSymlinks = true;
+      });
+
+      # TODO: remove once https://github.com/NixOS/nixpkgs/pull/380982 hits nixos-unstable.
+      whitesur-icon-theme = pkgs.whitesur-icon-theme.overrideAttrs (_: rec {
+        version = "2025-02-10";
+
+        src = pkgs.fetchFromGitHub {
+          owner = "vinceliuice";
+          repo = "WhiteSur-icon-theme";
+          tag = "v${version}";
+          hash = "sha256-spTmS9Cn/HAnbgf6HppwME63cxWEbcKwWYMMj8ajFyY=";
+        };
       });
     };
   in {
@@ -106,6 +118,7 @@
         zed-editor
         eslint
         prisma
+        whitesur-icon-theme
         ;
 
       _1password-gui = _packages._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
