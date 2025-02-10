@@ -100,6 +100,14 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
+  postFixup = ''
+    rm -f "$out"/packages/hoppscotch-backend/node_modules/jwt
+    rm -f "$out"/packages/hoppscotch-selfhost-desktop/node_modules/environments.api
+    rm -f "$out"/packages/hoppscotch-selfhost-desktop/node_modules/event
+    rm -f "$out"/packages/hoppscotch-selfhost-desktop/node_modules/shell
+    rm -f "$out"/packages/hoppscotch-selfhost-desktop/node_modules/tauri
+  '';
+
   meta = {
     description = "Open source API development ecosystem";
     longDescription = ''
