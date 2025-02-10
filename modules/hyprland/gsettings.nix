@@ -38,7 +38,7 @@
           seahorse
           sushi
           totem
-          wordbook
+          # wordbook
         ];
       } ''
         mkdir schemas

@@ -39,7 +39,7 @@
     seahorse
     sushi
     totem
-    wordbook
+    # wordbook
 
     # clipboard
     wl-clipboard
