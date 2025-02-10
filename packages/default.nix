@@ -64,6 +64,14 @@
         ];
       });
 
+      # TODO: remove once https://github.com/NixOS/nixpkgs/issues/380266 is merged.
+      eslint = pkgs.eslint.overrideAttrs (_: {
+        postFixup = ''
+          # Remove broken symlink
+          rm "$out"/lib/node_modules/eslint/node_modules/eslint-config-eslint
+        '';
+      });
+
       # TODO: remove once https://github.com/NixOS/nixpkgs/issues/380427 is fixed.
       prisma = pkgs.prisma.overrideAttrs (_: {
         dontCheckForBrokenSymlinks = true;
@@ -96,6 +104,7 @@
         vesktop
         vulkan-hdr-layer
         zed-editor
+        eslint
         prisma
         ;
 
