@@ -64,9 +64,10 @@
         ];
       });
 
-      # zed-editor = inputs.nixpkgs.legacyPackages.${system}.zed-editor.overrideAttrs (oldAttrs: {
-      #   patches = oldAttrs.patches ++ [./0001-Enable-package-version-server-lookup-in-PATH.patch];
-      # });
+      # TODO: remove once https://github.com/NixOS/nixpkgs/issues/380427 is fixed.
+      prisma = pkgs.prisma.overrideAttrs (_: {
+        dontCheckForBrokenSymlinks = true;
+      });
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -95,6 +96,7 @@
         vesktop
         vulkan-hdr-layer
         zed-editor
+        prisma
         ;
 
       _1password-gui = _packages._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
