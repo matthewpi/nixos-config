@@ -59,7 +59,7 @@ in {
   ];
 
   nix.settings = {
-    trusted-substituters = ["https://cache.blahaj.systems"];
+    trusted-substituters = ["https://cache.blahaj.systems" "https://ncps.blahaj.systems"];
     trusted-public-keys = ["cache.blahaj.systems:NV3iFToViaqHGNorfWVMXgkwGq/YWTdzopehQlyEmU8="];
   };
 }
