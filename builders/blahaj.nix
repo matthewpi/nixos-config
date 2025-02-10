@@ -35,7 +35,7 @@ in {
         "gccarch-znver3"
       ];
       mandatoryFeatures = [];
-      publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUoyR1FiaGVPQ09kN1FqbFRDRkxDMlpKekltYzBJMTRsOGNqNWZBc1MrYUsgcm9vdEBibGFoYWoK";
+      publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUoyR1FiaGVPQ09kN1FqbFRDRkxDMlpKekltYzBJMTRsOGNqNWZBc1MrYUs=";
     }
     {
       hostName = sshAlias;
@@ -54,7 +54,7 @@ in {
         "gccarch-znver3"
       ];
       mandatoryFeatures = [];
-      publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUoyR1FiaGVPQ09kN1FqbFRDRkxDMlpKekltYzBJMTRsOGNqNWZBc1MrYUsgcm9vdEBibGFoYWoK";
+      publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUoyR1FiaGVPQ09kN1FqbFRDRkxDMlpKekltYzBJMTRsOGNqNWZBc1MrYUs=";
     }
   ];
 
