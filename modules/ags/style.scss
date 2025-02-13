@@ -197,6 +197,10 @@ window.launcher {
 			color: $text;
 			margin-bottom: 0.8rem;
 			outline: none;
+
+			&:focus-within {
+				border-color: $primary;
+			}
 		}
 
 		button.app {

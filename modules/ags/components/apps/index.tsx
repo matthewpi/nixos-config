@@ -1,6 +1,7 @@
 import { Variable } from 'astal';
 import { App, Astal, Gdk, Gtk } from 'astal/gtk4';
 import { execAsync } from 'astal/process';
+
 import Apps from 'gi://AstalApps';
 import Pango from 'gi://Pango';
 
@@ -109,6 +110,10 @@ function Launcher() {
 		hide();
 	}
 
+	const searchEntry = (
+		<entry buffer={buffer} placeholderText="Search applications..." onActivate={onEnter} receivesDefault />
+	);
+
 	return (
 		<window
 			// `name` must go before `application`.
@@ -117,20 +122,27 @@ function Launcher() {
 			cssClasses={['launcher']}
 			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
 			exclusivity={Astal.Exclusivity.IGNORE}
-			onShow={() => (buffer.text = '')}
 			keymode={Astal.Keymode.ON_DEMAND}
 			onKeyPressed={(self, keyval) => {
 				if (keyval === Gdk.KEY_Escape) {
 					self.hide();
 				}
 			}}
+			onShow={() => {
+				// Reset the search buffer.
+				buffer.text = '';
+
+				// Focus the search entry when the window is shown. This is
+				// necessary to reset the focus when the window is being shown
+				// after previously being used as the focus may be on one of the
+				// app buttons instead of the entry.
+				searchEntry.child_focus(null);
+			}}
 		>
 			<box>
-				{/* <eventbox widthRequest={4000} expand onClick={hide} /> */}
 				<box hexpand={false} vertical>
-					{/* <eventbox heightRequest={100} onClick={hide} /> */}
 					<box widthRequest={500} cssClasses={['launcher']} vertical>
-						<entry buffer={buffer} placeholderText="Search applications..." onActivate={onEnter} />
+						{searchEntry}
 						<box spacing={6} vertical>
 							{list.as(list => list.map(app => <AppButton app={app} />))}
 						</box>
@@ -144,9 +156,7 @@ function Launcher() {
 							<label label="No match found" />
 						</box>
 					</box>
-					{/* <eventbox expand onClick={hide} /> */}
 				</box>
-				{/* <eventbox widthRequest={4000} expand onClick={hide} /> */}
 			</box>
 		</window>
 	);
