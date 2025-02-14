@@ -45,6 +45,13 @@
     command = lib.getExe pkgs.slack;
   };
 
+  # Command used to launch Zed.
+  zed-editor = mkSystemdRun {
+    name = "dev.zed.Zed";
+    command = lib.getExe config.programs.zed-editor.package;
+    args = ["--property=Type=forking"];
+  };
+
   # Command used to take a screenshot.
   screenshot = lib.getExe (pkgs.writeShellApplication {
     name = "hyprland-screenshot";
@@ -240,6 +247,7 @@ in {
           "special:terminal, on-created-empty:${alacritty}"
           "special:discord,  on-created-empty:${discord}"
           "special:slack,    on-created-empty:${slack}"
+          "special:music,    on-created-empty:${cider}"
         ]
         ++ lib.optionals isDesktop [
           # Configure default workspaces for the monitors
@@ -312,10 +320,13 @@ in {
         "$mainMod, C, togglespecialworkspace, terminal"
         "$mainMod, D, togglespecialworkspace, discord"
         "$mainMod, S, togglespecialworkspace, slack"
+        "$mainMod, M, togglespecialworkspace, music"
 
         # Special workspace keybinds, used to move windows into the workspace
         "$mainMod Shift, C, movetoworkspace, special:terminal"
         "$mainMod Shift, D, movetoworkspace, special:discord"
+        "$mainMod Shift, S, movetoworkspace, special:slack"
+        "$mainMod Shift, M, movetoworkspace, special:music"
 
         # Screenshot keybinds
         ", Print, exec, ${screenshot-activeworkspace}"
@@ -331,7 +342,7 @@ in {
         "$mainMod, Space, exec, ${lib.getExe' config.programs.ags.package "ags"} toggle launcher"
         "$mainMod, T, exec, ${alacritty}" # Terminal
         "$mainMod, B, exec, ${firefox}" # Web Browser
-        "$mainMod, M, exec, ${cider}" # Music
+        "$mainMod, Z, exec, ${zed-editor}" # Code Editor
 
         # Switch workspaces with $mainMod + [0-9]
         "$mainMod, 1, workspace, 1"
