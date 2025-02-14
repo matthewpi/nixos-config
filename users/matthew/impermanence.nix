@@ -56,7 +56,7 @@ in {
       ".cache/npm"
       ".cache/pnpm"
       # ".cache/tracker3"
-      # ".cache/tree-sitter"
+      ".cache/tree-sitter"
       ".cache/turbo"
 
       ".config/1Password"
