@@ -196,7 +196,7 @@
       gtk-enable-primary-paste = false;
 
       document-font-name = "Inter 11";
-      monospace-font-name = "MonaspiceNe Nerd Font 10";
+      monospace-font-name = "Monaspace Neon 10";
     };
 
     "org/gnome/desktop/privacy" = {
