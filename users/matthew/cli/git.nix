@@ -63,13 +63,19 @@
       aa = "add -A";
 
       c = "commit";
-      cs = "commit -s";
       ca = "commit --amend";
       amend = "commit --amend --no-edit";
 
+      d = "diff";
+      dc = "diff --cached";
+
+      r = "rebase";
+
       s = "stash";
-      sp = "stash push -S";
       sa = "stash apply";
+      sl = "stash list";
+      sp = "stash push -S";
+      ss = "stash show";
     };
   };
 }
