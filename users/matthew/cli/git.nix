@@ -12,26 +12,23 @@
     # Ignore directories and files that should never be committed globally.
     ignores = [".direnv" "result*"];
 
+    # Use the 1Password SSH Agent for commit signing.
+    signing = {
+      format = "ssh";
+      key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKL873MsP1OFfffNC8n9WcVuOXOSW65/q26MIzib0K9k";
+      signByDefault = true;
+      signer =
+        if pkgs.stdenv.isDarwin
+        then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
+        else "op-ssh-sign";
+    };
+
     extraConfig = {
       # Disable advice.
       advice.detachedHead = false;
 
       # Change the default branch to master.
       init.defaultBranch = "master";
-
-      # Use the 1Password SSH Agent.
-      gpg = {
-        format = "ssh";
-        ssh = {
-          program =
-            if pkgs.stdenv.isDarwin
-            then "/Applications/1Password.app/Contents/MacOS/op-ssh-sign"
-            else "op-ssh-sign";
-        };
-      };
-      user.signingKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIKL873MsP1OFfffNC8n9WcVuOXOSW65/q26MIzib0K9k";
-      commit.gpgSign = true;
-      tag.gpgSign = true;
 
       # Use SSH for GitHub, even if a HTTP url is used.
       url = {
