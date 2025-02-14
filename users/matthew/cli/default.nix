@@ -31,4 +31,13 @@
     whois
     yq-go
   ];
+
+  home.shell = {
+    enableBashIntegration = false;
+    enableFishIntegration = false;
+    enableIonIntegration = false;
+    enableNushellIntegration = false;
+    enableShellIntegration = true;
+    enableZshIntegration = true;
+  };
 }

@@ -1,10 +1,6 @@
 {
   programs.atuin = {
     enable = true;
-    enableBashIntegration = false;
-    enableFishIntegration = false;
-    enableNushellIntegration = false;
-    enableZshIntegration = true;
 
     settings = {
       auto_sync = false;
