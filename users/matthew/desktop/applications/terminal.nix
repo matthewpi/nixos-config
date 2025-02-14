@@ -12,11 +12,15 @@
         decorations = "None";
         opacity = 0.75;
         blur = true;
+        padding = {
+          x = 4;
+          y = 1;
+        };
       };
 
       font = {
         size = 10.0;
-        normal.family = "MonaspiceNe Nerd Font";
+        normal.family = "MonaspiceNe Nerd Font"; # "Monaspace Neon";
       };
 
       cursor.style.shape = "Beam";
