@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   nixosConfig,
   pkgs,
@@ -17,6 +18,7 @@
       delve
       emmet-language-server
       eslint
+      config.programs.git.package
       go
       golangci-lint
       gopls
@@ -87,9 +89,7 @@
       "zig"
     ];
 
-    userKeymaps = [];
-
-    userSettings =
+    userSettings = lib.mergeAttrsList [
       {
         auto_update = false;
         base_keymap = "VSCode";
@@ -100,8 +100,38 @@
           dark = "Catppuccin Mocha";
         };
 
-        buffer_font_family = "MonaspiceNe Nerd Font";
+        buffer_font_family = "Monaspace Neon";
         buffer_font_size = 12;
+
+        # ref; https://github.com/zed-industries/zed/issues/15752
+        # buffer_font_features = {
+        #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv01-cv09-figure-variants
+        #   cv01 = 2; # 0 (slash)
+        #   # cv02 = 1; # 1
+        #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv10-cv29-letter-variants
+        #   # cv10 = 0; # l i (Neon, Argon, Xenon, Radon)
+        #   # cv11 = 0; # j f r t (Neon, Argon)
+        #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv30-cv59-symbol-variants
+        #   # cv30 = 0; # * (vertically aligned)
+        #   # cv31 = 0; # * (6-points)
+        #   # cv32 = 0; # >= <= (angled lower-line)
+        #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv60-cv79-optional-ligatures
+        #   # cv60 = 0; # <= =>
+        #   # cv61 = 0; # []
+        #   # cv62 = 0; # @_
+        #   calt = true; # Texture Healing
+        #   ss01 = true; # === !== =!= =/= /== /= #= == != ~~ =~ !~ ~- -~ &=
+        #   ss02 = true; # >= <=
+        #   # ss03 = true; # <--> <-> <!-- <-- --> <- -> <~> <~~ ~~> <~ ~>
+        #   # ss04 = true; # </ /> </> <>
+        #   ss05 = true; # [| |] /\ \/ |> <| <|> {| |}
+        #   ss06 = true; # ### +++ &&&
+        #   ss07 = true; # -:- =:= :>: :<: ::> <:: :: :::
+        #   ss08 = true; # ..= ..- ..< .= .-
+        #   ss09 = true; # <=> <<= =>> =<< => << >>
+        #   ss10 = true; # #[ #(
+        #   liga = true; # ... /// // !! || ;; ;;;
+        # };
 
         ui_font_family = ".SystemUIFont";
         ui_font_size = 14;
@@ -109,6 +139,33 @@
         wrap_guides = [80 100 120];
 
         load_direnv = "shell_hook";
+
+        # Disable inline completions in comments.
+        inline_completions_disabled_in = ["comment"];
+
+        # Configure colored indent guides.
+        indent_guides.coloring = "indent_aware";
+
+        # Configure inlay hints.
+        inlay_hints = {
+          enabled = true;
+          show_background = false;
+        };
+
+        #project_panel.show_diagnostics = "off";
+
+        # Hide the collaboration panel button.
+        collaboration_panel.button = false;
+
+        # Configure the Zed journal to open in a properly persisted directory
+        # and use 24 hour time.
+        journal = {
+          path = "/code/matthewpi/journal";
+          hour_format = "hour24";
+        };
+
+        # Disable Jupyter.
+        jupyter.enabled = false;
 
         # Ensure files always end with a newline.
         ensure_final_newline_on_save = true;
@@ -208,7 +265,10 @@
         };
 
         # Disable AI completions.
-        features.inline_completion_provider = "none";
+        features = {
+          inline_completion_provider = "none";
+          edit_prediction_provider = "none";
+        };
 
         # Disable telemetry.
         telemetry = {
@@ -216,10 +276,10 @@
           metrics = false;
         };
       }
-      // (
+      (
         if nixosConfig.services.ollama.enable
         then {
-          # Disable AI assistant.
+          # Use local Ollama as our AI assistant.
           assistant = {
             version = "2";
             enabled = true;
@@ -230,18 +290,32 @@
             };
           };
 
+          # # Enable AI completions.
+          # features = {
+          #   inline_completion_provider = "ollama";
+          #   edit_prediction_provider = "ollama";
+          # };
+
           language_models.ollama = {
             api_url = "http://localhost:${toString nixosConfig.services.ollama.port}";
             available_models = [
               {
                 name = "mistral";
-                display_name = "mistral 16K";
-                max_tokens = 16384;
+                display_name = "mistral";
+                max_tokens = 32768;
+                keep_alive = "15m";
               }
               {
                 name = "qwen2.5-coder:7b";
-                display_name = "qwen 2.5 coder 16K";
-                max_tokens = 16384;
+                display_name = "qwen 2.5 coder";
+                max_tokens = 32768;
+                keep_alive = "15m";
+              }
+              {
+                name = "zeta";
+                display_name = "Zed Zeta";
+                max_tokens = 32768;
+                keep_alive = "5m";
               }
             ];
           };
@@ -254,6 +328,22 @@
             button = false;
           };
         }
-      );
+      )
+    ];
+
+    userKeymaps = [
+      {
+        context = "Terminal";
+        bindings = {
+          # Re-use the same keybind that opens the terminal to hide it.
+          #
+          # TODO: is there a better way to close the terminal view? This seems
+          # to only work if the terminal is at the bottom.
+          "ctrl-`" = "workspace::ToggleBottomDock";
+          # Allow pasting with Ctrl+V.
+          "ctrl-v" = "terminal::Paste";
+        };
+      }
+    ];
   };
 }
