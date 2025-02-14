@@ -1,4 +1,4 @@
-import { bind, execAsync, GLib, Variable } from 'astal';
+import { bind, execAsync, Variable } from 'astal';
 import { Astal, astalify, Gdk, Gtk, hook } from 'astal/gtk4';
 import Cairo from 'cairo';
 import Battery from 'gi://AstalBattery';
@@ -11,6 +11,7 @@ import Notifd from 'gi://AstalNotifd';
 import Tray from 'gi://AstalTray';
 import Wireplumber from 'gi://AstalWp';
 import Gio from 'gi://Gio';
+import GLib from 'gi://GLib';
 
 type PollFn<T> = (prev: T) => T | Promise<T>;
 
@@ -434,8 +435,12 @@ function Actions() {
 			text: 'Logout (Session)',
 			iconName: 'system-log-out-symbolic',
 			onActivate: async () => {
-				// TODO: either wrap command in bash or get `XDG_SESSION_ID` from within JS.
-				await execAsync(['loginctl', 'terminate-session', '$XDG_SESSION_ID']);
+				const xdgSessionId = GLib.getenv('XDG_SESSION_ID') ?? undefined;
+				if (xdgSessionId === undefined) {
+					return;
+				}
+
+				await execAsync(['loginctl', 'terminate-session', xdgSessionId]);
 			},
 		}),
 	);
@@ -445,8 +450,12 @@ function Actions() {
 			text: 'Logout (User)',
 			iconName: 'system-log-out-symbolic',
 			onActivate: async () => {
-				// TODO: either wrap command in bash or get `USER` from within JS.
-				await execAsync(['loginctl', 'terminate-user', '$USER']);
+				const user = GLib.getenv('USER') ?? undefined;
+				if (user === undefined) {
+					return;
+				}
+
+				await execAsync(['loginctl', 'terminate-user', user]);
 			},
 		}),
 	);
