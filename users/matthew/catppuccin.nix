@@ -21,6 +21,8 @@
 
     fzf.enable = true;
 
+    ghostty.enable = true;
+
     hyprland.enable = true;
 
     hyprlock.enable = true;
