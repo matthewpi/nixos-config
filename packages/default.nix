@@ -22,7 +22,11 @@
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
-      vesktop = pkgs.callPackage ./vesktop/package.nix {vesktop = pkgs.vesktop;};
+      vesktop = pkgs.callPackage ./vesktop/package.nix {
+        inherit inputs;
+        electron = pkgs.electron_33;
+        vesktop = inputs.nixpkgs.legacyPackages.${system}.vesktop;
+      };
       vulkan-hdr-layer = pkgs.callPackage ./vulkan-hdr-layer {};
 
       catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs (oldAttrs: {
