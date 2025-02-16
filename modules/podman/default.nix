@@ -20,6 +20,8 @@
     # Enable kernel modules required for container networking.
     boot.kernelModules = [
       "bridge"
+      "br_netfilter"
+
       "libcrc32c"
       "llc"
 
