@@ -37,7 +37,7 @@
       protols
       nodePackages.prettier
       python312Packages.python-lsp-server
-      rust-analyzer
+      # rust-analyzer
       simple-completion-language-server
       tailwindcss-language-server
       taplo
@@ -197,7 +197,7 @@
           # prettier.binary.path_lookup = true;
           protobuf-language-server.binary.path = "protols"; # Use `protols` instead of `protobuf-language-server`.
           simple-completion-language-server.binary.path_lookup = true;
-          rust-analyzer.binary.path_lookup = true;
+          # rust-analyzer.binary.path_lookup = true;
           taplo.binary.path_lookup = true;
           # tailwindcss-language-server.binary.path_lookup = true; # This option is ignored.
           # typescript-language-server.binary.path_lookup = true; # This option is ignored.

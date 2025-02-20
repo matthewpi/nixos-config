@@ -245,10 +245,10 @@ in {
         capabilities = capabilities,
         cmd = { "${lib.getExe pkgs.nixd}" },
       })
-      lspconfig.rust_analyzer.setup({
-        capabilities = capabilites,
-        cmd = { "${lib.getExe pkgs.rust-analyzer}" },
-      })
+      -- lspconfig.rust_analyzer.setup({
+      --   capabilities = capabilites,
+      --   cmd = { "''${lib.getExe pkgs.rust-analyzer}" },
+      -- })
       lspconfig.ts_ls.setup({
         capabilities = capabilities,
         cmd = { "${lib.getExe pkgs.nodePackages.typescript-language-server}", "--stdio" },

@@ -37,7 +37,7 @@
         christian-kohler.npm-intellisense # npm Intellisense
         christian-kohler.path-intellisense # Path Intellisense
         esbenp.prettier-vscode # Prettier - Code formatter
-        rust-lang.rust-analyzer # rust-analyzer
+        # rust-lang.rust-analyzer # rust-analyzer
         tailscale.vscode-tailscale # Tailscale
         bradlc.vscode-tailwindcss # Tailwind CSS IntelliSense
         jgclark.vscode-todo-highlight # TODO Highlight v2
