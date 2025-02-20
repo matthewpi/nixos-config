@@ -25,12 +25,16 @@ function Media() {
 	// TODO: how should we handle multiple players? The first player may not be
 	// the one we want to display.
 	return bind(mpris, 'players').as(players => {
-		const player = players.slice(0, 1).map(player => <MediaPlayer player={player} />)?.[0];
+		let player = players.find(p => p.playbackStatus === Mpris.PlaybackStatus.PLAYING);
+		if (player === undefined) {
+			player = players[0];
+		}
+
 		if (player === undefined) {
 			return <NoPlayer />;
 		}
 
-		return player;
+		return <MediaPlayer player={player} />;
 	});
 }
 
