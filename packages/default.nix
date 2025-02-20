@@ -68,10 +68,7 @@
         ];
       });
 
-      # TODO: remove once https://github.com/NixOS/nixpkgs/issues/380427 is fixed.
-      prisma = pkgs.prisma.overrideAttrs (_: {
-        dontCheckForBrokenSymlinks = true;
-      });
+      inherit (pkgs) xwayland;
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -100,7 +97,6 @@
         vesktop
         vulkan-hdr-layer
         zed-editor
-        prisma
         ;
 
       _1password-gui = _packages._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
