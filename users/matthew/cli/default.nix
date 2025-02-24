@@ -12,8 +12,9 @@
     ./kubernetes.nix
     ./man.nix
     ./neovim.nix
-    ./nodejs.nix
     ./nix-index.nix
+    ./nodejs.nix
+    ./ripgrep.nix
     ./ssh.nix
     ./starship.nix
     ./step.nix
