@@ -30,11 +30,12 @@
       vulkan-hdr-layer = pkgs.callPackage ./vulkan-hdr-layer {};
 
       catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs (oldAttrs: {
+        version = "2.0.0";
         src = pkgs.fetchFromGitHub {
           owner = "catppuccin";
           repo = "cursors";
-          rev = "47de593602cd78ffd0d659fbe8b61b3e9f13eefe";
-          hash = "sha256-LHYiw9QYws8Iz5RJenMLiawPiNTMnGxjevcDk5ZY1uc=";
+          tag = "v2.0.0";
+          hash = "sha256-qis6p+/m7+DdRDYzLq9yB2eZGpfZe5z5xRsa/1HoIG4=";
         };
 
         nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.zip];
