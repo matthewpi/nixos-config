@@ -13,72 +13,77 @@
 
     # Configure the default Firefox profile.
     profiles.default = lib.mkIf (!isDesktop) {
-      extensions = let
-        # While the flake directly outputs packages, it does so using it's own
-        # nixpkgs instance which doesn't have `allowUnfree` enabled, which is
-        # necessary for us to be able to use `night-eye-dark-mode` and
-        # `onepassword-password-manager`.
-        addons = import "${inputs.firefox-addons}/default.nix" {inherit (pkgs) fetchurl lib stdenv;};
-      in
-        with addons; [
-          decentraleyes
-          kagi-search
-          no-pdf-download
-          onepassword-password-manager
-          stylus
-          temporary-containers
-          ublock-origin
-          # react-devtools
-          # vue-js-devtools
+      extensions = {
+        packages = let
+          # While the flake directly outputs packages, it does so using it's own
+          # nixpkgs instance which doesn't have `allowUnfree` enabled, which is
+          # necessary for us to be able to use `night-eye-dark-mode` and
+          # `onepassword-password-manager`.
+          addons = import "${inputs.firefox-addons}/default.nix" {inherit (pkgs) fetchurl lib stdenv;};
+        in
+          with addons; [
+            decentraleyes
+            no-pdf-download
+            onepassword-password-manager
+            stylus
+            temporary-containers
+            ublock-origin
+            # react-devtools
+            # vue-js-devtools
 
-          # Catppuccin Selector
-          (buildFirefoxXpiAddon {
-            pname = "catppuccin-selector";
-            version = "1.1";
-            addonId = "catppuccin@federicoscodelaro.com";
-            url = "https://addons.mozilla.org/firefox/downloads/file/4279013/catppuccin_selector-1.1.xpi";
-            sha256 = "sha256-fuBLp4z7SQbRV67mO3015W3YucrM6xQfts9Un1lPODY=";
-            meta = {
-              homepage = "https://github.com/pudymody/firefox-catppuccin";
-              description = "Soothing pastel themes for Firefox";
-              license = lib.licenses.mit;
-              mozPermissions = [];
-              platforms = lib.platforms.all;
-            };
-          })
+            # Catppuccin Selector
+            (buildFirefoxXpiAddon {
+              pname = "catppuccin-selector";
+              version = "1.1";
+              addonId = "catppuccin@federicoscodelaro.com";
+              url = "https://addons.mozilla.org/firefox/downloads/file/4279013/catppuccin_selector-1.1.xpi";
+              sha256 = "sha256-fuBLp4z7SQbRV67mO3015W3YucrM6xQfts9Un1lPODY=";
+              meta = {
+                homepage = "https://github.com/pudymody/firefox-catppuccin";
+                description = "Soothing pastel themes for Firefox";
+                license = lib.licenses.mit;
+                mozPermissions = [];
+                platforms = lib.platforms.all;
+              };
+            })
 
-          # Dark Mode - Night Eye
-          (buildFirefoxXpiAddon {
-            pname = "night-eye-dark-mode";
-            version = "5.2.3";
-            addonId = "{7c6d56ed-2616-48f2-bfde-d1830f1cf2ed}";
-            url = "https://addons.mozilla.org/firefox/downloads/file/4367130/night_eye_dark_mode-5.2.3.xpi";
-            sha256 = "sha256-AQu4VTsO+GlWdaSytzCebY7QjVUkmRWms3SN7fTn6ew=";
-            meta = {
-              homepage = "https://nighteye.app/";
-              description = "Dark Mode on nearly all websites, improving readability and reducing eye strain in low light environments";
-              license = lib.licenses.unfree;
-              # mozPermissions = [];
-              platforms = lib.platforms.all;
-            };
-          })
+            # Dark Mode - Night Eye
+            (buildFirefoxXpiAddon {
+              pname = "night-eye-dark-mode";
+              version = "5.2.3";
+              addonId = "{7c6d56ed-2616-48f2-bfde-d1830f1cf2ed}";
+              url = "https://addons.mozilla.org/firefox/downloads/file/4367130/night_eye_dark_mode-5.2.3.xpi";
+              sha256 = "sha256-AQu4VTsO+GlWdaSytzCebY7QjVUkmRWms3SN7fTn6ew=";
+              meta = {
+                homepage = "https://nighteye.app/";
+                description = "Dark Mode on nearly all websites, improving readability and reducing eye strain in low light environments";
+                license = lib.licenses.unfree;
+                # mozPermissions = [];
+                platforms = lib.platforms.all;
+              };
+            })
 
-          # Disable WebRTC
-          (buildFirefoxXpiAddon {
-            pname = "happy-bonobo-disable-webrtc";
-            version = "1.0.23";
-            addonId = "jid1-5Fs7iTLscUaZBgwr@jetpack";
-            url = "https://addons.mozilla.org/firefox/downloads/file/3551985/happy_bonobo_disable_webrtc-1.0.23.xpi";
-            sha256 = "sha256-sUTzAyoJiMAYUUbfWgNQgYGzsiz9JqP2xNEy4viD5Ps=";
-            meta = {
-              homepage = "https://github.com/ChrisAntaki/disable-webrtc-firefox";
-              description = "";
-              license = lib.licenses.mpl20;
-              # mozPermissions = [];
-              platforms = lib.platforms.all;
-            };
-          })
-        ];
+            # Disable WebRTC
+            (buildFirefoxXpiAddon {
+              pname = "happy-bonobo-disable-webrtc";
+              version = "1.0.23";
+              addonId = "jid1-5Fs7iTLscUaZBgwr@jetpack";
+              url = "https://addons.mozilla.org/firefox/downloads/file/3551985/happy_bonobo_disable_webrtc-1.0.23.xpi";
+              sha256 = "sha256-sUTzAyoJiMAYUUbfWgNQgYGzsiz9JqP2xNEy4viD5Ps=";
+              meta = {
+                homepage = "https://github.com/ChrisAntaki/disable-webrtc-firefox";
+                description = "";
+                license = lib.licenses.mpl20;
+                # mozPermissions = [];
+                platforms = lib.platforms.all;
+              };
+            })
+          ];
+
+        # TODO: configure extensions here!
+        # ref; https://nix-community.github.io/home-manager/options.xhtml#opt-programs.firefox.profiles._name_.extensions
+        settings = {};
+      };
 
       bookmarks = {};
 
@@ -145,6 +150,40 @@
             definedAliases = ["@bgp"];
           };
 
+          "Go Packages" = {
+            urls = [
+              {
+                template = "https://pkg.go.dev/search";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            # iconUpdateURL = "https://pkg.go.dev/favicon.ico";
+            # updateInterval = 24 * 60 * 60 * 1000; # every day
+            icon = "${./go.ico}";
+            definedAliases = ["@go"];
+          };
+
+          "Kagi" = {
+            urls = [
+              {
+                template = "https://kagi.com";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = "${./kagi.svg}";
+            definedAliases = ["@kagi"];
+          };
+
           "MDN Web Docs" = {
             urls = [
               {
@@ -183,24 +222,6 @@
             ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = ["@nix"];
-          };
-
-          "Go Packages" = {
-            urls = [
-              {
-                template = "https://pkg.go.dev/search";
-                params = [
-                  {
-                    name = "q";
-                    value = "{searchTerms}";
-                  }
-                ];
-              }
-            ];
-            # iconUpdateURL = "https://pkg.go.dev/favicon.ico";
-            # updateInterval = 24 * 60 * 60 * 1000; # every day
-            icon = "${./go.ico}";
-            definedAliases = ["@go"];
           };
 
           "Simple Icons" = {
