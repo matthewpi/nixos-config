@@ -76,7 +76,6 @@ in {
       ".config/obsidian"
       ".config/op"
       ".config/rclone"
-      ".config/sh.cider.electron"
       ".config/sh.cider.genten"
       ".config/turborepo"
       ".config/vesktop"
