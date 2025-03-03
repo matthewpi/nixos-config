@@ -56,6 +56,9 @@
     # Enable gvfs
     services.gvfs.enable = lib.mkDefault true;
 
+    # Enable glib-networking.
+    services.gnome.glib-networking.enable = lib.mkDefault true;
+
     # Fixes issues with XDG portal definitions not being detected.
     # ref; https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
     environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
