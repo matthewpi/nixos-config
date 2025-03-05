@@ -15,6 +15,7 @@
         "/dev/streamdeck"
       ];
     };
+    Install.WantedBy = ["dev-streamdeck.device"];
 
     Service = {
       Type = "exec";
@@ -36,7 +37,7 @@
         # Configuration location
         "${config.home.homeDirectory}/.config/streamdeck"
         # Firefox assets
-        "${config.home.homeDirectory}/.mozilla/firefox/firefox-mpris"
+        "-${config.home.homeDirectory}/.mozilla/firefox/firefox-mpris"
         # Allow access to the binary since it's not packaged by Nix.
         "/code/matthewpi/streamdeck-local"
       ];
@@ -73,7 +74,5 @@
       DevicePolicy = "closed";
       DeviceAllow = "/dev/streamdeck";
     };
-
-    Install.WantedBy = ["hyprland-session.target"];
   };
 }
