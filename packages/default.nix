@@ -74,6 +74,15 @@
           ./0001-Enable-package-version-server-lookup-in-PATH.patch
         ];
       });
+
+      tailscale-systray = pkgs.tailscale.overrideAttrs (oldAttrs: rec {
+        outputs = ["out"];
+        subPackages = ["cmd/systray"];
+        postInstall = ''
+          mv "$out"/bin/systray "$out"/bin/${meta.mainProgram}
+        '';
+        meta = oldAttrs.meta // {mainProgram = "tailscale-systray";};
+      });
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -99,6 +108,7 @@
         inter
         monaspace
         simple-completion-language-server
+        tailscale-systray
         vesktop
         vulkan-hdr-layer
         zed-editor

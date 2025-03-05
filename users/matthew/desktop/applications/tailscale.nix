@@ -1,4 +1,9 @@
-{config, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   systemd.user.services.tailscale-systray = {
     Unit = {
       Description = "Tailscale Systray";
@@ -10,10 +15,7 @@
 
     Service = {
       Type = "exec";
-      # TODO: package
-      # Right now this comes from a local Tailscale clone as the systray binary
-      # isn't available in `pkgs.tailscale`.
-      ExecStart = "/code/github/tailscale/dist/systray";
+      ExecStart = lib.getExe pkgs.tailscale-systray;
       KillSignal = "SIGINT";
       Restart = "no";
       Slice = "background.slice";
