@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{config, ...}: {
   # https://wiki.hyprland.org/Hypr-Ecosystem/hypridle/
   services.hypridle = let
     # `pidof` here prevents multiple hyprlock instances from running simultaneously.
@@ -44,10 +40,5 @@
     };
   };
 
-  systemd.user.services.hypridle = {
-    Service.Slice = "session.slice";
-    Unit.After = lib.mkForce [];
-    Unit.PartOf = lib.mkForce ["hyprland-session.target"];
-    Install.WantedBy = lib.mkForce ["hyprland-session.target"];
-  };
+  systemd.user.services.hypridle.Service.Slice = "session.slice";
 }

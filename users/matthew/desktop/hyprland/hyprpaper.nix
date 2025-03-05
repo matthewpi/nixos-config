@@ -1,11 +1,7 @@
-{
-  lib,
-  pkgs,
-  ...
-}: let
-  wallpaper = "${pkgs.catppuccin-wallpapers}/CatppuccinMocha-Kurzgesagt-CloudyQuasar1.png";
-in {
-  services.hyprpaper = {
+{pkgs, ...}: {
+  services.hyprpaper = let
+    wallpaper = "${pkgs.catppuccin-wallpapers}/CatppuccinMocha-Kurzgesagt-CloudyQuasar1.png";
+  in {
     enable = true;
     settings = {
       ipc = false;
@@ -16,9 +12,5 @@ in {
     };
   };
 
-  systemd.user.services.hyprpaper = {
-    Service.Slice = "session.slice";
-    Unit.PartOf = lib.mkForce ["hyprland-session.target"];
-    Install.WantedBy = lib.mkForce ["hyprland-session.target"];
-  };
+  systemd.user.services.hyprpaper.Service.Slice = "session.slice";
 }

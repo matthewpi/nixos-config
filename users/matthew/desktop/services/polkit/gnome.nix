@@ -9,7 +9,11 @@ in {
     systemd.user.services.polkit-gnome-authentication-agent-1 = {
       Unit = {
         Description = "Polkit GNOME Authentication Agent";
+        PartOf = [config.wayland.systemd.target];
+        After = [config.wayland.systemd.target];
       };
+
+      Install.WantedBy = [config.wayland.systemd.target];
 
       Service = {
         Type = "simple";
@@ -18,10 +22,6 @@ in {
         RestartSec = 1;
         TimeoutStopSec = 10;
         Slice = "session.slice";
-      };
-
-      Install = {
-        WantedBy = ["hyprland-session.target"];
       };
     };
   };

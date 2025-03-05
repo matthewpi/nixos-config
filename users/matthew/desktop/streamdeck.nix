@@ -15,6 +15,7 @@
         "/dev/streamdeck"
       ];
     };
+
     Install.WantedBy = ["dev-streamdeck.device"];
 
     Service = {

@@ -13,19 +13,41 @@
       inputs.catppuccin.nixosModules.catppuccin
     ];
 
+    # Enable Catppuccin colors on the TTY.
     catppuccin.tty.enable = true;
 
     # HDR
     hardware.graphics.extraPackages = [pkgs.vulkan-hdr-layer];
 
-    # TODO: not reference home-manager for the package.
-    programs.hyprland.package = config.home-manager.users.matthew.wayland.windowManager.hyprland.finalPackage;
+    # Disable XWayland since we don't need it for any applications.
+    programs.xwayland.enable = false;
+
+    # Configure Hyprland and it's package.
+    programs.hyprland = {
+      # NOTE: this is intentional, if we enable this a bunch of settings get
+      # configured at the NixOS level, some of which we don't want (XDG portals).
+      #
+      # Most of our configuration is done at the home-manager level, so we only
+      # want the basic essentials in the NixOS config.
+      enable = false;
+      package = pkgs.hyprland;
+      portalPackage = pkgs.xdg-desktop-portal-hyprland;
+      xwayland.enable = config.programs.xwayland.enable;
+      withUWSM = true;
+    };
+
+    # Configure UWSM.
+    programs.uwsm = {
+      enable = true;
+      waylandCompositors.hyprland = {
+        prettyName = "Hyprland";
+        comment = "Hyprland compositor managed by UWSM";
+        binPath = "/run/current-system/sw/bin/Hyprland";
+      };
+    };
 
     # Add required packages to path.
     environment.systemPackages = [config.programs.hyprland.package pkgs.pciutils];
-
-    # Install hyprland as a session package so it can be used by tuigreet.
-    services.displayManager.sessionPackages = [config.programs.hyprland.package];
 
     # Path fixes for Hyprland.
     systemd.user.extraConfig = ''
@@ -34,7 +56,7 @@
 
     # Configure hyprlock PAM.
     security.pam.services.hyprlock = {
-      # Enable gnome-keyring integration if enabled.
+      # Enable gnome-keyring integration only if gnome-keyring is enabled.
       enableGnomeKeyring = lib.mkDefault config.services.gnome.gnome-keyring.enable;
 
       # Disable fprint auth since hyprlock supports accessing fprintd using DBUS.

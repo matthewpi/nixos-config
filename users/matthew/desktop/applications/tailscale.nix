@@ -1,7 +1,12 @@
-{
+{config, ...}: {
   systemd.user.services.tailscale-systray = {
-    Unit.Description = "Tailscale Systray";
-    Install.WantedBy = ["hyprland-session.target"];
+    Unit = {
+      Description = "Tailscale Systray";
+      PartOf = [config.wayland.systemd.target];
+      After = [config.wayland.systemd.target];
+    };
+
+    Install.WantedBy = [config.wayland.systemd.target];
 
     Service = {
       Type = "exec";

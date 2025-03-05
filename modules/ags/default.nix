@@ -29,7 +29,11 @@
     Unit = {
       Description = "AGS";
       Documentation = "https://github.com/Aylur/ags";
+      PartOf = [config.wayland.systemd.target];
+      After = [config.wayland.systemd.target];
     };
+
+    Install.WantedBy = [config.wayland.systemd.target];
 
     Service = {
       ExecStart = "${lib.getExe' config.programs.ags.finalPackage "ags"} run --gtk4";
@@ -84,7 +88,5 @@
       PrivateUsers = true;
       DevicePolicy = "closed";
     };
-
-    Install.WantedBy = ["hyprland-session.target"];
   };
 }

@@ -14,6 +14,7 @@
       Install.WantedBy = lib.mkForce ["pipewire.service"];
 
       Service = {
+        Slice = "background.slice";
         Type = "dbus";
         BusName = "com.github.wwmm.easyeffects";
         ExecStart = lib.mkForce "${lib.getExe config.services.easyeffects.package} --gapplication-service";

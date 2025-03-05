@@ -2,6 +2,7 @@
   config,
   isDesktop,
   lib,
+  nixosConfig,
   pkgs,
   ...
 }: let
@@ -93,25 +94,9 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = pkgs.hyprland;
-
-    # Disable xwayland since we don't need it for any applications.
-    xwayland.enable = false;
-
-    systemd = {
-      enableXdgAutostart = true;
-
-      extraCommands = [
-        # https://wiki.hyprland.org/Nix/Hyprland-on-Home-Manager/#programs-dont-work-in-systemd-services-but-do-on-the-terminal
-        "${lib.getExe' pkgs.dbus "dbus-update-activation-environment"} --systemd --all"
-        "${pkgs.systemd}/bin/systemctl --user stop hyprland-session.target"
-        "${pkgs.systemd}/bin/systemctl --user start hyprland-session.target"
-      ];
-
-      # Disable the default `dbus-update-activation-environment` command
-      # generation since we do it ourselves via `extraCommands`.
-      variables = lib.mkDefault [];
-    };
+    package = nixosConfig.programs.hyprland.package;
+    xwayland.enable = nixosConfig.programs.hyprland.xwayland.enable;
+    systemd.enable = !nixosConfig.programs.uwsm.enable;
 
     settings = {
       # experimental = {

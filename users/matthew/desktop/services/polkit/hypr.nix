@@ -9,9 +9,11 @@ in {
     systemd.user.services.hyprpolkitagent = {
       Unit = {
         Description = "Hyprland Polkit Authentication Agent";
-        # PartOf = ["graphical-session.target"];
-        # After = ["graphical-session.target"];
+        PartOf = [config.wayland.systemd.target];
+        After = [config.wayland.systemd.target];
       };
+
+      Install.WantedBy = [config.wayland.systemd.target];
 
       Service = {
         Type = "simple";
@@ -20,11 +22,6 @@ in {
         RestartSec = 1;
         TimeoutStopSec = 10;
         Slice = "session.slice";
-      };
-
-      Install = {
-        # WantedBy = ["graphical-session.target"];
-        WantedBy = ["hyprland-session.target"];
       };
     };
   };
