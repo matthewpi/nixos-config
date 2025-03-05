@@ -66,6 +66,8 @@
       d = "diff";
       dc = "diff --cached";
 
+      k = "kubectl";
+
       r = "rebase";
 
       s = "stash";
