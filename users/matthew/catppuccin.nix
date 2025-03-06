@@ -1,7 +1,6 @@
 {
   config,
   inputs,
-  isDesktop,
   pkgs,
   ...
 }: {
@@ -47,22 +46,18 @@
   home.pointerCursor = let
     inherit (config.catppuccin) flavor;
     accent = "dark";
+    size = 24;
   in {
     # Catppuccin's hyprland module tries to set `HYPRCURSOR_SIZE` to the same
     # as the main cursor, overriding home-manager. To avoid this, we need to
     # manually set the cursor theme so Catppuccin doesn't break anything.
     name = "catppuccin-${flavor}-${accent}-cursors";
     package = pkgs.catppuccin-cursors.${flavor + "Dark"};
-
-    # TODO: this may need to be different for !isDesktop.
-    size = 24;
+    inherit size;
 
     hyprcursor = {
       enable = true;
-      size =
-        if isDesktop
-        then 32
-        else 24;
+      inherit size;
     };
 
     gtk.enable = true;
