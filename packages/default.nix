@@ -53,28 +53,6 @@
         '';
       });
 
-      zed-editor = pkgs.zed-editor.overrideAttrs (_: {
-        # I have no idea why but if I use `oldAttrs.patches ++ []` somehow my
-        # patch gets added twice.
-        patches = [
-          # Zed uses cargo-install to install cargo-about during the script execution.
-          # We provide cargo-about ourselves and can skip this step.
-          # Until https://github.com/zed-industries/zed/issues/19971 is fixed,
-          # we also skip any crate for which the license cannot be determined.
-          "${inputs.nixpkgs}/pkgs/by-name/ze/zed-editor/0001-generate-licenses.patch"
-
-          # Upstream delegates linking on Linux to clang to make use of mold,
-          # but builds fine with our standard linker.
-          # This patch removes their linker override from the cargo config.
-          "${inputs.nixpkgs}/pkgs/by-name/ze/zed-editor/0002-linux-linker.patch"
-
-          # See https://github.com/zed-industries/zed/pull/21661#issuecomment-2524161840
-          "script/patches/use-cross-platform-livekit.patch"
-
-          ./0001-Enable-package-version-server-lookup-in-PATH.patch
-        ];
-      });
-
       tailscale-systray = pkgs.tailscale.overrideAttrs (oldAttrs: rec {
         doCheck = false;
         outputs = ["out"];
@@ -112,7 +90,6 @@
         tailscale-systray
         vesktop
         vulkan-hdr-layer
-        zed-editor
         ;
 
       _1password-gui = _packages._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
