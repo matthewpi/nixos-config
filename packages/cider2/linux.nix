@@ -4,11 +4,35 @@
   src,
   meta,
   appimageTools,
+  lib,
   makeWrapper,
 }: let
   appimageContents = appimageTools.extractType2 {
     inherit pname version src;
   };
+
+  enableFeatures = [
+    "AcceleratedVideoDecoder"
+    "AcceleratedVideoDecodeLinuxGL"
+    "AcceleratedVideoDecodeLinuxZeroCopyGL"
+    "AcceleratedVideoEncoder"
+    "Vulkan"
+  ];
+
+  flags = [
+    "--use-angle=vulkan"
+    # "--use-vulkan"
+    "--disable-seccomp-filter-sandbox"
+    "--enable-accelerated-2d-canvas"
+    "--enable-accelerated-mjpeg-decode"
+    "--enable-accelerated-video-decode"
+    "--enable-features=${lib.concatStringsSep "," enableFeatures}"
+    "--enable-gpu-compositing"
+    "--enable-gpu-rasterization"
+    "--enable-native-gpu-memory-buffers"
+    "--enable-zero-copy"
+    "--ignore-gpu-blocklist"
+  ];
 in
   appimageTools.wrapType2 {
     inherit pname version src meta;
@@ -21,7 +45,7 @@ in
 
       wrapProgram "$out"/bin/${meta.mainProgram} \
         --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}" \
-        --add-flags '--disable-seccomp-filter-sandbox --ignore-gpu-blocklist --enable-gpu-rasterization --enable-gpu --enable-features=Vulkan,UseSkiaRenderer,VaapiVideoDecoder,CanvasOopRasterization,VaapiVideoEncoder,RawDraw --disable-features=UseChromeOSDirectVideoDecoder --enable-zero-copy --enable-oop-rasterization --enable-raw-draw --enable-accelerated-mjpeg-decode --enable-accelerated-video --enable-native-gpu-memory-buffers'
+        --add-flags '${lib.concatStringsSep " " flags}'
 
       install -Dm444 '${appimageContents}/usr/share/icons/hicolor/256x256/cider.png' "$out"/share/icons/hicolor/256x256/cider.png
       install -Dm444 '${appimageContents}/Cider.desktop' "$out"/share/applications/cider.desktop

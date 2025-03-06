@@ -1,0 +1,51 @@
+From eea46099892cb02a3dc7b1af906686ca28e3224d Mon Sep 17 00:00:00 2001
+From: Matthew Penner <me@matthewp.io>
+Date: Wed, 5 Mar 2025 19:29:35 -0700
+Subject: [PATCH] chore: enable electron options for better hardware
+ acceleration
+
+Signed-off-by: Matthew Penner <me@matthewp.io>
+---
+ src/main/index.ts | 18 ++++++++++++++++--
+ 1 file changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/src/main/index.ts b/src/main/index.ts
+index 9e9244f..35c9361 100644
+--- a/src/main/index.ts
++++ b/src/main/index.ts
+@@ -43,8 +43,22 @@ function init() {
+             "AcceleratedVideoDecodeLinuxGL",
+             "AcceleratedVideoEncoder",
+             "AcceleratedVideoDecoder",
+-            "AcceleratedVideoDecodeLinuxZeroCopyGL"
++            "AcceleratedVideoDecodeLinuxZeroCopyGL",
++            "VaapiIgnoreDriverChecks",
++            "Vulkan",
+         );
++        app.commandLine.appendSwitch("use-angle", "vulkan");
++        // app.commandLine.appendSwitch("use-vulkan");
++        app.commandLine.appendSwitch("disable-frame-rate-limit");
++        app.commandLine.appendSwitch("enable-accelerated-2d-canvas");
++        app.commandLine.appendSwitch("enable-accelerated-mjpeg-decode");
++        app.commandLine.appendSwitch("enable-accelerated-video-decode");
++        app.commandLine.appendSwitch("enable-gpu-compositing");
++        app.commandLine.appendSwitch("enable-gpu-rasterization");
++        app.commandLine.appendSwitch("enable-native-gpu-memory-buffers");
++        app.commandLine.appendSwitch("enable-webrtc-pipewire-capturer");
++        app.commandLine.appendSwitch("enable-zero-copy");
++        app.commandLine.appendSwitch("ignore-gpu-blocklist");
+     }
+ 
+     if (disableSmoothScroll) {
+@@ -70,7 +84,7 @@ function init() {
+     disabledFeatures.push("WinRetrieveSuggestionsOnlyOnDemand", "HardwareMediaKeyHandling", "MediaSessionService");
+ 
+     // Support TTS on Linux using speech-dispatcher
+-    app.commandLine.appendSwitch("enable-speech-dispatcher");
++    //app.commandLine.appendSwitch("enable-speech-dispatcher");
+ 
+     app.commandLine.appendSwitch("enable-features", [...new Set(enabledFeatures)].filter(Boolean).join(","));
+     app.commandLine.appendSwitch("disable-features", [...new Set(disabledFeatures)].filter(Boolean).join(","));
+-- 
+2.48.1
+
