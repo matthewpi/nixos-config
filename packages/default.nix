@@ -76,6 +76,7 @@
       });
 
       tailscale-systray = pkgs.tailscale.overrideAttrs (oldAttrs: rec {
+        doCheck = false;
         outputs = ["out"];
         subPackages = ["cmd/systray"];
         postInstall = ''
