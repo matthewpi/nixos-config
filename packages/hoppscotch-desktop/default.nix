@@ -24,7 +24,7 @@ rustPlatform.buildRustPackage {
   src = hoppscotch;
 
   cargoRoot = "packages/hoppscotch-selfhost-desktop/src-tauri";
-  cargoHash = "sha256-N7Dm0pknmAJrgvlajTJ+KBsXmaJKylQ+qffuBTZ5U4w=";
+  cargoHash = "sha256-mOBMU9+bcicQYkpOvRvrv4O8pN/FZq7rrbzPs6HT3SU=";
   useFetchCargoVendor = true;
 
   # could not find `Cargo.toml` in `/build/source` or any parent directory.
