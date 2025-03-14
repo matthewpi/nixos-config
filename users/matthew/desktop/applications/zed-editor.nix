@@ -142,9 +142,6 @@
 
         load_direnv = "shell_hook";
 
-        # Disable inline completions in comments.
-        inline_completions_disabled_in = ["comment"];
-
         # Configure colored indent guides.
         indent_guides.coloring = "indent_aware";
 
@@ -263,14 +260,18 @@
 
           PHP.language_servers = ["intelephense" "!phpactor"];
 
-          "Vue.js".language_servers = ["!tailwindcss-language-server" "vue-language-server"];
+          "Vue.js" = {
+            format_on_save = "on";
+            formatter.external = prettier;
+            language_servers = ["!tailwindcss-language-server" "vue-language-server"];
+          };
         };
 
-        # Disable AI completions.
-        features = {
-          inline_completion_provider = "none";
-          edit_prediction_provider = "none";
-        };
+        # Disable AI completion.
+        features.edit_prediction_provider = "none";
+
+        # Disable completions in comments.
+        edit_predictions_disabled_in = ["comment"];
 
         # Disable telemetry.
         telemetry = {
@@ -291,12 +292,6 @@
               model = "qwen2.5-coder:7b";
             };
           };
-
-          # # Enable AI completions.
-          # features = {
-          #   inline_completion_provider = "ollama";
-          #   edit_prediction_provider = "ollama";
-          # };
 
           language_models.ollama = {
             api_url = "http://localhost:${toString nixosConfig.services.ollama.port}";
