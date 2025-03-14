@@ -37,7 +37,7 @@
       protols
       nodePackages.prettier
       python312Packages.python-lsp-server
-      # rust-analyzer
+      rust-analyzer
       simple-completion-language-server
       tailwindcss-language-server
       taplo
