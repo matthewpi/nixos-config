@@ -24,6 +24,7 @@
       monaspace = pkgs.callPackage ./monaspace.nix {};
       vesktop = pkgs.callPackage ./vesktop/package.nix {
         inherit inputs;
+        electron = pkgs.electron_33;
         vesktop = inputs.nixpkgs.legacyPackages.${system}.vesktop;
       };
       vulkan-hdr-layer = pkgs.callPackage ./vulkan-hdr-layer {};
