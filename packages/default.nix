@@ -10,8 +10,6 @@
     ...
   }: let
     _packages = rec {
-      _1password-gui = pkgs.callPackage ./1password-gui {};
-      _1password-gui-beta = pkgs.callPackage ./1password-gui {channel = "beta";};
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
       cider2 = pkgs.callPackage ./cider2 {};
@@ -29,17 +27,7 @@
       };
       vulkan-hdr-layer = pkgs.callPackage ./vulkan-hdr-layer {};
 
-      catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs (oldAttrs: {
-        version = "2.0.0";
-        src = pkgs.fetchFromGitHub {
-          owner = "catppuccin";
-          repo = "cursors";
-          tag = "v2.0.0";
-          hash = "sha256-qis6p+/m7+DdRDYzLq9yB2eZGpfZe5z5xRsa/1HoIG4=";
-        };
-
-        nativeBuildInputs = oldAttrs.nativeBuildInputs ++ [pkgs.zip];
-
+      catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs (_: {
         outputs = ["mochaDark" "out"];
 
         buildPhase = ''
@@ -73,7 +61,7 @@
           "''${gappsWrapperArgs[@]}" \
           --suffix PATH : ${lib.makeBinPath [pkgs.xdg-utils]} \
           --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \
-          --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
+          --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-wayland-ime=true}}"
       '';
     in {
       inherit
@@ -93,8 +81,8 @@
         vulkan-hdr-layer
         ;
 
-      _1password-gui = _packages._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
-      _1password-gui-beta = _packages._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+      _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+      _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
 
       signal-desktop = pkgs.signal-desktop.overrideAttrs (old: {
         preFixup =
