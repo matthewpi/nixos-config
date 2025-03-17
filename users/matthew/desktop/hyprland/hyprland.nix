@@ -43,7 +43,7 @@
   # Command used to launch slack.
   slack = mkSystemdRun {
     name = "com.slack.Slack";
-    command = lib.getExe pkgs.slack;
+    command = "${lib.getExe pkgs.slack} --disable-gpu";
   };
 
   # Command used to launch Zed.
