@@ -295,6 +295,12 @@
 
             # Pre-fetch the flake-registry to prevent it from being re-downloaded.
             nix.settings.flake-registry = "${inputs.flake-registry}/flake-registry.json";
+
+            # Set the configuration revision to this flake's Git revision.
+            #
+            # NOTE: `src.rev` is only available if the tree of this repository
+            # is clean (no uncommitted changes).
+            system.configurationRevision = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
           };
         in {
           lib = {inherit mkNixpkgs;};
