@@ -238,12 +238,12 @@
     systems-linux.url = "github:nix-systems/default-linux";
 
     treefmt-nix = {
-      url = "github:numtide/treefmt-nix/56c0ecd79f7ba01a0ec027da015df751d6ca3ae7";
+      url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     xdph = {
-      url = "github:hyprwm/xdg-desktop-portal-hyprland/ff6b2a51e95ca4ac590801e626c5ef777283a0fe";
+      url = "github:hyprwm/xdg-desktop-portal-hyprland";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
