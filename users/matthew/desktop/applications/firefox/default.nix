@@ -240,10 +240,10 @@
             definedAliases = ["@go"];
           };
 
-          "Bing".metaData.hidden = true;
-          "DuckDuckGo".metaData.hidden = true;
-          "eBay".metaData.hidden = true;
-          "Wikipedia (en)".metaData.hidden = true;
+          bing.metaData.hidden = true;
+          ddg.metaData.hidden = true;
+          ebay.metaData.hidden = true;
+          wikipedia.metaData.hidden = true;
         };
       };
 
