@@ -51,8 +51,8 @@
         # Compile all the schemas
         glib-compile-schemas ./schemas
 
-        mkdir -p "$out/share/gsettings-schemas/glib-2.0"
-        cp -r schemas "$out/share/gsettings-schemas/glib-2.0/"
+        mkdir -p "$out"/share/gsettings-schemas/glib-2.0
+        cp -r schemas "$out"/share/gsettings-schemas/glib-2.0/
       '')
   ];
 

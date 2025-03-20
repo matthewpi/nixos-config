@@ -6,6 +6,7 @@
 
     ./gtk.nix
     ./mime.nix
+    ./podman.nix
     ./streamdeck.nix
   ];
 

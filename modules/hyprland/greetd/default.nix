@@ -4,6 +4,9 @@
   pkgs,
   ...
 }: {
+  disabledModules = ["services/display-managers/greetd.nix"];
+  imports = [./module.nix];
+
   # Enable greetd.
   services.greetd = {
     enable = lib.mkDefault true;
@@ -30,7 +33,7 @@
   #
   # A fingerprint can still be used with other services once the user session
   # has been started.
-  security.pam.services.greetd.fprintAuth = false;
+  # security.pam.services.greetd.fprintAuth = false;
 
   systemd.services.greetd.serviceConfig = lib.mkIf config.services.greetd.enable {
     StandardInput = "tty";
@@ -42,4 +45,9 @@
     TTYVHangup = true;
     TTYVTDisallocate = true;
   };
+
+  # Force Pipewire to only start for a graphical session. This avoids it starting
+  # due to something like SSH or for other users (greeter) that don't actually
+  # need it.
+  systemd.user.services.pipewire.wantedBy = lib.mkForce ["graphical-session.target"];
 }

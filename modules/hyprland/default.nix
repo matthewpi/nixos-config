@@ -7,7 +7,7 @@
     ...
   }: {
     imports = [
-      ./greetd.nix
+      ./greetd
       ./gsettings.nix
 
       inputs.catppuccin.nixosModules.catppuccin
@@ -16,8 +16,8 @@
     # Enable Catppuccin colors on the TTY.
     catppuccin.tty.enable = true;
 
-    # HDR
-    hardware.graphics.extraPackages = [pkgs.vulkan-hdr-layer];
+    # # HDR
+    # hardware.graphics.extraPackages = [pkgs.vulkan-hdr-layer];
 
     # Disable XWayland since we don't need it for any applications.
     programs.xwayland.enable = false;
@@ -62,6 +62,10 @@
       # Disable fprint auth since hyprlock supports accessing fprintd using DBUS.
       fprintAuth = false;
     };
+
+    # Ensure fprintAuth for login is disabled, otherwise the keyring will never
+    # be unlocked since it requires a password at least once per-boot.
+    security.pam.services.login.fprintAuth = false;
 
     # Enable GNOME keyring.
     #
