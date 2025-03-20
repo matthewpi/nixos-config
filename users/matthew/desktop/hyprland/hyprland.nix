@@ -219,7 +219,8 @@ in {
         if isDesktop
         then [
           "DP-1, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
-          "DP-2, 1920x1080@144, -1920x0, 1, vrr,0, bitdepth,8"
+          "DP-2, 3840x2160@60, -2560x-720, 1.5, vrr,0, bitdepth,8"
+          "DP-3, 3840x2160@60, -2560x720, 1.5, vrr,0, bitdepth,8"
         ]
         else [
           "eDP-1, 2560x1600@165, 0x0, 1.333333, vrr,0, bitdepth,8"
@@ -238,6 +239,7 @@ in {
           # Configure default workspaces for the monitors
           "1, monitor:DP-1, default:true"
           "2, monitor:DP-2, default:true"
+          "3, monitor:DP-3, default:true"
         ];
 
       windowrulev2 = [
