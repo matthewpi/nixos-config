@@ -242,7 +242,7 @@ in {
           "3, monitor:DP-3, default:true"
         ];
 
-      windowrulev2 = [
+      windowrule = [
         # Float dialogs
         "float, title:^(Accounts)(.*)$"
         "float, title:^(Choose wallpaper)(.*)$"
