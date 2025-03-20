@@ -289,7 +289,7 @@
             button = true;
             default_model = {
               provider = "ollama";
-              model = "qwen2.5-coder:7b";
+              model = "gemma3:4b";
             };
           };
 
@@ -297,14 +297,8 @@
             api_url = "http://localhost:${toString nixosConfig.services.ollama.port}";
             available_models = [
               {
-                name = "mistral";
-                display_name = "mistral";
-                max_tokens = 32768;
-                keep_alive = "15m";
-              }
-              {
-                name = "qwen2.5-coder:7b";
-                display_name = "qwen 2.5 coder";
+                name = "gemma3:4b";
+                display_name = "Gemma 3";
                 max_tokens = 32768;
                 keep_alive = "15m";
               }
