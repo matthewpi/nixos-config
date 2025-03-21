@@ -449,11 +449,7 @@
 
             default = pkgs.mkShellNoCC {
               buildInputs =
-                (with pkgs; [
-                  gitsign
-                  nodejs_20
-                  nodePackages.pnpm
-                ])
+                []
                 ++ lib.optionals (system == "x86_64-linux") [
                   inputs.agenix.packages."${system}".default
                   inputs.ags.packages."${system}".agsFull
