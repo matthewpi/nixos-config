@@ -6,8 +6,8 @@
   config = lib.mkIf config.services.easyeffects.enable {
     systemd.user.services.easyeffects = {
       Unit = {
-        After = lib.mkForce ["pipewire.service"];
-        BindsTo = lib.mkForce ["pipewire.service"];
+        After = lib.mkForce ["pipewire.service" "graphical-session.target"];
+        BindsTo = lib.mkForce ["pipewire.service" "graphical-session.target"];
         PartOf = lib.mkForce [];
       };
 

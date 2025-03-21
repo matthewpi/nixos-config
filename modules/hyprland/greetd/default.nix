@@ -50,4 +50,5 @@
   # due to something like SSH or for other users (greeter) that don't actually
   # need it.
   systemd.user.services.pipewire.wantedBy = lib.mkForce ["graphical-session.target"];
+  systemd.user.services.pipewire-pulse.wantedBy = lib.mkForce ["graphical-session.target"];
 }
