@@ -2,6 +2,9 @@
   home.sessionVariables.NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
 
   xdg.configFile."npm/npmrc".text = ''
+    # Disable update notifications.
+    update-notifier=false
+
     # NPM
     prefix=''${XDG_DATA_HOME}/npm
     cache=''${XDG_CACHE_HOME}/npm
