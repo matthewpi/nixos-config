@@ -15,20 +15,20 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "hoppscotch";
-    version = "2025.2.2";
+    version = "2025.2.3";
 
     src = fetchFromGitHub {
       owner = "hoppscotch";
       repo = "hoppscotch";
       tag = finalAttrs.version;
-      hash = "sha256-ibZGOdlJODPiYyXzlwsnDzfBJZyw8jo2aLSMod5Iojw=";
+      hash = "sha256-24cFurEeU1502M3f4f4qCuG7Cs1iW+Nl7ecqqi+atI0=";
     };
 
     doCheck = false;
 
     pnpmDeps = pnpm.fetchDeps {
       inherit (finalAttrs) pname src;
-      hash = "sha256-8RYMNrdtFyu1r8AvL+GWKI6yR5vgbWVnidR5oVVkvK8=";
+      hash = "sha256-HxcsnB2Vi8o5QJ0YTD887Rn2s9ufyjxic3jhboPBdF4=";
     };
 
     nativeBuildInputs = [
