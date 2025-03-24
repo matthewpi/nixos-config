@@ -6,8 +6,6 @@
 
     ./gtk.nix
     ./mime.nix
-    ./podman.nix
-    ./streamdeck.nix
   ];
 
   home.packages = with pkgs; [

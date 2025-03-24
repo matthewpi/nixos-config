@@ -7,8 +7,8 @@
   systemd.user.services.streamdeck = lib.mkIf isDesktop {
     Unit = {
       Description = "Streamdeck";
-      BindsTo = ["dev-streamdeck.device"];
-      After = ["dev-streamdeck.device"];
+      # BindsTo = ["dev-streamdeck.device"];
+      # After = ["dev-streamdeck.device"];
       X-SwitchMethod = "keep-old"; # TODO: figure out if this is the best option.
       ConditionPathExists = [
         "/code/matthewpi/streamdeck-local/streamdeck"
@@ -16,7 +16,7 @@
       ];
     };
 
-    Install.WantedBy = ["dev-streamdeck.device"];
+    # Install.WantedBy = ["dev-streamdeck.device"];
 
     Service = {
       Type = "exec";
