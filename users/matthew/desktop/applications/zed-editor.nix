@@ -328,11 +328,13 @@
         bindings = {
           # Re-use the same keybind that opens the terminal to hide it.
           #
-          # TODO: is there a better way to close the terminal view? This seems
-          # to only work if the terminal is at the bottom.
+          # TODO: is there a better way to close/toggle the terminal view? This
+          # will only work if the terminal is docked at the bottom.
           "ctrl-`" = "workspace::ToggleBottomDock";
           # Allow pasting with Ctrl+V.
           "ctrl-v" = "terminal::Paste";
+          # Forward Ctrl+S (used for Atuin to change search mode).
+          "ctrl-s" = ["terminal::SendKeystroke" "ctrl-s"];
         };
       }
     ];
