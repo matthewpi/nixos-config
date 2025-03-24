@@ -16,8 +16,5 @@
 
     # Install kind
     kind
-
-    # Install devenv
-    devenv
   ];
 }
