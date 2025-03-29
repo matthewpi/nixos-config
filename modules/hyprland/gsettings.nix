@@ -13,14 +13,12 @@
           gtk4
 
           amberol
-          impression
-          switcheroo
-          video-trimmer
-
+          celluloid
           epiphany
           evince
           dconf-editor
           file-roller
+          impression
           geary
           gnome-calculator
           gnome-calendar
@@ -36,9 +34,11 @@
           loupe
           nautilus
           seahorse
+          showtime
           sushi
-          totem
+          switcheroo
           # wordbook
+          video-trimmer
         ];
       } ''
         mkdir schemas

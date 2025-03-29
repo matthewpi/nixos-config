@@ -18,10 +18,13 @@
 
   home.packages = with pkgs; [
     # GNOME
+    bustle
+    celluloid
     epiphany
     evince
     dconf-editor
     file-roller
+    fragments
     geary
     gnome-calculator
     gnome-calendar
@@ -37,8 +40,8 @@
     loupe
     nautilus
     seahorse
+    showtime
     sushi
-    totem
     # wordbook
 
     # clipboard
