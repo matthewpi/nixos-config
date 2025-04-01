@@ -22,7 +22,8 @@
     amberol
     cider2
     kooha
-    hoppscotch-desktop
+    # TODO: re-enable once fixed
+    # hoppscotch-desktop
     impression
     libreoffice
     ledger-live-desktop

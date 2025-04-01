@@ -13,16 +13,14 @@
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
       cider2 = pkgs.callPackage ./cider2 {};
-      hoppscotch = pkgs.callPackage ./hoppscotch {};
-      hoppscotch-desktop-unwrapped = pkgs.callPackage ./hoppscotch-desktop {inherit hoppscotch;};
-      hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/wrapper.nix {inherit hoppscotch-desktop-unwrapped;};
+      hoppscotch = pkgs.callPackage ./hoppscotch/package.nix {};
+      hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/package.nix {inherit hoppscotch;};
       simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server {};
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
       vesktop = pkgs.callPackage ./vesktop/package.nix {
         inherit inputs;
-        electron = pkgs.electron_33;
         vesktop = inputs.nixpkgs.legacyPackages.${system}.vesktop;
       };
       vulkan-hdr-layer = pkgs.callPackage ./vulkan-hdr-layer {};
@@ -71,7 +69,6 @@
         catppuccin-wallpapers
         cider2
         fast-syntax-highlighting
-        hoppscotch-desktop-unwrapped
         hoppscotch-desktop
         inter
         monaspace
