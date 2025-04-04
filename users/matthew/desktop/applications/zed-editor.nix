@@ -34,7 +34,7 @@
       nodejs
       package-version-server
       # phpactor
-      protols
+      # protols
       nodePackages.prettier
       python312Packages.python-lsp-server
       rust-analyzer
@@ -192,7 +192,10 @@
           package-version-server.binary.path_lookup = true;
           phpactor.binary.path_lookup = true;
           # prettier.binary.path_lookup = true;
-          protobuf-language-server.binary.path = "protols"; # Use `protols` instead of `protobuf-language-server`.
+          protobuf-language-server.binary = {
+            path = "buf";
+            arguments = ["beta" "lsp"];
+          };
           simple-completion-language-server.binary.path_lookup = true;
           # rust-analyzer.binary.path_lookup = true;
           taplo.binary.path_lookup = true;
