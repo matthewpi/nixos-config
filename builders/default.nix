@@ -2,6 +2,7 @@
   imports = [
     ./blahaj.nix
     ./djt.nix
+    ./nxs.nix
   ];
 
   # Enable distributed builds.
