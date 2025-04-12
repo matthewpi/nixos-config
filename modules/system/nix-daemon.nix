@@ -5,7 +5,7 @@
 }: {
   nix = {
     # Use the latest version of Nix
-    package = pkgs.nixVersions.nix_2_26;
+    package = pkgs.nixVersions.nix_2_28;
 
     # Disable nix channels since we don't use them.
     channel.enable = false;
