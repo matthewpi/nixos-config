@@ -11,6 +11,8 @@
     ./hardware-configuration.nix
   ];
 
+  programs.nix-ld.enable = true;
+
   # Hostname
   networking.hostName = "matthew-desktop";
 

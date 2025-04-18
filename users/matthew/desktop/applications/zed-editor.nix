@@ -47,6 +47,16 @@
       vtsls
       vue-language-server
       yaml-language-server
+
+      # C#
+      omnisharp-roslyn
+
+      # Swift
+      sourcekit-lsp
+
+      cargo
+      rustc
+      tree-sitter
     ];
 
     extensions = [
