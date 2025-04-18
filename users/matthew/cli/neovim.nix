@@ -6,9 +6,9 @@
 }: let
   grammars = {
     tree-sitter-caddyfile = rec {
-      url = "https://github.com/matthewpi/tree-sitter-caddyfile";
-      rev = "2c74f94ca43748e01f336b774324b98f93aa0de4";
-      hash = "sha256-6pEARNakyj5ajlvIrMeq18DejZKEvw0yAh/0mSqZmwk=";
+      url = "https://github.com/caddyserver/tree-sitter-caddyfile";
+      rev = "23f88b568a4f11de8c6c6a1d5b0aeb34b06c07d4";
+      hash = "sha256-rx3G5TNPJEaaQTQXBDXNcoQ8LFxvV7VTLekdwHBwEoE=";
       fetchSubmodules = false;
       src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
       generate = true;
