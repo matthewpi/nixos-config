@@ -24,6 +24,6 @@
   pnpmDeps = pnpm_9.fetchDeps {
     inherit (oldAttrs) pname version src;
     inherit patches;
-    hash = "sha256-xn3yE2S6hfCijV+Edx3PYgGro8eF76/GqarOIRj9Tbg=";
+    hash = "";
   };
 })
