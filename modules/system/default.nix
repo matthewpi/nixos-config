@@ -27,5 +27,12 @@
 
     # Enable htop
     programs.htop.enable = lib.mkDefault true;
+
+    # Enable `systemd-oomd` on more slices for better OOM management.
+    systemd.oomd = {
+      enableRootSlice = lib.mkDefault true;
+      enableSystemSlice = lib.mkDefault true;
+      enableUserSlices = lib.mkDefault true;
+    };
   };
 }
