@@ -17,18 +17,22 @@
     defaultKeymap = "emacs";
     dotDir = ".config/zsh";
 
-    initExtra = ''
-      # Enable the fast-syntax-highlighting plugin
-      source "${pkgs.fast-syntax-highlighting}/share/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
-    '';
+    localVariables = {
+      ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = 48;
+      ZSH_AUTOSUGGEST_USE_ASYNC = true;
+      ZSH_AUTOSUGGEST_MANUAL_REBIND = true;
+    };
 
-    initExtraBeforeCompInit = ''
-      bindkey "\e[3~" delete-char
+    initContent = lib.mkMerge [
+      (lib.mkOrder 550 ''
+        bindkey "\e[3~" delete-char
+      '')
 
-      ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE='48'
-      ZSH_AUTOSUGGEST_USE_ASYNC='true'
-      ZSH_AUTOSUGGEST_MANUAL_REBIND='true'
-    '';
+      ''
+        # Enable the fast-syntax-highlighting plugin
+        source "${pkgs.fast-syntax-highlighting}/share/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+      ''
+    ];
 
     # TODO: remove zsh history entirely, we use atuin instead.
     history = {
