@@ -24,7 +24,10 @@
 
     hyprland.enable = true;
 
-    hyprlock.enable = true;
+    hyprlock = {
+      enable = true;
+      useDefaultConfig = false;
+    };
 
     kvantum = {
       enable = true;
