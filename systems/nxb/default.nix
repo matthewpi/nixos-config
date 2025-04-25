@@ -98,4 +98,10 @@
 
   # kind
   # networking.nameservers = ["1.1.1.1" "1.0.0.1"];
+
+  # Use geoclue as the location provider.
+  location.provider = "geoclue2";
+
+  # Enable automatic-timezoned to automatically set the timezone according to geoclue.
+  services.automatic-timezoned.enable = true;
 }
