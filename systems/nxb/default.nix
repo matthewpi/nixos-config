@@ -101,7 +101,13 @@
 
   # Use geoclue as the location provider.
   location.provider = "geoclue2";
+  services.geoclue2 = {
+    enableNmea = false;
+    geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
+    submissionUrl = "https://api.beacondb.net/v2/geosubmit";
+  };
 
   # Enable automatic-timezoned to automatically set the timezone according to geoclue.
   services.automatic-timezoned.enable = true;
+  systemd.services.automatic-timezoned.environment.AUTOTZD_LOG_LEVEL = "debug";
 }
