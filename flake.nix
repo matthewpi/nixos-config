@@ -262,10 +262,23 @@
         # Add our overlays.
         overlays = builtins.attrValues outputs.overlays;
 
-        # Allow unfree packages
         config = {
-          allowUnfree = true;
-          allowUnfreePredicate = _: true;
+          # Allow some unfree packages by name.
+          allowUnfreePredicate = pkg:
+            builtins.elem (inputs.nixpkgs.lib.getName pkg) [
+              "1password"
+              "1password-cli"
+              "cider2"
+              "intelephense"
+              "obsidian"
+              "slack"
+              "star-citizen"
+
+              # Firefox Extensions (nxb)
+              "night-eye-dark-mode"
+              "onepassword-password-manager"
+            ];
+
           # NOTE: only enable if ollama is being used.
           # rocmSupport = true;
         };
