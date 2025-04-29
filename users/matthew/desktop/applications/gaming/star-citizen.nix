@@ -21,11 +21,11 @@
   pkgs,
 }: let
   # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
-  version = "2.1.1";
+  version = "2.3.1";
   src = pkgs.fetchurl {
     url = "https://install.robertsspaceindustries.com/rel/2/RSI%20Launcher-Setup-${version}.exe";
     name = "RSI Launcher-Setup-${version}.exe";
-    hash = "sha256-zSFrmvjHN9u/PdZUcRTUgmRGx51p9t+MSkDxB7q1sNo=";
+    hash = "sha256-w6o2UQsKlkK4E9luN+PO1mcbsI5nUHG7YEr1ZgcIAZo=";
   };
 
   # concat winetricks args
