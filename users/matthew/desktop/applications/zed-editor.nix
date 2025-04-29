@@ -65,6 +65,7 @@
       "blade"
       "capnp"
       "catppuccin"
+      "catppuccin-icons"
       "csv"
       "cue"
       "d2"
@@ -111,6 +112,7 @@
           light = "Catppuccin Latte";
           dark = "Catppuccin Mocha";
         };
+        icon_theme = "Catppuccin Mocha";
 
         buffer_font_family = "Monaspace Neon";
         buffer_font_size = 12;
