@@ -266,7 +266,8 @@
         config = {
           allowUnfree = true;
           allowUnfreePredicate = _: true;
-          rocmSupport = true;
+          # NOTE: only enable if ollama is being used.
+          # rocmSupport = true;
         };
       };
   in

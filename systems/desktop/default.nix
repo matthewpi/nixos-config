@@ -166,9 +166,9 @@
     "vm.max_map_count" = 2147483642;
   };
 
-  services.ollama = {
-    enable = true;
-    acceleration = "rocm";
-    rocmOverrideGfx = "11.0.0";
-  };
+  # services.ollama = {
+  #   enable = true;
+  #   acceleration = "rocm";
+  #   rocmOverrideGfx = "11.0.0";
+  # };
 }
