@@ -19,10 +19,6 @@
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
-      # vesktop = pkgs.callPackage ./vesktop/package.nix {
-      #   inherit inputs;
-      #   vesktop = inputs.nixpkgs.legacyPackages.${system}.vesktop;
-      # };
       vesktop = inputs.nixpkgs.legacyPackages.${system}.vesktop.override {
         withTTS = false;
         withSystemVencord = true;
@@ -78,7 +74,7 @@
         monaspace
         simple-completion-language-server
         tailscale-systray
-        # vesktop
+        vesktop
         vulkan-hdr-layer
         ;
 
