@@ -297,22 +297,11 @@
         ];
 
         flake = let
-          nixFlakeSettings = {
-            # Set nixpkgs to the one used by the flake. (affects legacy commands and comma)
-            nix.nixPath = ["nixpkgs=${inputs.nixpkgs}"];
-
-            # Add nixpkgs to the registry. (affects flake commands)
-            nix.registry.nixpkgs.flake = inputs.nixpkgs;
-
-            # Pre-fetch the flake-registry to prevent it from being re-downloaded.
-            nix.settings.flake-registry = "${inputs.flake-registry}/flake-registry.json";
-
-            # Set the configuration revision to this flake's Git revision.
-            #
-            # NOTE: `src.rev` is only available if the tree of this repository
-            # is clean (no uncommitted changes).
-            system.configurationRevision = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
-          };
+          # Configuration revision to this flake's Git revision.
+          #
+          # NOTE: `src.rev` is only available if the tree of this repository
+          # is clean (no uncommitted changes).
+          configurationRevision = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
         in {
           lib = {inherit mkNixpkgs;};
 
@@ -335,8 +324,9 @@
                   pkgs = outputs.lib.mkNixpkgs "x86_64-linux";
                   hostPlatform = "x86_64-linux";
                 };
+
+                system = {inherit configurationRevision;};
               })
-              nixFlakeSettings
 
               inputs.nixos-hardware.nixosModules.common-cpu-amd
               inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
@@ -409,8 +399,9 @@
                   pkgs = outputs.lib.mkNixpkgs "x86_64-linux";
                   hostPlatform = "x86_64-linux";
                 };
+
+                system = {inherit configurationRevision;};
               })
-              nixFlakeSettings
 
               inputs.nixos-hardware.nixosModules.framework-16-7040-amd
 
