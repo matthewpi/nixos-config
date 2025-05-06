@@ -273,6 +273,8 @@
               "obsidian"
               "slack"
               "star-citizen"
+              "steam"
+              "steam-unwrapped"
 
               # Firefox Extensions (nxb)
               "night-eye-dark-mode"

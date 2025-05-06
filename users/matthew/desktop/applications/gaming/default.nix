@@ -49,8 +49,8 @@
 
       histogram = false;
 
-      gamemode = true;
       vkbasalt = true;
+      winesync = true;
 
       font_size = 20;
       font_file = "${pkgs.inter}/share/fonts/opentype/Inter/Inter-Regular.otf";

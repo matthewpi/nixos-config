@@ -88,7 +88,6 @@
   ];
 
   programs.corectrl.enable = false;
-  programs.gamemode.enable = false;
   services.ratbagd.enable = false;
 
   boot.kernelParams = [

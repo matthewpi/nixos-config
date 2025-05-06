@@ -25,9 +25,8 @@
     GDK_BACKEND = "wayland,x11";
   };
 
+  home.file.".face".source = ../../.face;
   systemd.user.tmpfiles.rules = [
     "L %h/code 0755 - - - /code"
   ];
-
-  home.file.".face".source = ../../.face;
 }

@@ -11,7 +11,6 @@
       ./dconf.nix
       ./fonts.nix
       ./fwupd.nix
-      ./gamemode.nix
       ./geoclue.nix
       ./pipewire.nix
       # ./plymouth.nix
@@ -74,20 +73,47 @@
       # Incomplete protection again TIME-WAIT assassination
       "net.ipv4.tcp_rfc1337" = 1;
 
-      ## TCP optimization
-      # TCP Fast Open is a TCP extension that reduces network latency by packing
-      # data in the sender’s initial TCP SYN. Setting 3 = enable TCP Fast Open for
-      # both incoming and outgoing connections:
-      "net.ipv4.tcp_fastopen" = 3;
-      # Bufferbloat mitigations + slight improvement in throughput & latency
-      "net.ipv4.tcp_congestion_control" = "bbr"; # TODO: only enable if we are running a kernel with tcp_bbr support
-      "net.core.default_qdisc" = "cake";
+      # https://blog.cloudflare.com/optimizing-tcp-for-high-throughput-and-low-latency/#new-settings-under-test-new
+      "net.ipv4.tcp_rmem" = lib.mkDefault "8192 262144 536870912";
+      "net.ipv4.tcp_wmem" = lib.mkDefault "4096 16384 536870912";
+      "net.ipv4.tcp_adv_win_scale" = lib.mkDefault "-2";
+      "net.ipv4.tcp_notsent_lowat" = lib.mkDefault (128 * 1024); # 128 KiB
+      # Requires Cloudflare TCP collapse patches.
+      "net.ipv4.tcp_collapse_max_bytes" = lib.mkDefault (6 * 1024 * 1024); # 6 MiB
 
-      # https://github.com/quic-go/quic-go/wiki/UDP-Receive-Buffer-Size#non-bsd
-      "net.core.rmem_max" = 2500000;
+      # TCP Fast Open is a TCP extension that reduces network latency by packing
+      # data in the sender’s initial TCP SYN.
+      #
+      # 3 = enable TCP Fast Open for both incoming and outgoing connections.
+      "net.ipv4.tcp_fastopen" = lib.mkDefault 3;
+
+      # Bufferbloat mitigations + slight improvement in throughput & latency.
+      "net.ipv4.tcp_congestion_control" = lib.mkDefault "bbr";
+      "net.core.default_qdisc" = lib.mkDefault "cake";
+
+      # https://github.com/quic-go/quic-go/wiki/UDP-Buffer-Sizes#non-bsd
+      "net.core.rmem_max" = lib.mkDefault (builtins.floor (7.5 * 1024 * 1024)); # 7.5 MiB
+      "net.core.wmem_max" = lib.mkDefault (builtins.floor (7.5 * 1024 * 1024)); # 7.5 MiB
+
+      # Increase the size of netdev's receive queue, may help prevent losing
+      # packets.
+      #
+      # Defaults to `1000`.
+      "net.core.netdev_max_backlog" = lib.mkDefault (16 * 1024); # 16 KiB
+
+      # Disable TCP slow start after idle.
+      "net.ipv4.tcp_slow_start_after_idle" = 0;
 
       # Allow unprivileged users to ping.
       "net.ipv4.ping_group_range" = "0 2147483647";
+
+      # SteamOS/Fedora default, can help with performance.
+      "vm.max_map_count" = lib.mkForce 2147483642;
+
+      # TODO: document
+      #
+      # Recommended for hosts with jumbo frames enabled.
+      "net.ipv4.tcp_mtu_probing" = lib.mkDefault 1;
     };
 
     # Set location provider to manual.

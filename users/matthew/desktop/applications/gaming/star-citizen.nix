@@ -3,7 +3,6 @@
   makeDesktopItem,
   symlinkJoin,
   writeShellScriptBin,
-  gamemode,
   gamescope,
   winetricks,
   wine,
@@ -99,11 +98,11 @@
     ${preCommands}
 
     if [[ -t 1 ]]; then
-        ${gameScope} ${gamemode}/bin/gamemoderun wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@"
+        ${gameScope} wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@"
     else
         export LOG_DIR="$(mktemp -d)"
         echo 'Working around known launcher error by outputting logs to '"$LOG_DIR"
-        ${gameScope} ${gamemode}/bin/gamemoderun wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@" >"$LOG_DIR"/RSIout 2>"$LOG_DIR"/RSIerr
+        ${gameScope} wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@" >"$LOG_DIR"/RSIout 2>"$LOG_DIR"/RSIerr
     fi
 
     wineserver -w
