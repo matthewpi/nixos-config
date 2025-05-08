@@ -122,6 +122,8 @@ in {
         # Only move keyboard focus on click
         follow_mouse = 2;
 
+        resolve_binds_by_sym = true;
+
         # Only focus windows when the mouse crosses a window boundary
         # NOTE: this seems to fix issues with pop-ups in JetBrains IDEs
         mouse_refocus = false;
@@ -368,27 +370,27 @@ in {
         # `loginctl lock-session` will launch only hyprlock,
         # while `systemctl suspend` will handle both hyprlock
         # and any other actions; such as DPMS.
-        "$mainMod, L, exec, loginctl lock-session"
+        "$mainMod, L, exec, ${lib.getExe' nixosConfig.systemd.package "loginctl"} lock-session"
 
         # Use Tab to switch between windows in a floating workspace
-        "$mainMod, Tab, cyclenext," # Change focus to another window
-        "$mainMod, Tab, bringactivetotop," # Bring it to the top
+        # "$mainMod, Tab, cyclenext," # Change focus to another window
+        # "$mainMod, Tab, bringactivetotop," # Bring it to the top
       ];
 
       # bindl allows the bind to be used even when an input inhibitor is active
       bindl = [
         # Suspend on laptop lid close.
-        ", switch:on:Lid Switch, exec, systemctl suspend"
+        ", switch:on:Lid Switch, exec, ${lib.getExe' nixosConfig.systemd.package "systemctl"} suspend"
 
-        "$mainMod Shift, L, exec, systemctl suspend"
+        "$mainMod Shift, L, exec, ${lib.getExe' nixosConfig.systemd.package "systemctl"} suspend"
 
-        ", XF86AudioPlay, exec, playerctl play-pause"
-        ", XF86AudioPrev, exec, playerctl previous"
-        ", XF86AudioNext, exec, playerctl next"
+        ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
+        ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
+        ", XF86AudioNext, exec, ${lib.getExe pkgs.playerctl} next"
 
         # Mute audio (volume adjustment is bound under `binde`)
-        ", XF86AudioMute, exec, volumectl toggle-mute" # wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-        ", XF86AudioMicMute, exec, volumectl -m toggle-mute"
+        ", XF86AudioMute, exec, ${lib.getExe' config.services.avizo.package "volumectl"} toggle-mute" # wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+        ", XF86AudioMicMute, exec, ${lib.getExe' config.services.avizo.package "volumectl"} -m toggle-mute"
       ];
 
       bindm = [
@@ -401,12 +403,12 @@ in {
       # binde is for repeated inputs (trigger action multiple times while key is held)
       bindle = [
         # Volume up/down
-        ", XF86AudioRaiseVolume, exec, volumectl -u up" # wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
-        ", XF86AudioLowerVolume, exec, volumectl -u down" # wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-
+        ", XF86AudioRaiseVolume, exec, ${lib.getExe' config.services.avizo.package "volumectl"} -u up" # wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
+        ", XF86AudioLowerVolume, exec, ${lib.getExe' config.services.avizo.package "volumectl"} -u down" # wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-
 
         # Brightness
-        ", XF86MonBrightnessDown, exec, lightctl down" # brightnessctl --device=amdgpu_bl1 set 5%-
-        ", XF86MonBrightnessUp, exec, lightctl up" # brightnessctl --device=amdgpu_bl1 set +5%
+        ", XF86MonBrightnessDown, exec, ${lib.getExe' config.services.avizo.package "lightctl"} down" # brightnessctl --device=amdgpu_bl1 set 5%-
+        ", XF86MonBrightnessUp, exec, ${lib.getExe' config.services.avizo.package "lightctl"} up" # brightnessctl --device=amdgpu_bl1 set +5%
       ];
     };
   };

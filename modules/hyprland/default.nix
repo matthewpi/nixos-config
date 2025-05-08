@@ -51,7 +51,7 @@
 
     # Path fixes for Hyprland.
     systemd.user.extraConfig = ''
-      DefaultEnvironment="PATH=/run/wrappers/bin:/nix/profile/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:$PATH"
+      DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:$PATH"
     '';
 
     # Configure hyprlock PAM.
@@ -88,5 +88,16 @@
     # Fixes issues with XDG portal definitions not being detected.
     # ref; https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
     environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
+
+    environment.etc."X11/xorg.conf.d/00-keyboard.conf".text = ''
+      Section "InputClass"
+        Identifier "Keyboard catchall"
+        MatchIsKeyboard "on"
+        Option "XkbModel" "${config.services.xserver.xkb.model}"
+        Option "XkbLayout" "${config.services.xserver.xkb.layout}"
+        Option "XkbOptions" "${config.services.xserver.xkb.options}"
+        Option "XkbVariant" "${config.services.xserver.xkb.variant}"
+      EndSection
+    '';
   };
 }
