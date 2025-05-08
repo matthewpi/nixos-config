@@ -136,6 +136,9 @@
   # Override the default time servers to use DHCP instead.
   networking.timeServers = lib.mkForce [];
 
+  # Enable XWayland.
+  programs.xwayland.enable = true;
+
   programs.nix-required-mounts = {
     enable = true;
     allowedPatterns = {

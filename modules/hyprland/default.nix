@@ -20,7 +20,7 @@
     # hardware.graphics.extraPackages = [pkgs.vulkan-hdr-layer];
 
     # Disable XWayland since we don't need it for any applications.
-    programs.xwayland.enable = true;
+    programs.xwayland.enable = lib.mkDefault false;
 
     # Configure Hyprland and it's package.
     programs.hyprland = {

@@ -68,12 +68,6 @@
   # This allows us to call dumpcap without using separate privilege escalation.
   programs.wireshark.enable = true;
 
-  # Configure gamescope.
-  programs.gamescope = {
-    enable = isDesktop;
-    # capSysNice = true;
-  };
-
   # Configure steam.
   programs.steam = {
     enable = isDesktop;
@@ -95,19 +89,18 @@
           libpng
           libpulseaudio
           libvorbis
-          stdenv.cc.cc.lib
+          (lib.getLib stdenv.cc.cc)
           libkrb5
           keyutils
         ];
     };
     extraCompatPackages = with pkgs; [proton-ge-bin];
-    extraPackages = with pkgs; [gamescope];
     localNetworkGameTransfers.openFirewall = true;
     protontricks.enable = true;
   };
 
   services.ananicy = {
-    enable = isDesktop;
+    enable = true;
     package = pkgs.ananicy-cpp;
     rulesProvider = pkgs.ananicy-rules-cachyos;
     # rulesProvider = pkgs.ananicy-cpp;
