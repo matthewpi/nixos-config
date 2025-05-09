@@ -29,8 +29,8 @@
     Unit = {
       Description = "AGS";
       Documentation = "https://github.com/Aylur/ags";
-      PartOf = [config.wayland.systemd.target];
-      After = [config.wayland.systemd.target];
+      After = ["graphical-session-pre.target"];
+      Before = [config.wayland.systemd.target];
     };
 
     Install.WantedBy = [config.wayland.systemd.target];

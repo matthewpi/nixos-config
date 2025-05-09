@@ -256,6 +256,11 @@ in {
         "float, title:^(Open File)(.*)$"
         "float, title:^(Open Folder)(.*)$"
 
+        # 1Password
+        "dimaround, class:(1Password), floating:1"
+        "center,    class:(1Password), floating:1"
+        "pin,       class:(1Password), floating:1"
+
         # Steam
         "center, title:(Steam), class:(), floating:1"
         "float, title:(Steam Settings), class:(steam)"
