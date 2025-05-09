@@ -6,11 +6,12 @@
   pkgs,
   ...
 }: let
+  # https://systemd.io/DESKTOP_ENVIRONMENTS/#xdg-standardization-for-applications
   mkSystemdRun = {
     name,
     command,
     args ? null,
-  }: ''${pkgs.systemd}/bin/systemd-run --user --collect --no-block --slice=app --unit="app-${name}@''${RANDOM}" ${
+  }: ''${pkgs.systemd}/bin/systemd-run --user --collect --no-block --slice=app-graphical --unit="app-${name}@''${RANDOM}" ${
       if args == null
       then ""
       else ''${lib.concatStringsSep " " args} ''

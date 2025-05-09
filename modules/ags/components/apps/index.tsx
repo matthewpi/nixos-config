@@ -14,14 +14,16 @@ function hide() {
 function getRandomNumber(max: number): number {
 	return Math.floor(Math.random() * max);
 }
-
+/**
+ * https://systemd.io/DESKTOP_ENVIRONMENTS/#xdg-standardization-for-applications
+ */
 async function launch(app: Apps.Application): Promise<void> {
 	const cmd = [
 		'systemd-run',
 		'--user',
 		'--collect',
 		'--no-block',
-		'--slice=app',
+		'--slice=app-graphical',
 		`--unit=app-${app.name}@${getRandomNumber(32767)}`,
 	];
 
