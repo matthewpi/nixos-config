@@ -3,7 +3,6 @@
   makeDesktopItem,
   symlinkJoin,
   writeShellScriptBin,
-  gamescope,
   winetricks,
   wine,
   dxvk,
@@ -11,8 +10,6 @@
   location ? "$HOME/Games/star-citizen",
   tricks ? ["powershell" "corefonts" "tahoma"],
   wineDllOverrides ? ["winemenubuilder.exe=d"],
-  gameScopeEnable ? false,
-  gameScopeArgs ? [],
   preCommands ? "",
   postCommands ? "",
   enableGlCache ? true,
@@ -33,11 +30,13 @@
     then lib.concatStringsSep " " tricks
     else "-V";
 
-  gameScope = lib.strings.optionalString gameScopeEnable "${lib.getExe gamescope} ${lib.concatStringsSep " " gameScopeArgs} --";
-
   script = writeShellScriptBin "star-citizen" ''
+    # Wayland
+    export DISPLAY=""
+    echo "$DISPLAY"
+
     export WINETRICKS_LATEST_VERSION_CHECK=disabled
-    export WINEARCH="win64"
+    export WINEARCH=win64
     export WINEPREFIX="${location}"
     export WINEFSYNC=1
     export WINEESYNC=1
@@ -50,10 +49,10 @@
     export WINE_HIDE_NVIDIA_GPU=1
 
     # AMD
-    export dual_color_blend_by_location="true"
+    export dual_color_blend_by_location=true
     export WINEDEBUG=-all
 
-    export STORE="none"
+    export STORE=none
 
     export __GL_SHADER_DISK_CACHE=${
       if enableGlCache
@@ -72,11 +71,12 @@
       wineserver -k
 
       mkdir -p "$WINEPREFIX"'/drive_c/Program Files/Roberts Space Industries/StarCitizen/'{LIVE,PTU}
+    fi
 
-      # install launcher
-      # Use silent install
+    # If the launcher isn't installed, run the installer regardless of if the
+    # prefix has already been created.
+    if [ ! -f "$RSI_LAUNCHER" ]; then
       wine ${src} /S
-
       wineserver -k
     fi
 
@@ -97,13 +97,7 @@
 
     ${preCommands}
 
-    if [[ -t 1 ]]; then
-        ${gameScope} wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@"
-    else
-        export LOG_DIR="$(mktemp -d)"
-        echo 'Working around known launcher error by outputting logs to '"$LOG_DIR"
-        ${gameScope} wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@" >"$LOG_DIR"/RSIout 2>"$LOG_DIR"/RSIerr
-    fi
+    wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@"
 
     wineserver -w
 
@@ -128,12 +122,10 @@
 in
   symlinkJoin {
     name = "star-citizen";
-    paths = [
-      desktopItems
-      script
-    ];
+    paths = [desktopItems script];
 
     meta = {
+      mainPrograma = "star-citizen";
       description = "Star Citizen installer and launcher";
       homepage = "https://robertsspaceindustries.com/";
       license = lib.licenses.unfree;

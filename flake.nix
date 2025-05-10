@@ -253,6 +253,14 @@
         hyprwayland-scanner.follows = "hyprwayland-scanner";
       };
     };
+
+    nix-gaming = {
+      url = "github:fufexan/nix-gaming";
+      inputs = {
+        flake-parts.follows = "flake-parts";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
   };
 
   outputs = {self, ...} @ inputs: let
