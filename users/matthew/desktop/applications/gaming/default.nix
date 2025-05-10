@@ -1,14 +1,12 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     (prismlauncher.override {
-      # withWaylandGLFW = true;
       jdks = with pkgs; [
-        jdk8
-        semeru-bin-8
-        temurin-bin-8
-        jdk17
-        jdk21
-        temurin-bin-21
+        temurin-jre-bin-8
+        temurin-jre-bin-17
+        temurin-jre-bin-21
+        temurin-jre-bin-23
+        temurin-jre-bin-24
       ];
     })
 
