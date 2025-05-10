@@ -92,8 +92,10 @@
     hypridle = {
       url = "github:hyprwm/hypridle";
       inputs = {
+        hyprland-protocols.follows = "hyprland-protocols";
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
+        hyprwayland-scanner.follows = "hyprwayland-scanner";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -138,6 +140,7 @@
       url = "github:hyprwm/hyprland-qtutils";
       inputs = {
         hyprland-qt-support.follows = "hyprland-qt-support";
+        hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
