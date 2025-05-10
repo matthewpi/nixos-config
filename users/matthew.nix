@@ -75,8 +75,8 @@
       extraEnv = {
         # Manually set SDL_VIDEODRIVER to x11.
         #
-        # This fixes the `gldriverquery` segfault and issues with EAC crashing on games like Rust,
-        # rather than gracefully disabling itself.
+        # This fixes the `gldriverquery` segfault and issues with EAC crashing
+        # on games like Rust, rather than gracefully disabling itself.
         SDL_VIDEODRIVER = "x11";
       };
 
@@ -103,22 +103,15 @@
     enable = true;
     package = pkgs.ananicy-cpp;
     rulesProvider = pkgs.ananicy-rules-cachyos;
-    # rulesProvider = pkgs.ananicy-cpp;
-    # extraRules = [
-    #   {
-    #     name = "gamescope";
-    #     nice = -20;
-    #   }
-    # ];
   };
 
   boot.kernelModules = lib.optional isDesktop "ntsync";
 
   services.udev.extraRules = lib.mkIf isDesktop ''
+    # Allow all users to access ntsync.
     KERNEL=="ntsync", MODE="0644"
-  '';
 
-  environment.variables = lib.mkIf isDesktop {
-    PROTON_USE_NTSYNC = "1";
-  };
+    # Set the "uaccess" tag for raw HID access for VKB Devices in wine
+    KERNEL=="hidraw*", ATTRS{idVendor}=="231d", ATTRS{idProduct}=="*", MODE="0660", TAG+="uaccess"
+  '';
 }
