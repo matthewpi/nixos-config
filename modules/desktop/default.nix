@@ -21,6 +21,7 @@
     # Packages
     environment.systemPackages = with pkgs; [
       bind
+      btop
       dig
       fd
       file
