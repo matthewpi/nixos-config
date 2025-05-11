@@ -24,11 +24,6 @@ jobs:
         with:
           kvm: false
 
-      - name: Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@6221693898146dc97e38ad0e013488a16477a4c4 # v9
-        with:
-          use-flakehub: false
-
       - name: nix develop .#ci
         uses: rrbutani/use-nix-shell-action@59a52b2b9bbfe3cc0e7deb8f9059abe37a439edf # v1.1.0
         with:

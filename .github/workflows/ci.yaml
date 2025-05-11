@@ -23,10 +23,5 @@ jobs:
         with:
           kvm: false
 
-      - name: Nix Cache
-        uses: DeterminateSystems/magic-nix-cache-action@6221693898146dc97e38ad0e013488a16477a4c4 # v9
-        with:
-          use-flakehub: false
-
       - name: nix flake check
         run: nix flake check --all-systems
