@@ -261,14 +261,6 @@
         nixpkgs.follows = "nixpkgs";
       };
     };
-
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.0.tar.gz";
-      inputs = {
-        flake-utils.follows = "flake-utils";
-        nixpkgs.follows = "nixpkgs";
-      };
-    };
   };
 
   outputs = {self, ...} @ inputs: let
@@ -325,8 +317,6 @@
           configurationRevision = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
         in {
           lib = {inherit mkNixpkgs;};
-
-          overlays.lix = inputs.lix-module.overlays.default;
 
           nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";

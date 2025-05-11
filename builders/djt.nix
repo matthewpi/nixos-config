@@ -4,10 +4,7 @@
       User builder
       HostName djt.nxpkgs.dev
       IdentitiesOnly yes
-      IdentityFile %d/.ssh/id_ed25519
-      ControlMaster auto
-      ControlPath %d/.cache/ssh/control/%r@%h:%p
-      ControlPersist 120
+      IdentityFile /root/.ssh/id_ed25519
   '';
 
   programs.ssh.knownHosts = {

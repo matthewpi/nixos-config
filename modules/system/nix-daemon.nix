@@ -4,8 +4,8 @@
   ...
 }: {
   nix = {
-    # Use the latest version of Lix.
-    package = lib.mkDefault pkgs.lix;
+    # Use the latest version of Nix
+    package = pkgs.nixVersions.nix_2_28;
 
     # Disable nix channels since we don't use them.
     channel.enable = false;
@@ -58,7 +58,6 @@
   };
 
   # Only use necessary profile paths.
-  #
   # TODO: this should be gated behind `use-xdg-base-directories`.
   # NOTE: some services (like flatpak) may try to add other entries to this array,
   # be careful when using this.
