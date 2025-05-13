@@ -100,11 +100,7 @@ in {
     systemd.enable = !nixosConfig.programs.uwsm.enable;
 
     settings = {
-      # experimental = {
-      #   # hdr = isDesktop;
-      #   wide_color_gamut = true;
-      #   xx_color_management_v4 = true;
-      # };
+      experimental.xx_color_management_v4 = true;
 
       xwayland = {
         # https://wiki.hyprland.org/Configuring/XWayland/#hidpi-xwayland
@@ -123,13 +119,22 @@ in {
         # Only move keyboard focus on click
         follow_mouse = 2;
 
-        resolve_binds_by_sym = true;
-
         # Only focus windows when the mouse crosses a window boundary
         # NOTE: this seems to fix issues with pop-ups in JetBrains IDEs
+        #
+        # TODO: is this option still wanted/needed.
         mouse_refocus = false;
 
+        # TODO: document
+        resolve_binds_by_sym = true;
+
         touchpad = {
+          # Allow using the trackpad while typing.
+          #
+          # TODO: see if there is a way to only allow this while a game or
+          # fullscreen window is focused.
+          disable_while_typing = false;
+
           # Enable natural scrolling when using a touchpad.
           natural_scroll = true;
 
@@ -164,10 +169,8 @@ in {
           else "eDP-1";
       };
 
-      animations = {
-        # Disable animations
-        enabled = false;
-      };
+      # Disable animations.
+      animations.enabled = false;
 
       decoration = {
         # Round the corners of windows
@@ -189,10 +192,14 @@ in {
         # Ensure vfr is on.
         vfr = true;
 
-        # Disable auto-reloading
+        # Enable VRR (variable refresh-rate) for fullscreened `game` or `video`
+        # windows.
+        vrr = 3;
+
+        # Disable config auto-reloading.
         disable_autoreload = true;
 
-        # Disable logo and splash
+        # Disable logo and splash.
         disable_hyprland_logo = true;
         disable_splash_rendering = true;
 
@@ -211,19 +218,17 @@ in {
 
       render = {
         # Disable direct scanout as it causes artifacting in fullscreen games.
-        direct_scanout = false;
-
-        # Disable explicit sync.
-        # explicit_sync = 0;
+        direct_scanout = 0;
       };
 
       # Monitor configuration
       monitor =
         if isDesktop
         then [
-          "DP-1, 3840x2160@240, 0x0, 1.5, vrr,0, bitdepth,8"
-          "DP-2, 3840x2160@60, -2560x-720, 1.5, vrr,0, bitdepth,8"
-          "DP-3, 3840x2160@60, -2560x720, 1.5, vrr,0, bitdepth,8"
+          # "DP-1, 3840x2160@240, 0x0, 1.5, bitdepth,10, cm,hdr, sdrbrightness,1.36, sdrsaturation,0.98" # or cm,wide
+          "DP-1, 3840x2160@240, 0x0, 1.5, bitdepth,8, cm,srgb"
+          "DP-2, 3840x2160@60, -2560x-720, 1.5, bitdepth,8, cm,srgb"
+          "DP-3, 3840x2160@60, -2560x720, 1.5, bitdepth,8, cm,srgb"
         ]
         else [
           "eDP-1, 2560x1600@165, 0x0, 1.333333, vrr,0, bitdepth,8"
@@ -246,7 +251,19 @@ in {
         ];
 
       windowrule = [
-        # Float dialogs
+        # Disable borders on floating windows.
+        "noborder, floating:1"
+
+        # Inhibit idle whenever an application is fullscreened.
+        # TODO: utilize window's content? (like game or video).
+        "idleinhibit always, fullscreen:1"
+
+        # Picture in picture
+        "float,         title:Picture-in-Picture"
+        "forcergbx,     title:Picture-in-Picture"
+        "content video, title:Picture-in-Picture"
+
+        # Float dialogs (mostly xdg-desktop-portal-gtk)
         "float, title:^(Accounts)(.*)$"
         "float, title:^(Choose wallpaper)(.*)$"
         "float, title:^(Library)(.*)$"
@@ -255,16 +272,6 @@ in {
         "float, title:^(Select a File)(.*)$"
         "float, title:^(Open File)(.*)$"
         "float, title:^(Open Folder)(.*)$"
-
-        # 1Password
-        "dimaround, class:(1Password), floating:1"
-        "center,    class:(1Password), floating:1"
-        "pin,       class:(1Password), floating:1"
-
-        # Steam
-        "center, title:(Steam), class:(), floating:1"
-        "float, title:(Steam Settings), class:(steam)"
-        "float, title:(Friends List), class:(steam)"
 
         # Polkit (GNOME)
         "dimaround, class:(polkit-gnome-authentication-agent-1)"
@@ -284,28 +291,38 @@ in {
         "float,     title:(MainPicker)"
         "pin,       title:(MainPicker)"
 
-        # Keyring
+        # GNOME Keyring Prompt
         "dimaround, class:(gcr-prompter)"
         "center,    class:(gcr-prompter)"
         "float,     class:(gcr-prompter)"
         "pin,       class:(gcr-prompter)"
 
-        # Float GNOME calculator
+        # GNOME Calculator
         "float, class:(org.gnome.Calculator)"
 
-        # Disable borders on floating windows
-        "noborder, floating:1"
+        # 1Password Prompt
+        "dimaround, class:(1Password), floating:1"
+        "center,    class:(1Password), floating:1"
+        "pin,       class:(1Password), floating:1"
 
-        # Inhibit idle whenever an application is fullscreened
-        "idleinhibit always, fullscreen:1"
+        # Prism Launcher
+        "float, title:^(.*) — Prism Launcher ([1-9]+\.[0-9])$"
+        "size <75% 50%, title:^(.*) — Prism Launcher ([1-9]+\.[0-9])$"
 
-        # Picture in picture
-        "float, title:^(Picture-in-Picture)$"
-        "forcergbx, title:^(Picture-in-Picture)$"
+        # Steam
+        "center, title:(Steam), class:(), floating:1"
+        "float,  title:(Steam Settings), class:(steam)"
+        "float,  title:(Friends List), class:(steam)"
 
-        # Make some applications opaque
-        "opacity .97 .88, class:(codium)" # VSCodium
-        "opacity .97 .88, class:(vesktop)" # Vesktop
+        # Wine dialogs
+        "center, title:(Wine)"
+        "float,  title:(Wine)"
+
+        # Game (Proton or Wine)
+        "content game, class:(.*)\.exe$"
+        "noanim,       class:(.*)\.exe$"
+        "noborder,     class:(.*)\.exe$"
+        "nodim,        class:(.*)\.exe$"
       ];
 
       # Keybinds

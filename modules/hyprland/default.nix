@@ -16,9 +16,6 @@
     # Enable Catppuccin colors on the TTY.
     catppuccin.tty.enable = true;
 
-    # # HDR
-    # hardware.graphics.extraPackages = [pkgs.vulkan-hdr-layer];
-
     # Disable XWayland since we don't need it for any applications.
     programs.xwayland.enable = lib.mkDefault false;
 
@@ -47,7 +44,11 @@
     };
 
     # Add required packages to path.
-    environment.systemPackages = [config.programs.hyprland.package pkgs.pciutils];
+    environment.systemPackages = [
+      config.programs.hyprland.package
+      pkgs.pciutils
+      pkgs.vulkan-hdr-layer-kwin6
+    ];
 
     # Path fixes for Hyprland.
     systemd.user.extraConfig = ''

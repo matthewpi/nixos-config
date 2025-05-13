@@ -23,7 +23,6 @@
         withTTS = false;
         withSystemVencord = true;
       };
-      vulkan-hdr-layer = pkgs.callPackage ./vulkan-hdr-layer {};
 
       catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs (_: {
         outputs = ["mochaDark" "out"];
@@ -75,7 +74,6 @@
         simple-completion-language-server
         tailscale-systray
         vesktop
-        vulkan-hdr-layer
         ;
 
       _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
