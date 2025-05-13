@@ -1,5 +1,6 @@
 {
   inputs,
+  nixosConfig,
   pkgs,
   ...
 }: {
@@ -49,7 +50,7 @@
 
     (makeAutostartItem {
       name = "1password";
-      package = _1password-gui-beta;
+      package = nixosConfig.programs._1password-gui.package;
     })
   ];
 
