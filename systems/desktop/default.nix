@@ -19,8 +19,8 @@
   # Use my local timezone instead of UTC
   time.timeZone = "America/Edmonton";
 
-  # Use the latest xanmod kernel.
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  # Use the stable xanmod kernel.
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
 
   boot.kernelModules = [
     "unix_diag"

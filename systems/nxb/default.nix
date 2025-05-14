@@ -33,8 +33,8 @@
   # Allow runtime reconfiguration of the timezone, defaulting to UTC if unset.
   time.timeZone = null;
 
-  # Use the xanmod kernel.
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  # Use the stable xanmod kernel.
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_stable;
 
   # Disable SSH
   services.openssh = {
