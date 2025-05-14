@@ -65,6 +65,8 @@ in {
       ".config/attic"
       ".config/aws"
       ".config/chromium"
+      ".config/discord"
+      ".config/discordcanary"
       ".config/easyeffects"
       ".config/evolution"
       ".config/go"

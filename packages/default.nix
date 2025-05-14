@@ -1,8 +1,4 @@
 {inputs, ...}: {
-  flake.overlays.util-linux-fix = _: super: {
-    utillinux = super.util-linux;
-  };
-
   perSystem = {
     lib,
     pkgs,
@@ -60,49 +56,35 @@
           --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \
           --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-wayland-ime=true}}"
       '';
-    in {
-      inherit
-        (_packages)
-        catppuccin
-        catppuccin-cursors
-        catppuccin-wallpapers
-        cider2
-        fast-syntax-highlighting
-        hoppscotch-desktop
-        inter
-        monaspace
-        simple-completion-language-server
-        tailscale-systray
-        vesktop
-        ;
+    in (_packages
+      // {
+        _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+        _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
 
-      _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
-      _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+        signal-desktop = pkgs.signal-desktop.overrideAttrs (old: {
+          preFixup =
+            old.preFixup
+            + ''
+              gappsWrapperArgs+=(
+                --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
+              )
+            '';
+        });
 
-      signal-desktop = pkgs.signal-desktop.overrideAttrs (old: {
-        preFixup =
-          old.preFixup
-          + ''
-            gappsWrapperArgs+=(
-              --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
-            )
-          '';
+        # Flake overlays
+        hyprcursor = inputs.hyprcursor.packages.${system}.hyprcursor.override {stdenv = pkgs.gcc14Stdenv;};
+        hypridle = inputs.hypridle.packages.${system}.hypridle.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprland = inputs.hyprland.packages.${system}.hyprland.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprland-protocols = inputs.hyprland-protocols.packages.${system}.hyprland-protocols.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprland-qtutils = inputs.hyprland-qtutils.packages.${system}.hyprland-qtutils.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprlang = inputs.hyprlang.packages.${system}.hyprlang.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprlock = inputs.hyprlock.packages.${system}.hyprlock.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprgraphics = inputs.hyprgraphics.packages.${system}.hyprgraphics.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprutils = inputs.hyprutils.packages.${system}.hyprutils.override {stdenv = pkgs.gcc14Stdenv;};
+        hyprwayland-scanner = inputs.hyprwayland-scanner.packages.${system}.hyprwayland-scanner.override {stdenv = pkgs.gcc14Stdenv;};
+        xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland.override {stdenv = pkgs.gcc14Stdenv;};
       });
-
-      # Flake overlays
-      hyprcursor = inputs.hyprcursor.packages.${system}.hyprcursor.override {stdenv = pkgs.gcc14Stdenv;};
-      hypridle = inputs.hypridle.packages.${system}.hypridle.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprland = inputs.hyprland.packages.${system}.hyprland.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprland-protocols = inputs.hyprland-protocols.packages.${system}.hyprland-protocols.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprland-qtutils = inputs.hyprland-qtutils.packages.${system}.hyprland-qtutils.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprlang = inputs.hyprlang.packages.${system}.hyprlang.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprlock = inputs.hyprlock.packages.${system}.hyprlock.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprgraphics = inputs.hyprgraphics.packages.${system}.hyprgraphics.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprutils = inputs.hyprutils.packages.${system}.hyprutils.override {stdenv = pkgs.gcc14Stdenv;};
-      hyprwayland-scanner = inputs.hyprwayland-scanner.packages.${system}.hyprwayland-scanner.override {stdenv = pkgs.gcc14Stdenv;};
-      xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland.override {stdenv = pkgs.gcc14Stdenv;};
-    };
   };
 }
