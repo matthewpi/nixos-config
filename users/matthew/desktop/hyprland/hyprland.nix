@@ -87,9 +87,6 @@ in {
       XDG_SESSION_DESKTOP = "Hyprland";
     }
     // lib.optionalAttrs isDesktop {
-      # ENABLE_HDR_WSI = "1";
-      # DXVK_HDR = "1";
-
       AMD_DEBUG = "lowlatencyenc";
     };
 
@@ -100,12 +97,11 @@ in {
     systemd.enable = !nixosConfig.programs.uwsm.enable;
 
     settings = {
+      # Enable the experimental color management protocol.
       experimental.xx_color_management_v4 = true;
 
-      xwayland = {
-        # https://wiki.hyprland.org/Configuring/XWayland/#hidpi-xwayland
-        force_zero_scaling = true;
-      };
+      # https://wiki.hyprland.org/Configuring/XWayland/#hidpi-xwayland
+      xwayland.force_zero_scaling = true;
 
       input = {
         kb_layout = "us";
@@ -219,6 +215,12 @@ in {
       render = {
         # Disable direct scanout as it causes artifacting in fullscreen games.
         direct_scanout = 0;
+
+        # Passthrough color settings for all fullscreen applications.
+        cm_fs_passthrough = 1;
+
+        # Ensure color management is enabled.
+        cm_enabled = true;
       };
 
       # Monitor configuration
@@ -226,6 +228,7 @@ in {
         if isDesktop
         then [
           # "DP-1, 3840x2160@240, 0x0, 1.5, bitdepth,10, cm,hdr, sdrbrightness,1.36, sdrsaturation,0.98" # or cm,wide
+          # "DP-1, 3840x2160@240, 0x0, 1.5, bitdepth,10, cm,auto"
           "DP-1, 3840x2160@240, 0x0, 1.5, bitdepth,8, cm,srgb"
           "DP-2, 3840x2160@60, -2560x-720, 1.5, bitdepth,8, cm,srgb"
           "DP-3, 3840x2160@60, -2560x720, 1.5, bitdepth,8, cm,srgb"
@@ -314,15 +317,28 @@ in {
         "float,  title:(Steam Settings), class:(steam)"
         "float,  title:(Friends List), class:(steam)"
 
+        # mpv
+        "content video, class:mpv"
+        "fullscreen,    class:mpv"
+
         # Wine dialogs
         "center, title:(Wine)"
         "float,  title:(Wine)"
+        "pin,    title:(Wine)"
 
         # Game (Proton or Wine)
         "content game, class:(.*)\.exe$"
         "noanim,       class:(.*)\.exe$"
         "noborder,     class:(.*)\.exe$"
         "nodim,        class:(.*)\.exe$"
+
+        # Star Citizen
+        "size <50% <50%, class:^rsi launcher\.exe$"
+        "center,         class:^rsi launcher\.exe$"
+        "float,          class:^rsi launcher\.exe$"
+        "size <50% <50%, class:^starcitizen_launcher\.exe$"
+        "center,         class:^starcitizen_launcher\.exe$"
+        "float,          class:^starcitizen_launcher\.exe$"
       ];
 
       # Keybinds
