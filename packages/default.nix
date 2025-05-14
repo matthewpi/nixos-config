@@ -72,19 +72,21 @@
         });
 
         # Flake overlays
-        hyprcursor = inputs.hyprcursor.packages.${system}.hyprcursor.override {stdenv = pkgs.gcc14Stdenv;};
-        hypridle = inputs.hypridle.packages.${system}.hypridle.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprland = inputs.hyprland.packages.${system}.hyprland.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprland-protocols = inputs.hyprland-protocols.packages.${system}.hyprland-protocols.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprland-qtutils = inputs.hyprland-qtutils.packages.${system}.hyprland-qtutils.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprlang = inputs.hyprlang.packages.${system}.hyprlang.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprlock = inputs.hyprlock.packages.${system}.hyprlock.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprgraphics = inputs.hyprgraphics.packages.${system}.hyprgraphics.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprutils = inputs.hyprutils.packages.${system}.hyprutils.override {stdenv = pkgs.gcc14Stdenv;};
-        hyprwayland-scanner = inputs.hyprwayland-scanner.packages.${system}.hyprwayland-scanner.override {stdenv = pkgs.gcc14Stdenv;};
-        xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland.override {stdenv = pkgs.gcc14Stdenv;};
+        aquamarine = inputs.aquamarine.packages.${system}.aquamarine;
+        hyprcursor = inputs.hyprcursor.packages.${system}.hyprcursor;
+        hypridle = inputs.hypridle.packages.${system}.hypridle;
+        hyprland = inputs.hyprland.packages.${system}.hyprland;
+        hyprland-protocols = inputs.hyprland-protocols.packages.${system}.hyprland-protocols;
+        hyprland-qt-support = inputs.yprland-qt-support.packages.${system}.hyprland-qt-support;
+        hyprland-qtutils = inputs.hyprland-qtutils.packages.${system}.hyprland-qtutils;
+        hyprlang = inputs.hyprlang.packages.${system}.hyprlang;
+        hyprlock = inputs.hyprlock.packages.${system}.hyprlock;
+        hyprgraphics = inputs.hyprgraphics.packages.${system}.hyprgraphics;
+        hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
+        hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent;
+        hyprutils = inputs.hyprutils.packages.${system}.hyprutils;
+        hyprwayland-scanner = inputs.hyprwayland-scanner.packages.${system}.hyprwayland-scanner;
+        xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
       });
   };
 }
