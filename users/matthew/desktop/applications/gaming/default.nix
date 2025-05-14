@@ -1,21 +1,27 @@
 {
   inputs,
+  isDesktop,
+  lib,
   nixosConfig,
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
-    (prismlauncher.override {
-      jdks = with pkgs; [
-        temurin-jre-bin-8
-        temurin-jre-bin-17
-        temurin-jre-bin-21
-        temurin-jre-bin-23
-        temurin-jre-bin-24
-      ];
-    })
-
-    (pkgs.callPackage ./star-citizen.nix {
+  home.packages =
+    [
+      (pkgs.prismlauncher.override {
+        controllerSupport = false;
+        gamemodeSupport = false;
+        textToSpeechSupport = false;
+        jdks = with pkgs; [
+          temurin-jre-bin-8
+          temurin-jre-bin-17
+          temurin-jre-bin-21
+          temurin-jre-bin-23
+          temurin-jre-bin-24
+        ];
+      })
+    ]
+    ++ lib.optional isDesktop (pkgs.callPackage ./star-citizen.nix {
       winetricks = inputs.nix-gaming.packages.${pkgs.system}.winetricks-git;
       wine =
         (inputs.nix-gaming.packages.${pkgs.system}.wine-tkg.override (oldAttrs: {
@@ -43,8 +49,7 @@
             "-I${headers}/include"
           ];
         });
-    })
-  ];
+    });
 
   programs.mangohud = {
     enable = true;

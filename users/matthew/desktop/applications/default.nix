@@ -1,22 +1,13 @@
-{
-  isDesktop,
-  lib,
-  pkgs,
-  ...
-}: {
-  imports =
-    [
-      ./firefox
-      ./tailscale.nix
-      ./terminal.nix
-      ./vesktop.nix
-      ./vscode.nix
-      ./zed-editor.nix
-    ]
-    ++ lib.optionals isDesktop [
-      ./gaming
-      # ./virt-manager.nix
-    ];
+{pkgs, ...}: {
+  imports = [
+    ./firefox
+    ./gaming
+    ./tailscale.nix
+    ./terminal.nix
+    ./vesktop.nix
+    ./vscode.nix
+    ./zed-editor.nix
+  ];
 
   home.packages = with pkgs; [
     amberol

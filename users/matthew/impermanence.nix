@@ -34,7 +34,6 @@ in {
     ++ lib.optional config.programs.steam.enable ".local/share/Steam"
     ++ lib.optionals isDesktop [
       ".config/streamdeck"
-      ".local/share/PrismLauncher"
       "Games"
     ]
     ++ lib.optional config.services.gvfs.enable ".local/share/gvfs-metadata"
@@ -86,6 +85,7 @@ in {
         mode = "0700";
       }
 
+      ".local/share/PrismLauncher"
       ".local/share/cargo"
       ".local/share/containers"
       ".local/share/evolution"
