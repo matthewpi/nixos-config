@@ -54,13 +54,11 @@
   programs.mangohud = {
     enable = true;
     settings = {
-      # preset = 2;
-
       gpu_stats = true;
       gpu_temp = true;
       gpu_core_clock = true;
-      # gpu_mem_clock = true;
-      # gpu_mem_temp = true;
+      gpu_mem_clock = true;
+      gpu_mem_temp = true;
       gpu_power = true;
       gpu_fan = true;
       gpu_voltage = true;
@@ -70,9 +68,11 @@
       cpu_power = true;
       cpu_mhz = true;
 
+      vram = true;
+      ram = true;
+
       histogram = false;
 
-      vkbasalt = true;
       winesync = true;
 
       font_size = 20;
@@ -85,6 +85,8 @@
       position = "top-right";
       offset_x = -16;
       offset_y = 16;
+
+      font_scale = 1.5;
     };
   };
 }
