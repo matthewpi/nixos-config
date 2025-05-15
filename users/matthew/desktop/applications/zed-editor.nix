@@ -5,6 +5,20 @@
   pkgs,
   ...
 }: {
+  # Enable a workaround for a pretty nasty GPU crash.
+  #
+  # Logs:
+  # ```
+  # [gpui::platform::blade::blade_renderer] GPU hung
+  # [gpui::platform::blade::blade_renderer] there's a known bug with amdgpu/radv, try setting ZED_PATH_SAMPLE_COUNT=0 as a workaround
+  # ERROR [gpui::platform::blade::blade_renderer] if that helps you're running into https://github.com/zed-industries/zed/issues/26143
+  # ERROR [gpui::platform::blade::blade_renderer] your device information is: DeviceInformation { is_software_emulated: false, device_name: "AMD Radeon RX 7800 XT (RADV NAVI32)", driver_name: "radv", driver_info: "Mesa 25.0.5" }
+  # ```
+  #
+  # ref; https://github.com/zed-industries/zed/issues/26143
+  # ref; https://github.com/zed-industries/zed/pull/26890
+  home.sessionVariables.ZED_PATH_SAMPLE_COUNT = 0;
+
   programs.zed-editor = {
     enable = true;
     package = pkgs.zed-editor;
