@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   pkgs,
   ...
@@ -34,17 +33,6 @@
   # A fingerprint can still be used with other services once the user session
   # has been started.
   # security.pam.services.greetd.fprintAuth = false;
-
-  systemd.services.greetd.serviceConfig = lib.mkIf config.services.greetd.enable {
-    StandardInput = "tty";
-    StandardOutput = "tty";
-    # Without this errors will spam on screen
-    StandardError = "journal";
-    # Without these bootlogs will spam on screen
-    TTYReset = true;
-    TTYVHangup = true;
-    TTYVTDisallocate = true;
-  };
 
   # Force Pipewire to only start for a graphical session. This avoids it starting
   # due to something like SSH or for other users (greeter) that don't actually

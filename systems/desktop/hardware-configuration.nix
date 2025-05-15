@@ -28,9 +28,6 @@
   #   ];
   # };
 
-  # Enable graphics.
-  hardware.graphics.enable = true;
-
   # Add a udev rule for Elgato Stream Deck(s)
   # Add a udev rule to set the DPI on a Logitech MX Master 3
   services.udev.extraRules = ''

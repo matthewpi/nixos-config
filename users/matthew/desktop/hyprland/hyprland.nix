@@ -92,7 +92,11 @@ in {
 
   wayland.windowManager.hyprland = {
     enable = true;
-    package = nixosConfig.programs.hyprland.package;
+
+    # Set the Hyprland and XDPH packages to `null` to use the ones from the NixOS module.
+    package = null;
+    portalPackage = null;
+
     xwayland.enable = nixosConfig.programs.hyprland.xwayland.enable;
     systemd.enable = !nixosConfig.programs.uwsm.enable;
 
@@ -277,45 +281,47 @@ in {
         "float, title:^(Open Folder)(.*)$"
 
         # Polkit (GNOME)
-        "dimaround, class:(polkit-gnome-authentication-agent-1)"
-        "center,    class:(polkit-gnome-authentication-agent-1)"
-        "float,     class:(polkit-gnome-authentication-agent-1)"
-        "pin,       class:(polkit-gnome-authentication-agent-1)"
+        "dimaround, class:polkit-gnome-authentication-agent-1"
+        "center,    class:polkit-gnome-authentication-agent-1"
+        "float,     class:polkit-gnome-authentication-agent-1"
+        "pin,       class:polkit-gnome-authentication-agent-1"
 
         # Polkit (hyprpolkitagent)
-        "dimaround, title:(Hyprland Polkit Agent)"
-        "center,    title:(Hyprland Polkit Agent)"
-        "float,     title:(Hyprland Polkit Agent)"
-        "pin,       title:(Hyprland Polkit Agent)"
+        "dimaround, title:Hyprland Polkit Agent"
+        "center,    title:Hyprland Polkit Agent"
+        "float,     title:Hyprland Polkit Agent"
+        "pin,       title:Hyprland Polkit Agent"
 
         # Screenshare Portal
-        "dimaround, title:(MainPicker)"
-        "center,    title:(MainPicker)"
-        "float,     title:(MainPicker)"
-        "pin,       title:(MainPicker)"
+        "dimaround, title:MainPicker"
+        "center,    title:MainPicker"
+        "float,     title:MainPicker"
+        "pin,       title:MainPicker"
 
         # GNOME Keyring Prompt
-        "dimaround, class:(gcr-prompter)"
-        "center,    class:(gcr-prompter)"
-        "float,     class:(gcr-prompter)"
-        "pin,       class:(gcr-prompter)"
+        "dimaround, class:gcr-prompter"
+        "center,    class:gcr-prompter"
+        "float,     class:gcr-prompter"
+        "pin,       class:gcr-prompter"
 
         # GNOME Calculator
-        "float, class:(org.gnome.Calculator)"
+        "float, class:org\.gnome\.Calculator"
 
         # 1Password Prompt
-        "dimaround, class:(1Password), floating:1"
-        "center,    class:(1Password), floating:1"
-        "pin,       class:(1Password), floating:1"
+        "dimaround, class:1Password, floating:1"
+        "center,    class:1Password, floating:1"
+        "pin,       class:1Password, floating:1"
 
         # Prism Launcher
         "float, title:^(.*) — Prism Launcher ([1-9]+\.[0-9])$"
         "size <75% 50%, title:^(.*) — Prism Launcher ([1-9]+\.[0-9])$"
 
         # Steam
-        "center, title:(Steam), class:(), floating:1"
-        "float,  title:(Steam Settings), class:(steam)"
-        "float,  title:(Friends List), class:(steam)"
+        "center, title:Steam, floating:1"
+        "float,  title:Steam Settings, class:steam"
+        "float,  title:Friends List, class:steam"
+        "center, class:steam, title:^(?!Steam$).*$"
+        "float,  class:steam, title:^(?!Steam$).*$"
 
         # mpv
         "content video, class:mpv"

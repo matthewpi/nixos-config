@@ -30,7 +30,7 @@
       package = pkgs.hyprland;
       portalPackage = pkgs.xdg-desktop-portal-hyprland;
       xwayland.enable = config.programs.xwayland.enable;
-      withUWSM = true;
+      withUWSM = config.programs.uwsm.enable;
     };
 
     # Configure UWSM.
@@ -46,14 +46,16 @@
     # Add required packages to path.
     environment.systemPackages = [
       config.programs.hyprland.package
+      pkgs.nixos-icons
       pkgs.pciutils
-      pkgs.vulkan-hdr-layer-kwin6
+      pkgs.xdg-utils
+      pkgs.vulkan-hdr-layer-kwin6 # TODO: remove once nixpkgs has Mesa 25.1+
     ];
 
-    # Path fixes for Hyprland.
-    systemd.user.extraConfig = ''
-      DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:$PATH"
-    '';
+    # # Path fixes for Hyprland.
+    # systemd.user.extraConfig = ''
+    #   DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:$PATH"
+    # '';
 
     # Configure hyprlock PAM.
     security.pam.services.hyprlock = {
@@ -89,6 +91,10 @@
     # Fixes issues with XDG portal definitions not being detected.
     # ref; https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
     environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
+
+    services.graphical-desktop.enable = lib.mkDefault false;
+    hardware.graphics.enable = lib.mkDefault true;
+    services.speechd.enable = lib.mkDefault false;
 
     environment.etc."X11/xorg.conf.d/00-keyboard.conf".text = ''
       Section "InputClass"

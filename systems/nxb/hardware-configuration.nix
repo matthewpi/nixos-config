@@ -9,7 +9,4 @@
 
   # Use systemd stage 1
   boot.initrd.systemd.enable = true;
-
-  # Enable graphics.
-  hardware.graphics.enable = true;
 }

@@ -2,24 +2,21 @@
   config,
   inputs,
   lib,
+  nixosConfig,
   pkgs,
   ...
 }: let
   inherit (pkgs) xdg-desktop-portal-gtk;
-  xdg-desktop-portal-hyprland = pkgs.xdg-desktop-portal-hyprland.override {
-    hyprland = config.wayland.windowManager.hyprland.finalPackage;
-  };
+  xdg-desktop-portal-hyprland = nixosConfig.programs.hyprland.portalPackage;
 in {
   # grim and slurp are wanted by XDPH.
   home.packages = with pkgs; [glib grim slurp xdg-utils];
 
   xdg.portal = {
-    enable = lib.mkDefault true;
-    xdgOpenUsePortal = lib.mkDefault true;
-    extraPortals = [
-      xdg-desktop-portal-hyprland
-      xdg-desktop-portal-gtk
-    ];
+    enable = lib.mkForce true;
+    xdgOpenUsePortal = true;
+    extraPortals = [xdg-desktop-portal-gtk xdg-desktop-portal-hyprland];
+    configPackages = [nixosConfig.programs.hyprland.package];
     config.hyprland.default = ["hyprland" "gtk"];
   };
 
