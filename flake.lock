@@ -156,6 +156,18 @@
         "type": "github"
       }
     },
+    "determinate-nixd-x86_64-linux": {
+      "flake": false,
+      "locked": {
+        "narHash": "sha256-ogANyvmbyYZ9WDyAbNfetnpJd+YH9YzjUjok9Ad4fBs=",
+        "type": "file",
+        "url": "https://install.determinate.systems/determinate-nixd/tag/v3.5.2/x86_64-linux"
+      },
+      "original": {
+        "type": "file",
+        "url": "https://install.determinate.systems/determinate-nixd/tag/v3.5.2/x86_64-linux"
+      }
+    },
     "disko": {
       "inputs": {
         "nixpkgs": [
@@ -725,6 +737,33 @@
         "type": "github"
       }
     },
+    "nix": {
+      "inputs": {
+        "flake-parts": [
+          "flake-parts"
+        ],
+        "git-hooks-nix": [],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-23-11": [],
+        "nixpkgs-regression": []
+      },
+      "locked": {
+        "lastModified": 1747093184,
+        "narHash": "sha256-4QVmtRMUzw0GMyJmU93IlorvuZaUjyZUL7LYFSE1LCg=",
+        "owner": "DeterminateSystems",
+        "repo": "nix-src",
+        "rev": "6baf6470bf09ba156a85c1efcf642182f393ca1b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "DeterminateSystems",
+        "ref": "v3.5.2",
+        "repo": "nix-src",
+        "type": "github"
+      }
+    },
     "nix-gaming": {
       "inputs": {
         "flake-parts": [
@@ -807,6 +846,7 @@
         "astal": "astal",
         "catppuccin": "catppuccin",
         "darwin": "darwin",
+        "determinate-nixd-x86_64-linux": "determinate-nixd-x86_64-linux",
         "disko": "disko",
         "firefox-addons": "firefox-addons",
         "flake-compat": "flake-compat",
@@ -829,6 +869,7 @@
         "hyprwayland-scanner": "hyprwayland-scanner",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
+        "nix": "nix",
         "nix-gaming": "nix-gaming",
         "nix-index-database": "nix-index-database",
         "nixos-hardware": "nixos-hardware",
