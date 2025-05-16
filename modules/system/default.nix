@@ -35,5 +35,14 @@
       enableSystemSlice = lib.mkDefault true;
       enableUserSlices = lib.mkDefault true;
     };
+
+    # Configure nh, a Nix CLI helper.
+    # ref; https://github.com/nix-community/nh
+    programs.nh = {
+      enable = lib.mkDefault true;
+      clean.enable = lib.mkDefault true;
+      clean.extraArgs = lib.mkDefault "--keep-since 5d --keep 5";
+      flake = lib.mkDefault "/code/matthewpi/nixos-config";
+    };
   };
 }
