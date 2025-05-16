@@ -1,11 +1,8 @@
 {
-  flake.nixosModules.system = {
-    inputs,
-    lib,
-    ...
-  }: {
+  flake.nixosModules.system = {lib, ...}: {
     imports = [
       ./dbus.nix
+      ./flake-registry.nix
       ./networking.nix
       ./nix-daemon.nix
       ./openssh.nix
@@ -38,15 +35,5 @@
       enableSystemSlice = lib.mkDefault true;
       enableUserSlices = lib.mkDefault true;
     };
-
-    # Pin nixpkgs in the registry. (affects flake commands)
-    nix.registry.nixpkgs.to = {
-      type = "path";
-      path = inputs.nixpkgs;
-      inherit (inputs.nixpkgs) narHash;
-    };
-
-    # Pre-fetch the flake-registry to prevent it from being re-downloaded.
-    nix.settings.flake-registry = "${inputs.flake-registry}/flake-registry.json";
   };
 }
