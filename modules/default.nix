@@ -1,6 +1,7 @@
 {
   imports = [
     ./desktop
+    ./determinate
     ./gnome
     ./hyprland
     ./persistence
