@@ -290,6 +290,8 @@
         "datareporting.healthreport.uploadEnabled" = false;
 
         "font.name.serif.x-western" = "Inter";
+
+        "media.webspeech.synth.enabled" = false;
       };
     };
   };
