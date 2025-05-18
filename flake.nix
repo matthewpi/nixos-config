@@ -335,7 +335,7 @@
         in {
           lib = {inherit mkNixpkgs;};
 
-          nixosConfigurations.nxd = inputs.nixpkgs.lib.nixosSystem {
+          nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
 
             specialArgs = {
@@ -406,7 +406,7 @@
               }
 
               ./builders
-              ./systems/nxd
+              ./systems/desktop
               ./users
             ];
           };

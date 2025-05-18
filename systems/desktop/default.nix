@@ -14,7 +14,7 @@
   programs.nix-ld.enable = true;
 
   # Hostname
-  networking.hostName = "nxd";
+  networking.hostName = "matthew-desktop";
 
   # Use my local timezone instead of UTC
   time.timeZone = "America/Edmonton";
