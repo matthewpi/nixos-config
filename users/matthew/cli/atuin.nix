@@ -10,7 +10,7 @@
       search_mode = "prefix";
       filter_mode = "host";
 
-      keys.scroll_exits = false;
+      inline_height = 0;
     };
   };
 }
