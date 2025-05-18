@@ -297,8 +297,6 @@
               "1password"
               "1password-cli"
               "cider2"
-              "discord"
-              "discord-canary"
               "intelephense"
               "obsidian"
               "slack"

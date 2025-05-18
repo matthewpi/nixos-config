@@ -3,25 +3,7 @@
   pkgs,
   ...
 }: {
-  home.packages = with pkgs; [
-    ((discord.override {
-        withOpenASAR = true;
-        withVencord = true;
-        withTTS = false;
-      }).overrideAttrs (_: rec {
-        version = "0.0.94";
-        src = fetchurl {
-          url = "https://stable.dl2.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
-          hash = "sha256-035nfbEyvdsNxZh6fkXh2JhY7EXQtwUnS4sUKr74MRQ=";
-        };
-      }))
-    (discord-canary.override {
-      withOpenASAR = true;
-      withVencord = true;
-      withTTS = false;
-    })
-    vesktop
-  ];
+  home.packages = with pkgs; [vesktop];
 
   xdg.configFile = let
     json = pkgs.formats.json {};
