@@ -335,7 +335,7 @@
         in {
           lib = {inherit mkNixpkgs;};
 
-          nixosConfigurations.desktop = inputs.nixpkgs.lib.nixosSystem {
+          nixosConfigurations.matthew-desktop = inputs.nixpkgs.lib.nixosSystem {
             system = "x86_64-linux";
 
             specialArgs = {
