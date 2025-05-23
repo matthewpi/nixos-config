@@ -33,7 +33,9 @@ in {
     ++ lib.optional hmConfig.services.gnome-keyring.enable ".local/share/keyrings"
     ++ lib.optional config.programs.steam.enable ".local/share/Steam"
     ++ lib.optionals isDesktop [
+      ".cache/winetricks"
       ".config/streamdeck"
+      ".local/share/umu"
       "Games"
     ]
     ++ lib.optional config.services.gvfs.enable ".local/share/gvfs-metadata"

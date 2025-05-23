@@ -58,6 +58,52 @@
         '';
         meta = oldAttrs.meta // {mainProgram = "tailscale-systray";};
       });
+
+      star-citizen = let
+        nix-gaming = inputs.nix-gaming.packages.${pkgs.system};
+
+        winetricks = nix-gaming.winetricks-git;
+        inherit (nix-gaming) wineprefix-preparer umu-launcher;
+
+        linuxHeaders = pkgs.makeLinuxHeaders {inherit (pkgs.linuxPackages_xanmod_latest.kernel) src version patches;};
+
+        wine =
+          (pkgs.callPackage ./star-citizen/wine.nix {
+            inherit inputs;
+
+            # ntsync branch
+            src = pkgs.fetchFromGitHub {
+              owner = "Kron4ek";
+              repo = "wine-tkg";
+              rev = "68fba78452e7ede28b573a5f6304a0c353cd3df1";
+              hash = "sha256-hRD/0RoD6RtW4YvTDcc/xTMuco1AvsalMMyHrY3TPOk=";
+            };
+
+            patches = [
+              (pkgs.fetchpatch2 {
+                url = "https://raw.githubusercontent.com/starcitizen-lug/patches/98d6a9b6ce102726030bec3ee9ff63e3fad59ad5/wine/cache-committed-size.patch";
+                hash = "sha256-cTO6mfKF1MJ0dbaZb76vk4A80OPakxsdoSSe4Og/VdM=";
+              })
+              (pkgs.fetchpatch2 {
+                url = "https://raw.githubusercontent.com/starcitizen-lug/patches/98d6a9b6ce102726030bec3ee9ff63e3fad59ad5/wine/silence-sc-unsupported-os.patch";
+                hash = "sha256-/PnXSKPVzSV8tzsofBFT+pNHGUbj8rKrJBg3owz2Stc=";
+              })
+            ];
+          }).overrideAttrs (oldAttrs: {
+            # Include linux kernel headers for ntsync.
+            buildInputs = oldAttrs.buildInputs ++ [linuxHeaders];
+
+            # Fix `winetricks` by ensuring a `wine64` binary exists.
+            postInstall =
+              (oldAttrs.postInstall or "")
+              + ''
+                ln -s "$out"/bin/wine "$out"/bin/wine64
+              '';
+          });
+      in
+        pkgs.callPackage ./star-citizen/package.nix {
+          inherit wine wineprefix-preparer winetricks umu-launcher;
+        };
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -80,6 +126,18 @@
           withMoonlight = true;
           withTTS = false;
         };
+
+        mesa = pkgs.mesa.overrideAttrs (oldAttrs: {
+          patches =
+            (oldAttrs.patches or [])
+            ++ [
+              # https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/34918
+              (pkgs.fetchpatch2 {
+                url = "https://raw.githubusercontent.com/Nobara-Project/rpm-sources/refs/heads/42/baseos/mesa/34918.patch";
+                hash = "sha256-TbospUjVyC6GkctnEUpSMXKB8PX6mU0GG086tSph0Fc=";
+              })
+            ];
+        });
 
         signal-desktop = pkgs.signal-desktop.overrideAttrs (old: {
           preFixup =
