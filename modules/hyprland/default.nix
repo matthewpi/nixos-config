@@ -49,7 +49,6 @@
       pkgs.nixos-icons
       pkgs.pciutils
       pkgs.xdg-utils
-      pkgs.vulkan-hdr-layer-kwin6 # TODO: remove once nixpkgs has Mesa 25.1+
     ];
 
     # # Path fixes for Hyprland.
