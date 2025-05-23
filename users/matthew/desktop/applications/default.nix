@@ -2,10 +2,10 @@
   imports = [
     ./firefox
     ./gaming
+    ./discord.nix
     ./freelens.nix
     ./tailscale.nix
     ./terminal.nix
-    ./vesktop.nix
     ./vscode.nix
     ./zed-editor.nix
   ];

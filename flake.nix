@@ -297,6 +297,7 @@
               "1password"
               "1password-cli"
               "cider2"
+              "discord"
               "intelephense"
               "obsidian"
               "slack"

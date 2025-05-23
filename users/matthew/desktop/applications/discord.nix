@@ -2,12 +2,15 @@
   config,
   pkgs,
   ...
-}: {
-  home.packages = with pkgs; [vesktop];
+}: let
+  json = pkgs.formats.json {};
+in {
+  home.packages = with pkgs; [
+    discord
+    vesktop
+  ];
 
-  xdg.configFile = let
-    json = pkgs.formats.json {};
-  in {
+  xdg.configFile = {
     "vesktop/settings.json".source = json.generate "settings.json" {
       minimizeToTray = true;
       discordBranch = "stable";

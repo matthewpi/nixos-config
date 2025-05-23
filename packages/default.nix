@@ -75,6 +75,12 @@
         _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
         _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
 
+        discord = pkgs.discord.override {
+          withOpenASAR = true;
+          withMoonlight = true;
+          withTTS = false;
+        };
+
         signal-desktop = pkgs.signal-desktop.overrideAttrs (old: {
           preFixup =
             old.preFixup

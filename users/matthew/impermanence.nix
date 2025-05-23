@@ -67,7 +67,6 @@ in {
       ".config/aws"
       ".config/chromium"
       ".config/discord"
-      ".config/discordcanary"
       ".config/easyeffects"
       ".config/evolution"
       ".config/go"
