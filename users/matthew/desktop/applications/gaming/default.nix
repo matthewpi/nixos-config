@@ -21,35 +21,40 @@
         ];
       })
     ]
-    ++ lib.optional isDesktop (pkgs.callPackage ./star-citizen.nix {
-      winetricks = inputs.nix-gaming.packages.${pkgs.system}.winetricks-git;
-      wine =
-        (inputs.nix-gaming.packages.${pkgs.system}.wine-tkg.override (oldAttrs: {
-          patches =
-            (oldAttrs.patches or [])
-            ++ [
-              (pkgs.fetchpatch2 {
-                url = "https://raw.githubusercontent.com/starcitizen-lug/patches/98d6a9b6ce102726030bec3ee9ff63e3fad59ad5/wine/cache-committed-size.patch";
-                hash = "sha256-cTO6mfKF1MJ0dbaZb76vk4A80OPakxsdoSSe4Og/VdM=";
-              })
-              (pkgs.fetchpatch2 {
-                url = "https://raw.githubusercontent.com/starcitizen-lug/patches/98d6a9b6ce102726030bec3ee9ff63e3fad59ad5/wine/silence-sc-unsupported-os.patch";
-                hash = "sha256-/PnXSKPVzSV8tzsofBFT+pNHGUbj8rKrJBg3owz2Stc=";
-              })
+    ++ lib.optional isDesktop (let
+      nix-gaming = inputs.nix-gaming.packages.${pkgs.system};
+      winetricks = nix-gaming.winetricks-git;
+      inherit (nix-gaming) wineprefix-preparer;
+    in
+      pkgs.callPackage ./star-citizen.nix {
+        inherit wineprefix-preparer winetricks;
+        wine =
+          (nix-gaming.wine-tkg.override (oldAttrs: {
+            patches =
+              (oldAttrs.patches or [])
+              ++ [
+                (pkgs.fetchpatch2 {
+                  url = "https://raw.githubusercontent.com/starcitizen-lug/patches/98d6a9b6ce102726030bec3ee9ff63e3fad59ad5/wine/cache-committed-size.patch";
+                  hash = "sha256-cTO6mfKF1MJ0dbaZb76vk4A80OPakxsdoSSe4Og/VdM=";
+                })
+                (pkgs.fetchpatch2 {
+                  url = "https://raw.githubusercontent.com/starcitizen-lug/patches/98d6a9b6ce102726030bec3ee9ff63e3fad59ad5/wine/silence-sc-unsupported-os.patch";
+                  hash = "sha256-/PnXSKPVzSV8tzsofBFT+pNHGUbj8rKrJBg3owz2Stc=";
+                })
+              ];
+          })).overrideDerivation (_: {
+            # This is necessary in order to build Wine with NTSync7 support.
+            #
+            # TODO: we still need the ntsync patchset.
+            NIX_CFLAGS_COMPILE = let
+              headers = pkgs.makeLinuxHeaders {
+                inherit (nixosConfig.boot.kernelPackages.kernel) src version patches;
+              };
+            in [
+              "-I${headers}/include"
             ];
-        })).overrideDerivation (_: {
-          # This is necessary in order to build Wine with NTSync7 support.
-          #
-          # TODO: we still need the ntsync patchset.
-          NIX_CFLAGS_COMPILE = let
-            headers = pkgs.makeLinuxHeaders {
-              inherit (nixosConfig.boot.kernelPackages.kernel) src version patches;
-            };
-          in [
-            "-I${headers}/include"
-          ];
-        });
-    });
+          });
+      });
 
   programs.mangohud = {
     enable = true;

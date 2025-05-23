@@ -1,19 +1,19 @@
 {
   bashInteractive,
   lib,
+  fetchurl,
   freetype,
-  vulkan-loader,
   makeDesktopItem,
   runCommand,
   symlinkJoin,
   writeShellScriptBin,
-  winetricks,
   wine,
-  fetchurl,
-  dxvk,
+  wineprefix-preparer,
+  winetricks,
+  vulkan-loader,
   wineFlags ? "",
   location ? "$HOME/Games/star-citizen",
-  # tricks ? ["powershell" "corefonts" "tahoma"],
+  tricks ? ["powershell" "corefonts" "tahoma"],
   wineDllOverrides ? ["winemenubuilder.exe=d"],
   preCommands ? "",
   postCommands ? "",
@@ -61,24 +61,26 @@
     USER="$(whoami)"
     RSI_LAUNCHER="$WINEPREFIX"'/drive_c/Program Files/Roberts Space Industries/RSI Launcher/RSI Launcher.exe'
 
-    # # Ensure all tricks are installed
-    # ''${lib.toShellVars {
-    #   inherit tricks;
-    #   tricksInstalled = 1;
-    # }}
+    # Ensure all tricks are installed
+    ${lib.toShellVars {
+      inherit tricks;
+      tricksInstalled = 1;
+    }}
 
-    # for trick in "${"\${tricks[@]}"}"; do
-    #   if ! winetricks list-installed | grep -qw "$trick"; then
-    #     echo 'winetricks: Installing '"$trick"
-    #     winetricks -q -f "$trick"
-    #     tricksInstalled=0
-    #   fi
-    # done
+    ${lib.getExe wineprefix-preparer}
 
-    # if [ "$tricksInstalled" -eq 0 ]; then
-    #   # Ensure wineserver is restarted after tricks are installed.
-    #   wineserver -k
-    # fi
+    for trick in "${"\${tricks[@]}"}"; do
+      if ! winetricks list-installed | grep -qw "$trick"; then
+        echo 'winetricks: Installing '"$trick"
+        winetricks -q -f "$trick"
+        tricksInstalled=0
+      fi
+    done
+
+    if [ "$tricksInstalled" -eq 0 ]; then
+      # Ensure wineserver is restarted after tricks are installed.
+      wineserver -k
+    fi
 
     # If the launcher isn't installed, run the installer regardless of if the
     # prefix has already been created.
@@ -88,14 +90,11 @@
       mkdir -p "$WINEPREFIX"'/drive_c/Program Files/Roberts Space Industries/StarCitizen/'{LIVE,PTU}
 
       # Run the installer silently.
-      wine ${src} /S
+      WINEDLLOVERRIDES='dxwebsetup.exe,dotNetFx45_Full_setup.exe,winemenubuilder.exe=d' wine ${src} /S
 
       # Restart wineserver after the installer exits.
       wineserver -k
     fi
-
-    # Ensure DXVK is installed and up-to-date.
-    ${dxvk}/bin/setup_dxvk.sh install --symlink
 
     # Enter the prefix's directory.
     cd "$WINEPREFIX"
@@ -109,10 +108,17 @@
 
     # wine reg add 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer' /v NoTrayItemsDisplay /t REG_DWORD /d 1
 
+    # Only execute `mangohud` if it exists on the system.
+    if command -v mangohud > /dev/null 2>&1; then
+      mangohud='mangohud'
+    else
+      mangohud=""
+    fi
+
     ${preCommands}
 
     # Run the launcher.
-    mangohud wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@"
+    "$mangohud" wine ${wineFlags} "$RSI_LAUNCHER" --in-process-gpu "$@"
 
     wineserver -w
 
