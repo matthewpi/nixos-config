@@ -72,6 +72,7 @@ in {
       ".config/go"
       ".config/kubernetes"
       ".config/libreoffice"
+      ".config/moonlight-mod"
       ".config/nautilus"
       ".config/nix"
       ".config/obsidian"
