@@ -63,7 +63,7 @@
       yaml-language-server
 
       # C#
-      omnisharp-roslyn
+      # omnisharp-roslyn
 
       # Swift
       sourcekit-lsp
