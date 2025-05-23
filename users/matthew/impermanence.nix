@@ -60,6 +60,7 @@ in {
 
       ".config/1Password"
       ".config/Flipper Devices Inc"
+      ".config/Freelens"
       ".config/Ledger Live"
       ".config/Slack"
       ".config/attic"

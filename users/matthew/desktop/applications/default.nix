@@ -2,6 +2,7 @@
   imports = [
     ./firefox
     ./gaming
+    ./freelens.nix
     ./tailscale.nix
     ./terminal.nix
     ./vesktop.nix
