@@ -30,12 +30,8 @@
       # Change the default branch to master.
       init.defaultBranch = "master";
 
-      # Use SSH for GitHub, even if a HTTP url is used.
-      url = {
-        "git@github.com:" = {
-          insteadOf = "https://github.com/";
-        };
-      };
+      # # Use SSH for GitHub, even if a HTTP url is used.
+      # url."git@github.com:".insteadOf = "https://github.com/";
 
       # Enable the manyFiles feature.
       feature.manyFiles = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
