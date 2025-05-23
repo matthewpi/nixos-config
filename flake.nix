@@ -65,11 +65,6 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
 
-    flake-registry = {
-      url = "github:nixos/flake-registry";
-      flake = false;
-    };
-
     flake-utils = {
       url = "github:numtide/flake-utils";
       inputs.systems.follows = "systems";
