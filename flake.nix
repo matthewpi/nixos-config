@@ -228,7 +228,7 @@
     };
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable-small"; # TODO: switch back to nixos-unstable
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     systems.url = "github:nix-systems/default";
     systems-linux.url = "github:nix-systems/default-linux";
 
