@@ -109,4 +109,7 @@
   # Enable automatic-timezoned to automatically set the timezone according to geoclue.
   services.automatic-timezoned.enable = true;
   systemd.services.automatic-timezoned.environment.AUTOTZD_LOG_LEVEL = "debug";
+
+  # Enable XWayland.
+  programs.xwayland.enable = true;
 }
