@@ -5,6 +5,14 @@
     system,
     ...
   }: let
+    fixPathForLazyTrees = input: attr:
+      input.packages.${system}.${attr}.overrideAttrs {
+        src = builtins.path {
+          name = "source";
+          path = input;
+        };
+      };
+
     _packages = rec {
       catppuccin = pkgs.callPackage ./catppuccin {};
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
@@ -104,6 +112,60 @@
         pkgs.callPackage ./star-citizen/package.nix {
           inherit wine wineprefix-preparer winetricks umu-launcher;
         };
+
+      aquamarine = (fixPathForLazyTrees inputs.aquamarine "aquamarine").override {
+        inherit hyprutils hyprwayland-scanner;
+      };
+
+      hyprcursor = (fixPathForLazyTrees inputs.hyprcursor "hyprcursor").override {
+        inherit hyprlang;
+      };
+
+      hypridle = (fixPathForLazyTrees inputs.hypridle "hypridle").override {
+        inherit hyprland-protocols hyprlang hyprutils hyprwayland-scanner;
+      };
+
+      hyprland = (fixPathForLazyTrees inputs.hyprland "hyprland").override {
+        inherit aquamarine hyprcursor hyprgraphics hyprland-protocols hyprland-qtutils hyprlang hyprutils hyprwayland-scanner;
+      };
+
+      hyprland-protocols = fixPathForLazyTrees inputs.hyprland-protocols "hyprland-protocols";
+
+      hyprland-qt-support = (fixPathForLazyTrees inputs.hyprland-qt-support "hyprland-qt-support").override {
+        inherit hyprlang;
+      };
+
+      hyprland-qtutils = (fixPathForLazyTrees inputs.hyprland-qtutils "hyprland-qtutils").override {
+        inherit hyprland-qt-support hyprutils;
+      };
+
+      hyprlang = (fixPathForLazyTrees inputs.hyprlang "hyprlang").override {
+        inherit hyprutils;
+      };
+
+      hyprlock = (fixPathForLazyTrees inputs.hyprlock "hyprlock").override {
+        inherit hyprlang hyprgraphics hyprwayland-scanner hyprutils;
+      };
+
+      hyprgraphics = (fixPathForLazyTrees inputs.hyprgraphics "hyprgraphics").override {
+        inherit hyprutils;
+      };
+
+      hyprpaper = (fixPathForLazyTrees inputs.hyprpaper "hyprpaper").override {
+        inherit hyprlang hyprgraphics hyprutils hyprwayland-scanner;
+      };
+
+      hyprpolkitagent = (fixPathForLazyTrees inputs.hyprpolkitagent "hyprpolkitagent").override {
+        inherit hyprland-qt-support hyprutils;
+      };
+
+      hyprutils = fixPathForLazyTrees inputs.hyprutils "hyprutils";
+
+      hyprwayland-scanner = fixPathForLazyTrees inputs.hyprwayland-scanner "hyprwayland-scanner";
+
+      xdg-desktop-portal-hyprland = (fixPathForLazyTrees inputs.xdph "xdg-desktop-portal-hyprland").override {
+        inherit hyprland hyprland-protocols hyprlang hyprutils hyprwayland-scanner;
+      };
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
@@ -148,23 +210,6 @@
               )
             '';
         });
-
-        # Flake overlays
-        aquamarine = inputs.aquamarine.packages.${system}.aquamarine;
-        hyprcursor = inputs.hyprcursor.packages.${system}.hyprcursor;
-        hypridle = inputs.hypridle.packages.${system}.hypridle;
-        hyprland = inputs.hyprland.packages.${system}.hyprland;
-        hyprland-protocols = inputs.hyprland-protocols.packages.${system}.hyprland-protocols;
-        hyprland-qt-support = inputs.yprland-qt-support.packages.${system}.hyprland-qt-support;
-        hyprland-qtutils = inputs.hyprland-qtutils.packages.${system}.hyprland-qtutils;
-        hyprlang = inputs.hyprlang.packages.${system}.hyprlang;
-        hyprlock = inputs.hyprlock.packages.${system}.hyprlock;
-        hyprgraphics = inputs.hyprgraphics.packages.${system}.hyprgraphics;
-        hyprpaper = inputs.hyprpaper.packages.${system}.hyprpaper;
-        hyprpolkitagent = inputs.hyprpolkitagent.packages.${system}.hyprpolkitagent;
-        hyprutils = inputs.hyprutils.packages.${system}.hyprutils;
-        hyprwayland-scanner = inputs.hyprwayland-scanner.packages.${system}.hyprwayland-scanner;
-        xdg-desktop-portal-hyprland = inputs.xdph.packages.${system}.xdg-desktop-portal-hyprland;
       });
   };
 }

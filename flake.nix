@@ -240,12 +240,12 @@
     xdph = {
       url = "github:hyprwm/xdg-desktop-portal-hyprland";
       inputs = {
-        nixpkgs.follows = "nixpkgs";
-        systems.follows = "systems-linux";
         hyprland-protocols.follows = "hyprland-protocols";
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
       };
     };
 
