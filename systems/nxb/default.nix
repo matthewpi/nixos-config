@@ -34,7 +34,7 @@
   time.timeZone = null;
 
   # Use the stable xanmod kernel.
-  boot.kernelPackages = pkgs.linuxPackages_xanmod;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
 
   # Disable SSH
   services.openssh = {
