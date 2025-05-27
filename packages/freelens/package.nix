@@ -46,7 +46,7 @@ in
       # in the v1.3.0 tree.
       (fetchpatch2 {
         url = "https://github.com/freelensapp/freelens/commit/61bde752e88d810738c9f0146e4568ed16b76caf.patch";
-        hash = "sha256-JSLzu5l55EZEqirsZvAZ7+MIU6Gu7cYn5zm7VP9bTjQ=";
+        hash = "sha256-sQMWoC9lD8lJIJ6mFjlOhdIx30ykjmmm14wQmLAwEXw=";
       })
     ];
 
