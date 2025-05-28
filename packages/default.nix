@@ -183,11 +183,19 @@
         _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
         _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
 
-        discord = pkgs.discord.override {
-          withOpenASAR = true;
-          withMoonlight = true;
-          withTTS = false;
-        };
+        discord =
+          (pkgs.discord.override {
+            withOpenASAR = true;
+            withMoonlight = true;
+            withTTS = false;
+          }).overrideAttrs rec {
+            version = "0.0.94";
+
+            src = pkgs.fetchurl {
+              url = "https://stable.dl2.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
+              hash = "sha256-035nfbEyvdsNxZh6fkXh2JhY7EXQtwUnS4sUKr74MRQ=";
+            };
+          };
 
         mesa = pkgs.mesa.overrideAttrs (oldAttrs: {
           patches =
