@@ -2,7 +2,6 @@
   copyDesktopItems,
   electron_35,
   fetchFromGitHub,
-  fetchpatch2,
   freelens-k8s-proxy,
   kubectl,
   kubernetes-helm,
@@ -29,30 +28,18 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "freelens";
-    version = "1.3.0";
+    version = "1.3.1";
 
     src = fetchFromGitHub {
       owner = "freelensapp";
       repo = "freelens";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-GjnMrT9sWP3noD+BTJtzH7uVhV92rf244d7GOWvZ1m8=";
+      hash = "sha256-hn2DK1txuzrQn5kfqndZSwgmoxiV5KZhJqLr1R67Jlc=";
     };
 
-    patches = [
-      # Pull in a patch that removes usages of `pnpm dlx cross-env` from the `build`
-      # script of all packages in the monorepo.
-      #
-      # This patch will likely be included in the next release but isn't included
-      # in the v1.3.0 tree.
-      (fetchpatch2 {
-        url = "https://github.com/freelensapp/freelens/commit/61bde752e88d810738c9f0146e4568ed16b76caf.patch";
-        hash = "sha256-sQMWoC9lD8lJIJ6mFjlOhdIx30ykjmmm14wQmLAwEXw=";
-      })
-    ];
-
     pnpmDeps = pnpm.fetchDeps {
-      inherit (finalAttrs) pname version src patches;
-      hash = "sha256-JHqj6cqX4SnB1LDXuCPWHEB+eVu+ZWWtA0DybCOmUCM=";
+      inherit (finalAttrs) pname version src;
+      hash = "sha256-1pK3KW2/DlxbSR6S5THcLIIPHSvTDB2ERrsYU+YjvYs=";
     };
 
     strictDeps = true;
