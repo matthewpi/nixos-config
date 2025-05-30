@@ -31,12 +31,12 @@
   # tricks ? ["powershell" "corefonts" "tahoma"],
 }: let
   # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
-  version = "2.3.2";
+  version = "2.4.0";
 
   src = fetchurl {
     url = "https://install.robertsspaceindustries.com/rel/2/RSI%20Launcher-Setup-${version}.exe";
     name = "RSI Launcher-Setup-${version}.exe";
-    hash = "sha256-BzsO2bHXo7axvW9enll08H5aPA1KCZSLfikE49/EUw0=";
+    hash = "sha256-2/0ZRJaV6IXVTZGNmrgm1RqOBUdzqQukKwcjyOdmYQA=";
   };
 
   writeShellApplication = callPackage ./builder.nix {};
