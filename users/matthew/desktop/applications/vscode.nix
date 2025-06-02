@@ -273,7 +273,7 @@
         "go.lintTool" = "golangci-lint";
         "go.lintOnSave" = "off";
         "go.gopath" = config.home.sessionVariables.GOPATH;
-        "go.goroot" = "${pkgs.go_1_23}/share/go";
+        "go.goroot" = "${pkgs.go_1_24}/share/go";
         "go.toolsManagement.checkForUpdates" = "off";
         "go.toolsManagement.autoUpdate" = false;
         "go.alternateTools" = {

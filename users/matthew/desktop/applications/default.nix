@@ -6,7 +6,7 @@
     ./freelens.nix
     ./tailscale.nix
     ./terminal.nix
-    ./vscode.nix
+    # ./vscode.nix
     ./zed-editor.nix
   ];
 
