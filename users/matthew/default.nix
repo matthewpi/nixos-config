@@ -31,6 +31,10 @@
     # Change GOPATH from the default ~/go location to follow the XDG spec.
     GOPATH = "${config.home.sessionVariables.XDG_DATA_HOME}/go";
 
+    # Force Go to always use the locally available toolchain, even if a project
+    # requests a different version.
+    GOTOOLCHAIN = "local";
+
     #_JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.home.sessionVariables.XDG_CONFIG_HOME}/java";
   };
 
