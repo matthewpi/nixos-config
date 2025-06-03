@@ -99,6 +99,7 @@ in {
       ".local/share/hoppscotch"
       ".local/share/io.hoppscotch.desktop"
       ".local/share/icc"
+      ".local/share/k9s"
       ".local/share/nautilus"
       ".local/share/npm"
       ".local/share/obsidian"
