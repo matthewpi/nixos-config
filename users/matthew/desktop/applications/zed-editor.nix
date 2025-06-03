@@ -38,7 +38,7 @@
       gopls
       go-tools
       intelephense
-      (pkgs.runCommand "json-language-server" {} ''
+      (runCommand "json-language-server" {} ''
         mkdir -p "$out"/bin
         ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/json-language-server
         ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/vscode-json-languageserver
@@ -46,16 +46,23 @@
       nil
       nixd
       nodejs
+      opentofu
+      (runCommand "terraform" {} ''
+        mkdir -p "$out"/bin
+        ln -s ${lib.getExe opentofu} "$out"/bin/terraform
+      '')
+      opentofu-ls
+      (runCommand "terraform-ls" {} ''
+        mkdir -p "$out"/bin
+        ln -s ${lib.getExe opentofu-ls} "$out"/bin/terraform-ls
+      '')
       package-version-server
-      # phpactor
-      # protols
       nodePackages.prettier
       python312Packages.python-lsp-server
       rust-analyzer
       simple-completion-language-server
       tailwindcss-language-server
       taplo
-      # typescript-language-server
       uncrustify
       vala-language-server
       vtsls
@@ -208,7 +215,6 @@
         };
 
         lsp = {
-          # emmet-language-server.binary.path_lookup = true; # This option is ignored.
           eslint.binary.path_lookup = true;
           nil = {
             binary.path_lookup = true;
@@ -217,16 +223,12 @@
           nixd.binary.path_lookup = true;
           package-version-server.binary.path_lookup = true;
           phpactor.binary.path_lookup = true;
-          # prettier.binary.path_lookup = true;
           protobuf-language-server.binary = {
             path = "buf";
             arguments = ["beta" "lsp"];
           };
           simple-completion-language-server.binary.path_lookup = true;
-          # rust-analyzer.binary.path_lookup = true;
           taplo.binary.path_lookup = true;
-          # tailwindcss-language-server.binary.path_lookup = true; # This option is ignored.
-          # typescript-language-server.binary.path_lookup = true; # This option is ignored.
 
           # Using the `vtsls` path_lookup option causes a binary in the format of
           # `${pkgs.nodejs} ${pkgs.vtsls} ${pkgs.vtsls} --stdio` to get spawned which
@@ -236,7 +238,6 @@
           # vtsls.binary.path_lookup = true;
 
           yaml-language-server = {
-            # binary.path_lookup = true; # This option is ignored.
             settings.yaml = {
               # Allow yaml-language-server to pull schemas from [JSON Schema Store](https://www.schemastore.org/json/).
               schemaStore.enable = true;
