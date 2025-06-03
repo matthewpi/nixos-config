@@ -82,7 +82,13 @@
     };
 
     # Enable gvfs
-    services.gvfs.enable = lib.mkDefault true;
+    services.gvfs = {
+      enable = lib.mkDefault true;
+      package = pkgs.gvfs.override {
+        avahi = null;
+        samba = null;
+      };
+    };
 
     # Enable glib-networking.
     services.gnome.glib-networking.enable = lib.mkDefault true;
