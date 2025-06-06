@@ -83,8 +83,8 @@
             src = pkgs.fetchFromGitHub {
               owner = "Kron4ek";
               repo = "wine-tkg";
-              rev = "68fba78452e7ede28b573a5f6304a0c353cd3df1";
-              hash = "sha256-hRD/0RoD6RtW4YvTDcc/xTMuco1AvsalMMyHrY3TPOk=";
+              rev = "114d078407e75f1bb9a3ea187799cfcf6583a159";
+              hash = "sha256-tcrNMiXNfBY0IZtCSucIXbfFLCvEprPtymOXMfKnHRU=";
             };
 
             patches = [
