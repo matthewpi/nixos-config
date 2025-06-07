@@ -26,7 +26,7 @@
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
 
-      catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs (_: {
+      catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs {
         outputs = ["mochaDark" "out"];
 
         buildPhase = ''
@@ -39,7 +39,7 @@
 
           runHook postBuild
         '';
-      });
+      };
 
       tailscale-systray = pkgs.tailscale.overrideAttrs (oldAttrs: rec {
         doCheck = false;
