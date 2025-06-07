@@ -25,22 +25,6 @@
       fast-syntax-highlighting = pkgs.callPackage ./zsh/fast-syntax-highlighting.nix {};
       inter = pkgs.callPackage ./inter.nix {};
       monaspace = pkgs.callPackage ./monaspace.nix {};
-      vencord = inputs.nixpkgs.legacyPackages.${system}.vencord.overrideAttrs (_: {
-        version = "1.12.2";
-        src = pkgs.fetchFromGitHub {
-          owner = "Vendicated";
-          repo = "Vencord";
-          tag = "v1.12.2";
-          hash = "sha256-a4lbeuXEHDMDko8wte7jUdJ0yUcjfq3UPQAuSiz1UQU=";
-        };
-        meta.platforms = lib.platforms.unix;
-      });
-      vesktop = inputs.nixpkgs.legacyPackages.${system}.vesktop.override {
-        withTTS = false;
-        withSystemVencord = true;
-        inherit vencord;
-        electron = pkgs.electron_36;
-      };
 
       catppuccin-cursors = inputs.nixpkgs.legacyPackages.${system}.catppuccin-cursors.overrideAttrs (_: {
         outputs = ["mochaDark" "out"];
