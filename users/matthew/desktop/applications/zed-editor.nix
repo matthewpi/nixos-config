@@ -312,8 +312,8 @@
       (
         if nixosConfig.services.ollama.enable
         then {
-          # Use local Ollama as our AI assistant.
-          assistant = {
+          # Use local Ollama as our AI agent.
+          agent = {
             version = "2";
             enabled = true;
             button = true;
