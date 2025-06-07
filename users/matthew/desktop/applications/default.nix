@@ -24,6 +24,7 @@
     qFlipper
     resources
     seabird
+    signal-desktop
     slack
     switcheroo
     ungoogled-chromium

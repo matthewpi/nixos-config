@@ -208,16 +208,6 @@
               })
             ];
         });
-
-        signal-desktop = pkgs.signal-desktop.overrideAttrs (old: {
-          preFixup =
-            old.preFixup
-            + ''
-              gappsWrapperArgs+=(
-                --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --use-tray-icon}}"
-              )
-            '';
-        });
       });
   };
 }
