@@ -13,12 +13,10 @@
           gtk4
 
           amberol
+          bustle
           celluloid
-          epiphany
-          evince
           dconf-editor
           file-roller
-          impression
           geary
           gnome-calculator
           gnome-calendar
@@ -33,19 +31,17 @@
           gnome-weather
           loupe
           nautilus
+          papers
           seahorse
           showtime
           sushi
-          switcheroo
-          # wordbook
-          video-trimmer
         ];
       } ''
         mkdir schemas
         # Get the gsettings-schemas for all paths
         for path in $paths; do
-          cp $path/share/gsettings-schemas/*/glib-2.0/schemas/*.xml ./schemas || :
-          cp $path/share/gsettings-schemas/*/glib-2.0/schemas/*.override ./schemas || :
+          cp "$path"'/share/gsettings-schemas/'*'/glib-2.0/schemas/'*.xml ./schemas || :
+          cp "$path"'/share/gsettings-schemas/'*'/glib-2.0/schemas/'*.override ./schemas || :
         done
 
         # Compile all the schemas

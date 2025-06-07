@@ -21,11 +21,8 @@
     # GNOME
     bustle
     celluloid
-    epiphany
-    evince
     dconf-editor
     file-roller
-    fragments
     geary
     gnome-calculator
     gnome-calendar
@@ -40,10 +37,10 @@
     gnome-weather
     loupe
     nautilus
+    papers
     seahorse
     showtime
     sushi
-    # wordbook
 
     # clipboard
     wl-clipboard

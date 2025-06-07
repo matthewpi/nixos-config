@@ -48,7 +48,7 @@ in {
       "text/xml" = [defaultBrowser];
 
       # PDFs
-      "application/pdf" = ["org.gnome.Evince.desktop"];
+      "application/pdf" = ["org.gnome.Papers.desktop"];
 
       # Image Viewer
       "image/jpeg" = [defaultImageViewer];
