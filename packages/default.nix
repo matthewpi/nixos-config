@@ -62,7 +62,8 @@
       freelens = pkgs.callPackage ./freelens/package.nix {inherit freelens-k8s-proxy;};
       freelens-k8s-proxy = pkgs.callPackage ./freelens-k8s-proxy/package.nix {};
       hoppscotch = pkgs.callPackage ./hoppscotch/package.nix {};
-      hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/package.nix {inherit hoppscotch;};
+      hoppscotch-webapp-bundler = pkgs.callPackage ./hoppscotch-desktop/webapp-bundler.nix {inherit hoppscotch;};
+      hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/package.nix {inherit hoppscotch hoppscotch-webapp-bundler;};
       inter = pkgs.callPackage ./inter/package.nix {};
       monaspace = pkgs.callPackage ./monaspace/package.nix {};
       simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server {};

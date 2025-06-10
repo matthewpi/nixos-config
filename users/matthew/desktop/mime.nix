@@ -92,9 +92,9 @@ in {
       # Applications
       "x-scheme-handler/termius" = ["termius-app.desktop"];
 
-      # # Hoppscotch
-      # "x-scheme-handler/io.hoppscotch.desktop" = ["hoppscotch.desktop"];
-      # "x-scheme-handler/hoppscotch" = ["hoppscotch.desktop"];
+      # Hoppscotch
+      "x-scheme-handler/io.hoppscotch.desktop" = ["hoppscotch.desktop"];
+      "x-scheme-handler/hoppscotch" = ["hoppscotch.desktop"];
     };
   };
 }

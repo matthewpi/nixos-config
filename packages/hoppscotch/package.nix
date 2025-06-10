@@ -19,20 +19,20 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hoppscotch";
-  version = "2025.3.1";
+  version = "2025.5.1";
 
   src = fetchFromGitHub {
     owner = "hoppscotch";
     repo = "hoppscotch";
     tag = finalAttrs.version;
-    hash = "sha256-qj91cvIuen/6IwD6o5WrxrEns1dFsU+ObswqiL2tZYE=";
+    hash = "sha256-wgvRiJ7tS9CzhZMz49QN15MKMx68ENQ1HP3l9wq1an8=";
   };
 
   doCheck = false;
 
   pnpmDeps = pnpm_10.fetchDeps {
     inherit (finalAttrs) pname src;
-    hash = "sha256-cowDVga0Q2HfHOuwT7RTIx5TQGK7yUsxNwTj5E1Ggic=";
+    hash = "sha256-CU3CNzpPQ5Yhnz4bMEjs7YgHmE+uj32GBScWC1YThmA=";
   };
 
   nativeBuildInputs = [
@@ -75,17 +75,6 @@ stdenv.mkDerivation (finalAttrs: {
     ln -sfv ${nodejs}/include "$HOME"/.node-gyp/${nodejs.version}
     export npm_config_nodedir=${nodejs}
 
-    pushd node_modules/.pnpm/argon2@0.41.1/node_modules/argon2
-    if [ -z "$npm_config_node_gyp" ]; then
-      export npm_config_node_gyp=${node-gyp}/lib/node_modules/node-gyp/bin/node-gyp.js
-    fi
-    "$npm_config_node_gyp" rebuild
-    popd
-
-    pushd node_modules/.pnpm/bcrypt@5.1.1/node_modules/bcrypt
-    node-pre-gyp install --prefer-offline --build-from-source --nodedir=${nodejs}/include/node
-    popd
-
     pnpm rebuild --recursive --pending --use-stderr --stream
   '';
 
@@ -119,9 +108,7 @@ stdenv.mkDerivation (finalAttrs: {
     runHook postInstall
   '';
 
-  # TODO: is this necessary anymore?
   postFixup = ''
-    rm -f "$out"/packages/hoppscotch-backend/node_modules/jwt
     rm -f "$out"/packages/hoppscotch-selfhost-desktop/node_modules/environments.api
     rm -f "$out"/packages/hoppscotch-selfhost-desktop/node_modules/event
     rm -f "$out"/packages/hoppscotch-selfhost-desktop/node_modules/shell
