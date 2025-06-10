@@ -7,17 +7,17 @@
   grammars = {
     tree-sitter-caddyfile = rec {
       url = "https://github.com/caddyserver/tree-sitter-caddyfile";
-      rev = "23f88b568a4f11de8c6c6a1d5b0aeb34b06c07d4";
-      hash = "sha256-rx3G5TNPJEaaQTQXBDXNcoQ8LFxvV7VTLekdwHBwEoE=";
+      rev = "4158312f122aff3283a0171049118c46e03d6bc4";
+      hash = "sha256-vPAPXZoSSWqTCTcVhLwBrDz9GmKxrvj1Q+t7dvUZE8A=";
       fetchSubmodules = false;
       src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
       generate = true;
     };
 
     tree-sitter-d2 = rec {
-      url = "https://git.pleshevski.ru/pleshevskiy/tree-sitter-d2";
-      rev = "1e6d8ca3d85c0031ff010759bb60804dd47b95f2";
-      hash = "sha256-ld9zlJ7tXl/SyrHJXwPKviDHePbw/jhI9WPT3aNntt8=";
+      url = "https://github.com/ravsii/tree-sitter-d2";
+      rev = "f40a9fa426d55a03cedd17475e4d6affe755a1ae";
+      hash = "sha256-pKJ2hsSnIjoUunN8ZjWiinb/mt07WQ9AURc708ENHtY=";
       fetchSubmodules = false;
       src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
     };
