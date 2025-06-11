@@ -342,8 +342,8 @@
           };
         }
         else {
-          # Disable AI assistant.
-          assistant = {
+          # Disable AI agent.
+          agent = {
             version = "2";
             enabled = false;
             button = false;
