@@ -320,8 +320,8 @@ in {
         "center, title:Steam, floating:1"
         "float,  title:Steam Settings, class:steam"
         "float,  title:Friends List, class:steam"
-        "center, class:steam, title:^(?!Steam$).*$"
-        "float,  class:steam, title:^(?!Steam$).*$"
+        "center, class:^(steam)$, title:negative:^Steam$"
+        "float,  class:^(steam)$, title:negative:^Steam$"
 
         # mpv
         "content video, class:mpv"
