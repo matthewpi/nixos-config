@@ -6,16 +6,32 @@
   pkgs,
   ...
 }: let
+  systemd = nixosConfig.systemd.package;
+
   # https://systemd.io/DESKTOP_ENVIRONMENTS/#xdg-standardization-for-applications
   mkSystemdRun = {
-    name,
+    name ? null,
     command,
     args ? null,
-  }: ''${pkgs.systemd}/bin/systemd-run --user --collect --no-block --slice=app-graphical --unit="app-${name}@''${RANDOM}" ${
-      if args == null
-      then ""
-      else ''${lib.concatStringsSep " " args} ''
-    }${command}'';
+    slice ? "app-graphical",
+  }:
+    lib.concatStringsSep " " (
+      [
+        (lib.getExe' systemd "systemd-run")
+        "--user"
+        "--collect"
+        "--no-block"
+      ]
+      ++ lib.optional (slice != null) "--slice=${slice}"
+      ++ lib.optional (slice != null && name != null) "--unit='${slice}-${name}@'\"\${RANDOM}\""
+      ++ lib.optionals (args != null) args
+      ++ [command]
+    );
+
+  lock = mkSystemdRun {
+    command = "${lib.getExe' systemd "loginctl"} lock-session";
+    slice = null;
+  };
 
   # Command used to launch alacritty.
   alacritty = mkSystemdRun {
@@ -415,7 +431,7 @@ in {
         # `loginctl lock-session` will launch only hyprlock,
         # while `systemctl suspend` will handle both hyprlock
         # and any other actions; such as DPMS.
-        "$mainMod, L, exec, ${lib.getExe' nixosConfig.systemd.package "loginctl"} lock-session"
+        "$mainMod, L, exec, ${lock}"
 
         # Use Tab to switch between windows in a floating workspace
         # "$mainMod, Tab, cyclenext," # Change focus to another window
@@ -425,9 +441,9 @@ in {
       # bindl allows the bind to be used even when an input inhibitor is active
       bindl = [
         # Suspend on laptop lid close.
-        ", switch:on:Lid Switch, exec, ${lib.getExe' nixosConfig.systemd.package "systemctl"} suspend"
+        ", switch:on:Lid Switch, exec, ${lib.getExe' systemd "systemctl"} suspend"
 
-        "$mainMod Shift, L, exec, ${lib.getExe' nixosConfig.systemd.package "systemctl"} suspend"
+        "$mainMod Shift, L, exec, ${lib.getExe' systemd "systemctl"} suspend"
 
         ", XF86AudioPlay, exec, ${lib.getExe pkgs.playerctl} play-pause"
         ", XF86AudioPrev, exec, ${lib.getExe pkgs.playerctl} previous"
