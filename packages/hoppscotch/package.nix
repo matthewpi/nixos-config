@@ -19,20 +19,20 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hoppscotch";
-  version = "2025.5.1";
+  version = "2025.5.2";
 
   src = fetchFromGitHub {
     owner = "hoppscotch";
     repo = "hoppscotch";
     tag = finalAttrs.version;
-    hash = "sha256-wgvRiJ7tS9CzhZMz49QN15MKMx68ENQ1HP3l9wq1an8=";
+    hash = "sha256-BMnJLCnl5J6il0rfuuCV8BS+0TuhrucQPTgw8OBiR4M=";
   };
 
   doCheck = false;
 
   pnpmDeps = pnpm_10.fetchDeps {
     inherit (finalAttrs) pname src;
-    hash = "sha256-CU3CNzpPQ5Yhnz4bMEjs7YgHmE+uj32GBScWC1YThmA=";
+    hash = "sha256-Q8BqVCmlVx2J1obY4kAYldrFOVZQbAaqgssvCk+pmus=";
   };
 
   nativeBuildInputs = [
@@ -87,10 +87,6 @@ stdenv.mkDerivation (finalAttrs: {
     echo 'Generating prisma for hoppscotch-backend...'
     (cd packages/hoppscotch-backend; prisma generate)
     echo 'Prisma generated for hoppscotch-backend!'
-
-    echo 'Running graphql-codegen for hoppscotch-selfhost-desktop...'
-    (cd packages/hoppscotch-selfhost-desktop; pnpm graphql-codegen --config gql-codegen.yml)
-    echo 'graphql-codegen completed for hoppscotch-selfhost-desktop'
 
     # Equivalent of `pnpm run generate` for this project. We do this so extra
     # args can be added to `pnpm` to get the output to print properly in the

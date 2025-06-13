@@ -25,7 +25,7 @@ rustPlatform.buildRustPackage (_finalAttrs: {
   src = hoppscotch;
 
   cargoRoot = "packages/hoppscotch-desktop/src-tauri";
-  cargoHash = "sha256-kKaQi9/Jf4kyiuqQiYMtEh8XyUReQyn4ubuFPQuFb0Y=";
+  cargoHash = "sha256-V3og3NoP1GJaDLYlLlIikBoVz8Jqticzkj9xgCao7rQ=";
   useFetchCargoVendor = true;
   buildAndTestSubdir = "packages/hoppscotch-desktop/src-tauri";
 
