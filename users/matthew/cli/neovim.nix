@@ -7,8 +7,8 @@
   grammars = {
     tree-sitter-caddyfile = rec {
       url = "https://github.com/caddyserver/tree-sitter-caddyfile";
-      rev = "d856beaddccb128d0413f61ba68ae90fd702eead";
-      hash = "sha256-XIudiJ/UBY0Ca8abC9YucVTKUShFh9r8k2B7fgAaqDM=";
+      rev = "b04bdb4ec53e40c44afbf001e15540f60a296aef";
+      hash = "sha256-WaCWKq3wqjhWdsUd2vAT/JPqaxbHhOsaZrCg6MeXZZw=";
       fetchSubmodules = false;
       src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
       generate = true;
