@@ -32,6 +32,7 @@ async function launch(app: Apps.Application): Promise<void> {
 	// Both these editors fork themselves so they can provide multiple windows
 	// and manage their child processes.
 	switch (app.name) {
+		case 'StarCitizen':
 		case 'VSCodium':
 		case 'Zed':
 			cmd.push('--property=Type=forking');

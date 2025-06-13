@@ -39,6 +39,8 @@
     hash = "sha256-2/0ZRJaV6IXVTZGNmrgm1RqOBUdzqQukKwcjyOdmYQA=";
   };
 
+  wineCmd = "wine${lib.optionalString (wineFlags != "") " ${wineFlags}"}";
+
   writeShellApplication = callPackage ./builder.nix {};
 
   script = writeShellApplication {
@@ -216,11 +218,12 @@
         ''
         else ''
           # Start the RSI Launcher.
-          "$mangohud" wine${
-            if (wineFlags != "")
-            then " ${wineFlags}"
-            else ""
-          } "$RSI_LAUNCHER" "$@"
+          if [[ -t 1 ]]; then
+            "$mangohud" ${wineCmd} "$RSI_LAUNCHER" "$@"
+          else
+            LOG_DIR="$(mktemp -d)"
+            "$mangohud" ${wineCmd} "$RSI_LAUNCHER" "$@" >"$LOG_DIR"/RSIout 2>"$LOG_DIR"/RSIerr
+          fi
 
           # Block until all wine windows get closed.
           echo 'RSI Launcher exited, waiting for all wine windows to close...'
