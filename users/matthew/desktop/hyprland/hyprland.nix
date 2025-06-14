@@ -340,8 +340,9 @@ in {
 
         # Steam
         "center, title:Steam, floating:1"
-        "float,  title:Steam Settings, class:steam"
-        "float,  title:Friends List, class:steam"
+        "float,  class:steam, title:Steam Settings"
+        "size 328 768, class:steam, title:Friends List"
+        "float,  class:steam title:Friends List"
         "center, class:steam, title:negative:^(Steam|.?)$" # match everything but "Steam" or an empty title (dropdowns)
         "float,  class:steam, title:negative:^(Steam|.?)$" # match everything but "Steam" or an empty title (dropdowns)
 
@@ -367,6 +368,11 @@ in {
         "size <50% <50%, class:^starcitizen_launcher\.exe$"
         "center,         class:^starcitizen_launcher\.exe$"
         "float,          class:^starcitizen_launcher\.exe$"
+
+        # Star Trek Online (Launcher)
+        "size <50% <50%, class:^star trek online\.exe$"
+        "center,         class:^star trek online\.exe$"
+        "float,          class:^star trek online\.exe$"
       ];
 
       # Keybinds
