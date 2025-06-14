@@ -66,7 +66,7 @@
       hoppscotch-desktop = pkgs.callPackage ./hoppscotch-desktop/package.nix {inherit hoppscotch hoppscotch-webapp-bundler;};
       inter = pkgs.callPackage ./inter/package.nix {};
       monaspace = pkgs.callPackage ./monaspace/package.nix {};
-      simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server {};
+      simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server/package.nix {};
       star-citizen = pkgs.callPackage ./star-citizen {inherit inputs;};
 
       # This is here instead of an overlay since it's a new package based on an existing one.
