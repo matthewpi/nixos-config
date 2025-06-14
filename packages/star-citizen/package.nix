@@ -28,7 +28,7 @@
   # wine
   wineDllOverrides ? ["winemenubuilder.exe=d"],
   wineFlags ? "",
-  # tricks ? ["powershell" "corefonts" "tahoma"],
+  tricks ? ["powershell" "corefonts" "tahoma"],
 }: let
   # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
   version = "2.4.0";
@@ -50,7 +50,7 @@
     runtimeInputs =
       if useUmu
       then [umu-launcher]
-      else [wine winetricks];
+      else [wine wineprefix-preparer winetricks];
     runtimeEnv =
       {
         WINETRICKS_LATEST_VERSION_CHECK = "disabled";
@@ -131,8 +131,6 @@
     # star-citizen --shell
     # winecfg
     # ```
-    #
-    # TODO: automatically run `wine reg add 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer' /v NoTrayItemsDisplay /t REG_DWORD /d 1`
     text =
       (
         if useUmu
@@ -146,26 +144,47 @@
           fi
         ''
         else ''
-          # # Ensure the "$WINEPREFIX" is setup.
-          # ${lib.getExe wineprefix-preparer}
+          # Ensure the "$WINEPREFIX" is setup.
+          wineprefix-preparer
 
-          # # Ensure all tricks are installed.
-          # ''${lib.toShellVars {
-          #   inherit tricks;
-          #   tricksInstalled = 1;
-          # }}
-          # for trick in "${"\${tricks[@]}"}"; do
-          #   if ! winetricks list-installed | grep -qw "$trick"; then
-          #     echo 'winetricks: Installing '"$trick"
-          #     winetricks -q -f "$trick"
-          #     tricksInstalled=0
-          #   fi
-          # done
+          # Disable tray icons as on Wayland it will appear as a separate tiny
+          # window.
+          wine reg add 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer' /v NoTrayItemsDisplay /t REG_DWORD /d 1
 
-          # # If tricks were installed, restart the `wineserver`.
-          # if [ "$tricksInstalled" -eq 0 ]; then
-          #   wineserver --kill
-          # fi
+          # Update the DPI for scaling so text renders correctly and so cursor
+          # alignment in-game works.
+          #
+          # The default DPI is 96, so for a scaling factor of 1.5, you would
+          # want to change the DPI to 144 (96 * 1.5).
+          #
+          # The value for the registry key is in hex, to calculate the hex value
+          # for a given DPI, you can run `printf '0x%x\n' <DPI>`.
+          #
+          # So for a DPI of 96 (Wine's default) you would run `printf '0x%x\n' 96`
+          # which returns `0x60`.
+          #
+          # TODO: this is display-specific and should be configurable.
+          wine reg add 'HKLM\System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts' /v LogPixels /t REG_DWORD /d 0x90
+
+          # Ensure all tricks are installed.
+          ${lib.toShellVars {
+            inherit tricks;
+            tricksInstalled = 1;
+          }}
+          # TODO: only run `winetricks list-installed` once and only refresh
+          # it after a trick gets installed (installing a trick may cause multiple to get installed).
+          for trick in ''${tricks[@]}; do
+            if ! winetricks list-installed | grep -qw "$trick"; then
+              echo 'winetricks: Installing '"$trick"
+              winetricks -q -f "$trick"
+              tricksInstalled=0
+            fi
+          done
+
+          # If tricks were installed, restart the `wineserver`.
+          if [ "$tricksInstalled" -eq 0 ]; then
+            wineserver --kill
+          fi
 
           # Ensure RSI Launcher is installed.
           if [ ! -e "$RSI_LAUNCHER" ]; then
