@@ -51,10 +51,10 @@
         mkdir -p "$out"/bin
         ln -s ${lib.getExe opentofu} "$out"/bin/terraform
       '')
-      opentofu-ls
+      tofu-ls
       (runCommand "terraform-ls" {} ''
         mkdir -p "$out"/bin
-        ln -s ${lib.getExe opentofu-ls} "$out"/bin/terraform-ls
+        ln -s ${lib.getExe tofu-ls} "$out"/bin/terraform-ls
       '')
       package-version-server
       nodePackages.prettier
