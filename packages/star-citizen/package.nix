@@ -149,7 +149,7 @@
 
           # Disable tray icons as on Wayland it will appear as a separate tiny
           # window.
-          wine reg add 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer' /v NoTrayItemsDisplay /t REG_DWORD /d 1
+          wine reg add 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer' /v NoTrayItemsDisplay /t REG_DWORD /d 1 /f
 
           # Update the DPI for scaling so text renders correctly and so cursor
           # alignment in-game works.
@@ -164,7 +164,7 @@
           # which returns `0x60`.
           #
           # TODO: this is display-specific and should be configurable.
-          wine reg add 'HKLM\System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts' /v LogPixels /t REG_DWORD /d 0x90
+          wine reg add 'HKLM\System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts' /v LogPixels /t REG_DWORD /d 0x90 /f
 
           # Ensure all tricks are installed.
           ${lib.toShellVars {
