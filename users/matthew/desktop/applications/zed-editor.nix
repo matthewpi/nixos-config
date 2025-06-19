@@ -26,6 +26,7 @@
 
     extraPackages = with pkgs; [
       alejandra
+      # biome
       clang-tools
       cue
       d2
@@ -76,12 +77,14 @@
       sourcekit-lsp
 
       cargo
+      clang
       rustc
       tree-sitter
     ];
 
     extensions = [
       "assembly"
+      "biome"
       "bitbake"
       "blade"
       "capnp"
@@ -215,6 +218,7 @@
         };
 
         lsp = {
+          biome.settings.require_config_file = true;
           eslint.binary.path_lookup = true;
           nil = {
             binary.path_lookup = true;
@@ -251,48 +255,24 @@
         };
 
         # Language settings
-        languages = let
-          prettier = {
-            command = "prettier";
-            arguments = ["--stdin-filepath" "{buffer_path}"];
-          };
-        in {
+        languages = {
           Go.format_on_save = "on";
           JSON.format_on_save = "on";
 
-          JavaScript = {
-            format_on_save = "on";
-            formatter.external = prettier;
-          };
+          JavaScript.format_on_save = "on";
 
-          JSX = {
-            format_on_save = "on";
-            formatter.external = prettier;
-          };
+          JSX.format_on_save = "on";
 
           # Nix.format_on_save = "on";
 
-          TypeScript = {
-            format_on_save = "on";
-            formatter.external = prettier;
-            code_actions_on_format = {
-              "source.organizeImports" = true;
-            };
-          };
+          TypeScript.format_on_save = "on";
 
-          TSX = {
-            format_on_save = "on";
-            formatter.external = prettier;
-            code_actions_on_format = {
-              "source.organizeImports" = true;
-            };
-          };
+          TSX.format_on_save = "on";
 
           PHP.language_servers = ["intelephense" "!phpactor"];
 
           "Vue.js" = {
             format_on_save = "on";
-            formatter.external = prettier;
             language_servers = ["!tailwindcss-language-server" "vue-language-server"];
           };
         };
