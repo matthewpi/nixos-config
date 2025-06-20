@@ -19,13 +19,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "hoppscotch";
-  version = "2025.5.2";
+  version = "2025.5.3";
 
   src = fetchFromGitHub {
     owner = "hoppscotch";
     repo = "hoppscotch";
     tag = finalAttrs.version;
-    hash = "sha256-BMnJLCnl5J6il0rfuuCV8BS+0TuhrucQPTgw8OBiR4M=";
+    hash = "sha256-6e80VZjbc2p0Xp1T/FPc2pDl42dLRYJtmaG0XcjJPpk=";
   };
 
   doCheck = false;
