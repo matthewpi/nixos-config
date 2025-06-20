@@ -15,7 +15,7 @@
     determinate-nixd =
       pkgs.runCommand "determinate-nixd" rec {
         pname = "determinate-nixd";
-        version = "3.6.2";
+        version = "3.6.6";
         name = "${pname}-${version}";
         meta.mainProgram = "determinate-nixd";
       } ''
@@ -24,8 +24,15 @@
         chmod +x "$out"/bin/determinate-nixd
         "$out"/bin/determinate-nixd --help
       '';
+
+    nix = inputs.nix.packages.${pkgs.stdenv.system}.nix.override (oldAttrs: {
+      # Disable nix-functional-tests.
+      nix-functional-tests = oldAttrs.nix-functional-tests.overrideAttrs {
+        doCheck = false;
+      };
+    });
   in {
-    nix.package = inputs.nix.packages.${pkgs.stdenv.system}.nix;
+    nix.package = nix;
     environment.systemPackages = [determinate-nixd];
 
     # NOTE(cole-h): Move the generated nix.conf to /etc/nix/nix.custom.conf, which is included from
