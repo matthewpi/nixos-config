@@ -1,7 +1,6 @@
 {lib, ...}: {
   imports = [
     ./blahaj.nix
-    ./djt.nix
     ./nxs.nix
   ];
 
