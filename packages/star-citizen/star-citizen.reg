@@ -1,0 +1,15 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\Software\Wine\DllOverrides]
+"d3d10core"="native"
+"d3d11"="native"
+"d3d12"="native"
+"d3d12core"="native"
+"d3d9"="native"
+"dxgi"="native"
+
+[HKEY_LOCAL_MACHINE\System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts]
+"LogPixels"=dword:00000090
+
+[HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer]
+"NoTrayItemsDisplay"=dword:00000001

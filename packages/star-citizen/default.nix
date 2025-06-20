@@ -6,7 +6,18 @@
   nix-gaming = inputs.nix-gaming.packages.${pkgs.system};
 
   winetricks = nix-gaming.winetricks-git;
-  inherit (nix-gaming) wineprefix-preparer umu-launcher;
+  inherit (nix-gaming) umu-launcher;
+  wineprefix-preparer = pkgs.callPackage ./wineprefix-preparer.nix {
+    inherit
+      (nix-gaming)
+      dxvk-w32
+      dxvk-w64
+      dxvk-nvapi-w32
+      dxvk-nvapi-w64
+      vkd3d-proton-w32
+      vkd3d-proton-w64
+      ;
+  };
 
   linuxHeaders = pkgs.makeLinuxHeaders {inherit (pkgs.linuxPackages_xanmod_latest.kernel) src version patches;};
 

@@ -28,7 +28,6 @@
   # wine
   wineDllOverrides ? ["winemenubuilder.exe=d"],
   wineFlags ? "",
-  tricks ? ["powershell" "corefonts" "tahoma"],
 }: let
   # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
   version = "2.4.0";
@@ -41,7 +40,7 @@
 
   wineCmd = "wine${lib.optionalString (wineFlags != "") " ${wineFlags}"}";
 
-  writeShellApplication = callPackage ./builder.nix {};
+  writeShellApplication = callPackage ./write-shell-application.nix {};
 
   script = writeShellApplication {
     name = "star-citizen";
@@ -120,17 +119,6 @@
       echo "$WINEPREFIX"
     '';
 
-    # NOTE: on a fresh prefix creation we will need to change the DPI if scaling
-    # is enabled.
-    #
-    # The default DPI is 96, so for a scaling factor of 1.5, you would need to
-    # change the DPI to 144 (96 * 1.5).  The DPI can be changed via running and
-    # using the `winecfg` window to change the DPI.
-    #
-    # ```bash
-    # star-citizen --shell
-    # winecfg
-    # ```
     text =
       (
         if useUmu
@@ -144,45 +132,41 @@
           fi
         ''
         else ''
-          # Ensure the "$WINEPREFIX" is setup.
+          # Ensure the "$WINEPREFIX" is setup and up-to-date with the version
+          # of Wine we are using.
           wineprefix-preparer
 
-          # Disable tray icons as on Wayland it will appear as a separate tiny
-          # window.
-          wine reg add 'HKLM\Software\Microsoft\Windows\CurrentVersion\Policies\Explorer' /v NoTrayItemsDisplay /t REG_DWORD /d 1 /f
+          # Update the registry all at once instead of running a bunch of
+          # `wine reg add` commands which each take a few seconds to run each.
+          echo 'Editing registry...'
+          wine regedit ${./star-citizen.reg}
 
-          # Update the DPI for scaling so text renders correctly and so cursor
-          # alignment in-game works.
+          # Ensure the necessary winetricks are installed.
           #
-          # The default DPI is 96, so for a scaling factor of 1.5, you would
-          # want to change the DPI to 144 (96 * 1.5).
-          #
-          # The value for the registry key is in hex, to calculate the hex value
-          # for a given DPI, you can run `printf '0x%x\n' <DPI>`.
-          #
-          # So for a DPI of 96 (Wine's default) you would run `printf '0x%x\n' 96`
-          # which returns `0x60`.
-          #
-          # TODO: this is display-specific and should be configurable.
-          wine reg add 'HKLM\System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts' /v LogPixels /t REG_DWORD /d 0x90 /f
-
-          # Ensure all tricks are installed.
-          ${lib.toShellVars {
-            inherit tricks;
-            tricksInstalled = 1;
-          }}
-          # TODO: only run `winetricks list-installed` once and only refresh
-          # it after a trick gets installed (installing a trick may cause multiple to get installed).
-          for trick in ''${tricks[@]}; do
-            if ! winetricks list-installed | grep -qw "$trick"; then
-              echo 'winetricks: Installing '"$trick"
+          # NOTE: this was designed for speed on existing installs, hence why
+          # we run `winetricks list-installed` once and only refresh it if a
+          # trick was installed. Keep in mind a installing a trick may install
+          # multiple, so we need to keep `installedTricks` updated.
+          tricksInstalled=0
+          installedTricks="$(winetricks list-installed)"
+          for trick in powershell corefonts tahoma; do
+            if ! echo "$installedTricks" | grep -qw "$trick"; then
+              echo 'winetricks: installing '"$trick"'...'
               winetricks -q -f "$trick"
-              tricksInstalled=0
+              tricksInstalled=1
+
+              # Everytime we install a trick, refresh `installedTricks`. Running
+              # `winetricks list-installed` is quite slow, so on an existing
+              # install, we only want to run it once.
+              installedTricks="$(winetricks list-installed)"
+            else
+              echo 'winetricks: '"$trick"' is already installed'
             fi
           done
 
           # If tricks were installed, restart the `wineserver`.
-          if [ "$tricksInstalled" -eq 0 ]; then
+          if [ "$tricksInstalled" -eq 1 ]; then
+            echo 'Stopping wineserver after tricks were installed...'
             wineserver --kill
           fi
 
