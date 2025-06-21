@@ -131,6 +131,8 @@
         auto_update = false;
         base_keymap = "VSCode";
 
+        hide_mouse = "never";
+
         theme = {
           mode = "system";
           light = "Catppuccin Latte";
