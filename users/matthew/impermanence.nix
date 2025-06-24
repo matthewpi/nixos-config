@@ -29,6 +29,10 @@ in {
     ++ lib.optional hmConfig.programs.starship.enable ".cache/starship"
     ++ lib.optional hmConfig.programs.vscode.enable ".config/VSCodium"
     ++ lib.optionals hmConfig.programs.zed-editor.enable [
+      # Harper is used by Zed for spell-checking, we use this directory to store our custom dictionary
+      ".config/harper-ls"
+      ".local/share/harper-ls"
+
       ".cache/zed"
       ".local/share/zed"
     ]

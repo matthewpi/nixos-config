@@ -38,6 +38,7 @@
       golangci-lint
       gopls
       go-tools
+      harper
       intelephense
       (runCommand "json-language-server" {} ''
         mkdir -p "$out"/bin
@@ -99,6 +100,7 @@
       "git-firefly"
       "golangci-lint"
       "gosum"
+      "harper"
       "helm"
       "html"
       "http"
