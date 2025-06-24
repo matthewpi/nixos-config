@@ -19,13 +19,13 @@
   wrapGAppsHook4,
   xdg-utils,
 }:
-rustPlatform.buildRustPackage (_finalAttrs: {
+rustPlatform.buildRustPackage {
   pname = "hoppscotch-desktop";
   inherit (hoppscotch) version pnpmDeps;
   src = hoppscotch;
 
   cargoRoot = "packages/hoppscotch-desktop/src-tauri";
-  cargoHash = "sha256-zPhfrHoHSAiPe7MkgiMCMkG20ey229sH2EEdy/VXwiM=";
+  cargoHash = "sha256-4vYzgCLroD2N2PP6GxUoBpwjKbUzYz+LuF9YnePn+bg=";
   useFetchCargoVendor = true;
   buildAndTestSubdir = "packages/hoppscotch-desktop/src-tauri";
 
@@ -122,4 +122,4 @@ rustPlatform.buildRustPackage (_finalAttrs: {
     // {
       mainProgram = "hoppscotch-desktop";
     };
-})
+}
