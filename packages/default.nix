@@ -3,7 +3,7 @@
     ./hypr.nix
   ];
 
-  flake.overlays.overrides = final: prev: {
+  flake.overlays.overrides = _: prev: {
     # Only build mochaDark cursors so the build doesn't take 8 years to build
     # a bunch of cursors we won't end up using anyways.
     catppuccin-cursors = prev.catppuccin-cursors.overrideAttrs {
