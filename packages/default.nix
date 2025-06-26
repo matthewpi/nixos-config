@@ -16,36 +16,6 @@
         runHook postBuild
       '';
     };
-
-    mangohud = prev.mangohud.overrideAttrs {
-      patches = [
-        # Add @libraryPath@ template variable to fix loading the preload
-        # library and @dataPath@ to support overlaying Vulkan apps without
-        # requiring MangoHud to be installed
-        "${inputs.nixpkgs}/pkgs/tools/graphics/mangohud/preload-nix-workaround.patch"
-
-        # Hard code dependencies. Can't use makeWrapper since the Vulkan
-        # layer can be used without the mangohud executable by setting MANGOHUD=1.
-        (final.replaceVars
-          (final.fetchpatch2 {
-            url = "https://raw.githubusercontent.com/NixOS/nixpkgs/62f1946374dc9d463544293244ffc596f22b5c59/pkgs/tools/graphics/mangohud/hardcode-dependencies.patch";
-            hash = "sha256-E4Q/OH/eCFJKPsVlBMtm3DD5U0URKn9+LZZkNq5dCiU=";
-          })
-          {
-            path = final.lib.makeBinPath (with final; [
-              coreutils
-              curl
-              gnugrep
-              gnused
-              xdg-utils
-            ]);
-
-            inherit (final) libGL hwdata;
-            inherit (final.xorg) libX11;
-            libdbus = final.dbus.lib;
-          })
-      ];
-    };
   };
 
   perSystem = {
