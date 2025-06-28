@@ -67,5 +67,8 @@
         DirectoryMode = "0755";
       };
     };
+
+    # Enable lazy-trees by default.
+    nix.settings.lazy-trees = lib.mkDefault true;
   };
 }
