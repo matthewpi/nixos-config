@@ -16,6 +16,7 @@
     kooha
     hoppscotch-desktop
     impression
+    ladybird
     libreoffice
     ledger-live-desktop
     obsidian
