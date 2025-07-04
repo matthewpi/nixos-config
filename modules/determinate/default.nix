@@ -69,6 +69,6 @@
     };
 
     # Enable lazy-trees by default.
-    nix.settings.lazy-trees = lib.mkDefault true;
+    nix.settings.lazy-trees = lib.mkDefault false;
   };
 }
