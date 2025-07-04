@@ -13,5 +13,6 @@
   # Override the default substituters.
   nix.settings.substituters = lib.mkForce [
     "https://ncps.blahaj.systems" # local cache for cache.nixos.org
+    "https://nxs.blahaj.systems"
   ];
 }
