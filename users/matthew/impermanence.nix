@@ -35,6 +35,8 @@ in {
 
       ".cache/zed"
       ".local/share/zed"
+
+      ".local/share/rustup"
     ]
     ++ lib.optional hmConfig.programs.zsh.enable ".local/share/zsh"
     ++ lib.optional hmConfig.services.gnome-keyring.enable ".local/share/keyrings"

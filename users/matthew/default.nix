@@ -24,6 +24,7 @@
 
     # Change CARGO_HOME from the default ~/.cargo location to follow the XDG spec.
     CARGO_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/cargo";
+    RUSTUP_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/rustup";
 
     # Change GNUPGHOME from the default ~/.gnupg location to follow the XDG spec.
     GNUPGHOME = "${config.home.sessionVariables.XDG_DATA_HOME}/gnupg";

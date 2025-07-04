@@ -77,10 +77,9 @@
       # Swift
       sourcekit-lsp
 
-      cargo
       clang
-      rustc
       tree-sitter
+      rustup
     ];
 
     extensions = [
