@@ -38,7 +38,10 @@ in {
     ]
     ++ lib.optional hmConfig.programs.zsh.enable ".local/share/zsh"
     ++ lib.optional hmConfig.services.gnome-keyring.enable ".local/share/keyrings"
-    ++ lib.optional config.programs.steam.enable ".local/share/Steam"
+    ++ lib.optionals config.programs.steam.enable [
+      ".cache/protontricks"
+      ".local/share/Steam"
+    ]
     ++ lib.optionals isDesktop [
       ".cache/winetricks"
       ".config/streamdeck"
