@@ -15,9 +15,19 @@ in {
   };
 
   config = lib.mkIf cfg.enable (let
-    systemd-pcrlock = pkgs.runCommand "systemd-pcrlock" {} ''
+    systemd = config.systemd.package.overrideAttrs (oldAttrs: {
+      patches =
+        (oldAttrs.patches or [])
+        ++ [
+          (pkgs.fetchpatch2 {
+            url = "https://github.com/systemd/systemd/commit/95b58ed32ea66de6a13735aad47a96bd714cb6be.patch";
+            hash = "sha256-vxFZGMCRbG1qBB0QR/N4CZL8tOXeo37xRgKHT16Dg2o=";
+          })
+        ];
+    });
+    systemd-pcrlock = pkgs.runCommand "systemd-pcrlock" {meta.mainProgram = "systemd-pcrlock";} ''
       mkdir -p "$out"/bin
-      ln -s ${config.systemd.package}/lib/systemd/systemd-pcrlock "$out"/bin
+      ln -s ${systemd}/lib/systemd/systemd-pcrlock "$out"/bin
     '';
   in {
     boot.initrd.systemd.tpm2.enable = true;
@@ -60,7 +70,7 @@ in {
     # https://github.com/systemd/systemd/issues/34512#issuecomment-2364156638
     systemd.services.systemd-pcrlock-make-policy.serviceConfig.ExecStart = lib.mkForce [
       " " # required to unset the previous value.
-      "${config.systemd.package}/lib/systemd/systemd-pcrlock make-policy --location=831"
+      "${lib.getExe systemd-pcrlock} --location=831"
     ];
 
     environment.etc."pcrlock.d".source = "${config.systemd.package}/lib/pcrlock.d";
