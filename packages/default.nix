@@ -79,18 +79,6 @@
               hash = "sha256-035nfbEyvdsNxZh6fkXh2JhY7EXQtwUnS4sUKr74MRQ=";
             };
           };
-
-        mesa = pkgs.mesa.overrideAttrs (oldAttrs: {
-          patches =
-            (oldAttrs.patches or [])
-            ++ [
-              # https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/34918
-              (pkgs.fetchpatch2 {
-                url = "https://raw.githubusercontent.com/Nobara-Project/rpm-sources/refs/heads/42/baseos/mesa/34918.patch";
-                hash = "sha256-TbospUjVyC6GkctnEUpSMXKB8PX6mU0GG086tSph0Fc=";
-              })
-            ];
-        });
       });
   };
 }
