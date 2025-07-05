@@ -38,6 +38,7 @@
       wantedBy = ["initrd.target"];
       before = ["sysroot.mount"];
       after = ["systemd-cryptsetup@${luksName}.service"];
+      requires = ["systemd-cryptsetup@${luksName}.service"];
       unitConfig.DefaultDependencies = "no";
       serviceConfig.Type = "oneshot";
 
