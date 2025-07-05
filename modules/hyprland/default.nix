@@ -74,6 +74,7 @@
     # This configures system components, but not a service for GNOME keyring,
     # the GNOME keyring service is configured under home-manager.
     services.gnome.gnome-keyring.enable = lib.mkDefault true;
+    services.gnome.gcr-ssh-agent.enable = lib.mkDefault false;
 
     # Enable upower for power management.
     services.upower = {
