@@ -5,7 +5,6 @@
     ./captive.nix
     ./disko.nix
     ./hardware-configuration.nix
-    ./pcrlock.nix
   ];
 
   # Hostname and networking
