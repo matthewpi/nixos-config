@@ -36,6 +36,7 @@ in {
     # custom `init` binary that would allow them to extract the key from the
     # TPM, allowing them to unlock our disk and gain full access to it's contents.
     boot.initrd.systemd.services.verify-system-identity = {
+      description = "Verification of system-identity (PCR 15)";
       after = ["cryptsetup.target"];
       before = ["sysroot.mount"];
       requiredBy = ["sysroot.mount"];
@@ -46,8 +47,12 @@ in {
       };
       script = ''
         echo 'Verifying system identity...'
-        if [ "$(systemd-analyze pcrs --json=short 15)" != '[{"nr":15,"name":"system-identity","sha256":"${cfg.pcr15}"}]' ]; then
+        GOT="$(systemd-analyze pcrs --json=short 15)"
+        EXPECTED='[{"nr":15,"name":"system-identity","sha256":"${cfg.pcr15}"}]'
+        if [ "$GOT" != "$EXPECTED" ]; then
           echo 'Failed to verify system identity, aborting!'
+          echo 'Expected: '"$EXPECTED"
+          echo 'Got: '"$GOT"
           exit 1
         fi
         echo 'System identity verified.'
