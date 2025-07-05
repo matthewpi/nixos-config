@@ -9,7 +9,6 @@
   programs.ags = {
     enable = true;
     configDir = builtins.filterSource (path: _type: path != "default.nix") ./.;
-
     extraPackages = with inputs.ags.packages.${pkgs.system}; [
       apps
       battery
@@ -36,7 +35,7 @@
     Install.WantedBy = [config.wayland.systemd.target];
 
     Service = {
-      ExecStart = "${lib.getExe' config.programs.ags.finalPackage "ags"} run --gtk4";
+      ExecStart = "${lib.getExe' config.programs.ags.finalPackage "ags"} run --gtk 4";
       Slice = "session.slice";
 
       Restart = "on-failure";
