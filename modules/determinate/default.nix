@@ -15,7 +15,7 @@
     determinate-nixd =
       pkgs.runCommand "determinate-nixd" rec {
         pname = "determinate-nixd";
-        version = "3.6.8";
+        version = "3.7.0";
         name = "${pname}-${version}";
         meta.mainProgram = "determinate-nixd";
       } ''

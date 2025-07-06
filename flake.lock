@@ -160,13 +160,13 @@
     "determinate-nixd-x86_64-linux": {
       "flake": false,
       "locked": {
-        "narHash": "sha256-jHpbawa+AsMNL0uHuSIQ0Loy4ddEAwBmoxqIW7YKzBA=",
+        "narHash": "sha256-hSauxThw5pfDiiqdVeFv3QeL4e3DRI09hFYuGhTKQWU=",
         "type": "file",
-        "url": "https://install.determinate.systems/determinate-nixd/tag/v3.6.8/x86_64-linux"
+        "url": "https://install.determinate.systems/determinate-nixd/tag/v3.7.0/x86_64-linux"
       },
       "original": {
         "type": "file",
-        "url": "https://install.determinate.systems/determinate-nixd/tag/v3.6.8/x86_64-linux"
+        "url": "https://install.determinate.systems/determinate-nixd/tag/v3.7.0/x86_64-linux"
       }
     },
     "disko": {
@@ -751,16 +751,16 @@
         "nixpkgs-regression": []
       },
       "locked": {
-        "lastModified": 1750847545,
-        "narHash": "sha256-mvC0XyabdgMEYRpFwTrfadYZnbH8mDO/Po7dLnGAZGA=",
+        "lastModified": 1751568315,
+        "narHash": "sha256-52rbPxatlf/8BA3plVc87W8kyXdBr6iab+nQHe4QeJg=",
         "owner": "DeterminateSystems",
         "repo": "nix-src",
-        "rev": "3a8bd3b108657ab95d62582c4f590624d3fe761c",
+        "rev": "81672fee2a84385d052c20982307bbd86fd031c4",
         "type": "github"
       },
       "original": {
         "owner": "DeterminateSystems",
-        "ref": "v3.6.8",
+        "ref": "v3.7.0",
         "repo": "nix-src",
         "type": "github"
       }
