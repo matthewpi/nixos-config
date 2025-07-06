@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: {
-  boot.initrd.systemIdentity.pcr15 = "";
+  boot.initrd.systemIdentity.pcr15 = "183c33ce59767187c3b1da427b71de134818608c8a006dd3519d9ccf4d28c01d";
 
   boot.kernelModules = ["kvm-amd"];
   boot.initrd.availableKernelModules = ["ahci" "nvme" "usbhid" "xhci_pci"];
