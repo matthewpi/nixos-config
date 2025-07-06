@@ -8,8 +8,7 @@
 in {
   # Impermanence
   environment.persistence."/persist".users.matthew.directories =
-    []
-    ++ lib.optional hmConfig.programs.ags.enable ".cache/ags"
+    [".cache/ags"]
     ++ lib.optional hmConfig.programs.atuin.enable ".local/share/atuin"
     ++ lib.optional hmConfig.programs.bat.enable ".cache/bat"
     ++ lib.optionals hmConfig.programs.direnv.enable [

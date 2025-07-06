@@ -9,11 +9,14 @@
 *.ipr
 *.iws
 
+# Sublime Text
+*.sublime-*
+
 # Visual Studio Code
 .vscode
 
-# Sublime Text
-*.sublime-*
+# Zed
+.zed
 
 #-------------------#
 # Operating Systems #

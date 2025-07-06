@@ -31,15 +31,10 @@
 
 		"baseUrl": ".",
 		"jsx": "react-jsx",
-		"jsxImportSource": "/nix/store/zqn3hxrlyyg9mkd267g0dvxa5rrcrd0c-astal-gjs/share/astal/gjs/gtk4",
-		"experimentalDecorators": true,
-		"module": "ES2022",
-		"target": "ES2022",
+		"jsxImportSource": "ags/gtk4",
 		"moduleResolution": "Bundler",
-
-		"paths": {
-			"astal": ["/nix/store/zqn3hxrlyyg9mkd267g0dvxa5rrcrd0c-astal-gjs/share/astal/gjs"],
-			"astal/*": ["/nix/store/zqn3hxrlyyg9mkd267g0dvxa5rrcrd0c-astal-gjs/share/astal/gjs/*"]
-		}
+		"module": "ES2022",
+		"target": "ES2020",
+		"typeRoots": ["./@girs"]
 	}
 }

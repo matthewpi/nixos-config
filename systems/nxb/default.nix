@@ -1,11 +1,58 @@
-{pkgs, ...}: {
-  system.stateVersion = "24.11";
-
+{
+  configurationRevision,
+  inputs,
+  lib,
+  outputs,
+  pkgs,
+  ...
+}: {
   imports = [
+    inputs.nixos-hardware.nixosModules.framework-16-7040-amd
+
+    inputs.agenix.nixosModules.default
+    inputs.disko.nixosModules.disko
+    inputs.home-manager.nixosModules.home-manager
+
+    outputs.nixosModules.desktop
+    outputs.nixosModules.determinate
+    outputs.nixosModules.hyprland
+    outputs.nixosModules.persistence
+    outputs.nixosModules.podman
+    outputs.nixosModules.secureboot
+    outputs.nixosModules.system
+    outputs.nixosModules.tailscale
+
+    ../../builders
+    ../../users
+
     ./captive.nix
     ./disko.nix
     ./hardware-configuration.nix
   ];
+
+  system = {
+    inherit configurationRevision;
+    stateVersion = "24.11";
+  };
+
+  nixpkgs = {
+    config = lib.mkForce {};
+    pkgs = outputs.lib.mkNixpkgs "x86_64-linux";
+    hostPlatform = "x86_64-linux";
+  };
+
+  # agenix
+  age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+  age.secrets = {
+    passwordfile-matthew.file = ../../secrets/passwordfile-matthew.age;
+    desktop-resolved = {
+      file = ../../secrets/desktop-resolved.age;
+      path = "/etc/systemd/resolved.conf";
+      mode = "444";
+      owner = "root";
+      group = "root";
+    };
+  };
 
   # Hostname and networking
   networking.hostName = "nxb";
@@ -81,11 +128,7 @@
   # Enable the community built framework kernel module.
   hardware.framework.enableKmod = true;
 
-  environment.systemPackages = with pkgs; [
-    brightnessctl
-    easyeffects
-  ];
-
+  environment.systemPackages = with pkgs; [brightnessctl easyeffects];
   programs.corectrl.enable = false;
   services.ratbagd.enable = false;
 

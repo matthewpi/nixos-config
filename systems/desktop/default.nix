@@ -1,15 +1,76 @@
 {
   config,
+  configurationRevision,
+  inputs,
   lib,
+  outputs,
   pkgs,
   ...
 }: {
-  system.stateVersion = "23.05";
-
   imports = [
+    inputs.nixos-hardware.nixosModules.common-cpu-amd
+    inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
+    inputs.nixos-hardware.nixosModules.common-gpu-amd
+
+    inputs.agenix.nixosModules.default
+    inputs.disko.nixosModules.disko
+    inputs.home-manager.nixosModules.home-manager
+
+    outputs.nixosModules.desktop
+    outputs.nixosModules.determinate
+    outputs.nixosModules.hyprland
+    outputs.nixosModules.persistence
+    outputs.nixosModules.podman
+    outputs.nixosModules.secureboot
+    outputs.nixosModules.system
+    outputs.nixosModules.tailscale
+    # outputs.nixosModules.virtualisation
+
+    ../../builders
+    ../../users
+
     ./disko.nix
     ./hardware-configuration.nix
   ];
+
+  system = {
+    inherit configurationRevision;
+    stateVersion = "23.05";
+  };
+
+  nixpkgs = {
+    config = lib.mkForce {};
+    pkgs = outputs.lib.mkNixpkgs "x86_64-linux";
+    hostPlatform = "x86_64-linux";
+  };
+
+  age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
+  age.secrets = {
+    passwordfile-matthew.file = ../../secrets/passwordfile-matthew.age;
+    restic-matthew-code.file = ../../secrets/restic-matthew-code.age;
+
+    restic-matthew-code-repository = {
+      file = ../../secrets/restic-matthew-code-repository.age;
+      mode = "400";
+      owner = "matthew";
+      group = "users";
+    };
+
+    restic-matthew-code-password = {
+      file = ../../secrets/restic-matthew-code-password.age;
+      mode = "400";
+      owner = "matthew";
+      group = "users";
+    };
+
+    desktop-resolved = {
+      file = ../../secrets/desktop-resolved.age;
+      path = "/etc/systemd/resolved.conf";
+      mode = "444";
+      owner = "root";
+      group = "root";
+    };
+  };
 
   programs.nix-ld.enable = true;
 
@@ -168,10 +229,4 @@
     # see comment in include/linux/mm.h in the kernel tree.
     "vm.max_map_count" = 2147483642;
   };
-
-  # services.ollama = {
-  #   enable = true;
-  #   acceleration = "rocm";
-  #   rocmOverrideGfx = "11.0.0";
-  # };
 }

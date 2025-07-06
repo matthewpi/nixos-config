@@ -3,6 +3,7 @@
   isDesktop,
   lib,
   nixosConfig,
+  outputs,
   pkgs,
   ...
 }: let
@@ -400,8 +401,7 @@ in {
         "$mainMod, Q, killactive"
 
         # Application keybinds
-        # "$mainMod Shift, Space, exec, ${lib.getExe pkgs.gauntlet} open"
-        "$mainMod, Space, exec, ${lib.getExe' config.programs.ags.package "ags"} toggle launcher"
+        "$mainMod, Space, exec, ${lib.getExe outputs.packages.${pkgs.system}.ags} toggle launcher"
         "$mainMod, T, exec, ${alacritty}" # Terminal
         "$mainMod, B, exec, ${firefox}" # Web Browser
         "$mainMod, Z, exec, ${zed-editor}" # Code Editor

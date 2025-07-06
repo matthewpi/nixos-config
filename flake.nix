@@ -275,271 +275,166 @@
     };
   };
 
-  outputs = {self, ...} @ inputs: let
-    inherit (self) outputs;
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake {inherit inputs;} ({self, ...}: {
+      systems = ["x86_64-linux"];
 
-    mkNixpkgs = system:
-      import inputs.nixpkgs {
-        localSystem = {inherit system;};
+      imports = [
+        inputs.flake-parts.flakeModules.easyOverlay
+        inputs.treefmt-nix.flakeModule
 
-        # Add our overlays.
-        overlays = builtins.attrValues outputs.overlays;
+        ./modules
+        ./packages
+      ];
 
-        config = {
-          # Allow some unfree packages by name.
-          allowUnfreePredicate = pkg:
-            builtins.elem (inputs.nixpkgs.lib.getName pkg) [
-              "1password"
-              "1password-cli"
-              "cider2"
-              "discord"
-              "intelephense"
-              "obsidian"
-              "slack"
-              "star-citizen"
-              "steam"
-              "steam-unwrapped"
+      flake = {
+        lib.mkNixpkgs = system:
+          import inputs.nixpkgs {
+            localSystem = {inherit system;};
 
-              # Firefox Extensions (nxb)
-              "night-eye-dark-mode"
-              "onepassword-password-manager"
-            ];
+            # Add our overlays.
+            overlays = builtins.attrValues self.overlays;
 
-          # NOTE: only enable if ollama is being used.
-          # rocmSupport = true;
+            config = {
+              # Allow some unfree packages by name.
+              allowUnfreePredicate = pkg:
+                builtins.elem (inputs.nixpkgs.lib.getName pkg) [
+                  "1password"
+                  "1password-cli"
+                  "cider2"
+                  "discord"
+                  "intelephense"
+                  "obsidian"
+                  "slack"
+                  "star-citizen"
+                  "steam"
+                  "steam-unwrapped"
+
+                  # Firefox Extensions (nxb)
+                  "night-eye-dark-mode"
+                  "onepassword-password-manager"
+                ];
+            };
+          };
+
+        nixosConfigurations.matthew-desktop = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [./systems/desktop];
+
+          specialArgs = {
+            inherit inputs;
+            configurationRevision =
+              if (self ? rev)
+              then self.rev
+              else null;
+            outputs = self;
+            isDesktop = true;
+          };
+        };
+
+        nixosConfigurations.nxb = inputs.nixpkgs.lib.nixosSystem {
+          system = "x86_64-linux";
+          modules = [./systems/nxb];
+
+          specialArgs = {
+            inherit inputs;
+            configurationRevision =
+              if (self ? rev)
+              then self.rev
+              else null;
+            outputs = self;
+            isDesktop = false;
+          };
         };
       };
-  in
-    inputs.flake-parts.lib.mkFlake {inherit inputs;} (
-      {self, ...}: {
-        systems = ["x86_64-linux"];
 
-        imports = [
-          inputs.flake-parts.flakeModules.easyOverlay
-          inputs.treefmt-nix.flakeModule
+      perSystem = {
+        pkgs,
+        self',
+        system,
+        ...
+      }: {
+        _module.args.pkgs = self.lib.mkNixpkgs system;
 
-          ./modules
-          ./packages
-        ];
-
-        flake = let
-          # Configuration revision to this flake's Git revision.
-          #
-          # NOTE: `src.rev` is only available if the tree of this repository
-          # is clean (no uncommitted changes).
-          configurationRevision = inputs.nixpkgs.lib.mkIf (self ? rev) self.rev;
-        in {
-          lib = {inherit mkNixpkgs;};
-
-          nixosConfigurations.matthew-desktop = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-
-            specialArgs = {
-              inherit inputs outputs;
-              isDesktop = true;
+        packages = {
+          agenix = inputs.agenix.packages."${system}".default;
+          ags = with inputs.ags.packages.${pkgs.system};
+            ags.override {
+              extraPackages = [
+                apps
+                battery
+                bluetooth
+                hyprland
+                mpris
+                notifd
+                powerprofiles
+                tray
+                wireplumber
+                pkgs.libadwaita
+              ];
             };
-
-            modules = [
-              ({
-                lib,
-                outputs,
-                ...
-              }: {
-                nixpkgs = {
-                  config = lib.mkForce {};
-                  pkgs = outputs.lib.mkNixpkgs "x86_64-linux";
-                  hostPlatform = "x86_64-linux";
-                };
-
-                system = {inherit configurationRevision;};
-              })
-
-              inputs.nixos-hardware.nixosModules.common-cpu-amd
-              inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-              inputs.nixos-hardware.nixosModules.common-gpu-amd
-
-              inputs.agenix.nixosModules.default
-              inputs.disko.nixosModules.disko
-              inputs.home-manager.nixosModules.home-manager
-
-              self.nixosModules.desktop
-              self.nixosModules.determinate
-              self.nixosModules.hyprland
-              self.nixosModules.persistence
-              self.nixosModules.podman
-              self.nixosModules.secureboot
-              self.nixosModules.system
-              self.nixosModules.tailscale
-              # self.nixosModules.virtualisation
-
-              {
-                age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
-                age.secrets = {
-                  passwordfile-matthew.file = secrets/passwordfile-matthew.age;
-
-                  restic-matthew-code.file = secrets/restic-matthew-code.age;
-                  restic-matthew-code-repository = {
-                    file = secrets/restic-matthew-code-repository.age;
-                    mode = "400";
-                    owner = "matthew";
-                    group = "users";
-                  };
-                  restic-matthew-code-password = {
-                    file = secrets/restic-matthew-code-password.age;
-                    mode = "400";
-                    owner = "matthew";
-                    group = "users";
-                  };
-
-                  desktop-resolved = {
-                    file = secrets/desktop-resolved.age;
-                    path = "/etc/systemd/resolved.conf";
-                    mode = "444";
-                    owner = "root";
-                    group = "root";
-                  };
-                };
-              }
-
-              ./builders
-              ./systems/desktop
-              ./users
-            ];
-          };
-
-          nixosConfigurations.nxb = inputs.nixpkgs.lib.nixosSystem {
-            system = "x86_64-linux";
-
-            specialArgs = {
-              inherit inputs outputs;
-              isDesktop = false;
-            };
-
-            modules = [
-              ({
-                lib,
-                outputs,
-                ...
-              }: {
-                nixpkgs = {
-                  config = lib.mkForce {};
-                  pkgs = outputs.lib.mkNixpkgs "x86_64-linux";
-                  hostPlatform = "x86_64-linux";
-                };
-
-                system = {inherit configurationRevision;};
-              })
-
-              inputs.nixos-hardware.nixosModules.framework-16-7040-amd
-
-              inputs.agenix.nixosModules.default
-              inputs.disko.nixosModules.disko
-              inputs.home-manager.nixosModules.home-manager
-
-              self.nixosModules.desktop
-              self.nixosModules.determinate
-              self.nixosModules.hyprland
-              self.nixosModules.persistence
-              self.nixosModules.podman
-              self.nixosModules.secureboot
-              self.nixosModules.system
-              self.nixosModules.tailscale
-
-              {
-                age.identityPaths = ["/persist/etc/ssh/ssh_host_ed25519_key"];
-                age.secrets = {
-                  passwordfile-matthew.file = secrets/passwordfile-matthew.age;
-                  desktop-resolved = {
-                    file = secrets/desktop-resolved.age;
-                    path = "/etc/systemd/resolved.conf";
-                    mode = "444";
-                    owner = "root";
-                    group = "root";
-                  };
-                };
-              }
-
-              ./builders
-              ./systems/nxb
-              ./users
-            ];
-          };
         };
 
-        perSystem = {
-          lib,
-          pkgs,
-          system,
-          ...
-        }: {
-          _module.args.pkgs = mkNixpkgs system;
-
-          devShells = {
-            ci = pkgs.mkShellNoCC {buildInputs = [pkgs.gitsign];};
-
-            default = pkgs.mkShellNoCC {
-              buildInputs =
-                []
-                ++ lib.optionals (system == "x86_64-linux") [
-                  inputs.agenix.packages."${system}".default
-                ];
-            };
-          };
-
-          treefmt = {
-            projectRootFile = "flake.nix";
-
-            programs = {
-              # Enable actionlint, a GitHub Actions static checker.
-              actionlint.enable = true;
-
-              # Enable alejandra, a Nix formatter.
-              alejandra.enable = true;
-
-              # Enable deadnix, a Nix linter/formatter that removes un-used Nix code.
-              deadnix.enable = true;
-
-              # Enable prettier, a... TODO
-              prettier = {
-                enable = true;
-                includes = [
-                  "*.css"
-                  "*.js"
-                  "*.json"
-                  "*.ts"
-                  "*.tsx"
-                  "*.md"
-                  "*.scss"
-                  "*.yaml"
-                ];
-              };
-
-              # Enable shellcheck, a shell script linter.
-              shellcheck.enable = true;
-
-              # Enable shfmt, a shell script formatter.
-              shfmt = {
-                enable = true;
-                indent_size = 0; # 0 causes shfmt to use tabs
-              };
-
-              # Enable yamlfmt, a YAML formatter.
-              yamlfmt = {
-                enable = true;
-                settings.formatter = {
-                  type = "basic";
-                  retain_line_breaks_single = true;
-                };
-              };
-            };
-
-            # Ensure no files within `node_modules` get formatted.
-            settings.global.excludes = [
-              "**/node_modules"
-              "secrets/*.age"
-            ];
-          };
+        devShells.default = pkgs.mkShellNoCC {
+          packages = [
+            self'.packages.agenix
+            self'.packages.ags
+          ];
         };
-      }
-    );
+
+        treefmt = {
+          projectRootFile = "flake.nix";
+
+          programs = {
+            # Enable actionlint, a GitHub Actions static checker.
+            actionlint.enable = true;
+
+            # Enable alejandra, a Nix formatter.
+            alejandra.enable = true;
+
+            # Enable deadnix, a Nix linter/formatter that removes un-used Nix code.
+            deadnix.enable = true;
+
+            # Enable prettier, a... TODO
+            prettier = {
+              enable = true;
+              includes = [
+                "*.css"
+                "*.js"
+                "*.json"
+                "*.ts"
+                "*.tsx"
+                "*.md"
+                "*.scss"
+                "*.yaml"
+              ];
+            };
+
+            # Enable shellcheck, a shell script linter.
+            shellcheck.enable = true;
+
+            # Enable shfmt, a shell script formatter.
+            shfmt = {
+              enable = true;
+              indent_size = 0; # 0 causes shfmt to use tabs
+            };
+
+            # Enable yamlfmt, a YAML formatter.
+            yamlfmt = {
+              enable = true;
+              settings.formatter = {
+                type = "basic";
+                retain_line_breaks_single = true;
+              };
+            };
+          };
+
+          # Ensure no files within `node_modules` get formatted.
+          settings.global.excludes = [
+            "**/node_modules"
+            "secrets/*.age"
+          ];
+        };
+      };
+    });
 }

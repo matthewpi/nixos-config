@@ -1,97 +1,26 @@
-import { Variable } from 'astal';
-import { App, Astal, Gdk, Gtk } from 'astal/gtk4';
-import { execAsync } from 'astal/process';
-
-import Apps from 'gi://AstalApps';
-import Pango from 'gi://Pango';
-
-const MAX_ITEMS = 12;
-
-function hide() {
-	App.get_window('launcher')?.hide();
-}
+import { createState, For } from 'ags';
+import { execAsync } from 'ags/process';
+import Adw from 'gi://Adw';
+import Astal from 'gi://Astal?version=4.0';
+import AstalApps from 'gi://AstalApps?version=0.1';
+import Gdk from 'gi://Gdk?version=4.0';
+import Graphene from 'gi://Graphene?version=1.0';
+import Gtk from 'gi://Gtk?version=4.0';
+import Pango from 'gi://Pango?version=1.0';
 
 function getRandomNumber(max: number): number {
 	return Math.floor(Math.random() * max);
 }
-/**
- * https://systemd.io/DESKTOP_ENVIRONMENTS/#xdg-standardization-for-applications
- */
-async function launch(app: Apps.Application): Promise<void> {
-	const cmd = [
-		'systemd-run',
-		'--user',
-		'--collect',
-		'--no-block',
-		'--slice=app-graphical',
-		`--unit=app-${app.name}@${getRandomNumber(32767)}`,
-	];
 
-	// If the application is VSCodium or Zed, set `Type=forking`.
-	//
-	// Both these editors fork themselves so they can provide multiple windows
-	// and manage their child processes.
-	switch (app.name) {
-		case 'VSCodium':
-		case 'Zed':
-			cmd.push('--property=Type=forking');
-			break;
-	}
+function AppLauncher() {
+	let launcherWindow: Astal.Window;
+	let contentBox: Gtk.Box;
+	let searchEntry: Gtk.Entry;
 
-	// Add the app's executable and flags to the command.
-	cmd.push(...app.executable.split(/\s+/).filter(str => !str.startsWith('%') && !str.startsWith('@')));
+	const apps = new AstalApps.Apps();
+	const [list, setList] = createState(getApps(''));
 
-	await execAsync(cmd).catch(err => {
-		print(err);
-	});
-
-	// Increase the app's "frequency" so common apps get preferred over non-common
-	// ones when using `fuzzy_query`.
-	app.frequency++;
-}
-
-interface AppButtonProps {
-	app: Apps.Application;
-}
-
-function AppButton({ app }: AppButtonProps) {
-	return (
-		<button
-			cssClasses={['app']}
-			onClicked={() => {
-				hide();
-				launch(app);
-			}}
-		>
-			<box>
-				<image iconName={app.iconName} iconSize={Gtk.IconSize.LARGE} />
-				<box valign={Gtk.Align.CENTER} vertical>
-					<label cssClasses={['name']} xalign={0} label={app.name} ellipsize={Pango.EllipsizeMode.END} />
-					{app.description && <label cssClasses={['description']} wrap xalign={0} label={app.description} />}
-				</box>
-			</box>
-		</button>
-	);
-}
-
-function Launcher() {
-	const apps = new Apps.Apps();
-
-	// Since we updated to Gtk4, we need to use a EntryBuffer to control the
-	// content of the entry widget. If we just use `onNotifyText`, we can get
-	// the content as it changes, but we cannot change the content ourselves, like
-	// to clear the entry whenever the window is closed for example.
-	//
-	// So instead we use an EntryBuffer and "watch" it's text property, updating
-	// the `text` variable so we can live filter applications.
-	const text = Variable('');
-	const buffer = new Gtk.EntryBuffer();
-	buffer.connect('inserted-text', self => text.set(self.text));
-	buffer.connect('deleted-text', (self, position) => text.set(self.text.substring(0, position)));
-
-	const list = text(text => searchApps(text).slice(0, MAX_ITEMS));
-
-	function searchApps(query: string) {
+	function getApps(query: string): AstalApps.Application[] {
 		return (
 			apps
 				// Filter apps using the search query.
@@ -101,67 +30,166 @@ function Launcher() {
 		);
 	}
 
+	function searchApps(query: string): void {
+		setList(getApps(query));
+	}
+
+	function onKey(_event: Gtk.EventControllerKey, keyval: number, _: number, _mod: number) {
+		if (keyval === Gdk.KEY_Escape) {
+			launcherWindow.visible = false;
+			return;
+		}
+	}
+
+	function onClick(_e: Gtk.GestureClick, _: number, x: number, y: number) {
+		const [, rect] = contentBox.compute_bounds(launcherWindow);
+		const position = new Graphene.Point({ x, y });
+		if (!rect.contains_point(position)) {
+			launcherWindow.visible = false;
+			return true;
+		}
+
+		return;
+	}
+
+	// If enter is pressed from within the search entry, launch the first
+	// application in the list.
 	function onEnter() {
-		const results = searchApps(text.get());
-		const result = results?.[0];
+		const result = list.get()[0];
 		if (result === undefined) {
 			return;
 		}
 
 		launch(result);
-		hide();
 	}
 
-	const searchEntry = (
-		<entry buffer={buffer} placeholderText="Search applications..." onActivate={onEnter} receivesDefault />
-	);
+	/**
+	 * https://systemd.io/DESKTOP_ENVIRONMENTS/#xdg-standardization-for-applications
+	 */
+	async function launch(app: AstalApps.Application): Promise<void> {
+		const cmd = [
+			'systemd-run',
+			'--user',
+			'--collect',
+			'--no-block',
+			'--slice=app-graphical',
+			`--unit=app-${app.name}@${getRandomNumber(32767)}`,
+		];
+
+		// If the application is VSCodium or Zed, set `Type=forking`.
+		//
+		// Both these editors fork themselves so they can provide multiple windows
+		// and manage their child processes.
+		switch (app.name) {
+			case 'VSCodium':
+			case 'Zed':
+				cmd.push('--property=Type=forking');
+				break;
+		}
+
+		// Add the app's executable and flags to the command.
+		cmd.push(...app.executable.split(/\s+/).filter(str => !str.startsWith('%') && !str.startsWith('@')));
+
+		await execAsync(cmd).catch(err => {
+			print(err);
+		});
+
+		// Increase the app's "frequency" so common apps get preferred over non-common
+		// ones when using `fuzzy_query`.
+		app.frequency++;
+
+		// Hide the window once we launch an application.
+		launcherWindow.hide();
+	}
 
 	return (
 		<window
-			// `name` must go before `application`.
+			$={ref => (launcherWindow = ref)}
 			name="launcher"
-			application={App}
 			cssClasses={['launcher']}
-			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM}
 			exclusivity={Astal.Exclusivity.IGNORE}
-			keymode={Astal.Keymode.ON_DEMAND}
-			onKeyPressed={(self, keyval) => {
-				if (keyval === Gdk.KEY_Escape) {
-					self.hide();
+			keymode={Astal.Keymode.EXCLUSIVE}
+			anchor={
+				Astal.WindowAnchor.TOP | Astal.WindowAnchor.BOTTOM | Astal.WindowAnchor.LEFT | Astal.WindowAnchor.RIGHT
+			}
+			onNotifyVisible={({ visible }) => {
+				if (visible) {
+					// Focus the entry whenever the app launcher is focused.
+					searchEntry.grab_focus();
+					return;
 				}
-			}}
-			onShow={() => {
-				// Reset the search buffer.
-				buffer.text = '';
 
-				// Focus the search entry when the window is shown. This is
-				// necessary to reset the focus when the window is being shown
-				// after previously being used as the focus may be on one of the
-				// app buttons instead of the entry.
-				searchEntry.child_focus(null);
+				// Clear the entry's text.
+				searchEntry.set_text('');
 			}}
 		>
-			<box>
-				<box hexpand={false} vertical>
-					<box widthRequest={500} cssClasses={['launcher']} vertical>
-						{searchEntry}
-						<box spacing={6} vertical>
-							{list.as(list => list.map(app => <AppButton app={app} />))}
+			<Gtk.EventControllerKey onKeyPressed={onKey} />
+			<Gtk.GestureClick onPressed={onClick} />
+
+			<Adw.Clamp maximumSize={700}>
+				<box
+					$={ref => (contentBox = ref)}
+					cssClasses={['launcher']}
+					orientation={Gtk.Orientation.VERTICAL}
+					valign={Gtk.Align.CENTER}
+					halign={Gtk.Align.CENTER}
+					widthRequest={700}
+				>
+					<entry
+						$={ref => (searchEntry = ref)}
+						onNotifyText={({ text }) => searchApps(text)}
+						placeholderText="Search applications..."
+						onActivate={onEnter}
+					/>
+
+					<scrolledwindow
+						propagateNaturalHeight
+						propagateNaturalWidth
+						maxContentHeight={500}
+						minContentHeight={500}
+					>
+						<box spacing={6} orientation={Gtk.Orientation.VERTICAL}>
+							<For each={list}>
+								{app => (
+									<button cssClasses={['app']} onClicked={() => launch(app)}>
+										<box>
+											<image iconName={app.iconName} iconSize={Gtk.IconSize.LARGE} />
+											<box valign={Gtk.Align.CENTER} orientation={Gtk.Orientation.VERTICAL}>
+												<label
+													cssClasses={['name']}
+													xalign={0}
+													label={app.name}
+													ellipsize={Pango.EllipsizeMode.END}
+												/>
+												{app.description && (
+													<label
+														cssClasses={['description']}
+														wrap
+														xalign={0}
+														label={app.description}
+													/>
+												)}
+											</box>
+										</box>
+									</button>
+								)}
+							</For>
 						</box>
-						<box
-							halign={Gtk.Align.CENTER}
-							cssClasses={['not-found']}
-							vertical
-							visible={list.as(l => l.length === 0)}
-						>
-							<image iconName="system-search-symbolic" />
-							<label label="No match found" />
-						</box>
+					</scrolledwindow>
+
+					<box
+						visible={list.as(l => l.length === 0)}
+						halign={Gtk.Align.CENTER}
+						cssClasses={['not-found']}
+						orientation={Gtk.Orientation.VERTICAL}
+					>
+						<image iconName="system-search-symbolic" />
+						<label label="No match found" />
 					</box>
 				</box>
-			</box>
+			</Adw.Clamp>
 		</window>
 	);
 }
 
-export { Launcher };
+export { AppLauncher };

@@ -13,7 +13,6 @@
     ./hyprpaper.nix
     ./xdg.nix
 
-    inputs.ags.homeManagerModules.default
     ../../../../modules/ags
   ];
 

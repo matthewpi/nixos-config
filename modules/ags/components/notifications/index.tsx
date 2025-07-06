@@ -1,130 +1,58 @@
-import { bind, timeout } from 'astal';
-import type { Subscribable } from 'astal/binding';
-import { App, Astal, Gtk } from 'astal/gtk4';
-import Notifd from 'gi://AstalNotifd';
+import { createState, For, onCleanup } from 'ags';
+import Astal from 'gi://Astal?version=4.0';
+import AstalNotifd from 'gi://AstalNotifd?version=0.1';
+import Gtk from 'gi://Gtk?version=4.0';
 
 import { Notification } from './Notification';
 
-// see comment below in constructor
-const TIMEOUT_DELAY = 5000;
+function Notifications() {
+	const notifd = AstalNotifd.get_default();
 
-// https://aylur.github.io/astal/guide/typescript/binding#example-custom-subscribable
-export class VarMap<K, T = Gtk.Widget> implements Subscribable {
-	#subs = new Set<(v: Array<[K, T]>) => void>();
-	#map: Map<K, T>;
+	const [notifications, setNotifications] = createState(new Array<AstalNotifd.Notification>());
 
-	constructor(initial?: Iterable<[K, T]>) {
-		this.#map = new Map(initial);
-	}
+	const notifiedHandler = notifd.connect('notified', (_, id, replaced) => {
+		const notification = notifd.get_notification(id);
 
-	get(): [K, T][] {
-		return [...this.#map.entries()];
-	}
-
-	set(key: K, value: T): void {
-		this.#delete(key);
-		this.#map.set(key, value);
-		this.#notify();
-	}
-
-	#delete(key: K): void {
-		const v = this.#map.get(key);
-
-		if (v instanceof Gtk.Widget) {
-			v.unparent();
+		if (replaced && notifications.get().some(n => n.id === id)) {
+			setNotifications(ns => ns.map(n => (n.id === id ? notification : n)));
+			return;
 		}
 
-		this.#map.delete(key);
-	}
+		setNotifications(ns => [notification, ...ns]);
+	});
 
-	delete(key: K): void {
-		this.#delete(key);
-		this.#notify();
-	}
+	const resolvedHandler = notifd.connect('resolved', (_, id) => {
+		setNotifications(ns => ns.filter(n => n.id !== id));
+	});
 
-	subscribe(callback: (v: Array<[K, T]>) => void): () => boolean {
-		this.#subs.add(callback);
-		return () => this.#subs.delete(callback);
-	}
-
-	#notify(): void {
-		const value = this.get();
-		for (const sub of this.#subs) {
-			sub(value);
-		}
-	}
-}
-
-class NotificationMap extends VarMap<number, Gtk.Widget> {
-	#notifd = Notifd.get_default();
-
-	constructor() {
-		super();
-
-		/**
-		 * uncomment this if you want to
-		 * ignore timeout by senders and enforce our own timeout
-		 * note that if the notification has any actions
-		 * they might not work, since the sender already treats them as resolved
-		 */
-		// Ignore timeouts set by notification senders so we can enforce our own
-		this.#notifd.ignoreTimeout = true;
-
-		this.#notifd.connect('notified', (_, id) => {
-			this.set(
-				id,
-				Notification({
-					notification: this.#notifd.get_notification(id),
-					// Remove the notification after the timeout has passed.
-					setup: () => timeout(TIMEOUT_DELAY, () => this.delete(id)),
-					// onHoverLeave: () => this.delete(id).
-				}),
-			);
-		});
-
-		// notifications can be closed by the outside before
-		// any user input, which have to be handled too
-		this.#notifd.connect('resolved', (_, id) => {
-			this.delete(id);
-		});
-	}
-
-	override set(key: number, value: Gtk.Widget): void {
-		super.set(key, value);
-
-		// If a notification was added, ensure the window is visible.
-		const window = App.get_window('notifications') ?? undefined;
-		if (window !== undefined && !window.visible) {
-			window.show();
-		}
-	}
-
-	override delete(id: number): void {
-		super.delete(id);
-
-		// If all notifications have been removed, hide the window.
-		const window = App.get_window('notifications') ?? undefined;
-		if (window !== undefined && this.get().length < 1) {
-			window.hide();
-		}
-	}
-}
-
-function NotificationsWindow() {
-	const notifications = new NotificationMap();
+	// technically, we don't need to cleanup because in this example this is a root component
+	// and this cleanup function is only called when the program exits, but exiting will cleanup either way
+	// but it's here to remind you that you should not forget to cleanup signal connections
+	onCleanup(() => {
+		notifd.disconnect(notifiedHandler);
+		notifd.disconnect(resolvedHandler);
+	});
 
 	return (
 		<window
-			// `name` must go before `application`.
 			name="notifications"
-			application={App}
 			cssClasses={['notifications']}
 			exclusivity={Astal.Exclusivity.EXCLUSIVE}
 			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
+			visible={notifications(ns => ns.length > 0)}
 		>
-			<box vertical>{bind(notifications)}</box>
+			<box orientation={Gtk.Orientation.VERTICAL}>
+				<For each={notifications}>
+					{notification => (
+						<Notification
+							n={notification}
+							onHoverLost={() => setNotifications(ns => ns.filter(n => n.id !== notification.id))}
+						/>
+					)}
+				</For>
+			</box>
 		</window>
 	);
 }
 
-export { NotificationsWindow };
+export { Notifications };

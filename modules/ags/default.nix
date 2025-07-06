@@ -1,27 +1,17 @@
 {
   config,
-  inputs,
   lib,
+  outputs,
   pkgs,
   ...
-}: {
-  # Enable ags.
-  programs.ags = {
-    enable = true;
-    configDir = builtins.filterSource (path: _type: path != "default.nix") ./.;
-    extraPackages = with inputs.ags.packages.${pkgs.system}; [
-      apps
-      battery
-      bluetooth
-      hyprland
-      # iwd
-      mpris
-      # networkd
-      notifd
-      tray
-      wireplumber
-    ];
-  };
+}: let
+  ags = outputs.packages.${pkgs.system}.ags;
+in {
+  # Install the AGS CLI.
+  home.packages = [ags];
+
+  # Link the config to `.config/ags`.
+  xdg.configFile."ags".source = builtins.filterSource (path: _type: path != "default.nix") ./.;
 
   # Configure a systemd user service for AGS.
   systemd.user.services.ags = {
@@ -35,7 +25,7 @@
     Install.WantedBy = [config.wayland.systemd.target];
 
     Service = {
-      ExecStart = "${lib.getExe' config.programs.ags.finalPackage "ags"} run --gtk 4";
+      ExecStart = "${lib.getExe ags} run --gtk 4";
       Slice = "session.slice";
 
       Restart = "on-failure";

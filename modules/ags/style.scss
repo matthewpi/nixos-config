@@ -64,34 +64,35 @@ window.bar {
 	}
 }
 
-.battery {
-	margin-left: 1rem;
-	margin-right: 1rem;
+.media {
+	margin-right: 0.5rem;
 
-	& label {
-		padding-left: 0;
-		margin-left: 0.5rem;
+	.media-icon {
+		font-size: 1.25rem;
+		margin-right: 1rem;
 	}
-}
 
-.clock {
-	background: transparent;
-	color: $text;
-	margin: 0 0.375rem;
-	font-size: 1rem;
+	.media-label {
+		font-size: 0.75rem;
 
-	.time-display {
-		/* > .time {
+		// Change the color when nothing is playing.
+		& label.nothing {
+			color: $overlay2;
+		}
 
-		} */
+		& label.media-title {
+			color: $text;
+		}
 
-		> .timezone {
-			color: $overlay0;
+		& label.media-artists {
+			color: $overlay1;
 		}
 	}
 }
 
 .workspaces {
+	margin-left: 0.5rem;
+
 	> button.workspace {
 		all: unset;
 		padding: unset;
@@ -132,12 +133,35 @@ window.bar {
 	}
 }
 
+.clock {
+	background: transparent;
+	color: $text;
+	margin: 0 0.375rem;
+	font-size: 1rem;
+
+	.time-display {
+		/* > .time {
+
+		} */
+
+		> .timezone {
+			color: $overlay0;
+		}
+	}
+}
+
 .systray {
-	margin-right: 1rem;
+	margin-right: 0.5rem;
+}
+
+.bluetooth {
+	margin-right: 0.5rem;
+	margin-left: 0.5rem;
 }
 
 .volume {
-	margin-right: 1rem;
+	margin-right: 0.5rem;
+	margin-left: 0.5rem;
 
 	.volume-slider {
 		min-width: 8rem;
@@ -156,30 +180,19 @@ window.bar {
 	}
 }
 
-button.media {
-	margin-right: 1rem;
+.battery {
+	margin-right: 0.5rem;
+	margin-left: 0.5rem;
 
-	.media-icon {
-		font-size: 1.25rem;
-		margin-right: 1rem;
+	& label {
+		padding-left: 0;
+		margin-left: 0.5rem;
 	}
+}
 
-	.media-label {
-		font-size: 0.75rem;
-
-		// Change the color when nothing is playing.
-		& label.nothing {
-			color: $overlay2;
-		}
-
-		& label.media-title {
-			color: $text;
-		}
-
-		& label.media-artists {
-			color: $overlay1;
-		}
-	}
+.notification-indicator {
+	margin-right: 0.5rem;
+	margin-left: 0.5rem;
 }
 
 window.launcher {
