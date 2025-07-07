@@ -23,61 +23,61 @@ function Media() {
 	const mpris = AstalMpris.get_default();
 
 	const player = createBinding(mpris, 'players').as(players => {
-		let player = players.find(p => p.playbackStatus === AstalMpris.PlaybackStatus.PLAYING);
-		if (player === undefined) {
-			player = players[0];
+		if (players.length < 1) {
+			return undefined;
 		}
-		return player;
+
+		return players.find(p => p.playbackStatus === AstalMpris.PlaybackStatus.PLAYING) ?? players[0];
 	});
 
 	return (
-		<With value={player}>{player => (player === undefined ? <NoPlayer /> : <MediaPlayer player={player} />)}</With>
-	);
-}
-
-function NoPlayer() {
-	return (
-		<button cssClasses={['media']}>
-			<box valign={Gtk.Align.CENTER}>
-				<box
-					cssClasses={['media-label']}
-					homogeneous={false}
-					valign={Gtk.Align.CENTER}
-					orientation={Gtk.Orientation.VERTICAL}
-				>
-					<label cssClasses={['nothing']} label="Nothing is playing" />
-				</box>
-			</box>
-		</button>
-	);
-}
-
-interface MediaPlayerProps {
-	player: AstalMpris.Player;
-}
-
-function MediaPlayer({ player }: MediaPlayerProps) {
-	const playIcon = createBinding(player, 'playbackStatus').as(s =>
-		s === AstalMpris.PlaybackStatus.PLAYING ? 'media-playback-start-symbolic' : 'media-playback-pause-symbolic',
-	);
-
-	return (
-		<button cssClasses={['media']} onClicked={() => player.play_pause()}>
-			<box valign={Gtk.Align.CENTER}>
-				<box cssClasses={['media-icon']}>
-					<image iconName={playIcon} />
-				</box>
-				<box
-					cssClasses={['media-label']}
-					homogeneous={false}
-					valign={Gtk.Align.CENTER}
-					orientation={Gtk.Orientation.VERTICAL}
-				>
-					<label cssClasses={['media-title']} label={createBinding(player, 'title').as(l => l ?? '')} />
-					<label cssClasses={['media-artists']} label={createBinding(player, 'artist').as(l => l ?? '')} />
-				</box>
-			</box>
-		</button>
+		<box cssClasses={['media']}>
+			<With value={player}>
+				{player => (
+					<button cssClasses={['media-button']} onClicked={() => player?.play_pause()}>
+						{player === undefined ? (
+							<box valign={Gtk.Align.CENTER}>
+								<box
+									cssClasses={['media-label']}
+									homogeneous={false}
+									valign={Gtk.Align.CENTER}
+									orientation={Gtk.Orientation.VERTICAL}
+								>
+									<label cssClasses={['nothing']} label="Nothing is playing" />
+								</box>
+							</box>
+						) : (
+							<box valign={Gtk.Align.CENTER}>
+								<box cssClasses={['media-icon']}>
+									<image
+										iconName={createBinding(player, 'playbackStatus').as(s =>
+											s === AstalMpris.PlaybackStatus.PLAYING
+												? 'media-playback-start-symbolic'
+												: 'media-playback-pause-symbolic',
+										)}
+									/>
+								</box>
+								<box
+									cssClasses={['media-label']}
+									homogeneous={false}
+									valign={Gtk.Align.CENTER}
+									orientation={Gtk.Orientation.VERTICAL}
+								>
+									<label
+										cssClasses={['media-title']}
+										label={createBinding(player, 'title').as(l => l ?? '')}
+									/>
+									<label
+										cssClasses={['media-artists']}
+										label={createBinding(player, 'artist').as(l => l ?? '')}
+									/>
+								</box>
+							</box>
+						)}
+					</button>
+				)}
+			</With>
+		</box>
 	);
 }
 
