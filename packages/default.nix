@@ -4,8 +4,7 @@
   ];
 
   flake.overlays.overrides = _: prev: {
-    # Only build mochaDark cursors so the build doesn't take 8 years to build
-    # a bunch of cursors we won't end up using anyways.
+    # Only build mochaDark cursors so the build doesn't take 8 years.
     catppuccin-cursors = prev.catppuccin-cursors.overrideAttrs {
       outputs = ["mochaDark" "out"];
       buildPhase = ''
@@ -25,8 +24,7 @@
     ...
   }: let
     _packages = rec {
-      catppuccin = pkgs.callPackage ./catppuccin {};
-      catppuccin-wallpapers = pkgs.callPackage ./catppuccin/wallpapers {};
+      catppuccin-wallpapers = pkgs.callPackage ./catppuccin-wallpapers/package.nix {};
       cider2 = pkgs.callPackage ./cider2 {};
       fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting/package.nix {};
       freelens = pkgs.callPackage ./freelens/package.nix {inherit freelens-k8s-proxy;};
