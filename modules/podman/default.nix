@@ -31,7 +31,7 @@
       "bridge"
       "br_netfilter"
 
-      "libcrc32c"
+      # "libcrc32c"
       "llc"
 
       "nf_conntrack"
