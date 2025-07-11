@@ -77,11 +77,10 @@
             withMoonlight = true;
             withTTS = false;
           }).overrideAttrs rec {
-            version = "0.0.94";
-
+            version = "0.0.101";
             src = pkgs.fetchurl {
               url = "https://stable.dl2.discordapp.net/apps/linux/${version}/discord-${version}.tar.gz";
-              hash = "sha256-035nfbEyvdsNxZh6fkXh2JhY7EXQtwUnS4sUKr74MRQ=";
+              hash = "sha256-FB6GiCM+vGyjZLtF0GjAIq8etK5FYyQVisWX6IzB4Zc=";
             };
           };
       });
