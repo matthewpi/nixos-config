@@ -83,6 +83,22 @@
               hash = "sha256-FB6GiCM+vGyjZLtF0GjAIq8etK5FYyQVisWX6IzB4Zc=";
             };
           };
+
+        moonlight = pkgs.moonlight.overrideAttrs rec {
+          version = "1.3.22";
+          src = pkgs.fetchFromGitHub {
+            owner = "moonlight-mod";
+            repo = "moonlight";
+            tag = "v${version}";
+            hash = "sha256-mn6f4ci5C2jkyxgmBHQ4dI9V0/20DlyS6EbQz4w7znc=";
+          };
+          pnpmDeps = pkgs.pnpm_10.fetchDeps {
+            pname = "moonlight";
+            inherit version src;
+            buildInputs = [pkgs.nodejs_22];
+            hash = "sha256-vrSfrAnLc30kba+8VOPawdp8KaQVUhsD6mUq+YdAJTY=";
+          };
+        };
       });
   };
 }
