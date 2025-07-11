@@ -57,12 +57,19 @@
           "''${gappsWrapperArgs[@]}" \
           --suffix PATH : ${lib.makeBinPath [pkgs.xdg-utils]} \
           --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [pkgs.udev]} \
-          --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-wayland-ime=true}}"
+          --add-flags "\''${NIXOS_OZONE_WL:+--ozone-platform-hint=auto}"
       '';
     in (_packages
       // {
-        _1password-gui = pkgs._1password-gui.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
-        _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs (_: {preFixup = _1passwordPreFixup;});
+        _1password-gui = pkgs._1password-gui.overrideAttrs {preFixup = _1passwordPreFixup;};
+        _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs rec {
+          version = "8.11.2-18.BETA";
+          src = pkgs.fetchurl {
+            url = "https://downloads.1password.com/linux/tar/beta/x86_64/1password-${version}.x64.tar.gz";
+            hash = "sha256-/8sXdF1JmJX3kFOn9SCRz6Cr/ZldzHfhvq1oJlV19v8=";
+          };
+          preFixup = _1passwordPreFixup;
+        };
 
         discord =
           (pkgs.discord.override {
