@@ -91,6 +91,7 @@ in {
       ".config/op"
       ".config/rclone"
       ".config/sh.cider.genten"
+      ".config/supersonic"
       ".config/turborepo"
       ".config/vesktop"
 

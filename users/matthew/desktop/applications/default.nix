@@ -4,6 +4,7 @@
     ./gaming
     ./discord.nix
     ./freelens.nix
+    ./supersonic.nix
     ./tailscale.nix
     ./terminal.nix
     # ./vscode.nix
