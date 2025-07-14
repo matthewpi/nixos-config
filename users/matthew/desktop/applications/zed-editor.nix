@@ -223,6 +223,16 @@
         lsp = {
           biome.settings.require_config_file = true;
           eslint.binary.path_lookup = true;
+          json-language-server.settings.json.schemas = [
+            {
+              fileMatch = ["bun.lock"];
+              schema.allowTrailingCommas = true;
+            }
+            {
+              fileMatch = ["*.jsonc"];
+              schema.allowTrailingCommas = true;
+            }
+          ];
           nil = {
             binary.path_lookup = true;
             settings.formatting.command = ["alejandra"];
