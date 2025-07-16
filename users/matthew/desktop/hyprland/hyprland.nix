@@ -374,6 +374,12 @@ in {
         "size <50% <50%, class:^star trek online\.exe$"
         "center,         class:^star trek online\.exe$"
         "float,          class:^star trek online\.exe$"
+
+        # Supersonic
+        #
+        # Allow the window to render while in the background. Workaround for
+        # https://github.com/dweymouth/supersonic/issues/560
+        "renderunfocused, title:Supersonic"
       ];
 
       # Keybinds
