@@ -40,12 +40,6 @@
     command = lib.getExe config.programs.alacritty.package;
   };
 
-  # Command used to launch cider.
-  cider = mkSystemdRun {
-    name = "sh.cider.Cider";
-    command = lib.getExe pkgs.cider2;
-  };
-
   # Command used to launch discord.
   discord = mkSystemdRun {
     name = "com.discord.Discord";
@@ -62,6 +56,12 @@
   slack = mkSystemdRun {
     name = "com.slack.Slack";
     command = "${lib.getExe pkgs.slack} --disable-gpu";
+  };
+
+  # Command used to launch supersonic.
+  supersonic = mkSystemdRun {
+    name = "Supersonic";
+    command = lib.getExe pkgs.supersonic-wayland;
   };
 
   # Command used to launch Zed.
@@ -265,7 +265,7 @@ in {
           "special:terminal, on-created-empty:${alacritty}"
           "special:discord,  on-created-empty:${discord}"
           "special:slack,    on-created-empty:${slack}"
-          "special:music,    on-created-empty:${cider}"
+          "special:music,    on-created-empty:${supersonic}"
         ]
         ++ lib.optionals isDesktop [
           # Configure default workspaces for the monitors
