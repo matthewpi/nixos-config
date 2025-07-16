@@ -199,18 +199,11 @@
           exec ${lib.getExe bashInteractive}
         fi
 
-        # HACK: if we are running Wine Wayland, add the `--in-process-gpu` flag
-        # to the launcher.
-        if [[ "''${PROTON_ENABLE_WAYLAND:-0}" == '1' || -z "$DISPLAY" ]]; then
-          echo 'Wine Wayland detected, adding --in-process-gpu flag to RSI Launcher command.'
-          set -- "$@" '--in-process-gpu'
-        fi
-
         # Only execute `mangohud` if it exists on the system.
         if command -v mangohud > /dev/null 2>&1; then
           mangohud='mangohud'
         else
-          mangohud=""
+          mangohud=${"''"}
         fi
       ''
       + lib.optionalString (preCommands != null) preCommands

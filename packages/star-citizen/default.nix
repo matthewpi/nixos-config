@@ -29,23 +29,37 @@
       src = pkgs.fetchFromGitHub {
         owner = "Kron4ek";
         repo = "wine-tkg";
-        rev = "b5417fc26c586da6a58d58d74afe8843d2482168";
-        hash = "sha256-cIQ80yLj0aiBLYm/9nOsOLFs474JGEjTivesISyhOpc=";
+        rev = "2a59efcc00604b4082bed837c5a78676d5c585cd";
+        hash = "sha256-qkqdz5XyZf8kBOJK6O1HtIbzqoj5sF5IzU+EOoj+ygw=";
       };
 
-      patches = [
-        (pkgs.fetchpatch2 {
-          url = "https://raw.githubusercontent.com/starcitizen-lug/patches/98d6a9b6ce102726030bec3ee9ff63e3fad59ad5/wine/cache-committed-size.patch";
-          hash = "sha256-cTO6mfKF1MJ0dbaZb76vk4A80OPakxsdoSSe4Og/VdM=";
-        })
-        (pkgs.fetchpatch2 {
-          url = "https://raw.githubusercontent.com/starcitizen-lug/patches/98d6a9b6ce102726030bec3ee9ff63e3fad59ad5/wine/silence-sc-unsupported-os.patch";
-          hash = "sha256-/PnXSKPVzSV8tzsofBFT+pNHGUbj8rKrJBg3owz2Stc=";
-        })
+      patches = let
+        patches = pkgs.fetchFromGitHub {
+          owner = "starcitizen-lug";
+          repo = "patches";
+          rev = "db778f958c6425fd5b7f56d11bf9cdfc4f67e839";
+          hash = "sha256-wW9z4JBq0/3zgLX7Y1lbReMvbLL9MDcrtGSpPvsYVg8=";
+        };
+      in [
+        "${patches}/wine/append_cmd.patch"
+        "${patches}/wine/cache-committed-size.patch"
+        "${patches}/wine/dummy_dlls.patch"
+        "${patches}/wine/real_path.patch"
+        "${patches}/wine/silence-sc-unsupported-os.patch"
+        # "${patches}/wine/winewayland-no-enter-move-if-relative.patch"
       ];
     }).overrideAttrs (oldAttrs: {
       # Include linux kernel headers for ntsync.
       buildInputs = oldAttrs.buildInputs ++ [linuxHeaders];
+
+      prePatch =
+        (oldAttrs.prePatch or "")
+        + ''
+          echo 'Disabling wine menubuilder...'
+          substituteInPlace "loader/wine.inf.in" --replace-warn \
+            'HKLM,%CurrentVersion%\RunServices,"winemenubuilder",2,"%11%\winemenubuilder.exe -a -r"' \
+            'HKLM,%CurrentVersion%\RunServices,"winemenubuilder",2,"%11%\winemenubuilder.exe -r"'
+        '';
 
       # Fix `winetricks` by ensuring a `wine64` binary exists.
       postInstall =
