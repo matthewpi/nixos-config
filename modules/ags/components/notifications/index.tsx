@@ -1,4 +1,5 @@
 import { createState, For, onCleanup } from 'ags';
+
 import Astal from 'gi://Astal?version=4.0';
 import AstalNotifd from 'gi://AstalNotifd?version=0.1';
 import Gtk from 'gi://Gtk?version=4.0';
@@ -37,19 +38,11 @@ function Notifications() {
 		<window
 			name="notifications"
 			cssClasses={['notifications']}
-			exclusivity={Astal.Exclusivity.EXCLUSIVE}
-			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
 			visible={notifications(ns => ns.length > 0)}
+			anchor={Astal.WindowAnchor.TOP | Astal.WindowAnchor.RIGHT}
 		>
 			<box orientation={Gtk.Orientation.VERTICAL}>
-				<For each={notifications}>
-					{notification => (
-						<Notification
-							n={notification}
-							onHoverLost={() => setNotifications(ns => ns.filter(n => n.id !== notification.id))}
-						/>
-					)}
-				</For>
+				<For each={notifications}>{notification => <Notification n={notification} />}</For>
 			</box>
 		</window>
 	);

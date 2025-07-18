@@ -14,6 +14,7 @@ app.start({
 
 		const appLauncher = AppLauncher() as Gtk.Window;
 		app.add_window(appLauncher);
+
 		const notifications = Notifications() as Gtk.Window;
 		app.add_window(notifications);
 	},

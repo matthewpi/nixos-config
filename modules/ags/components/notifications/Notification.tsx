@@ -25,96 +25,91 @@ function urgency(n: AstalNotifd.Notification) {
 
 interface NotificationProps {
 	n: AstalNotifd.Notification;
-	onHoverLost?: () => void;
 }
 
-function Notification({ n, onHoverLost }: NotificationProps) {
+function Notification({ n }: NotificationProps) {
 	return (
 		<Adw.Clamp maximumSize={400}>
-			<box cssClasses={['notification', urgency(n)]} widthRequest={400}>
-				<Gtk.EventControllerMotion onLeave={onHoverLost} />
+			<box cssClasses={['notification', urgency(n)]} widthRequest={400} orientation={Gtk.Orientation.VERTICAL}>
+				<box cssClasses={['header']}>
+					<image
+						iconName={n.appIcon || n.desktopEntry || 'dialog-information-symbolic'}
+						cssClasses={['app-icon']}
+					/>
+					<label
+						cssClasses={['app-name']}
+						halign={Gtk.Align.START}
+						ellipsize={Pango.EllipsizeMode.END}
+						label={n.appName || 'Unknown'}
+					/>
+					<label
+						cssClasses={['time']}
+						halign={Gtk.Align.END}
+						ellipsize={Pango.EllipsizeMode.END}
+						label={time(n.time)}
+						hexpand
+					/>
+					<button onClicked={() => n.dismiss()}>
+						<image iconName="window-close-symbolic" />
+					</button>
+				</box>
 
-				<box orientation={Gtk.Orientation.VERTICAL}>
-					<box cssClasses={['header']}>
-						<image
-							iconName={n.appIcon || n.desktopEntry || 'dialog-information-symbolic'}
-							cssClasses={['app-icon']}
-						/>
-						<label
-							cssClasses={['app-name']}
-							halign={Gtk.Align.START}
-							ellipsize={Pango.EllipsizeMode.END}
-							label={n.appName || 'Unknown'}
-						/>
-						<label
-							cssClasses={['time']}
-							halign={Gtk.Align.END}
-							ellipsize={Pango.EllipsizeMode.END}
-							label={time(n.time)}
-							hexpand
-						/>
-						<button onClicked={() => n.dismiss()}>
-							<image iconName="window-close-symbolic" />
-						</button>
-					</box>
+				<Gtk.Separator visible />
 
-					<Gtk.Separator visible />
-
-					<box cssClasses={['content']}>
-						{n.image && (
-							<box cssClasses={['image']} valign={Gtk.Align.START}>
-								{fileExists(n.image) ? (
-									<image
-										file={n.image}
-										hexpand
-										vexpand
-										halign={Gtk.Align.CENTER}
-										valign={Gtk.Align.CENTER}
-									/>
-								) : (
-									<image
-										iconName={n.image}
-										hexpand
-										vexpand
-										halign={Gtk.Align.CENTER}
-										valign={Gtk.Align.CENTER}
-									/>
-								)}
-							</box>
-						)}
-
-						<box orientation={Gtk.Orientation.VERTICAL}>
-							<label
-								cssClasses={['summary']}
-								halign={Gtk.Align.START}
-								xalign={0}
-								ellipsize={Pango.EllipsizeMode.END}
-								label={n.summary}
-							/>
-							{n.body && (
-								<label
-									cssClasses={['body']}
-									halign={Gtk.Align.START}
-									xalign={0}
-									justify={Gtk.Justification.FILL}
-									useMarkup
-									wrap
-									label={n.body}
+				<box cssClasses={['content']}>
+					{n.image && (
+						<box cssClasses={['image']} valign={Gtk.Align.START}>
+							{fileExists(n.image) ? (
+								<image
+									file={n.image}
+									hexpand
+									vexpand
+									halign={Gtk.Align.CENTER}
+									valign={Gtk.Align.CENTER}
+								/>
+							) : (
+								<image
+									iconName={n.image}
+									hexpand
+									vexpand
+									halign={Gtk.Align.CENTER}
+									valign={Gtk.Align.CENTER}
 								/>
 							)}
 						</box>
-					</box>
-
-					{n.actions.length > 0 && (
-						<box cssClasses={['actions']}>
-							{n.actions.map(({ label, id }) => (
-								<button onClicked={() => n.invoke(id)} hexpand>
-									<label halign={Gtk.Align.CENTER} hexpand label={label} />
-								</button>
-							))}
-						</box>
 					)}
+
+					<box orientation={Gtk.Orientation.VERTICAL}>
+						<label
+							cssClasses={['summary']}
+							halign={Gtk.Align.START}
+							xalign={0}
+							ellipsize={Pango.EllipsizeMode.END}
+							label={n.summary}
+						/>
+						{n.body && (
+							<label
+								cssClasses={['body']}
+								halign={Gtk.Align.START}
+								xalign={0}
+								justify={Gtk.Justification.FILL}
+								useMarkup
+								wrap
+								label={n.body}
+							/>
+						)}
+					</box>
 				</box>
+
+				{n.actions.length > 0 && (
+					<box cssClasses={['actions']}>
+						{n.actions.map(({ label, id }) => (
+							<button onClicked={() => n.invoke(id)} hexpand>
+								<label halign={Gtk.Align.CENTER} hexpand label={label} />
+							</button>
+						))}
+					</box>
+				)}
 			</box>
 		</Adw.Clamp>
 	);
