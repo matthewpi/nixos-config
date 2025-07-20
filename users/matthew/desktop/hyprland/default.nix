@@ -48,7 +48,7 @@
     ])
     ++ lib.optional nixosConfig.programs._1password-gui.enable (pkgs.makeAutostartItem {
       name = "1password";
-      package = nixosConfig.programs._1password-gui.finalPackage;
+      package = nixosConfig.programs._1password-gui.package;
       # Do not open a window when started. This causes 1Password to only appear
       # in the tray where it can then be unlocked later.
       prependExtraArgs = ["--silent"];
