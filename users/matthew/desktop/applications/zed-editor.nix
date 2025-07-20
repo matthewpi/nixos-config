@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  nixosConfig,
   pkgs,
   ...
 }: {
@@ -127,223 +126,174 @@
       "zig"
     ];
 
-    userSettings = lib.mergeAttrsList [
-      {
-        auto_update = false;
-        base_keymap = "VSCode";
+    userSettings = {
+      auto_update = false;
+      base_keymap = "VSCode";
 
-        hide_mouse = "never";
+      hide_mouse = "never";
 
-        theme = {
-          mode = "system";
-          light = "Catppuccin Latte";
-          dark = "Catppuccin Mocha";
-        };
-        icon_theme = "Catppuccin Mocha";
+      theme = {
+        mode = "system";
+        light = "Catppuccin Latte";
+        dark = "Catppuccin Mocha";
+      };
+      icon_theme = "Catppuccin Mocha";
 
-        buffer_font_family = "Monaspace Neon";
-        buffer_font_size = 12;
+      buffer_font_family = "Monaspace Neon";
+      buffer_font_size = 12;
 
-        # ref; https://github.com/zed-industries/zed/issues/15752
-        # buffer_font_features = {
-        #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv01-cv09-figure-variants
-        #   cv01 = 2; # 0 (slash)
-        #   # cv02 = 1; # 1
-        #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv10-cv29-letter-variants
-        #   # cv10 = 0; # l i (Neon, Argon, Xenon, Radon)
-        #   # cv11 = 0; # j f r t (Neon, Argon)
-        #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv30-cv59-symbol-variants
-        #   # cv30 = 0; # * (vertically aligned)
-        #   # cv31 = 0; # * (6-points)
-        #   # cv32 = 0; # >= <= (angled lower-line)
-        #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv60-cv79-optional-ligatures
-        #   # cv60 = 0; # <= =>
-        #   # cv61 = 0; # []
-        #   # cv62 = 0; # @_
-        #   calt = true; # Texture Healing
-        #   ss01 = true; # === !== =!= =/= /== /= #= == != ~~ =~ !~ ~- -~ &=
-        #   ss02 = true; # >= <=
-        #   # ss03 = true; # <--> <-> <!-- <-- --> <- -> <~> <~~ ~~> <~ ~>
-        #   # ss04 = true; # </ /> </> <>
-        #   ss05 = true; # [| |] /\ \/ |> <| <|> {| |}
-        #   ss06 = true; # ### +++ &&&
-        #   ss07 = true; # -:- =:= :>: :<: ::> <:: :: :::
-        #   ss08 = true; # ..= ..- ..< .= .-
-        #   ss09 = true; # <=> <<= =>> =<< => << >>
-        #   ss10 = true; # #[ #(
-        #   liga = true; # ... /// // !! || ;; ;;;
-        # };
+      # ref; https://github.com/zed-industries/zed/issues/15752
+      # buffer_font_features = {
+      #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv01-cv09-figure-variants
+      #   cv01 = 2; # 0 (slash)
+      #   # cv02 = 1; # 1
+      #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv10-cv29-letter-variants
+      #   # cv10 = 0; # l i (Neon, Argon, Xenon, Radon)
+      #   # cv11 = 0; # j f r t (Neon, Argon)
+      #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv30-cv59-symbol-variants
+      #   # cv30 = 0; # * (vertically aligned)
+      #   # cv31 = 0; # * (6-points)
+      #   # cv32 = 0; # >= <= (angled lower-line)
+      #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv60-cv79-optional-ligatures
+      #   # cv60 = 0; # <= =>
+      #   # cv61 = 0; # []
+      #   # cv62 = 0; # @_
+      #   calt = true; # Texture Healing
+      #   ss01 = true; # === !== =!= =/= /== /= #= == != ~~ =~ !~ ~- -~ &=
+      #   ss02 = true; # >= <=
+      #   # ss03 = true; # <--> <-> <!-- <-- --> <- -> <~> <~~ ~~> <~ ~>
+      #   # ss04 = true; # </ /> </> <>
+      #   ss05 = true; # [| |] /\ \/ |> <| <|> {| |}
+      #   ss06 = true; # ### +++ &&&
+      #   ss07 = true; # -:- =:= :>: :<: ::> <:: :: :::
+      #   ss08 = true; # ..= ..- ..< .= .-
+      #   ss09 = true; # <=> <<= =>> =<< => << >>
+      #   ss10 = true; # #[ #(
+      #   liga = true; # ... /// // !! || ;; ;;;
+      # };
 
-        ui_font_family = ".SystemUIFont";
-        ui_font_size = 14;
+      ui_font_family = ".SystemUIFont";
+      ui_font_size = 14;
 
-        wrap_guides = [80 100 120];
+      wrap_guides = [80 100 120];
 
-        load_direnv = "shell_hook";
+      load_direnv = "shell_hook";
 
-        # Configure colored indent guides.
-        indent_guides.coloring = "indent_aware";
+      # Configure colored indent guides.
+      indent_guides.coloring = "indent_aware";
 
-        # Configure inlay hints.
-        inlay_hints = {
-          enabled = true;
-          show_background = false;
-        };
+      # Configure inlay hints.
+      inlay_hints = {
+        enabled = true;
+        show_background = false;
+      };
 
-        #project_panel.show_diagnostics = "off";
+      #project_panel.show_diagnostics = "off";
 
-        # Hide the collaboration panel button.
-        collaboration_panel.button = false;
+      # Hide the collaboration panel button.
+      collaboration_panel.button = false;
 
-        # Configure the Zed journal to open in a properly persisted directory
-        # and use 24 hour time.
-        journal = {
-          path = "/code/matthewpi/journal";
-          hour_format = "hour24";
-        };
+      # Configure the Zed journal to open in a properly persisted directory
+      # and use 24 hour time.
+      journal = {
+        path = "/code/matthewpi/journal";
+        hour_format = "hour24";
+      };
 
-        # Disable Jupyter.
-        jupyter.enabled = false;
+      # Disable Jupyter.
+      #
+      # NOTE: Zed says `property enabled is not allowed` but it is definitely
+      # checked by Zed's source code.
+      #
+      # ref; https://github.com/zed-industries/zed/blob/ff79b29f3812e8d39763e51af17c9c13e3ebf8f5/crates/repl/src/jupyter_settings.rs#L19
+      # ref; https://github.com/zed-industries/zed/blob/ff79b29f3812e8d39763e51af17c9c13e3ebf8f5/crates/editor/src/editor_settings.rs#L705-L707
+      jupyter.enabled = false;
 
-        # Ensure files always end with a newline.
-        ensure_final_newline_on_save = true;
+      # Ensure files always end with a newline.
+      ensure_final_newline_on_save = true;
 
-        # Disable formatting on save by default.
-        format_on_save = "off";
+      # Disable formatting on save by default.
+      format_on_save = "off";
 
-        # Use language servers for formatting.
-        formatter = "language_server";
+      # Use language servers for formatting.
+      formatter = "language_server";
 
-        # Fix file type associations.
-        file_types = {
-          # https://github.com/bajrangCoder/zed-laravel-blade
-          Blade = ["*.blade.php"];
-        };
+      # Fix file type associations.
+      file_types = {
+        # https://github.com/bajrangCoder/zed-laravel-blade
+        Blade = ["*.blade.php"];
+      };
 
-        lsp = {
-          biome.settings.require_config_file = true;
-          eslint.binary.path_lookup = true;
-          json-language-server.settings.json.schemas = [
-            {
-              fileMatch = ["bun.lock"];
-              schema.allowTrailingCommas = true;
-            }
-            {
-              fileMatch = ["*.jsonc"];
-              schema.allowTrailingCommas = true;
-            }
-          ];
-          nil = {
-            binary.path_lookup = true;
-            settings.formatting.command = ["alejandra"];
-          };
-          nixd.binary.path_lookup = true;
-          package-version-server.binary.path_lookup = true;
-          phpactor.binary.path_lookup = true;
-          protobuf-language-server.binary = {
-            path = "buf";
-            arguments = ["beta" "lsp"];
-          };
-          simple-completion-language-server.binary.path_lookup = true;
-          taplo.binary.path_lookup = true;
+      lsp = {
+        # Only enable Biome when a `biome.jsonc?` file is present in the project.
+        biome.settings.require_config_file = true;
 
-          # Using the `vtsls` path_lookup option causes a binary in the format of
-          # `${pkgs.nodejs} ${pkgs.vtsls} ${pkgs.vtsls} --stdio` to get spawned which
-          # is very incorrect.
-          #
-          # ref; https://github.com/zed-industries/zed/blob/597e5f8304ee3ffc74c7a312edf70108e93d59e2/crates/languages/src/vtsls.rs#L279
-          # vtsls.binary.path_lookup = true;
+        # Allow trailing commas for specific JSON files.
+        json-language-server.settings.json.schemas = [
+          {
+            fileMatch = ["bun.lock"];
+            schema.allowTrailingCommas = true;
+          }
+          {
+            fileMatch = ["*.jsonc"];
+            schema.allowTrailingCommas = true;
+          }
+        ];
 
-          yaml-language-server = {
-            settings.yaml = {
-              # Allow yaml-language-server to pull schemas from [JSON Schema Store](https://www.schemastore.org/json/).
-              schemaStore.enable = true;
-            };
-            settings.editor.tabSize = 2;
-            settings."[yaml]".editor.tabSize = 2;
-          };
+        # Use `alejandra` for formatting with `nil` (Nix Language Server).
+        nil.settings.formatting.command = ["alejandra"];
 
-          # json-language-server.binary.path_lookup = true; # This option is ignored.
-          # vscode-json-languageserver.binary.path_lookup = true; # This option is ignored.
+        # Use `buf` as the language server for Protobuf.
+        protobuf-language-server.binary = {
+          path = "buf";
+          arguments = ["beta" "lsp"];
         };
 
-        # Language settings
-        languages = {
-          Go.format_on_save = "on";
-          JSON.format_on_save = "on";
+        yaml-language-server = {
+          # Allow yaml-language-server to pull schemas from [JSON Schema Store](https://www.schemastore.org/json/).
+          settings.yaml.schemaStore.enable = true;
 
-          JavaScript.format_on_save = "on";
-
-          JSX.format_on_save = "on";
-
-          # Nix.format_on_save = "on";
-
-          TypeScript.format_on_save = "on";
-
-          TSX.format_on_save = "on";
-
-          PHP.language_servers = ["intelephense" "!phpactor"];
-
-          "Vue.js" = {
-            format_on_save = "on";
-            language_servers = ["!tailwindcss-language-server" "vue-language-server"];
-          };
+          # Ensure tabs with a size of 2 are always used for YAML.
+          settings.editor.tabSize = 2;
+          settings."[yaml]".editor.tabSize = 2;
         };
+      };
 
-        # Disable AI completion.
-        features.edit_prediction_provider = "none";
+      # Language settings
+      languages = {
+        Go.format_on_save = "on";
+        JSON.format_on_save = "on";
+        JavaScript.format_on_save = "on";
+        # Nix.format_on_save = "on";
+        TypeScript.format_on_save = "on";
+        TSX.format_on_save = "on";
 
-        # Disable completions in comments.
-        edit_predictions_disabled_in = ["comment"];
+        PHP.language_servers = ["intelephense" "!phpactor"];
 
-        # Disable telemetry.
-        telemetry = {
-          diagnostics = false;
-          metrics = false;
+        "Vue.js" = {
+          format_on_save = "on";
+          language_servers = ["!tailwindcss-language-server" "vue-language-server"];
         };
-      }
-      (
-        if nixosConfig.services.ollama.enable
-        then {
-          # Use local Ollama as our AI agent.
-          agent = {
-            version = "2";
-            enabled = true;
-            button = true;
-            default_model = {
-              provider = "ollama";
-              model = "gemma3:4b";
-            };
-          };
+      };
 
-          language_models.ollama = {
-            api_url = "http://localhost:${toString nixosConfig.services.ollama.port}";
-            available_models = [
-              {
-                name = "gemma3:4b";
-                display_name = "Gemma 3";
-                max_tokens = 32768;
-                keep_alive = "15m";
-              }
-              {
-                name = "zeta";
-                display_name = "Zed Zeta";
-                max_tokens = 32768;
-                keep_alive = "5m";
-              }
-            ];
-          };
-        }
-        else {
-          # Disable AI agent.
-          agent = {
-            version = "2";
-            enabled = false;
-            button = false;
-          };
-        }
-      )
-    ];
+      # Disable AI completion.
+      features.edit_prediction_provider = "none";
+
+      # Disable completions in comments.
+      edit_predictions_disabled_in = ["comment"];
+
+      # Disable telemetry.
+      telemetry = {
+        diagnostics = false;
+        metrics = false;
+      };
+
+      # Enable Zed's built-in AI agent.
+      agent = {
+        enabled = true;
+        button = true;
+      };
+    };
 
     userKeymaps = [
       {
