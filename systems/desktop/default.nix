@@ -16,6 +16,7 @@
     inputs.disko.nixosModules.disko
     inputs.home-manager.nixosModules.home-manager
 
+    outputs.nixosModules._1password
     outputs.nixosModules.desktop
     outputs.nixosModules.determinate
     outputs.nixosModules.hyprland
