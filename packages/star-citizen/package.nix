@@ -30,12 +30,12 @@
   wineFlags ? "",
 }: let
   # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
-  version = "2.4.0";
+  version = "2.6.0";
 
   src = fetchurl {
     url = "https://install.robertsspaceindustries.com/rel/2/RSI%20Launcher-Setup-${version}.exe";
     name = "RSI Launcher-Setup-${version}.exe";
-    hash = "sha256-2/0ZRJaV6IXVTZGNmrgm1RqOBUdzqQukKwcjyOdmYQA=";
+    hash = "sha256-gVeF86xr/jcKJa4IoxHQx4ytOxhR5WWoRQfIZBVKy4c=";
   };
 
   wineCmd = "wine${lib.optionalString (wineFlags != "") " ${wineFlags}"}";
@@ -203,7 +203,7 @@
         if command -v mangohud > /dev/null 2>&1; then
           mangohud='mangohud'
         else
-          mangohud=${"''"}
+          mangohud=""
         fi
       ''
       + lib.optionalString (preCommands != null) preCommands
@@ -215,10 +215,10 @@
         else ''
           # Start the RSI Launcher.
           if [[ -t 1 ]]; then
-            "$mangohud" ${wineCmd} "$RSI_LAUNCHER" "$@"
+            $mangohud ${wineCmd} "$RSI_LAUNCHER" "$@"
           else
             LOG_DIR="$(mktemp -d)"
-            "$mangohud" ${wineCmd} "$RSI_LAUNCHER" "$@" >"$LOG_DIR"/RSIout 2>"$LOG_DIR"/RSIerr
+            $mangohud ${wineCmd} "$RSI_LAUNCHER" "$@" >"$LOG_DIR"/RSIout 2>"$LOG_DIR"/RSIerr
           fi
 
           # Block until all wine windows get closed.
