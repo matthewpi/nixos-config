@@ -69,15 +69,16 @@
         ]
       },
       "locked": {
-        "lastModified": 1753216019,
-        "narHash": "sha256-zik7WISrR1ks2l6T1MZqZHb/OqroHdJnSnAehkE0kCk=",
-        "owner": "hyprwm",
+        "lastModified": 1753462446,
+        "narHash": "sha256-HIsLOf/1pNI+LpbUg6MkxM6mDqmO5orpvioQXKLEcy4=",
+        "owner": "UjinT34",
         "repo": "aquamarine",
-        "rev": "be166e11d86ba4186db93e10c54a141058bdce49",
+        "rev": "c125e60a89d7da5dace6cf6efad077e633cd0919",
         "type": "github"
       },
       "original": {
-        "owner": "hyprwm",
+        "owner": "UjinT34",
+        "ref": "fix-hdr-modeset",
         "repo": "aquamarine",
         "type": "github"
       }

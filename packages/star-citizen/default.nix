@@ -6,7 +6,6 @@
   nix-gaming = inputs.nix-gaming.packages.${pkgs.system};
 
   winetricks = nix-gaming.winetricks-git;
-  inherit (nix-gaming) umu-launcher;
   wineprefix-preparer = pkgs.callPackage ./wineprefix-preparer.nix {
     inherit
       (nix-gaming)
@@ -68,7 +67,9 @@
           ln -s "$out"/bin/wine "$out"/bin/wine64
         '';
     });
+
+  star-citizen = pkgs.callPackage ./package.nix {
+    inherit wine wineprefix-preparer winetricks;
+  };
 in
-  pkgs.callPackage ./package.nix {
-    inherit wine wineprefix-preparer winetricks umu-launcher;
-  }
+  star-citizen

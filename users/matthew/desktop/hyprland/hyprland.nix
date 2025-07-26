@@ -117,6 +117,9 @@ in {
     xwayland.enable = nixosConfig.programs.hyprland.xwayland.enable;
     systemd.enable = !nixosConfig.programs.uwsm.enable;
 
+    # https://github.com/nix-community/home-manager/issues/7230#issuecomment-2952907793
+    importantPrefixes = ["$" "bezier" "name" "source" "output"];
+
     settings = {
       # Enable the experimental color management protocol.
       experimental.xx_color_management_v4 = true;
@@ -231,31 +234,73 @@ in {
         focus_on_activate = true;
       };
 
-      ecosystem.no_update_news = true;
+      ecosystem = {
+        # I follow updates myself and auto-update with Nix.
+        no_update_news = true;
+
+        # I already donate to the project :)
+        no_donation_nag = true;
+      };
 
       render = {
-        # Disable direct scanout as it causes artifacting in fullscreen games.
-        direct_scanout = 0;
+        # Ensure color management is enabled.
+        cm_enabled = true;
 
         # Passthrough color settings for all fullscreen applications.
         cm_fs_passthrough = 1;
 
-        # Ensure color management is enabled.
-        cm_enabled = true;
+        # Use `cm, hdredid` (2) instead of `cm, hdr` (1) when using Auto HDR.
+        cm_auto_hdr = 2;
+
+        # Disable direct scanout as it causes artifacting in fullscreen games.
+        direct_scanout = 0;
       };
 
       # Monitor configuration
-      monitor =
+      monitorv2 =
         if isDesktop
         then [
-          # "DP-1, 3840x2160@240, 0x0, 1.5, bitdepth,10, cm,hdr, sdrbrightness,1.36, sdrsaturation,0.98" # or cm,wide
-          # "DP-1, 3840x2160@240, 0x0, 1.5, bitdepth,10, cm,auto"
-          "DP-1, 3840x2160@240, 0x0, 1.5, bitdepth,8, cm,srgb"
-          "DP-2, 3840x2160@60, -2560x-720, 1.5, bitdepth,8, cm,srgb"
-          "DP-3, 3840x2160@60, -2560x720, 1.5, bitdepth,8, cm,srgb"
+          {
+            output = "DP-1";
+            mode = "3840x2160@240";
+            position = "0x0";
+            scale = "1.5";
+            bitdepth = 10;
+            cm = "hdredid";
+            sdrbrightness = 0.98;
+            sdrsaturation = 1.1;
+            supports_wide_color = true;
+            supports_hdr = true;
+            sdr_min_luminance = 0.005;
+            sdr_max_luminance = 275;
+            min_luminance = 0;
+            max_luminance = 1000;
+            max_avg_luminance = 400;
+          }
+          {
+            output = "DP-2";
+            mode = "3840x2160@60";
+            position = "-2560x-720";
+            scale = "1.5";
+            bitdepth = 8;
+          }
+          {
+            output = "DP-3";
+            mode = "3840x2160@60";
+            position = "-2560x720";
+            scale = "1.5";
+            bitdepth = 8;
+          }
         ]
         else [
-          "eDP-1, 2560x1600@165, 0x0, 1.333333, vrr,0, bitdepth,8"
+          {
+            output = "eDP-1";
+            mode = "2560x1600@165";
+            position = "-2560x720";
+            scale = "1.333333";
+            vrr = 0;
+            bitdepth = 8;
+          }
           # ", preferred, auto, 1, vrr,0, bitdepth,8"
         ];
 
