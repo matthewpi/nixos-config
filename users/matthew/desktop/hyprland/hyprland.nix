@@ -265,8 +265,10 @@ in {
             mode = "3840x2160@240";
             position = "0x0";
             scale = "1.5";
-            bitdepth = 10;
-            cm = "hdredid";
+            bitdepth = 8;
+            cm = "srgb";
+            #bitdepth = 10;
+            #cm = "hdredid";
             sdrbrightness = 0.98;
             sdrsaturation = 1.1;
             supports_wide_color = true;
