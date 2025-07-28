@@ -26,7 +26,7 @@
     };
 
     aquamarine = {
-      url = "github:UjinT34/aquamarine/fix-hdr-modeset";
+      url = "github:hyprwm/aquamarine";
       inputs = {
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
