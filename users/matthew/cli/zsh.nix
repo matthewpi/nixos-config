@@ -15,7 +15,7 @@
     };
 
     defaultKeymap = "emacs";
-    dotDir = ".config/zsh";
+    dotDir = "${config.xdg.configHome}/zsh";
 
     localVariables = {
       ZSH_AUTOSUGGEST_BUFFER_MAX_SIZE = 48;
@@ -27,7 +27,6 @@
       (lib.mkOrder 550 ''
         bindkey "\e[3~" delete-char
       '')
-
       ''
         # Enable the fast-syntax-highlighting plugin
         source "${pkgs.fast-syntax-highlighting}/share/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
