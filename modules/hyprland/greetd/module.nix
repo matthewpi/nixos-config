@@ -11,14 +11,14 @@ in {
   options.services.greetd = {
     enable = lib.mkEnableOption "greetd, a minimal and flexible login manager daemon";
 
-    package = lib.mkPackageOption pkgs ["greetd" "greetd"] {};
+    package = lib.mkPackageOption pkgs "greetd" {};
 
     settings = lib.mkOption {
       type = settingsFormat.type;
       example = lib.literalExpression ''
         {
           default_session = {
-            command = "''${pkgs.greetd.greetd}/bin/agreety --cmd sway";
+            command = "''${lib.getExe' pkgs.greetd "agreety"} --cmd sway";
           };
         }
       '';
@@ -92,7 +92,7 @@ in {
       };
 
       serviceConfig = {
-        ExecStart = "${lib.getExe' cfg.package "greetd"} --config ${settingsFormat.generate "greetd.toml" cfg.settings}";
+        ExecStart = "${lib.getExe cfg.package} --config ${settingsFormat.generate "greetd.toml" cfg.settings}";
 
         Restart = lib.mkIf cfg.restart "on-success";
 

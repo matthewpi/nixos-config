@@ -20,19 +20,9 @@
     # available sessions from `config.services.displayManager.sessionPackages`.
     settings.default_session = {
       user = "greeter";
-      command = "${lib.getExe pkgs.greetd.tuigreet} --time";
+      command = "${lib.getExe pkgs.tuigreet} --time";
     };
   };
-
-  # Disable fprint auth for greetd.
-  #
-  # greetd is used immediately after boot to start a user session. If
-  # fingerprint auth is used, gnome-keyring won't get unlocked, requiring a
-  # password later anyways. So to avoid this, just use a password instead.
-  #
-  # A fingerprint can still be used with other services once the user session
-  # has been started.
-  # security.pam.services.greetd.fprintAuth = false;
 
   # Force Pipewire to only start for a graphical session. This avoids it starting
   # due to something like SSH or for other users (greeter) that don't actually
