@@ -36,17 +36,7 @@
       monaspace = pkgs.callPackage ./monaspace/package.nix {};
       simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server/package.nix {};
       star-citizen = pkgs.callPackage ./star-citizen {inherit inputs;};
-
-      # This is here instead of an overlay since it's a new package based on an existing one.
-      tailscale-systray = pkgs.tailscale.overrideAttrs (oldAttrs: rec {
-        doCheck = false;
-        outputs = ["out"];
-        subPackages = ["cmd/systray"];
-        postInstall = ''
-          mv "$out"/bin/systray "$out"/bin/${meta.mainProgram}
-        '';
-        meta = oldAttrs.meta // {mainProgram = "tailscale-systray";};
-      });
+      tailscale = pkgs.callPackage ./tailscale/package.nix {};
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;

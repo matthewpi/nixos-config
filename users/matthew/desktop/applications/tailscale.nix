@@ -15,7 +15,7 @@
 
     Service = {
       Type = "exec";
-      ExecStart = lib.getExe pkgs.tailscale-systray;
+      ExecStart = lib.getExe' pkgs.tailscale.systray "tailscale-systray";
       KillSignal = "SIGINT";
       Restart = "no";
       Slice = "background.slice";
