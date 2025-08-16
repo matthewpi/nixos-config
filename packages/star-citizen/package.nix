@@ -32,7 +32,7 @@
     hash = "sha256-gVeF86xr/jcKJa4IoxHQx4ytOxhR5WWoRQfIZBVKy4c=";
   };
 
-  wineCmd = "wine${lib.optionalString (wineFlags != "") " ${wineFlags}"}";
+  wineCmd = "wine" + lib.optionalString (wineFlags != "") " ${wineFlags}";
 
   writeShellApplication = callPackage ./write-shell-application.nix {};
 

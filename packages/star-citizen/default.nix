@@ -28,16 +28,16 @@
       src = pkgs.fetchFromGitHub {
         owner = "Kron4ek";
         repo = "wine-tkg";
-        rev = "2a59efcc00604b4082bed837c5a78676d5c585cd";
-        hash = "sha256-qkqdz5XyZf8kBOJK6O1HtIbzqoj5sF5IzU+EOoj+ygw=";
+        rev = "956fb6d3774a2b2bac54b22c4edd3d00f961e7ba";
+        hash = "sha256-WpO1CvKkE/ywJlSMEZc6sQHnrptf+qBu1aBnOEZMr9A=";
       };
 
       patches = let
         patches = pkgs.fetchFromGitHub {
           owner = "starcitizen-lug";
           repo = "patches";
-          rev = "db778f958c6425fd5b7f56d11bf9cdfc4f67e839";
-          hash = "sha256-wW9z4JBq0/3zgLX7Y1lbReMvbLL9MDcrtGSpPvsYVg8=";
+          rev = "87a620ee062812d640fc8b8d01c39293b8fd4f60";
+          hash = "sha256-/j/pmPQHSq460Iei8uqPJmNNKikDQhO7zCJJPkpX3tw=";
         };
       in [
         "${patches}/wine/append_cmd.patch"
@@ -45,6 +45,7 @@
         "${patches}/wine/dummy_dlls.patch"
         "${patches}/wine/real_path.patch"
         "${patches}/wine/silence-sc-unsupported-os.patch"
+        "${patches}/wine/printkey_wld.patch"
         # "${patches}/wine/winewayland-no-enter-move-if-relative.patch"
       ];
     }).overrideAttrs (oldAttrs: {
