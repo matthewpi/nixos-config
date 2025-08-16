@@ -5,7 +5,6 @@
   fetchurl,
   freetype,
   makeDesktopItem,
-  runCommand,
   symlinkJoin,
   wine,
   wineprefix-preparer,
@@ -23,14 +22,15 @@
   wineDllOverrides ? ["winemenubuilder.exe=d" "winex11.drv=d" "winewayland.drv=b"],
   wineFlags ? "",
 }: let
-  # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
-  version = "2.6.0";
-
-  src = fetchurl {
-    url = "https://install.robertsspaceindustries.com/rel/2/RSI%20Launcher-Setup-${version}.exe";
-    name = "RSI Launcher-Setup-${version}.exe";
-    hash = "sha256-gVeF86xr/jcKJa4IoxHQx4ytOxhR5WWoRQfIZBVKy4c=";
-  };
+  rsiLauncherSetup = let
+    # Latest version can be found: https://install.robertsspaceindustries.com/rel/2/latest.yml
+    version = "2.7.1";
+  in
+    fetchurl {
+      url = "https://install.robertsspaceindustries.com/rel/2/RSI%20Launcher-Setup-${version}.exe";
+      name = "RSI-Launcher-Setup-${version}.exe";
+      hash = "sha256-3OHxKC/Wq09NzSbymfnv+OyAoOnvWTu1eIjEjf98VVA=";
+    };
 
   wineCmd = "wine" + lib.optionalString (wineFlags != "") " ${wineFlags}";
 
@@ -140,7 +140,7 @@
       if [ ! -e "$RSI_LAUNCHER" ]; then
         # Run the installer silently.
         echo 'RSI Launcher not found, running installer...'
-        WINEDLLOVERRIDES='dxwebsetup.exe,dotNetFx45_Full_setup.exe,winemenubuilder.exe=d' wine ${src} /S
+        WINEDLLOVERRIDES='dxwebsetup.exe,dotNetFx45_Full_setup.exe,winemenubuilder.exe=d' wine ${rsiLauncherSetup} /S
         echo 'RSI Launcher installed!'
 
         # Stop wineserver after the installer exits to ensure it gets
@@ -185,12 +185,6 @@
     '';
   };
 
-  icon = fetchurl {
-    url = "https://logos-world.net/SVGimage/Star_Citizen_300124/Star_Citizen_(1).svg";
-    name = "star-citizen.svg";
-    hash = "sha256-r3Y3RTl7ZoGmGLm2tjfCtRbAtEdORByeAa2HToQtISU=";
-  };
-
   desktopItem = makeDesktopItem {
     name = "star-citizen";
     exec = "${lib.getExe script} %U";
@@ -206,11 +200,12 @@ in
     paths = [
       script
       desktopItem
-      (runCommand "star-citizen-icon" {} ''
-        mkdir -p "$out"/share/icons/hicolor/scalable/apps
-        ln -s ${icon} "$out"/share/icons/hicolor/scalable/apps/star-citizen.svg
-      '')
     ];
+
+    postBuild = ''
+      mkdir -p "$out"/share/icons/hicolor/scalable/apps
+      ln -s ${./star-citizen.svg} "$out"/share/icons/hicolor/scalable/apps/star-citizen.svg
+    '';
 
     passthru.script = script;
 
