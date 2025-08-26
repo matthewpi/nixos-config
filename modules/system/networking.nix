@@ -1,8 +1,4 @@
-{
-  config,
-  lib,
-  ...
-}: {
+{lib, ...}: {
   # Enable systemd-timesyncd in favor of chrony by default.
   services.timesyncd.enable = lib.mkDefault true;
   services.chrony.enable = lib.mkDefault false;
@@ -11,8 +7,8 @@
   networking.timeServers = lib.mkDefault ["time.cloudflare.com"];
 
   # Enable systemd-networkd by default.
-  systemd.network.enable = lib.mkDefault true;
-  networking.useNetworkd = lib.mkDefault true;
+  systemd.network.enable = true;
+  networking.useNetworkd = true;
 
   # Enable firewall
   networking.firewall = {
@@ -22,14 +18,8 @@
 
   # Disable NetworkManager by default when systemd-networkd is disabled.
   networking.networkmanager = {
-    enable =
-      if config.systemd.network.enable
-      then lib.mkForce false
-      else lib.mkDefault true;
-    dns =
-      if config.services.resolved.enable
-      then lib.mkDefault "systemd-resolved"
-      else lib.mkDefault "default";
+    enable = lib.mkForce false;
+    dns = "systemd-resolved";
     plugins = lib.mkForce [];
   };
 
@@ -38,7 +28,7 @@
 
   # Enable systemd-resolved by default.
   services.resolved = {
-    enable = lib.mkDefault true;
+    enable = true;
     llmnr = lib.mkDefault "false";
     dnssec = lib.mkDefault "false";
   };
