@@ -139,38 +139,41 @@
       };
       icon_theme = "Catppuccin Mocha";
 
-      buffer_font_family = "Monaspace Neon";
+      buffer_font_family = "Monaspace Neon NF";
       buffer_font_size = 12;
+      buffer_font_features = {
+        # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv01-cv09-figure-variants
+        cv01 = 2; # 0 (slash)
+        # cv02 = 0; # 1
 
-      # ref; https://github.com/zed-industries/zed/issues/15752
-      # buffer_font_features = {
-      #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv01-cv09-figure-variants
-      #   cv01 = 2; # 0 (slash)
-      #   # cv02 = 1; # 1
-      #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv10-cv29-letter-variants
-      #   # cv10 = 0; # l i (Neon, Argon, Xenon, Radon)
-      #   # cv11 = 0; # j f r t (Neon, Argon)
-      #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv30-cv59-symbol-variants
-      #   # cv30 = 0; # * (vertically aligned)
-      #   # cv31 = 0; # * (6-points)
-      #   # cv32 = 0; # >= <= (angled lower-line)
-      #   # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv60-cv79-optional-ligatures
-      #   # cv60 = 0; # <= =>
-      #   # cv61 = 0; # []
-      #   # cv62 = 0; # @_
-      #   calt = true; # Texture Healing
-      #   ss01 = true; # === !== =!= =/= /== /= #= == != ~~ =~ !~ ~- -~ &=
-      #   ss02 = true; # >= <=
-      #   # ss03 = true; # <--> <-> <!-- <-- --> <- -> <~> <~~ ~~> <~ ~>
-      #   # ss04 = true; # </ /> </> <>
-      #   ss05 = true; # [| |] /\ \/ |> <| <|> {| |}
-      #   ss06 = true; # ### +++ &&&
-      #   ss07 = true; # -:- =:= :>: :<: ::> <:: :: :::
-      #   ss08 = true; # ..= ..- ..< .= .-
-      #   ss09 = true; # <=> <<= =>> =<< => << >>
-      #   ss10 = true; # #[ #(
-      #   liga = true; # ... /// // !! || ;; ;;;
-      # };
+        # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv10-cv29-letter-variants
+        cv10 = 1; # Alternatives for "l i" (Neon, Argon, Xenon, Radon)
+        cv11 = 1; # Alternatives for "j f r t" (Neon, Argon)
+
+        # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv30-cv59-symbol-variants
+        # cv30 = 0; # * (vertically aligned)
+        cv31 = 1; # * (6-points instead of 5)
+        # cv32 = 0; # >= <= (angled lower-line)
+
+        # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv60-cv79-optional-ligatures
+        # cv60 = 0; # <= =>
+        # cv61 = 0; # []
+        # cv62 = 0; # @_
+
+        # https://github.com/githubnext/monaspace?tab=readme-ov-file#coding-ligatures
+        calt = true; # Texture Healing
+        liga = true; # ... /// // !! || ;; ;;;
+        ss01 = true; # === !== =!= =/= /== /= #= == != ~~ =~ !~ ~- -~ &=
+        ss02 = true; # >= <=
+        ss03 = true; # <--> <-> <!-- <-- --> <- -> <~> <~~ ~~> <~ ~>
+        ss04 = true; # </ /> </> <>
+        ss05 = true; # [| |] /\ \/ |> <| <|> {| |}
+        ss06 = true; # ### +++ &&&
+        ss07 = true; # -:- =:= :>: :<: ::> <:: :: :::
+        ss08 = true; # ..= ..- ..< .= .-
+        ss09 = true; # <=> <<= =>> =<< => << >>
+        ss10 = true; # #[ #(
+      };
 
       ui_font_family = ".SystemUIFont";
       ui_font_size = 14;

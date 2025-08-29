@@ -12,7 +12,7 @@
       defaultFonts = {
         serif = lib.mkDefault ["Inter"];
         sansSerif = lib.mkDefault ["Inter"];
-        monospace = lib.mkDefault ["Monaspace Neon"];
+        monospace = lib.mkDefault ["Monaspace Neon NF"];
         emoji = lib.mkDefault ["Noto Color Emoji"];
       };
     };
@@ -21,10 +21,8 @@
 
     packages = with pkgs; [
       inter
-      monaspace.ttf
       monaspace.otf
-      # TODO: remove nerd-font, Monaspace includes icons by default
-      nerd-fonts.monaspace
+      monaspace.nerdfonts
     ];
   };
 }

@@ -1,36 +1,35 @@
 {
-  fetchzip,
+  fetchFromGitHub,
   lib,
   stdenvNoCC,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "monaspace";
-  version = "1.200";
+  version = "1.300";
 
-  src = fetchzip {
-    url = "https://github.com/githubnext/monaspace/releases/download/v${finalAttrs.version}/monaspace-v${finalAttrs.version}.zip";
-    hash = "sha256-j1xQYVxfTNDVuzCKvT5FbU29t8XsH4XqcZ477sjydts=";
-    stripRoot = false;
+  src = fetchFromGitHub {
+    owner = "githubnext";
+    repo = "monaspace";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-iTbMLcd4uVzegKSqacqq3YKIPP3CQIgCQfvRC0rFAVU=";
   };
 
-  outputs = ["out" "otf" "ttf" "woff" "woff2"];
+  outputs = ["out" "otf" "ttf" "woff" "woff2" "nerdfonts"];
 
   installPhase = ''
     runHook preInstall
 
-    cd monaspace-v${finalAttrs.version}
-
     for family in Argon Krypton Neon Radon; do
-      install -Dm644 fonts/otf/Monaspace"$family"-*.otf -t "$otf"/share/fonts/opentype/Monaspace"$family"
+      install -Dm444 'fonts/Frozen Fonts/Monaspace '"$family"/Monaspace"$family"Frozen-*.ttf -t "$ttf"/share/fonts/truetype/'Monaspace '"$family"' Frozen'
+      install -Dm444 'fonts/NerdFonts/Monaspace '"$family"/Monaspace"$family"NF-*.otf -t "$nerdfonts"/share/fonts/opentype/'Monaspace '"$family"' NF'
+      install -Dm444 'fonts/Static Fonts/Monaspace '"$family"/Monaspace"$family"-*.otf -t "$otf"/share/fonts/opentype/'Monaspace '"$family"
+      install -Dm444 'fonts/Variable Fonts/Monaspace '"$family"/'Monaspace '"$family"' Var'.ttf -t "$ttf"/share/fonts/truetype
 
-      install -Dm644 fonts/frozen/Monaspace"$family"Frozen-*.ttf -t "$ttf"/share/fonts/truetype
-      install -Dm644 fonts/variable/Monaspace"$family"VarVF'[wght,wdth,slnt]'.ttf -t "$ttf"/share/fonts/truetype
+      install -Dm444 'fonts/Web Fonts/Static Web Fonts/Monaspace '"$family"/woff/Monaspace"$family"-*.woff -t "$woff"/share/fonts/woff/'Monaspace '"$family"
+      install -Dm444 'fonts/Web Fonts/Static Web Fonts/Monaspace '"$family"/woff2/Monaspace"$family"-*.woff2 -t "$woff2"/share/fonts/woff2/'Monaspace '"$family"
 
-      install -Dm644 fonts/webfonts/Monaspace"$family"-*.woff -t "$woff"/share/fonts/woff/Monaspace"$family"
-      install -Dm644 fonts/webfonts/Monaspace"$family"VarVF'[wght,wdth,slnt]'.woff -t "$woff"/share/fonts/woff
-
-      install -Dm644 fonts/webfonts/Monaspace"$family"-*.woff2 -t "$woff2"/share/fonts/woff2/Monaspace"$family"
-      install -Dm644 fonts/webfonts/Monaspace"$family"VarVF'[wght,wdth,slnt]'.woff2 -t "$woff2"/share/fonts/woff2
+      install -Dm444 'fonts/Web Fonts/Variable Web Fonts/Monaspace '"$family"/'Monaspace '"$family"' Var'.woff -t "$woff"/share/fonts/woff
+      install -Dm444 'fonts/Web Fonts/Variable Web Fonts/Monaspace '"$family"/'Monaspace '"$family"' Var'.woff2 -t "$woff2"/share/fonts/woff2
     done
 
     mkdir -p "$out"/share/fonts
@@ -64,6 +63,6 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     license = lib.licenses.ofl;
     maintainers = with lib.maintainers; [matthewpi];
     platforms = lib.platforms.all;
-    outputsToInstall = finalAttrs.outputs;
+    outputsToInstall = ["otf"];
   };
 })
