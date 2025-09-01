@@ -66,6 +66,7 @@ in {
       ".cache/npm"
       ".cache/pnpm"
       ".cache/radv_builtin_shaders"
+      ".cache/supersonic"
       ".cache/tree-sitter"
       ".cache/turbo"
 

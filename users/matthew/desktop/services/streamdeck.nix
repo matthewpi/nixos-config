@@ -35,6 +35,7 @@
       BindReadOnlyPaths = [
         # Cache locations, usually for album art
         "${config.home.homeDirectory}/.cache/amberol"
+        "${config.home.homeDirectory}/.cache/supersonic"
         # Configuration location
         "${config.home.homeDirectory}/.config/streamdeck"
         # # Firefox assets
