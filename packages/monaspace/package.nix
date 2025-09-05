@@ -5,13 +5,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "monaspace";
-  version = "1.300";
+  version = "1.301";
 
   src = fetchFromGitHub {
     owner = "githubnext";
     repo = "monaspace";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-iTbMLcd4uVzegKSqacqq3YKIPP3CQIgCQfvRC0rFAVU=";
+    hash = "sha256-8tPwm92ZtaXL9qeDL+ay9PdXLUBBsspdk7/0U8VO0Tg=";
   };
 
   outputs = ["out" "otf" "ttf" "woff" "woff2" "nerdfonts"];
@@ -20,15 +20,23 @@ stdenvNoCC.mkDerivation (finalAttrs: {
     runHook preInstall
 
     for family in Argon Krypton Neon Radon; do
+      echo 'Installing frozen fonts...'
       install -Dm444 'fonts/Frozen Fonts/Monaspace '"$family"/Monaspace"$family"Frozen-*.ttf -t "$ttf"/share/fonts/truetype/'Monaspace '"$family"' Frozen'
+      echo 'Installing nerd fonts...'
       install -Dm444 'fonts/NerdFonts/Monaspace '"$family"/Monaspace"$family"NF-*.otf -t "$nerdfonts"/share/fonts/opentype/'Monaspace '"$family"' NF'
+      echo 'Installing static fonts...'
       install -Dm444 'fonts/Static Fonts/Monaspace '"$family"/Monaspace"$family"-*.otf -t "$otf"/share/fonts/opentype/'Monaspace '"$family"
+      echo 'Installing variable fonts...'
       install -Dm444 'fonts/Variable Fonts/Monaspace '"$family"/'Monaspace '"$family"' Var'.ttf -t "$ttf"/share/fonts/truetype
 
-      install -Dm444 'fonts/Web Fonts/Static Web Fonts/Monaspace '"$family"/woff/Monaspace"$family"-*.woff -t "$woff"/share/fonts/woff/'Monaspace '"$family"
-      install -Dm444 'fonts/Web Fonts/Static Web Fonts/Monaspace '"$family"/woff2/Monaspace"$family"-*.woff2 -t "$woff2"/share/fonts/woff2/'Monaspace '"$family"
+      echo 'Installing static web fonts (woff)...'
+      install -Dm444 'fonts/Web Fonts/Static Web Fonts/Monaspace '"$family"/Monaspace"$family"-*.woff -t "$woff"/share/fonts/woff/'Monaspace '"$family"
+      echo 'Installing static web fonts (woff2)...'
+      install -Dm444 'fonts/Web Fonts/Static Web Fonts/Monaspace '"$family"/Monaspace"$family"-*.woff2 -t "$woff2"/share/fonts/woff2/'Monaspace '"$family"
 
+      echo 'Installing variable web fonts (woff)...'
       install -Dm444 'fonts/Web Fonts/Variable Web Fonts/Monaspace '"$family"/'Monaspace '"$family"' Var'.woff -t "$woff"/share/fonts/woff
+      echo 'Installing variable web fonts (woff2)...'
       install -Dm444 'fonts/Web Fonts/Variable Web Fonts/Monaspace '"$family"/'Monaspace '"$family"' Var'.woff2 -t "$woff2"/share/fonts/woff2
     done
 
