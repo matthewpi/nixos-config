@@ -33,10 +33,10 @@
       emmet-language-server
       eslint
       config.programs.git.package
-      go
-      golangci-lint
+      go_1_25
       gopls
-      go-tools
+      (golangci-lint.override {buildGoModule = pkgs.buildGoLatestModule;})
+      (go-tools.override {buildGoModule = pkgs.buildGoLatestModule;})
       harper
       intelephense
       (runCommand "json-language-server" {} ''
