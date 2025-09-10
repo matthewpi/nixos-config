@@ -35,7 +35,7 @@
       config.programs.git.package
       go_1_25
       gopls
-      (golangci-lint.override {buildGoModule = pkgs.buildGoLatestModule;})
+      golangci-lint
       (go-tools.override {buildGoModule = pkgs.buildGoLatestModule;})
       harper
       intelephense
