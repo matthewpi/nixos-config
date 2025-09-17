@@ -28,25 +28,25 @@
       src = pkgs.fetchFromGitHub {
         owner = "Kron4ek";
         repo = "wine-tkg";
-        rev = "956fb6d3774a2b2bac54b22c4edd3d00f961e7ba";
-        hash = "sha256-WpO1CvKkE/ywJlSMEZc6sQHnrptf+qBu1aBnOEZMr9A=";
+        rev = "0d14294f54462ee2847d0266adf2024a58d08a19";
+        hash = "sha256-aeHNtLc6vOLZ9wR/nhw8uiOThfK7iPqBHoZJ10Fb3lM=";
       };
 
       patches = let
         patches = pkgs.fetchFromGitHub {
           owner = "starcitizen-lug";
           repo = "patches";
-          rev = "87a620ee062812d640fc8b8d01c39293b8fd4f60";
-          hash = "sha256-/j/pmPQHSq460Iei8uqPJmNNKikDQhO7zCJJPkpX3tw=";
+          rev = "16908d0748f7d1b706f41fc17e18fafe84dced5b";
+          hash = "sha256-SF6RV1NZWtXJ9zWVy9WSiioeHr0Gi2Zpx1GNqLZGQWc=";
         };
       in [
         "${patches}/wine/append_cmd.patch"
         "${patches}/wine/cache-committed-size.patch"
         "${patches}/wine/dummy_dlls.patch"
+        "${patches}/wine/eac_60101_timeout.patch"
         "${patches}/wine/real_path.patch"
-        "${patches}/wine/silence-sc-unsupported-os.patch"
         "${patches}/wine/printkey_wld.patch"
-        # "${patches}/wine/winewayland-no-enter-move-if-relative.patch"
+        "${patches}/wine/silence-sc-unsupported-os.patch"
       ];
     }).overrideAttrs (oldAttrs: {
       # Include linux kernel headers for ntsync.
