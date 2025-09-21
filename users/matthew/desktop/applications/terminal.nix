@@ -38,7 +38,7 @@
   };
 
   programs.ghostty = {
-    enable = true;
+    enable = false;
     settings = {
       font-family = "Monaspace Neon NF";
       font-size = 10;
