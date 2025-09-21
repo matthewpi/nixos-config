@@ -5,23 +5,23 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "freelens-k8s-proxy";
-  version = "1.3.6";
+  version = "1.4.0";
 
   src = fetchFromGitHub {
     owner = "freelensapp";
     repo = "freelens-k8s-proxy";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-zgxNd0zImTKcATqc9MXLEEAmelxe6eRP36aZPNQPaFk=";
+    hash = "sha256-nozD3lM7q2obiGCOFZdrb9YsW3Z8kWand1e4W6MLunk=";
   };
 
-  vendorHash = "sha256-rnkmKFrAWuvln5zsXC3aaInbXyTLxAgVZab3pdFNT3U=";
+  vendorHash = "sha256-undapU07xxQze8fx10kvNenFlMYExZwkkuZAvqnKR3w=";
 
   # I love Go, except for the decision to pin the Go version in `go.mod`.
   #
   # If we are below the version specified in the `go.mod`, even by a single
   # minor, the build will fail.
   prePatch = ''
-    substituteInPlace go.mod --replace-fail 'go 1.24.5' 'go 1.24.4'
+    substituteInPlace go.mod --replace-fail 'go 1.25.1' 'go 1.25.0'
   '';
 
   env.CGO_ENABLED = 0;
