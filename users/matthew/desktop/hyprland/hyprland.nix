@@ -367,10 +367,11 @@ in {
         "pin,           title:Hyprland Polkit Agent"
 
         # Screenshare Portal
-        "dimaround, title:MainPicker"
-        "center,    title:MainPicker"
-        "float,     title:MainPicker"
-        "pin,       title:MainPicker"
+        "noscreenshare, title:MainPicker"
+        "dimaround,     title:MainPicker"
+        "center,        title:MainPicker"
+        "float,         title:MainPicker"
+        "pin,           title:MainPicker"
 
         # GNOME Keyring Prompt
         "noscreenshare, class:gcr-prompter"
@@ -389,8 +390,10 @@ in {
         # Steam
         "center, title:Steam, floating:1"
         "float,  class:steam, title:Steam Settings"
+
         "size 328 768, class:steam, title:Friends List"
-        "float,  class:steam title:Friends List"
+        "float,  class:steam, title:Friends List"
+
         "center, class:steam, title:negative:^(Steam|.?)$" # match everything but "Steam" or an empty title (dropdowns)
         "float,  class:steam, title:negative:^(Steam|.?)$" # match everything but "Steam" or an empty title (dropdowns)
 
@@ -421,12 +424,6 @@ in {
         "size <50% <50%, class:^star trek online\.exe$"
         "center,         class:^star trek online\.exe$"
         "float,          class:^star trek online\.exe$"
-
-        # Supersonic
-        #
-        # Allow the window to render while in the background. Workaround for
-        # https://github.com/dweymouth/supersonic/issues/560
-        "renderunfocused, title:Supersonic"
       ];
 
       # Keybinds
