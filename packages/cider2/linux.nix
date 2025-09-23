@@ -47,7 +47,7 @@ in
         --add-flags "\''${NIXOS_OZONE_WL:+\''${WAYLAND_DISPLAY:+--ozone-platform-hint=auto --enable-features=WaylandWindowDecorations}}" \
         --add-flags '${lib.concatStringsSep " " flags}'
 
-      install -Dm444 ${appimageContents}/usr/share/icons/hicolor/256x256/cider.png "$out"/share/icons/hicolor/256x256/apps/cider.png
+      install -Dm444 ${appimageContents}/usr/share/icons/hicolor/256x256/Cider.png "$out"/share/icons/hicolor/256x256/apps/cider.png
       install -Dm444 ${appimageContents}/Cider.desktop "$out"/share/applications/cider.desktop
       substituteInPlace "$out"/share/applications/cider.desktop \
         --replace-fail 'Exec=Cider' 'Exec=${meta.mainProgram}'
