@@ -28,19 +28,19 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "freelens";
-    version = "1.5.3";
+    version = "1.6.0";
 
     src = fetchFromGitHub {
       owner = "freelensapp";
       repo = "freelens";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-ORKXzk0HEGtHdKRgXCE6OGsJz17ut+yVLRdzCrHIzS4=";
+      hash = "sha256-gcyIwJ9oOaC/16BjLe7fZRmlYSIWD/oT0DN6NBke9iw=";
     };
 
     pnpmDeps = pnpm.fetchDeps {
       inherit (finalAttrs) pname version src;
       fetcherVersion = 1;
-      hash = "sha256-sltt5twiJm3CgrF5LwOyCT4iqf6Ci92pYNW0U6JtvJU=";
+      hash = "sha256-7FOMpH2PWuPNCDhlaIAo1Ai7TkzyFBNCEID+eWh6c9I=";
     };
 
     strictDeps = true;
