@@ -231,6 +231,10 @@
         # Only enable Biome when a `biome.jsonc?` file is present in the project.
         biome.settings.require_config_file = true;
 
+        harper-ls.settings.harper-ls.linters = {
+          PunctuationClusters = false;
+        };
+
         # Allow trailing commas for specific JSON files.
         json-language-server.settings.json.schemas = [
           {
