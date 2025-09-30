@@ -23,6 +23,7 @@
         in
           with addons; [
             decentraleyes
+            multi-account-containers
             no-pdf-download
             onepassword-password-manager
             stylus
