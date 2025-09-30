@@ -38,4 +38,10 @@
 
   # Enable mtr
   programs.mtr.enable = lib.mkDefault true;
+
+  # Stop delaying boot until the network is online.
+  #
+  # Any service incapable of handling offline networking or networking
+  # connecting well after boot should be fixed.
+  systemd.services.systemd-networkd-wait-online.enable = lib.mkForce false;
 }

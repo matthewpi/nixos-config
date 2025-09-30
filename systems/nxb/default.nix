@@ -145,6 +145,7 @@
   location.provider = "geoclue2";
   services.geoclue2 = {
     enableNmea = false;
+    enableWifi = true;
     geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
     submissionUrl = "https://api.beacondb.net/v2/geosubmit";
   };
