@@ -15,7 +15,7 @@
     amberol
     cider2
     kooha
-    hoppscotch-desktop
+    # hoppscotch-desktop
     impression
     # ladybird
     libreoffice
