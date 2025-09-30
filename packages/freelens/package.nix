@@ -1,6 +1,6 @@
 {
   copyDesktopItems,
-  electron_35,
+  electron,
   fetchFromGitHub,
   freelens-k8s-proxy,
   kubectl,
@@ -13,7 +13,6 @@
   python3,
   stdenv,
 }: let
-  electron = electron_35;
   nodejs = nodejs_22;
   pnpm = pnpm_10;
 
@@ -28,19 +27,19 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "freelens";
-    version = "1.6.0";
+    version = "1.6.1";
 
     src = fetchFromGitHub {
       owner = "freelensapp";
       repo = "freelens";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-gcyIwJ9oOaC/16BjLe7fZRmlYSIWD/oT0DN6NBke9iw=";
+      hash = "sha256-QO064mApXbMPUGULTe7BihTwqK0LGWOlhOVTtDPW8Oo=";
     };
 
     pnpmDeps = pnpm.fetchDeps {
       inherit (finalAttrs) pname version src;
       fetcherVersion = 1;
-      hash = "sha256-7FOMpH2PWuPNCDhlaIAo1Ai7TkzyFBNCEID+eWh6c9I=";
+      hash = "sha256-2L4+w75+4VMXpP7KgZd5P4h0rw1sePe+Fc8ddzZVVyw=";
     };
 
     strictDeps = true;
