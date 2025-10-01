@@ -126,7 +126,7 @@
       "zig"
     ];
 
-    userSettings = {
+    userSettings = rec {
       auto_update = false;
       base_keymap = "VSCode";
 
@@ -174,6 +174,7 @@
         ss09 = true; # <=> <<= =>> =<< => << >>
         ss10 = true; # #[ #(
       };
+      terminal.font_features = buffer_font_features;
 
       ui_font_family = ".SystemUIFont";
       ui_font_size = 14;
