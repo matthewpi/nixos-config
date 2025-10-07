@@ -170,6 +170,11 @@ in {
         # Use smaller window gaps
         gaps_in = 4;
         gaps_out = 12;
+
+        # Allow tearing in fullscreen applications.
+        # TODO: this was causing CS2 to stop rendering while fullscreened, even with an `immediate` windowrule.
+        # ref; https://wiki.hypr.land/Configuring/Tearing/
+        # allow_tearing = true;
       };
 
       cursor = {
@@ -212,9 +217,9 @@ in {
         # Ensure vfr is on.
         vfr = true;
 
-        # Enable VRR (variable refresh-rate) for fullscreened `game` or `video`
-        # windows.
-        vrr = 3;
+        # # Enable VRR (variable refresh-rate) for fullscreened `game` or `video`
+        # # windows.
+        # vrr = 3;
 
         # Disable config auto-reloading.
         disable_autoreload = true;
@@ -252,8 +257,11 @@ in {
         # Use `cm, hdredid` (2) instead of `cm, hdr` (1) when using Auto HDR.
         cm_auto_hdr = 2;
 
-        # Disable direct scanout as it causes artifacting in fullscreen games.
-        direct_scanout = 0;
+        # Enable direct scanout for fullscreen game or video applications.
+        direct_scanout = 2;
+
+        # # Disable direct scanout as it causes artifacting in fullscreen games.
+        # direct_scanout = 0;
       };
 
       # Monitor configuration
@@ -278,6 +286,7 @@ in {
             min_luminance = 0;
             max_luminance = 1000;
             max_avg_luminance = 400;
+            vrr = 3; # Enable VRR (variable refresh-rate) for fullscreened `game` or `video` windows.
           }
           {
             output = "DP-2";
@@ -405,6 +414,13 @@ in {
         "center, title:(Wine)"
         "float,  title:(Wine)"
         "pin,    title:(Wine)"
+
+        # CS2
+        "content game, class:cs2"
+        "fullscreen,   class:cs2"
+        "noanim,       class:cs2"
+        "noborder,     class:cs2"
+        "nodim,        class:cs2"
 
         # Game (Proton or Wine)
         "content game, class:(.*)\.exe$"
