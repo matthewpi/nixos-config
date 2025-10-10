@@ -528,8 +528,8 @@ in {
         ", XF86AudioNext, exec, ${lib.getExe pkgs.playerctl} next"
 
         # Mute audio (volume adjustment is bound under `binde`)
-        ", XF86AudioMute, exec, ${lib.getExe' config.services.avizo.package "volumectl"} toggle-mute" # wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
-        ", XF86AudioMicMute, exec, ${lib.getExe' config.services.avizo.package "volumectl"} -m toggle-mute"
+        ", XF86AudioMute, exec, ${lib.getExe' nixosConfig.services.pipewire.wireplumber.package "wpctl"} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+        ", XF86AudioMicMute, exec, ${lib.getExe' nixosConfig.services.pipewire.wireplumber.package "wpctl"} set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
       ];
 
       bindm = [
@@ -540,39 +540,17 @@ in {
       # bindl allows the bind to be used even when an input inhibitor is active
       #
       # binde is for repeated inputs (trigger action multiple times while key is held)
-      bindle = [
-        # Volume up/down
-        ", XF86AudioRaiseVolume, exec, ${lib.getExe' config.services.avizo.package "volumectl"} -u up" # wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+
-        ", XF86AudioLowerVolume, exec, ${lib.getExe' config.services.avizo.package "volumectl"} -u down" # wpctl set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-
-
-        # Brightness
-        ", XF86MonBrightnessDown, exec, ${lib.getExe' config.services.avizo.package "lightctl"} down" # brightnessctl --device=amdgpu_bl1 set 5%-
-        ", XF86MonBrightnessUp, exec, ${lib.getExe' config.services.avizo.package "lightctl"} up" # brightnessctl --device=amdgpu_bl1 set +5%
-      ];
+      bindle =
+        [
+          # Volume up/down
+          ", XF86AudioRaiseVolume, exec, ${lib.getExe' nixosConfig.services.pipewire.wireplumber.package "wpctl"} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%+"
+          ", XF86AudioLowerVolume, exec, ${lib.getExe' nixosConfig.services.pipewire.wireplumber.package "wpctl"} set-volume -l 1.0 @DEFAULT_AUDIO_SINK@ 5%-"
+        ]
+        ++ lib.optionals (!isDesktop) [
+          # Brightness
+          ", XF86MonBrightnessDown, exec, ${lib.getExe pkgs.brightnessctl} --device=amdgpu_bl1 set 5%-"
+          ", XF86MonBrightnessUp, exec, ${lib.getExe pkgs.brightnessctl} --device=amdgpu_bl1 set +5%"
+        ];
     };
   };
-
-  services.avizo = {
-    enable = true;
-    settings.default = {
-      time = 1.0;
-      width = 192;
-      height = 192;
-      padding = 16;
-      y-offset = 0.75;
-      x-offset = 0.5;
-      border-radius = 16;
-      border-width = 1;
-      block-height = 10;
-      block-spacing = 2;
-      block-count = 20;
-      fade-in = 0.1;
-      fade-out = 0.2;
-      background = "rgba(49, 50, 68, 0.75)"; # Surface 0
-      border-color = "rgba(69, 71, 90, 1.0)"; # Surface 1
-      bar-bg-color = "rgba(88, 91, 112, 1.0)"; # Surface 2
-      bar-fg-color = "rgba(203, 166, 247, 1.0)"; # Mauve
-    };
-  };
-  systemd.user.services.avizo.Service.Slice = "background.slice";
 }
