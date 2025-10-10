@@ -73,8 +73,8 @@
       # C#
       # omnisharp-roslyn
 
-      # Swift
-      sourcekit-lsp
+      # # Swift
+      # sourcekit-lsp
 
       clang
       tree-sitter
