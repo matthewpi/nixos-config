@@ -7,6 +7,6 @@
 
   home.packages = [
     pkgs.step-cli
-    pkgs.step-kms-plugin
+    # pkgs.step-kms-plugin
   ];
 }
