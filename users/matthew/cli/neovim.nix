@@ -128,19 +128,19 @@ in {
           return {
             CmpItemKindSnippet = { fg = C.base, bg = C.mauve },
             CmpItemKindKeyword = { fg = C.base, bg = C.red },
-        	  CmpItemKindText = { fg = C.base, bg = C.teal },
+            CmpItemKindText = { fg = C.base, bg = C.teal },
             CmpItemKindMethod = { fg = C.base, bg = C.blue },
             CmpItemKindConstructor = { fg = C.base, bg = C.blue },
-        	  CmpItemKindFunction = { fg = C.base, bg = C.blue },
+            CmpItemKindFunction = { fg = C.base, bg = C.blue },
             CmpItemKindFolder = { fg = C.base, bg = C.blue },
             CmpItemKindModule = { fg = C.base, bg = C.blue },
             CmpItemKindConstant = { fg = C.base, bg = C.peach },
             CmpItemKindField = { fg = C.base, bg = C.green },
-        	  CmpItemKindProperty = { fg = C.base, bg = C.green },
-        	  CmpItemKindEnum = { fg = C.base, bg = C.green },
+            CmpItemKindProperty = { fg = C.base, bg = C.green },
+            CmpItemKindEnum = { fg = C.base, bg = C.green },
             CmpItemKindUnit = { fg = C.base, bg = C.green },
             CmpItemKindClass = { fg = C.base, bg = C.yellow },
-        	  CmpItemKindVariable = { fg = C.base, bg = C.flamingo },
+            CmpItemKindVariable = { fg = C.base, bg = C.flamingo },
             CmpItemKindFile = { fg = C.base, bg = C.blue },
             CmpItemKindInterface = { fg = C.base, bg = C.yellow },
             CmpItemKindColor = { fg = C.base, bg = C.red },
@@ -223,15 +223,14 @@ in {
       -- Add additional capabilities supported by nvim-cmp
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local lspconfig = require('lspconfig')
-
-      lspconfig.buf_ls.setup({
-        capabilities = capabilities,
+      vim.lsp.config('buf_ls', {
         cmd = { "${lib.getExe pkgs.buf}", "beta", "lsp" },
-      })
-      lspconfig.gopls.setup({
         capabilities = capabilities,
+      })
+
+      vim.lsp.config('gopls', {
         cmd = { "${lib.getExe pkgs.gopls}" },
+        capabilities = capabilities,
         settings = {
           analyses = {
             unreachable  = false,
@@ -241,17 +240,17 @@ in {
           gofumpt = true,
         },
       })
-      lspconfig.nixd.setup({
-        capabilities = capabilities,
+      vim.lsp.config('nixd', {
         cmd = { "${lib.getExe pkgs.nixd}" },
-      })
-      -- lspconfig.rust_analyzer.setup({
-      --   capabilities = capabilites,
-      --   cmd = { "''${lib.getExe pkgs.rust-analyzer}" },
-      -- })
-      lspconfig.ts_ls.setup({
         capabilities = capabilities,
+      })
+      -- vim.lsp.config('rust_analyzer', {
+      --   cmd = { "''${lib.getExe pkgs.rust-analyzer}" },
+      --   capabilities = capabilites,
+      -- })
+      vim.lsp.config('ts_ls', {
         cmd = { "${lib.getExe pkgs.nodePackages.typescript-language-server}", "--stdio" },
+        capabilities = capabilities,
       })
 
       local cmp = require("cmp")
