@@ -46,9 +46,11 @@
 
     difftastic = {
       enable = true;
-      background = "dark";
-      color = "auto";
-      display = "side-by-side";
+      options = {
+        background = "dark";
+        color = "auto";
+        display = "side-by-side";
+      };
     };
 
     aliases = {
