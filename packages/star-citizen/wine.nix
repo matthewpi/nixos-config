@@ -27,7 +27,7 @@
   };
 
   base = let
-    sources = (import "${inputs.nixpkgs}/${nixpkgsWineDir}/sources.nix" {inherit pkgs;}).unstable;
+    sources = (import "${nixpkgs-wine}/${nixpkgsWineDir}/sources.nix" {inherit pkgs;}).unstable;
   in {
     inherit moltenvk;
     buildScript = "${nixpkgs-wine}/${nixpkgsWineDir}/builder-wow.sh";

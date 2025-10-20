@@ -24,12 +24,11 @@
     (pkgs.callPackage ./wine.nix {
       inherit inputs;
 
-      # ntsync branch
       src = pkgs.fetchFromGitHub {
         owner = "Kron4ek";
         repo = "wine-tkg";
-        rev = "0d14294f54462ee2847d0266adf2024a58d08a19";
-        hash = "sha256-aeHNtLc6vOLZ9wR/nhw8uiOThfK7iPqBHoZJ10Fb3lM=";
+        tag = "10.17";
+        hash = "sha256-/diEOe6uPquBhffpDEx5NofEBGcXzFVCJsxAkOyGiNI=";
       };
 
       patches = let
