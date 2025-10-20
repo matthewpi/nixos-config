@@ -217,10 +217,6 @@ in {
         # Ensure vfr is on.
         vfr = true;
 
-        # # Enable VRR (variable refresh-rate) for fullscreened `game` or `video`
-        # # windows.
-        # vrr = 3;
-
         # Disable config auto-reloading.
         disable_autoreload = true;
 
@@ -259,9 +255,6 @@ in {
 
         # Enable direct scanout for fullscreen game or video applications.
         direct_scanout = 2;
-
-        # # Disable direct scanout as it causes artifacting in fullscreen games.
-        # direct_scanout = 0;
       };
 
       # Monitor configuration
@@ -309,8 +302,8 @@ in {
             mode = "2560x1600@165";
             position = "-2560x720";
             scale = "1.333333";
-            vrr = 0;
             bitdepth = 8;
+            vrr = 0;
           }
           # ", preferred, auto, 1, vrr,0, bitdepth,8"
         ];
