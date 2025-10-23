@@ -6,20 +6,9 @@
 }: let
   cfg = config.systemd.pcrlock;
 
-  systemd = config.systemd.package.overrideAttrs (oldAttrs: {
-    patches =
-      (oldAttrs.patches or [])
-      ++ [
-        (pkgs.fetchpatch2 {
-          url = "https://github.com/systemd/systemd/commit/95b58ed32ea66de6a13735aad47a96bd714cb6be.patch";
-          hash = "sha256-vxFZGMCRbG1qBB0QR/N4CZL8tOXeo37xRgKHT16Dg2o=";
-        })
-      ];
-  });
-
   systemd-pcrlock = pkgs.runCommand "systemd-pcrlock" {meta.mainProgram = "systemd-pcrlock";} ''
     mkdir -p "$out"/bin
-    ln -s ${systemd}/lib/systemd/systemd-pcrlock "$out"/bin
+    ln -s ${config.systemd.package}/lib/systemd/systemd-pcrlock "$out"/bin
   '';
 
   predictions = pkgs.runCommand "pcrlock.d" {} ''
