@@ -29,7 +29,7 @@
       fetch.writeCommitGraph = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
 
       # Configure some aliases for commonly used commands and arguments.
-      aliases = {
+      alias = {
         a = "add";
         aa = "add -A";
 
