@@ -6,7 +6,7 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "determinate-nixd";
-  version = "3.11.3";
+  version = "3.12.0";
   src = inputs."determinate-nixd-${stdenvNoCC.system}";
 
   dontUnpack = true;
