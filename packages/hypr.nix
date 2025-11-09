@@ -26,17 +26,13 @@
       };
 
       hyprland = (fixPathForLazyTrees inputs.hyprland "hyprland").override {
-        inherit aquamarine hyprcursor hyprgraphics hyprland-protocols hyprland-qtutils hyprlang hyprutils hyprwayland-scanner;
+        inherit aquamarine hyprcursor hyprgraphics hyprland-guiutils hyprland-protocols hyprlang hyprutils hyprwayland-scanner;
       };
 
       hyprland-protocols = fixPathForLazyTrees inputs.hyprland-protocols "hyprland-protocols";
 
       hyprland-qt-support = (fixPathForLazyTrees inputs.hyprland-qt-support "hyprland-qt-support").override {
         inherit hyprlang;
-      };
-
-      hyprland-qtutils = (fixPathForLazyTrees inputs.hyprland-qtutils "hyprland-qtutils").override {
-        inherit hyprland-qt-support hyprutils;
       };
 
       hyprlang = (fixPathForLazyTrees inputs.hyprlang "hyprlang").override {
@@ -51,12 +47,20 @@
         inherit hyprutils;
       };
 
+      hyprland-guiutils = (fixPathForLazyTrees inputs.hyprland-guiutils "hyprland-guiutils").override {
+        inherit aquamarine hyprgraphics hyprlang hyprtoolkit hyprutils;
+      };
+
       hyprpaper = (fixPathForLazyTrees inputs.hyprpaper "hyprpaper").override {
         inherit hyprlang hyprgraphics hyprutils hyprwayland-scanner;
       };
 
       hyprpolkitagent = (fixPathForLazyTrees inputs.hyprpolkitagent "hyprpolkitagent").override {
         inherit hyprland-qt-support hyprutils;
+      };
+
+      hyprtoolkit = (fixPathForLazyTrees inputs.hyprtoolkit "hyprtoolkit").override {
+        inherit aquamarine hyprgraphics hyprlang hyprutils hyprwayland-scanner;
       };
 
       hyprutils = fixPathForLazyTrees inputs.hyprutils "hyprutils";

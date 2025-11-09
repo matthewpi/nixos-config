@@ -102,14 +102,27 @@
         aquamarine.follows = "aquamarine";
         hyprcursor.follows = "hyprcursor";
         hyprgraphics.follows = "hyprgraphics";
+        hyprland-guiutils.follows = "hyprland-guiutils";
         hyprland-protocols.follows = "hyprland-protocols";
-        hyprland-qtutils.follows = "hyprland-qtutils";
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
         xdph.follows = "xdph";
         nixpkgs.follows = "nixpkgs";
         pre-commit-hooks.follows = "";
+        systems.follows = "systems-linux";
+      };
+    };
+
+    hyprland-guiutils = {
+      url = "github:hyprwm/hyprland-guiutils";
+      inputs = {
+        aquamarine.follows = "aquamarine";
+        hyprgraphics.follows = "hyprgraphics";
+        hyprlang.follows = "hyprlang";
+        hyprtoolkit.follows = "hyprtoolkit";
+        hyprutils.follows = "hyprutils";
+        nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
     };
@@ -131,12 +144,14 @@
       };
     };
 
-    hyprland-qtutils = {
-      url = "github:hyprwm/hyprland-qtutils";
+    hyprtoolkit = {
+      url = "github:hyprwm/hyprtoolkit";
       inputs = {
-        hyprland-qt-support.follows = "hyprland-qt-support";
+        aquamarine.follows = "aquamarine";
+        hyprgraphics.follows = "hyprgraphics";
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
+        hyprwayland-scanner.follows = "hyprwayland-scanner";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
