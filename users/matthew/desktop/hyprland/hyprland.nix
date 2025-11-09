@@ -347,12 +347,12 @@ in {
         "float, title:^(Open Folder)(.*)$"
 
         # 1Password
-        "noscreenshare, class:1Password" # applies to both the main window and floating prompt.
+        "noscreenshare, class:1password" # applies to both the main window and floating prompt.
 
         # 1Password Prompt
-        "dimaround, class:1Password, floating:1"
-        "center,    class:1Password, floating:1"
-        "pin,       class:1Password, floating:1"
+        "dimaround, class:1password, floating:1"
+        "center,    class:1password, floating:1"
+        "pin,       class:1password, floating:1"
 
         # Polkit (GNOME)
         "noscreenshare, class:polkit-gnome-authentication-agent-1"
