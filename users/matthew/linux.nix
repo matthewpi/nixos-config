@@ -26,9 +26,7 @@
   };
 
   home.file.".face".source = ../../.face;
-
-  systemd.user.tmpfiles.settings."10-code".rules."%h/code".L = {
-    argument = "/code";
-    mode = "0755";
-  };
+  systemd.user.tmpfiles.rules = [
+    "L %h/code 0755 - - - /code"
+  ];
 }
