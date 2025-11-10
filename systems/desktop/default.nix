@@ -96,6 +96,12 @@
     "bridge"
   ];
 
+  # Enable OpenRazer
+  hardware.openrazer = {
+    enable = true;
+    users = ["matthew"];
+  };
+
   # Enable SSH
   services.openssh.enable = true;
 

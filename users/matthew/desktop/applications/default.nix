@@ -31,5 +31,7 @@
     ungoogled-chromium
     video-trimmer
     wireshark
+
+    polychromatic
   ];
 }
