@@ -122,6 +122,7 @@
         hyprlang.follows = "hyprlang";
         hyprtoolkit.follows = "hyprtoolkit";
         hyprutils.follows = "hyprutils";
+        hyprwayland-scanner.follows = "hyprwayland-scanner";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
