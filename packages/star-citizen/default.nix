@@ -3,7 +3,7 @@
   pkgs,
   ...
 }: let
-  nix-gaming = inputs.nix-gaming.packages.${pkgs.system};
+  nix-gaming = inputs.nix-gaming.packages."${pkgs.stdenv.hostPlatform.system}";
 
   winetricks = nix-gaming.winetricks-git;
   wineprefix-preparer = pkgs.callPackage ./wineprefix-preparer.nix {

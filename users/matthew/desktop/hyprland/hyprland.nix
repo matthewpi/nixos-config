@@ -460,7 +460,7 @@ in {
         "$mainMod, Q, killactive"
 
         # Application keybinds
-        "$mainMod, Space, exec, ${lib.getExe outputs.packages.${pkgs.system}.ags} toggle launcher"
+        "$mainMod, Space, exec, ${lib.getExe outputs.packages."${pkgs.stdenv.hostPlatform.system}".ags} toggle launcher"
         "$mainMod, T, exec, ${alacritty}" # Terminal
         "$mainMod, B, exec, ${firefox}" # Web Browser
         "$mainMod, Z, exec, ${zed-editor}" # Code Editor

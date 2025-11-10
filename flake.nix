@@ -374,7 +374,7 @@
 
         packages = {
           agenix = inputs.agenix.packages."${system}".default;
-          ags = with inputs.ags.packages.${pkgs.system};
+          ags = with inputs.ags.packages."${system}";
             ags.override {
               extraPackages = [
                 apps

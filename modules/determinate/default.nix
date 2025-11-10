@@ -15,7 +15,7 @@
     mkMorePreferable = lib.mkOverride 75;
 
     determinatePackages = {
-      determinate-nix = inputs.nix.packages.${pkgs.stdenv.system}.nix.override (oldAttrs: {
+      determinate-nix = inputs.nix.packages."${pkgs.stdenv.hostPlatform.system}".nix.override (oldAttrs: {
         # Disable nix-functional-tests.
         nix-functional-tests = oldAttrs.nix-functional-tests.overrideAttrs {
           doCheck = false;

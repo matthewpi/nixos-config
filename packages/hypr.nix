@@ -5,7 +5,7 @@
     ...
   }: let
     fixPathForLazyTrees = input: attr:
-      input.packages.${system}.${attr}.overrideAttrs {
+      input.packages."${system}"."${attr}".overrideAttrs {
         src = builtins.path {
           name = "source";
           path = input;

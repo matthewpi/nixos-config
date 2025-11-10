@@ -5,7 +5,7 @@
   pkgs,
   ...
 }: let
-  ags = outputs.packages.${pkgs.system}.ags;
+  ags = outputs.packages."${pkgs.stdenv.hostPlatform.system}".ags;
 in {
   # Install the AGS CLI.
   home.packages = [ags];

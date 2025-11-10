@@ -15,7 +15,7 @@
   };
 
   src = fetchurl {
-    inherit (sources.${stdenv.system}) url hash;
+    inherit (sources."${stdenv.hostPlatform.system}") url hash;
   };
 
   meta = {
@@ -30,4 +30,4 @@
 in
   if stdenv.isLinux
   then callPackage ./linux.nix {inherit pname version src meta;}
-  else throw "Unsupported platform: ${stdenv.system}"
+  else throw "Unsupported platform: ${stdenv.hostPlatform.system}"
