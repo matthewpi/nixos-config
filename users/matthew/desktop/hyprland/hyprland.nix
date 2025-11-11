@@ -433,6 +433,11 @@ in {
         "size <50% <50%, class:^star trek online\.exe$"
         "center,         class:^star trek online\.exe$"
         "float,          class:^star trek online\.exe$"
+
+        # Polychromatic
+        "center,        class:polychromatic, title:negative:Polychromatic"
+        "float,         class:polychromatic, title:negative:Polychromatic"
+        "size <75% 50%, class:polychromatic, title:negative:Polychromatic"
       ];
 
       # Keybinds
