@@ -44,8 +44,10 @@ in {
       ".local/share/Steam"
     ]
     ++ lib.optionals isDesktop [
+      ".cache/polychromatic"
       ".cache/winetricks"
       ".config/streamdeck"
+      ".config/polychromatic"
       ".local/share/umu"
       "Games"
     ]
