@@ -15,10 +15,14 @@
 
     Service = {
       Type = "exec";
-      ExecStart = lib.getExe' pkgs.tailscale.systray "tailscale-systray";
+      ExecStart = "${lib.getExe pkgs.tailscale} systray";
       KillSignal = "SIGINT";
       Restart = "no";
       Slice = "background.slice";
+
+      Environment = [
+        "PATH=${lib.makeBinPath [pkgs.wl-clipboard]}"
+      ];
 
       # Capabilities
       CapabilityBoundingSet = "";

@@ -36,7 +36,6 @@
       monaspace = pkgs.callPackage ./monaspace/package.nix {};
       simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server/package.nix {};
       star-citizen = pkgs.callPackage ./star-citizen {inherit inputs;};
-      tailscale = pkgs.callPackage ./tailscale/package.nix {};
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
