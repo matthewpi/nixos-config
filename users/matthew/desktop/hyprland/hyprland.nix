@@ -43,7 +43,7 @@
   # Command used to launch discord.
   discord = mkSystemdRun {
     name = "com.discord.Discord";
-    command = lib.getExe pkgs.discord;
+    command = lib.getExe pkgs.vesktop;
   };
 
   # Command used to launch firefox.

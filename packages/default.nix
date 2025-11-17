@@ -57,6 +57,11 @@
           # withMoonlight = true;
           withTTS = false;
         };
+
+        vesktop = pkgs.vesktop.override {
+          withTTS = false;
+          withSystemVencord = true;
+        };
       });
   };
 }
