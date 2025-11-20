@@ -325,119 +325,78 @@ in {
 
       windowrule = [
         # Disable borders on floating windows.
-        "noborder, floating:1"
+        "match:float yes, border_size 0"
 
         # Inhibit idle whenever an application is fullscreened.
         # TODO: utilize window's content? (like game or video).
-        "idleinhibit always, fullscreen:1"
+        "match:fullscreen 1, idle_inhibit always"
 
-        # Picture in picture
-        "float,         title:Picture-in-Picture"
-        "forcergbx,     title:Picture-in-Picture"
-        "content video, title:Picture-in-Picture"
+        # Picture in picture.
+        "match:title Picture-in-Picture, float yes, force_rgbx yes, content video"
 
         # Float dialogs (mostly xdg-desktop-portal-gtk)
-        "float, title:^(Accounts)(.*)$"
-        "float, title:^(Choose wallpaper)(.*)$"
-        "float, title:^(Library)(.*)$"
-        "float, title:^(Save As)(.*)$"
-        "float, title:^(Save File)(.*)$"
-        "float, title:^(Select a File)(.*)$"
-        "float, title:^(Open File)(.*)$"
-        "float, title:^(Open Folder)(.*)$"
+        "match:title ^(Accounts)(.*)$, float yes"
+        "match:title ^(Choose wallpaper)(.*)$, float yes"
+        "match:title ^(Library)(.*)$, float yes"
+        "match:title ^(Save As)(.*)$, float yes"
+        "match:title ^(Save File)(.*)$, float yes"
+        "match:title ^(Select a File)(.*)$, float yes"
+        "match:title ^(Open File)(.*)$, float yes"
+        "match:title ^(Open Folder)(.*)$, float yes"
 
         # 1Password
-        "noscreenshare, class:1password" # applies to both the main window and floating prompt.
+        "match:class 1password, no_screen_share yes" # applies to both the main window and floating prompt.
 
         # 1Password Prompt
-        "dimaround, class:1password, floating:1"
-        "center,    class:1password, floating:1"
-        "pin,       class:1password, floating:1"
+        "match:class 1password, match:float yes, dim_around yes, center yes, pin yes"
 
         # Polkit (GNOME)
-        "noscreenshare, class:polkit-gnome-authentication-agent-1"
-        "dimaround,     class:polkit-gnome-authentication-agent-1"
-        "center,        class:polkit-gnome-authentication-agent-1"
-        "float,         class:polkit-gnome-authentication-agent-1"
-        "pin,           class:polkit-gnome-authentication-agent-1"
+        "match:class polkit-gnome-authentication-agent-1, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
 
         # Polkit (hyprpolkitagent)
-        "noscreenshare, title:Hyprland Polkit Agent"
-        "dimaround,     title:Hyprland Polkit Agent"
-        "center,        title:Hyprland Polkit Agent"
-        "float,         title:Hyprland Polkit Agent"
-        "pin,           title:Hyprland Polkit Agent"
+        "match:title Hyprland Polkit Agent, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
 
         # Screenshare Portal
-        "noscreenshare, title:MainPicker"
-        "dimaround,     title:MainPicker"
-        "center,        title:MainPicker"
-        "float,         title:MainPicker"
-        "pin,           title:MainPicker"
+        "match:title MainPicker, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
 
         # GNOME Keyring Prompt
-        "noscreenshare, class:gcr-prompter"
-        "dimaround,     class:gcr-prompter"
-        "center,        class:gcr-prompter"
-        "float,         class:gcr-prompter"
-        "pin,           class:gcr-prompter"
+        "match:class gcr-prompter, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
 
         # GNOME Calculator
-        "float, class:org\.gnome\.Calculator"
+        "match:class org\.gnome\.Calculator, float yes"
 
         # Prism Launcher
-        "float, title:^(.*) — Prism Launcher ([1-9]+\.[0-9])$"
-        "size <75% 50%, title:^(.*) — Prism Launcher ([1-9]+\.[0-9])$"
+        "match:title ^(.*) — Prism Launcher ([1-9]+\.[0-9])$, float yes, size <75% 50%"
 
         # Steam
-        "center, title:Steam, floating:1"
-        "float,  class:steam, title:Steam Settings"
+        "match:title Steam, match:float yes, center yes"
+        "match:class steam, match:title Steam Settings, float yes"
 
-        "size 328 768, class:steam, title:Friends List"
-        "float,  class:steam, title:Friends List"
+        "match:class steam, match:title Friends List, size 328 768, float yes"
 
-        "center, class:steam, title:negative:^(Steam|.?)$" # match everything but "Steam" or an empty title (dropdowns)
-        "float,  class:steam, title:negative:^(Steam|.?)$" # match everything but "Steam" or an empty title (dropdowns)
+        "match:class steam, match:title negative:^(Steam|.?)$, center yes, float yes" # match everything but "Steam" or an empty title (dropdowns)
 
         # mpv
-        "content video, class:mpv"
-        "fullscreen,    class:mpv"
+        "match:class mpv, content video, fullscreen yes"
 
         # Wine dialogs
-        "center, title:(Wine)"
-        "float,  title:(Wine)"
-        "pin,    title:(Wine)"
+        "match:title (Wine), center yes, float yes, pin yes"
 
         # CS2
-        "content game, class:cs2"
-        "fullscreen,   class:cs2"
-        "noanim,       class:cs2"
-        "noborder,     class:cs2"
-        "nodim,        class:cs2"
+        "match:class cs2, content game, fullscreen yes, no_anim yes, no_dim yes, border_size 0"
 
         # Game (Proton or Wine)
-        "content game, class:(.*)\.exe$"
-        "noanim,       class:(.*)\.exe$"
-        "noborder,     class:(.*)\.exe$"
-        "nodim,        class:(.*)\.exe$"
+        "match:class (.*)\.exe$, content game, fullscreen yes, no_anim yes, no_dim yes, border_size 0"
 
         # Star Citizen
-        "size <50% <50%, class:^rsi launcher\.exe$"
-        "center,         class:^rsi launcher\.exe$"
-        "float,          class:^rsi launcher\.exe$"
-        "size <50% <50%, class:^starcitizen_launcher\.exe$"
-        "center,         class:^starcitizen_launcher\.exe$"
-        "float,          class:^starcitizen_launcher\.exe$"
+        "match:class ^rsi launcher\.exe$, center yes, float yes, size <50% <50%"
+        "match:class ^starcitizen_launcher\.exe$, center yes, float yes, size <50% <50%"
 
         # Star Trek Online (Launcher)
-        "size <50% <50%, class:^star trek online\.exe$"
-        "center,         class:^star trek online\.exe$"
-        "float,          class:^star trek online\.exe$"
+        "match:class ^star trek online\.exe$, center yes, float yes, size <50% <50%"
 
         # Polychromatic
-        "center,        class:polychromatic, title:negative:Polychromatic"
-        "float,         class:polychromatic, title:negative:Polychromatic"
-        "size <75% 50%, class:polychromatic, title:negative:Polychromatic"
+        "match:class polychromatic, match:title negative:Polychromatic, center yes, float yes, size <75% 50%"
       ];
 
       # Keybinds
