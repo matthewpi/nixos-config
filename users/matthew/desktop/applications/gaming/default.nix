@@ -1,24 +1,17 @@
-{
-  isDesktop,
-  lib,
-  pkgs,
-  ...
-}: {
-  home.packages =
-    [
-      (pkgs.prismlauncher.override {
-        controllerSupport = false;
-        gamemodeSupport = false;
-        textToSpeechSupport = false;
-        jdks = with pkgs; [
-          temurin-jre-bin-8
-          temurin-jre-bin-17
-          temurin-jre-bin-21
-          temurin-jre-bin-25
-        ];
-      })
-    ]
-    ++ lib.optional isDesktop pkgs.star-citizen;
+{pkgs, ...}: {
+  home.packages = [
+    (pkgs.prismlauncher.override {
+      controllerSupport = false;
+      gamemodeSupport = false;
+      textToSpeechSupport = false;
+      jdks = with pkgs; [
+        temurin-jre-bin-8
+        temurin-jre-bin-17
+        temurin-jre-bin-21
+        temurin-jre-bin-25
+      ];
+    })
+  ];
 
   programs.mangohud = {
     enable = true;
