@@ -19,6 +19,7 @@
     [
       amberol
       cider2
+      gnome-online-accounts-gtk
       kooha
       # hoppscotch-desktop
       impression

@@ -94,6 +94,10 @@
     # Enable glib-networking.
     services.gnome.glib-networking.enable = lib.mkDefault true;
 
+    # Enable services required for GNOME Calendar.
+    services.gnome.gnome-online-accounts.enable = lib.mkDefault true;
+    services.gnome.evolution-data-server.enable = lib.mkDefault true;
+
     # Fixes issues with XDG portal definitions not being detected.
     # ref; https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
     environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
