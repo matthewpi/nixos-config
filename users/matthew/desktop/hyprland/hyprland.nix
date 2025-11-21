@@ -397,6 +397,9 @@ in {
 
         # Polychromatic
         "match:class polychromatic, match:title negative:Polychromatic, center yes, float yes, size <75% 50%"
+
+        # Virt Manager
+        "match:class \.virt-manager-wrapped, match:title negative:Virtual Machine Manager, center yes, float yes, size <75% 50%"
       ];
 
       # Keybinds

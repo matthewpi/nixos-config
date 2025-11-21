@@ -40,5 +40,6 @@
     ]
     ++ lib.optionals isDesktop [
       polychromatic
+      virt-manager
     ];
 }

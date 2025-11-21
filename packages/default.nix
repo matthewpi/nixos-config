@@ -36,6 +36,20 @@
       monaspace = pkgs.callPackage ./monaspace/package.nix {};
       simple-completion-language-server = pkgs.callPackage ./simple-completion-language-server/package.nix {};
       star-citizen = pkgs.callPackage ./star-citizen {inherit inputs;};
+
+      libvirt = pkgs.libvirt.override {
+        enableXen = false;
+        enableZfs = false;
+      };
+
+      libvirt-glib = pkgs.libvirt-glib.override {
+        inherit libvirt;
+      };
+
+      virt-manager = pkgs.virt-manager.override {
+        inherit libvirt-glib;
+        spiceSupport = false;
+      };
     };
   in {
     packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
