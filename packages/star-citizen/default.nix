@@ -27,8 +27,8 @@
       src = pkgs.fetchFromGitHub {
         owner = "Kron4ek";
         repo = "wine-tkg";
-        tag = "10.17";
-        hash = "sha256-/diEOe6uPquBhffpDEx5NofEBGcXzFVCJsxAkOyGiNI=";
+        tag = "10.19";
+        hash = "sha256-OhOBre5elbFYl1k3WL6qgi3nfb+sIn5BQOvcLJNpCsw=";
       };
 
       patches = let
