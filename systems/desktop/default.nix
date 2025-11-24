@@ -100,6 +100,7 @@
   hardware.openrazer = {
     enable = true;
     users = ["matthew"];
+    batteryNotifier.enable = false;
   };
 
   # Enable SSH
