@@ -237,4 +237,14 @@
     # see comment in include/linux/mm.h in the kernel tree.
     "vm.max_map_count" = 2147483642;
   };
+
+  services.ollama = {
+    enable = true;
+    acceleration = "vulkan";
+    environmentVariables = {
+      OLLAMA_GPU_OVERHEAD = builtins.toString (1024 * 1024 * 1024);
+      OLLAMA_MAX_LOADED_MODELS = "1";
+      OLLAMA_VULKAN = "1";
+    };
+  };
 }

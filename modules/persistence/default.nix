@@ -17,6 +17,7 @@
       ./iwd.nix
       ./libvirtd.nix
       ./networkmanager.nix
+      ./ollama.nix
       ./openssh.nix
       ./plymouth.nix
       ./podman.nix
