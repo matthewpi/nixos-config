@@ -366,7 +366,7 @@ in {
         "match:class org\.gnome\.Calculator, float yes"
 
         # Prism Launcher
-        "match:title ^(.*) — Prism Launcher ([1-9]+\.[0-9])$, float yes, size <75% 50%"
+        "match:title ^(.*) — Prism Launcher ([1-9]+\.[0-9])$, float yes, max_size 2880 1080"
 
         # Steam
         "match:title Steam, match:float yes, center yes"
@@ -389,17 +389,17 @@ in {
         "match:class (.*)\.exe$, content game, fullscreen yes, no_anim yes, no_dim yes, border_size 0"
 
         # Star Citizen
-        "match:class ^rsi launcher\.exe$, center yes, float yes, size <50% <50%"
-        "match:class ^starcitizen_launcher\.exe$, center yes, float yes, size <50% <50%"
+        "match:class ^rsi launcher\.exe$, center yes, float yes, max_size 1920 1080"
+        "match:class ^starcitizen_launcher\.exe$, center yes, float yes, max_size 1920 1080"
 
         # Star Trek Online (Launcher)
-        "match:class ^star trek online\.exe$, center yes, float yes, size <50% <50%"
+        "match:class ^star trek online\.exe$, center yes, float yes, max_size 1920 1080"
 
         # Polychromatic
-        "match:class polychromatic, match:title negative:Polychromatic, center yes, float yes, size <75% 50%"
+        "match:class polychromatic, match:title negative:Polychromatic, center yes, float yes, max_size 1920 1080"
 
         # Virt Manager
-        "match:class \.virt-manager-wrapped, match:title negative:Virtual Machine Manager, center yes, float yes, size <75% 50%"
+        "match:class ^\.virt-manager-wrapped$, match:title negative:Virtual Machine Manager, center yes, float yes, max_size 1920 1080"
       ];
 
       # Keybinds
