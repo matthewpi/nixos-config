@@ -18,10 +18,10 @@
   home.packages = with pkgs;
     [
       amberol
+      cartero
       cider2
       gnome-online-accounts-gtk
       kooha
-      # hoppscotch-desktop
       impression
       # ladybird
       libreoffice
