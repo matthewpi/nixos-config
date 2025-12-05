@@ -11,6 +11,7 @@
     ./supersonic.nix
     ./tailscale.nix
     ./terminal.nix
+    ./virt-manager.nix
     # ./vscode.nix
     ./zed-editor.nix
   ];
@@ -38,8 +39,5 @@
       video-trimmer
       wireshark
     ]
-    ++ lib.optionals isDesktop [
-      polychromatic
-      virt-manager
-    ];
+    ++ lib.optional isDesktop polychromatic;
 }
