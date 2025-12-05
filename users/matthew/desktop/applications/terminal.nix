@@ -38,8 +38,9 @@
   };
 
   programs.ghostty = {
-    enable = false;
+    enable = true;
     settings = {
+      theme = "Catppuccin Mocha";
       font-family = "Monaspace Neon NF";
       font-size = 10;
       font-feature = [
