@@ -107,6 +107,7 @@
         hyprlang.follows = "hyprlang";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
+        hyprwire.follows = "hyprwire";
         xdph.follows = "xdph";
         nixpkgs.follows = "nixpkgs";
         pre-commit-hooks.follows = "";
@@ -191,10 +192,13 @@
     hyprpaper = {
       url = "github:hyprwm/hyprpaper";
       inputs = {
+        aquamarine.follows = "aquamarine";
         hyprlang.follows = "hyprlang";
         hyprgraphics.follows = "hyprgraphics";
+        hyprtoolkit.follows = "hyprtoolkit";
         hyprutils.follows = "hyprutils";
         hyprwayland-scanner.follows = "hyprwayland-scanner";
+        hyprwire.follows = "hyprwire";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };
@@ -221,6 +225,15 @@
     hyprwayland-scanner = {
       url = "github:hyprwm/hyprwayland-scanner";
       inputs = {
+        nixpkgs.follows = "nixpkgs";
+        systems.follows = "systems-linux";
+      };
+    };
+
+    hyprwire = {
+      url = "github:hyprwm/hyprwire";
+      inputs = {
+        hyprutils.follows = "hyprutils";
         nixpkgs.follows = "nixpkgs";
         systems.follows = "systems-linux";
       };

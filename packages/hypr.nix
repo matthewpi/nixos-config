@@ -26,7 +26,7 @@
       };
 
       hyprland = (fixPathForLazyTrees inputs.hyprland "hyprland").override {
-        inherit aquamarine hyprcursor hyprgraphics hyprland-guiutils hyprland-protocols hyprlang hyprutils hyprwayland-scanner;
+        inherit aquamarine hyprcursor hyprgraphics hyprland-guiutils hyprland-protocols hyprlang hyprutils hyprwayland-scanner hyprwire;
       };
 
       hyprland-protocols = fixPathForLazyTrees inputs.hyprland-protocols "hyprland-protocols";
@@ -52,7 +52,7 @@
       };
 
       hyprpaper = (fixPathForLazyTrees inputs.hyprpaper "hyprpaper").override {
-        inherit hyprlang hyprgraphics hyprutils hyprwayland-scanner;
+        inherit aquamarine hyprlang hyprgraphics hyprtoolkit hyprutils hyprwayland-scanner hyprwire;
       };
 
       hyprpolkitagent = (fixPathForLazyTrees inputs.hyprpolkitagent "hyprpolkitagent").override {
@@ -66,6 +66,10 @@
       hyprutils = fixPathForLazyTrees inputs.hyprutils "hyprutils";
 
       hyprwayland-scanner = fixPathForLazyTrees inputs.hyprwayland-scanner "hyprwayland-scanner";
+
+      hyprwire = (fixPathForLazyTrees inputs.hyprwire "hyprwire").override {
+        inherit hyprutils;
+      };
 
       xdg-desktop-portal-hyprland = (fixPathForLazyTrees inputs.xdph "xdg-desktop-portal-hyprland").override {
         inherit hyprland hyprland-protocols hyprlang hyprutils hyprwayland-scanner;
