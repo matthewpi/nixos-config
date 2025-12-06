@@ -18,7 +18,7 @@
 
     outputs.nixosModules._1password
     outputs.nixosModules.desktop
-    outputs.nixosModules.determinate
+    # outputs.nixosModules.determinate
     outputs.nixosModules.hyprland
     outputs.nixosModules.persistence
     outputs.nixosModules.podman
