@@ -25,7 +25,6 @@
   }: let
     _packages = rec {
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin-wallpapers/package.nix {};
-      cider2 = pkgs.callPackage ./cider2 {};
       fast-syntax-highlighting = pkgs.callPackage ./fast-syntax-highlighting/package.nix {};
       freelens = pkgs.callPackage ./freelens/package.nix {inherit freelens-k8s-proxy;};
       freelens-k8s-proxy = pkgs.callPackage ./freelens-k8s-proxy/package.nix {};

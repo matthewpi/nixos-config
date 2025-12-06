@@ -330,7 +330,6 @@
                 builtins.elem (inputs.nixpkgs.lib.getName pkg) [
                   "1password"
                   "1password-cli"
-                  "cider2"
                   "discord"
                   "intelephense"
                   "obsidian"

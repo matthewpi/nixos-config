@@ -20,7 +20,6 @@
     [
       amberol
       cartero
-      cider2
       gnome-online-accounts-gtk
       kooha
       impression
