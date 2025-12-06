@@ -240,7 +240,7 @@
 
   services.ollama = {
     enable = true;
-    acceleration = "vulkan";
+    package = pkgs.ollama-vulkan;
     environmentVariables = {
       OLLAMA_GPU_OVERHEAD = builtins.toString (1024 * 1024 * 1024);
       OLLAMA_MAX_LOADED_MODELS = "1";
