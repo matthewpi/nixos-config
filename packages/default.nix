@@ -65,11 +65,6 @@
         _1password-gui = pkgs._1password-gui.overrideAttrs {preFixup = _1passwordPreFixup;};
         _1password-gui-beta = pkgs._1password-gui-beta.overrideAttrs {preFixup = _1passwordPreFixup;};
 
-        discord = pkgs.discord.override {
-          # withMoonlight = true;
-          withTTS = false;
-        };
-
         vesktop = pkgs.vesktop.override {
           withTTS = false;
           withSystemVencord = true;
