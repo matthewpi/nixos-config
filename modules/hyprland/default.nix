@@ -30,18 +30,26 @@
       package = pkgs.hyprland;
       portalPackage = pkgs.xdg-desktop-portal-hyprland;
       xwayland.enable = config.programs.xwayland.enable;
-      withUWSM = config.programs.uwsm.enable;
     };
 
-    # Configure UWSM.
-    programs.uwsm = {
-      enable = true;
-      waylandCompositors.hyprland = {
-        prettyName = "Hyprland";
-        comment = "Hyprland compositor managed by UWSM";
-        binPath = "/run/current-system/sw/bin/start-hyprland";
-      };
-    };
+    # Configure a display manager session for Hyprland using the absolute path
+    # to `start-hyprland`.
+    services.displayManager.sessionPackages = [
+      (pkgs.writeTextFile {
+        name = "hyprland";
+        text = ''
+          [Desktop Entry]
+          Name=Hyprland
+          Comment=An intelligent dynamic tiling Wayland compositor
+          Exec=${lib.getExe' config.programs.hyprland.package "start-hyprland"}
+          Type=Application
+          DesktopNames=Hyprland
+          Keywords=tiling;wayland;compositor;
+        '';
+        destination = "/share/wayland-sessions/hyprland.desktop";
+        derivationArgs.passthru.providedSessions = ["hyprland"];
+      })
+    ];
 
     # Add required packages to path.
     environment.systemPackages = [
@@ -50,11 +58,6 @@
       pkgs.pciutils
       pkgs.xdg-utils
     ];
-
-    # # Path fixes for Hyprland.
-    # systemd.user.extraConfig = ''
-    #   DefaultEnvironment="PATH=/run/wrappers/bin:/etc/profiles/per-user/%u/bin:/run/current-system/sw/bin:$PATH"
-    # '';
 
     # Configure hyprlock PAM.
     security.pam.services.hyprlock = {
@@ -82,7 +85,7 @@
       criticalPowerAction = lib.mkDefault "PowerOff";
     };
 
-    # Enable gvfs
+    # Enable gvfs.
     services.gvfs = {
       enable = lib.mkDefault true;
       package = pkgs.gvfs.override {
