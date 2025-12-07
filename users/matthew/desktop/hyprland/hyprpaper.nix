@@ -4,11 +4,15 @@
   in {
     enable = true;
     settings = {
-      ipc = false;
+      ipc = true;
       splash = false;
-      preload = [wallpaper];
-      # The comma here causes the same wallpaper to be rendered on all monitors.
-      wallpaper = [",${wallpaper}"];
+      wallpaper = [
+        {
+          monitor = "";
+          path = wallpaper;
+          fit_mode = "fill";
+        }
+      ];
     };
   };
 
