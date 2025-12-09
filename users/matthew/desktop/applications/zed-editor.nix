@@ -18,6 +18,9 @@
   # ref; https://github.com/zed-industries/zed/pull/26890
   home.sessionVariables.ZED_PATH_SAMPLE_COUNT = 0;
 
+  # TODO: why do these need to be installed globally?
+  home.packages = with pkgs; [nil nixd];
+
   programs.zed-editor = {
     enable = true;
     package = pkgs.zed-editor;
@@ -44,8 +47,8 @@
         ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/json-language-server
         ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/vscode-json-languageserver
       '')
-      nil
-      nixd
+      # nil
+      # nixd
       nodejs
       opentofu
       (runCommand "terraform" {} ''
