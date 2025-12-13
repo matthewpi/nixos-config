@@ -49,7 +49,7 @@
       '')
       # nil
       # nixd
-      nodejs
+      nodejs_24
       opentofu
       (runCommand "terraform" {} ''
         mkdir -p "$out"/bin
