@@ -144,6 +144,7 @@
   # Use geoclue as the location provider.
   location.provider = "geoclue2";
   services.geoclue2 = {
+    enableDemoAgent = false;
     enableNmea = false;
     enableWifi = true;
     geoProviderUrl = "https://api.beacondb.net/v1/geolocate";
