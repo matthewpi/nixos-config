@@ -120,9 +120,6 @@ in {
       variables = ["--all"];
     };
 
-    # https://github.com/nix-community/home-manager/issues/7230#issuecomment-2952907793
-    importantPrefixes = ["$" "bezier" "name" "source" "output"];
-
     settings = {
       # Enable the experimental color management protocol.
       experimental.xx_color_management_v4 = true;
