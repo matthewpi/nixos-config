@@ -11,7 +11,6 @@
     settings = {
       general = {
         hide_cursor = true;
-        grace = 5;
         ignore_empty_input = true;
       };
 
@@ -25,6 +24,7 @@
           enabled = nixosConfig.services.fprintd.enable;
           ready_message = "(Scan fingerprint to unlock)";
           present_message = "Scanning fingerprint";
+          retry_delay = 750;
         };
       };
 
