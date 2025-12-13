@@ -115,7 +115,10 @@ in {
     portalPackage = null;
 
     xwayland.enable = nixosConfig.programs.hyprland.xwayland.enable;
-    systemd.enable = !nixosConfig.programs.uwsm.enable;
+    systemd = {
+      enable = !nixosConfig.programs.uwsm.enable;
+      variables = ["--all"];
+    };
 
     # https://github.com/nix-community/home-manager/issues/7230#issuecomment-2952907793
     importantPrefixes = ["$" "bezier" "name" "source" "output"];
