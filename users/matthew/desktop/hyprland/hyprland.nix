@@ -300,12 +300,29 @@ in {
           {
             output = "eDP-1";
             mode = "2560x1600@165";
-            position = "-2560x720";
+            position = "0x0";
             scale = "1.333333";
             bitdepth = 8;
-            vrr = 0;
+            vrr = 3;
           }
-          # ", preferred, auto, 1, vrr,0, bitdepth,8"
+          {
+            output = "desc:Microstep MPG321UX OLED 0x01010101";
+            mode = "3840x2160@240";
+            position = "auto-center-up";
+            scale = "1.5";
+            bitdepth = 10;
+            cm = "hdredid";
+            sdrbrightness = 0.98;
+            sdrsaturation = 1.1;
+            supports_wide_color = true;
+            supports_hdr = true;
+            sdr_min_luminance = 0.005;
+            sdr_max_luminance = 275;
+            min_luminance = 0;
+            max_luminance = 1000;
+            max_avg_luminance = 400;
+            vrr = 3; # Enable VRR (variable refresh-rate) for fullscreened `game` or `video` windows.
+          }
         ];
 
       workspace =
