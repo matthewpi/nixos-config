@@ -103,13 +103,6 @@
           icon = "briefcase";
           name = "Work";
         };
-
-        rock = {
-          id = 3;
-          color = "green";
-          icon = "tree";
-          name = "Rock";
-        };
       };
 
       search = {
