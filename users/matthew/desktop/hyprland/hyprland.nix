@@ -117,6 +117,7 @@ in {
     xwayland.enable = nixosConfig.programs.hyprland.xwayland.enable;
     systemd = {
       enable = !nixosConfig.programs.uwsm.enable;
+      enableXdgAutostart = true;
       variables = ["--all"];
     };
 

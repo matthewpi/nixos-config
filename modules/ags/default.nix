@@ -19,13 +19,23 @@ in {
       Description = "AGS";
       Documentation = "https://github.com/Aylur/ags";
       After = ["graphical-session-pre.target"];
-      Before = [config.wayland.systemd.target];
+      Before = ["xdg-desktop-autostart.target"];
+      PartOf = [config.wayland.systemd.target];
     };
 
     Install.WantedBy = [config.wayland.systemd.target];
 
     Service = {
       ExecStart = "${lib.getExe ags} run --gtk 4";
+      # Wait 1 second after AGS starts before continuing.
+      #
+      # This helps avoid a timing issue where system tray applications autostart
+      # before AGS is actually ready.
+      #
+      # TODO: does pre-building/bundling resolve this? We also may want to
+      # consider adding sdnotify into AGS instead just to be 100% sure we don't
+      # encounter any timing issues.
+      ExecStartPost = "${lib.getExe' pkgs.coreutils "sleep"} 1";
       Slice = "session.slice";
 
       Restart = "on-failure";
