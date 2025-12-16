@@ -27,19 +27,19 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "freelens";
-    version = "1.6.1";
+    version = "1.7.0";
 
     src = fetchFromGitHub {
       owner = "freelensapp";
       repo = "freelens";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-QO064mApXbMPUGULTe7BihTwqK0LGWOlhOVTtDPW8Oo=";
+      hash = "sha256-LTsS6QuILMaLE/TxMykCYBunooOUtyXFmahUWu+INjY=";
     };
 
     pnpmDeps = pnpm.fetchDeps {
       inherit (finalAttrs) pname version src;
       fetcherVersion = 1;
-      hash = "sha256-2L4+w75+4VMXpP7KgZd5P4h0rw1sePe+Fc8ddzZVVyw=";
+      hash = "sha256-myokxAXqJ3koxdSQs/q/CSKRY9+mRE+4yhWNI5PfKPo=";
     };
 
     strictDeps = true;
@@ -85,17 +85,22 @@ in
         --replace-fail 'process.resourcesPath' "'$out/share/freelens/resources'"
     '';
 
+    postPatch = ''
+      sed -i -e 's/corepack //g' freelens/package.json
+      sed -i '/"build:resources:client"/d' freelens/package.json
+    '';
+
     buildPhase = ''
       runHook preBuild
 
       # Build the application and all of it's dependencies in the monorepo.
-      pnpm run --recursive --use-stderr --stream build
+      pnpm run build
 
       # Switch to the directory where the Electron application is located.
       cd freelens
 
       # Pre-build the electron part of the application.
-      pnpm run prebuild:app
+      pnpm electron-rebuild
 
       # Run electron-builder, making sure it uses the electron from nixpkgs.
       pnpm exec electron-builder \
