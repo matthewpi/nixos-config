@@ -93,6 +93,7 @@ function Notification({ n }: NotificationProps) {
 								halign={Gtk.Align.START}
 								xalign={0}
 								justify={Gtk.Justification.FILL}
+								ellipsize={Pango.EllipsizeMode.END}
 								useMarkup
 								wrap
 								label={n.body}
