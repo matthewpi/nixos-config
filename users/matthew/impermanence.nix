@@ -57,6 +57,7 @@ in {
       ".cache/buf"
       ".cache/chromium"
       ".cache/containers"
+      ".cache/cue"
       ".cache/evolution"
       ".cache/fontconfig"
       ".cache/golangci-lint"
