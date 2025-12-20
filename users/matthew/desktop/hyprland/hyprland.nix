@@ -358,14 +358,14 @@ in {
         "match:title Picture-in-Picture, float yes, force_rgbx yes, content video"
 
         # Float dialogs (mostly xdg-desktop-portal-gtk)
-        "match:title ^(Accounts)(.*)$, float yes"
-        "match:title ^(Choose wallpaper)(.*)$, float yes"
-        "match:title ^(Library)(.*)$, float yes"
-        "match:title ^(Save As)(.*)$, float yes"
-        "match:title ^(Save File)(.*)$, float yes"
-        "match:title ^(Select a File)(.*)$, float yes"
-        "match:title ^(Open File)(.*)$, float yes"
-        "match:title ^(Open Folder)(.*)$, float yes"
+        "match:title ^(Accounts)(.*)$, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
+        "match:title ^(Choose wallpaper)(.*)$, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
+        "match:title ^(Library)(.*)$, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
+        "match:title ^(Save As)(.*)$, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
+        "match:title ^(Save File)(.*)$, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
+        "match:title ^(Select a File)(.*)$, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
+        "match:title ^(Open File)(.*)$, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
+        "match:title ^(Open Folder)(.*)$, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
 
         # 1Password
         "match:class 1password, no_screen_share yes" # applies to both the main window and floating prompt.
@@ -380,7 +380,7 @@ in {
         "match:title Hyprland Polkit Agent, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
 
         # Screenshare Portal
-        "match:title MainPicker, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
+        "match:title Select what to share, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
 
         # GNOME Keyring Prompt
         "match:class gcr-prompter, no_screen_share yes, dim_around yes, center yes, float yes, pin yes"
@@ -406,7 +406,7 @@ in {
         "match:title (Wine), center yes, float yes, pin yes"
 
         # CS2
-        "match:class cs2, content game, fullscreen yes, no_anim yes, no_dim yes, border_size 0"
+        "match:class cs2, content game, fullscreen yes, no_anim yes, no_dim yes, border_size 0, render_unfocused yes"
 
         # Game (Proton or Wine)
         "match:class (.*)\.exe$, content game, fullscreen yes, no_anim yes, no_dim yes, border_size 0"
