@@ -24,7 +24,6 @@
       kooha
       impression
       # ladybird
-      libreoffice
       ledger-live-desktop
       obsidian
       overskride
@@ -37,6 +36,11 @@
       ungoogled-chromium
       video-trimmer
       wireshark
+
+      libreoffice
+      hunspell
+      hunspellDicts.en_CA
+      hunspellDicts.en_US
     ]
     ++ lib.optional isDesktop polychromatic;
 }
