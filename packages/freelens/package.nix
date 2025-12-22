@@ -2,6 +2,7 @@
   copyDesktopItems,
   electron,
   fetchFromGitHub,
+  fetchPnpmDeps,
   freelens-k8s-proxy,
   kubectl,
   kubernetes-helm,
@@ -10,12 +11,10 @@
   makeWrapper,
   nodejs_22,
   pnpm_10,
+  pnpmConfigHook,
   python3,
   stdenv,
 }: let
-  nodejs = nodejs_22;
-  pnpm = pnpm_10;
-
   # https://www.electron.build/builder-util.typealias.archtype
   binaryArchitecture =
     {
@@ -36,18 +35,20 @@ in
       hash = "sha256-LTsS6QuILMaLE/TxMykCYBunooOUtyXFmahUWu+INjY=";
     };
 
-    pnpmDeps = pnpm.fetchDeps {
+    pnpmDeps = fetchPnpmDeps {
       inherit (finalAttrs) pname version src;
-      fetcherVersion = 1;
-      hash = "sha256-myokxAXqJ3koxdSQs/q/CSKRY9+mRE+4yhWNI5PfKPo=";
+      pnpm = pnpm_10;
+      fetcherVersion = 3;
+      hash = "sha256-+lRvfKi6it7GOL0exDiLD5UoX9EtZWMTLAXJnYxeb0o=";
     };
 
     strictDeps = true;
     nativeBuildInputs = [
       copyDesktopItems
       makeWrapper
-      nodejs
-      pnpm.configHook
+      nodejs_22
+      pnpm_10
+      pnpmConfigHook
       python3
     ];
 
