@@ -80,6 +80,7 @@ in {
       ".config/Flipper Devices Inc"
       ".config/Freelens"
       ".config/Ledger Live"
+      ".config/Signal"
       ".config/Slack"
       ".config/attic"
       ".config/aws"
