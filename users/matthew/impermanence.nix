@@ -48,6 +48,7 @@ in {
       ".cache/winetricks"
       ".config/streamdeck"
       ".config/polychromatic"
+      ".cache/umu"
       ".local/share/umu"
       "Games"
     ]
