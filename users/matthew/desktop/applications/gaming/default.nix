@@ -6,6 +6,7 @@
 }: {
   home.packages =
     [
+      pkgs.blockbench
       (pkgs.prismlauncher.override {
         controllerSupport = false;
         gamemodeSupport = false;

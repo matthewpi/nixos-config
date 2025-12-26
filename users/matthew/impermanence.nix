@@ -76,6 +76,7 @@ in {
       ".cache/turbo"
 
       ".config/1Password"
+      ".config/Blockbench"
       ".config/Flipper Devices Inc"
       ".config/Freelens"
       ".config/Ledger Live"
