@@ -131,5 +131,11 @@
 
     # Enable tcpdump
     programs.tcpdump.enable = true;
+
+    # Use the SCX LAVD scheduler by default.
+    services.scx = {
+      enable = lib.mkDefault true;
+      scheduler = lib.mkDefault "scx_lavd";
+    };
   };
 }
