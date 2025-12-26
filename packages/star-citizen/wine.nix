@@ -1,18 +1,26 @@
 {
+  callPackage,
   inputs,
   lib,
-  pkgs,
-  pkgsCross,
-  pkgsi686Linux,
-  callPackage,
   moltenvk,
   overrideCC,
-  wrapCCMulti,
-  gcc14,
+  pkgs,
+  pkgsCross,
   stdenv,
+  wine-mono,
+  wrapCCMulti,
   src ? null,
   patches ? [],
+  llvmBuild ? true,
+  llvmPackages_latest,
 }: let
+  gccName = "gcc14";
+
+  wineStdenv =
+    if llvmBuild
+    then llvmPackages_latest.stdenv
+    else overrideCC stdenv (wrapCCMulti pkgs.${gccName});
+
   nixpkgsWineDir = "pkgs/applications/emulators/wine";
 
   nixpkgs-wine = builtins.path {
@@ -26,19 +34,20 @@
     );
   };
 
-  base = let
-    sources = (import "${nixpkgs-wine}/${nixpkgsWineDir}/sources.nix" {inherit pkgs;}).unstable;
-  in {
-    inherit moltenvk;
-    buildScript = "${nixpkgs-wine}/${nixpkgsWineDir}/builder-wow.sh";
-    configureFlags = ["--disable-tests"];
+  wineRelease = "unstable";
+  sources = (import "${nixpkgs-wine}/${nixpkgsWineDir}/sources.nix" {inherit pkgs;}).${wineRelease};
+
+  base = {
+    inherit moltenvk wineRelease;
+    buildScript = null;
+    configureFlags = ["--disable-tests" "--enable-archs=x86_64,i386" "--with-ffmpeg"];
     geckos = with sources; [gecko32 gecko64];
-    mingwGccs = with pkgsCross; [mingw32.buildPackages.gcc14 mingwW64.buildPackages.gcc14];
-    monos = with sources; [mono];
-    pkgArches = [pkgs pkgsi686Linux];
+    mingwGccs = [pkgsCross.mingw32.buildPackages.${gccName} pkgsCross.mingwW64.buildPackages.${gccName}];
+    monos = [wine-mono];
+    pkgArches = [pkgs];
     platforms = ["x86_64-linux"];
-    stdenv = overrideCC stdenv (wrapCCMulti gcc14);
-    wineRelease = "unstable";
+    stdenv = wineStdenv;
+    mainProgram = "wine";
     supportFlags = {
       gettextSupport = true;
       fontconfigSupport = true;
@@ -60,7 +69,12 @@
       x11Support = true;
       usbSupport = true;
       gtkSupport = true;
-      gstreamerSupport = true;
+      # We don't need gstreamer with `ffmpeg-full`.
+      #
+      # NOTE: if gstreamer is enabled, update the `WINE_BIN` (in `./package.nix`)
+      # to use the binary name `".wine"`, otherwise winetricks will fail to
+      # detect the type of Wine being used.
+      gstreamerSupport = false;
       openalSupport = true;
       openclSupport = true;
       odbcSupport = true;
@@ -71,7 +85,7 @@
       gphoto2Support = true;
       embedInstallers = true;
       waylandSupport = true;
-      ffmpegSupport = true;
+      ffmpegSupport = false; # actually true :^)
     };
   };
 in

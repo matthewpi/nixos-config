@@ -412,7 +412,7 @@ in {
         "match:class (.*)\.exe$, content game, fullscreen yes, no_anim yes, no_dim yes, border_size 0"
 
         # Star Citizen
-        "match:class ^rsi launcher\.exe$, center yes, float yes, max_size 1920 1080"
+        "match:title ^RSI Launcher$, center yes, float yes, max_size 1280 720"
         "match:class ^starcitizen_launcher\.exe$, center yes, float yes, max_size 1920 1080"
 
         # Star Trek Online (Launcher)

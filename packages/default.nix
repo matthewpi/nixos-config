@@ -30,7 +30,8 @@
       freelens-k8s-proxy = pkgs.callPackage ./freelens-k8s-proxy/package.nix {};
       inter = pkgs.callPackage ./inter/package.nix {};
       monaspace = pkgs.callPackage ./monaspace/package.nix {};
-      star-citizen = pkgs.callPackage ./star-citizen {inherit inputs;};
+      proton-ge-bin = pkgs.callPackage ./proton-ge-bin/package.nix {};
+      star-citizen = pkgs.callPackage ./star-citizen {inherit inputs proton-ge-bin;};
 
       libvirt = pkgs.libvirt.override {
         enableXen = false;

@@ -7,6 +7,9 @@ Windows Registry Editor Version 5.00
 "d3d12core"="native"
 "d3d9"="native"
 "dxgi"="native"
+"icu"="native"
+"icuin"="native"
+"icuuc"="native"
 "winex11.drv"="d"
 "winewayland.drv"="b"
 
