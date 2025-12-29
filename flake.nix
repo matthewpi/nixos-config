@@ -287,7 +287,7 @@
     };
 
     nix = {
-      url = "github:DeterminateSystems/nix-src/v3.15.0";
+      url = "github:DeterminateSystems/nix-src/v3.15.1";
       inputs = {
         flake-parts.follows = "flake-parts";
         git-hooks-nix.follows = "";
@@ -299,7 +299,7 @@
 
     # NOTE: unfree
     determinate-nixd-x86_64-linux = {
-      url = "https://install.determinate.systems/determinate-nixd/tag/v3.15.0/x86_64-linux";
+      url = "https://install.determinate.systems/determinate-nixd/tag/v3.15.1/x86_64-linux";
       flake = false;
     };
   };
