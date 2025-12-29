@@ -1,6 +1,6 @@
 {
   copyDesktopItems,
-  electron,
+  electron_39,
   fetchFromGitHub,
   fetchPnpmDeps,
   freelens-k8s-proxy,
@@ -15,6 +15,8 @@
   python3,
   stdenv,
 }: let
+  electron = electron_39;
+
   # https://www.electron.build/builder-util.typealias.archtype
   binaryArchitecture =
     {
@@ -26,20 +28,20 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "freelens";
-    version = "1.7.0";
+    version = "1.8.0";
 
     src = fetchFromGitHub {
       owner = "freelensapp";
       repo = "freelens";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-LTsS6QuILMaLE/TxMykCYBunooOUtyXFmahUWu+INjY=";
+      hash = "sha256-8hfFo+VGFpHUKIEejgJRAkOJuNfrsClDTAAL7/Qco6s=";
     };
 
     pnpmDeps = fetchPnpmDeps {
       inherit (finalAttrs) pname version src;
       pnpm = pnpm_10;
       fetcherVersion = 3;
-      hash = "sha256-+lRvfKi6it7GOL0exDiLD5UoX9EtZWMTLAXJnYxeb0o=";
+      hash = "sha256-MPwfizvayR9N4+1P7mfxrwnSFKwPy9gX9ZOaTlutiLQ=";
     };
 
     strictDeps = true;
