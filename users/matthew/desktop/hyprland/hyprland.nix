@@ -122,9 +122,6 @@ in {
     };
 
     settings = {
-      # Enable the experimental color management protocol.
-      experimental.xx_color_management_v4 = true;
-
       # Always report HDR mode as preferred.
       #
       # ref; https://wiki.hypr.land/Configuring/Variables/#quirks
