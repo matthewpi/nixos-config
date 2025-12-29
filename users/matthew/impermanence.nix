@@ -108,6 +108,7 @@ in {
         mode = "0700";
       }
 
+      ".local/share/Freelens"
       ".local/share/PrismLauncher"
       ".local/share/cargo"
       ".local/share/containers"

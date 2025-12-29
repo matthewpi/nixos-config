@@ -84,6 +84,9 @@ in
     preBuild = lib.optionalString stdenv.hostPlatform.isLinux ''
       substituteInPlace packages/core/src/common/vars/lens-resources-dir.injectable.ts \
         --replace-fail 'process.resourcesPath' "'$out/share/freelens/resources'"
+
+      substituteInPlace packages/core/src/extensions/extension-discovery/extension-discovery.ts \
+        --replace-fail '".freelens", "extensions"' '".local", "share", "Freelens"'
     '';
 
     postPatch = ''
