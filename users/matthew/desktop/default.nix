@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{
   imports = [
     ./applications
     ./hyprland
@@ -6,10 +6,5 @@
 
     ./gtk.nix
     ./mime.nix
-  ];
-
-  home.packages = with pkgs; [
-    # Install nvtop
-    nvtopPackages.amd
   ];
 }

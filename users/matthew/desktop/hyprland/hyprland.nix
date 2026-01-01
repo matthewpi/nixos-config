@@ -193,7 +193,7 @@ in {
 
         default_monitor =
           if isDesktop
-          then "DP-1"
+          then "DP-4"
           else "eDP-1";
       };
 
@@ -265,7 +265,7 @@ in {
         if isDesktop
         then [
           {
-            output = "DP-1";
+            output = "DP-4";
             mode = "3840x2160@240";
             position = "0x0";
             scale = "1.5";
@@ -285,14 +285,14 @@ in {
             vrr = 3; # Enable VRR (variable refresh-rate) for fullscreened `game` or `video` windows.
           }
           {
-            output = "DP-2";
+            output = "DP-3";
             mode = "3840x2160@60";
             position = "-2560x-720";
             scale = "1.5";
             bitdepth = 8;
           }
           {
-            output = "DP-3";
+            output = "DP-2";
             mode = "3840x2160@60";
             position = "-2560x720";
             scale = "1.5";

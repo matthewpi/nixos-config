@@ -1,4 +1,5 @@
 {
+  config,
   lib,
   pkgs,
   ...
@@ -8,6 +9,19 @@
   boot.kernelModules = ["kvm-amd"];
   boot.initrd.availableKernelModules = ["ahci" "nvme" "usbhid" "xhci_pci"];
   boot.initrd.supportedFilesystems = ["btrfs"]; # "ntfs"
+
+  services.xserver.videoDrivers = ["nvidia"];
+  hardware.graphics.enable = true;
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.latest;
+    open = true;
+    modesetting.enable = true;
+  };
+
+  environment.systemPackages = with pkgs; [
+    nvidia-vaapi-driver
+    nvtopPackages.nvidia
+  ];
 
   # Change the boot loader timeout to 3 seconds.
   boot.loader.timeout = 3;

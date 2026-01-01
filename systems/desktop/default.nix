@@ -10,7 +10,6 @@
   imports = [
     inputs.nixos-hardware.nixosModules.common-cpu-amd
     inputs.nixos-hardware.nixosModules.common-cpu-amd-pstate
-    inputs.nixos-hardware.nixosModules.common-gpu-amd
 
     inputs.agenix.nixosModules.default
     inputs.disko.nixosModules.disko
@@ -240,11 +239,10 @@
 
   services.ollama = {
     enable = true;
-    package = pkgs.ollama-vulkan;
+    package = pkgs.ollama-cuda;
     environmentVariables = {
-      OLLAMA_GPU_OVERHEAD = builtins.toString (1024 * 1024 * 1024);
+      OLLAMA_GPU_OVERHEAD = toString (1024 * 1024 * 1024);
       OLLAMA_MAX_LOADED_MODELS = "1";
-      OLLAMA_VULKAN = "1";
     };
   };
 }

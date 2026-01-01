@@ -326,22 +326,41 @@
 
             config = {
               # Allow some unfree packages by name.
-              allowUnfreePredicate = pkg:
-                builtins.elem (inputs.nixpkgs.lib.getName pkg) [
-                  "1password"
-                  "1password-cli"
-                  "discord"
-                  "intelephense"
-                  "obsidian"
-                  "slack"
-                  "star-citizen"
-                  "steam"
-                  "steam-unwrapped"
+              allowUnfreePredicate = pkg: let
+                name = inputs.nixpkgs.lib.getName pkg;
+              in (
+                if inputs.nixpkgs.lib.hasPrefix "cuda_" name
+                then true
+                else
+                  builtins.elem name [
+                    "1password"
+                    "1password-cli"
+                    "discord"
+                    "intelephense"
+                    "obsidian"
+                    "slack"
+                    "star-citizen"
+                    "steam"
+                    "steam-unwrapped"
 
-                  # Firefox Extensions (nxb)
-                  "night-eye-dark-mode"
-                  "onepassword-password-manager"
-                ];
+                    # Firefox Extensions (nxb)
+                    "night-eye-dark-mode"
+                    "onepassword-password-manager"
+
+                    # NVIDIA (desktop)
+                    "cuda-merged"
+                    "libcufft"
+                    "libcublas"
+                    "libcurand"
+                    "libcusolver"
+                    "libnvjitlink"
+                    "libcusparse"
+                    "libnpp"
+
+                    "nvidia-x11"
+                    "nvidia-settings"
+                  ]
+              );
             };
           };
 

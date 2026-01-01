@@ -1,4 +1,4 @@
-{
+{pkgs, ...}: {
   boot.initrd.systemIdentity.pcr15 = "ce573d6fcabb125bc170724af61424b1992dfeaf7e258591c343efb76bff4b0b";
 
   boot.kernelModules = ["kvm-amd"];
@@ -10,4 +10,8 @@
 
   # Use systemd stage 1.
   boot.initrd.systemd.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    nvtopPackages.amd
+  ];
 }
