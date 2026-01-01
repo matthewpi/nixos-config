@@ -16,6 +16,7 @@
   stdenv,
 }: let
   electron = electron_39;
+  pnpm = pnpm_10.override {nodejs = nodejs_22;};
 
   # https://www.electron.build/builder-util.typealias.archtype
   binaryArchitecture =
@@ -39,7 +40,7 @@ in
 
     pnpmDeps = fetchPnpmDeps {
       inherit (finalAttrs) pname version src;
-      pnpm = pnpm_10;
+      inherit pnpm;
       fetcherVersion = 3;
       hash = "sha256-MPwfizvayR9N4+1P7mfxrwnSFKwPy9gX9ZOaTlutiLQ=";
     };
@@ -49,7 +50,7 @@ in
       copyDesktopItems
       makeWrapper
       nodejs_22
-      pnpm_10
+      pnpm
       pnpmConfigHook
       python3
     ];
