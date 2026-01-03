@@ -68,6 +68,36 @@
             withTTS = false;
             withSystemVencord = true;
           }).overrideAttrs {
+            # https://github.com/NixOS/nixpkgs/pull/476347
+            preBuild =
+              lib.optionalString pkgs.stdenv.hostPlatform.isDarwin ''
+                cp -r ${pkgs.electron.dist}/Electron.app .
+                chmod -R u+w Electron.app
+              ''
+              + lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
+                cp -r ${pkgs.electron.dist} electron-dist
+                chmod -R u+w electron-dist
+              '';
+
+            buildPhase = let
+              electron-dist =
+                if pkgs.stdenv.hostPlatform.isDarwin
+                then "."
+                else "electron-dist";
+            in ''
+              runHook preBuild
+
+              pnpm build
+              pnpm exec electron-builder \
+                --dir \
+                -c.asarUnpack="**/*.node" \
+                -c.electronDist=${electron-dist} \
+                -c.electronVersion=${pkgs.electron.version}
+
+              runHook postBuild
+            '';
+            # END https://github.com/NixOS/nixpkgs/pull/476347
+
             postFixup =
               lib.optionalString pkgs.stdenv.hostPlatform.isLinux ''
                 makeWrapper ${lib.getExe pkgs.electron} "$out"/bin/vesktop \
