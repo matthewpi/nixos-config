@@ -245,4 +245,15 @@
       OLLAMA_MAX_LOADED_MODELS = "1";
     };
   };
+
+  services.apcupsd = {
+    enable = true;
+    # This UPS is dedicated only to the system and no other devices, so
+    # only shutdown when the battery hits 25% or has less than 3 minutes
+    # of estimated runtime left.
+    configText = ''
+      BATTERYLEVEL 25
+      MINUTES 3
+    '';
+  };
 }
