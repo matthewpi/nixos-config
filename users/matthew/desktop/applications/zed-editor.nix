@@ -287,7 +287,7 @@
         };
       };
 
-      # Disable AI completion.
+      # Disable AI edit predictions.
       features.edit_prediction_provider = "none";
 
       # Disable completions in comments.
@@ -303,6 +303,30 @@
       agent = {
         enabled = true;
         button = true;
+      };
+
+      # Configure the available models for Ollama.
+      language_models.ollama = {
+        available_models = [
+          {
+            name = "devstral-small-2:24b";
+            display_name = "Devstral Small 2";
+            # Defaults to 384K which exceeds our available VRAM.
+            max_tokens = 65536;
+            supports_tools = true;
+            supports_thinking = false;
+            supports_images = true;
+          }
+          {
+            # ~17 GB of VRAM
+            name = "gpt-oss:20b";
+            display_name = "GPT OSS";
+            max_tokens = 131072; # Default amount of tokens for the model.
+            supports_tools = true;
+            supports_thinking = true;
+            supports_images = false;
+          }
+        ];
       };
     };
 
