@@ -26,11 +26,11 @@
   nixpkgs-wine = builtins.path {
     path = inputs.nixpkgs;
     name = "source";
-    filter = path: type: let
+    filter = p: type: let
       wineDir = "${inputs.nixpkgs}/${nixpkgsWineDir}/";
     in (
-      (type == "directory" && (lib.hasPrefix path wineDir))
-      || (type != "directory" && (lib.hasPrefix wineDir path))
+      (type == "directory" && (lib.hasPrefix p wineDir))
+      || (type != "directory" && (lib.hasPrefix wineDir p))
     );
   };
 
