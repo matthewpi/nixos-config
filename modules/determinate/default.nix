@@ -1,4 +1,4 @@
-{inputs, ...}: {
+{
   flake.nixosModules.determinate = {
     config,
     lib,
@@ -15,13 +15,8 @@
     mkMorePreferable = lib.mkOverride 75;
 
     determinatePackages = {
-      determinate-nix = inputs.nix.packages."${pkgs.stdenv.hostPlatform.system}".nix.override (oldAttrs: {
-        # Disable nix-functional-tests.
-        nix-functional-tests = oldAttrs.nix-functional-tests.overrideAttrs {
-          doCheck = false;
-        };
-      });
-      determinate-nixd = pkgs.callPackage ./determinate-nixd.nix {inherit inputs;};
+      determinate-nix = pkgs.callPackage ./determinate-nix.nix {};
+      determinate-nixd = pkgs.callPackage ./determinate-nixd.nix {};
     };
   in {
     options.determinate = {

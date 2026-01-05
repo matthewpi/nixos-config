@@ -15,6 +15,8 @@
         runHook postBuild
       '';
     };
+
+    lowdown = prev.lowdown.overrideAttrs {patches = [];};
   };
 
   perSystem = {
