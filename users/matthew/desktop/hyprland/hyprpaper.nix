@@ -3,6 +3,7 @@
     wallpaper = "${pkgs.catppuccin-wallpapers}/CatppuccinMocha-Kurzgesagt-CloudyQuasar1.png";
   in {
     enable = true;
+    importantPrefixes = ["monitor"];
     settings = {
       ipc = true;
       splash = false;
