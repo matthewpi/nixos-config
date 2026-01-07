@@ -157,8 +157,8 @@ in {
 
       vim.notify = require("notify")
 
-      require("nvim-treesitter.configs").setup({
-        parser_install_dir = "/home/matthew/.cache/tree-sitter",
+      require("nvim-treesitter").setup({
+        install_dir = "/home/matthew/.cache/tree-sitter",
         auto_install = false,
         highlight = {
           enable = true,
@@ -166,8 +166,6 @@ in {
         },
       })
       vim.opt.runtimepath:append("/home/matthew/.cache/tree-sitter")
-
-      local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
 
       vim.filetype.add({
         filename = {
