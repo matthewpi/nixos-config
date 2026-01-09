@@ -239,7 +239,13 @@
       };
     };
 
-    impermanence.url = "github:nix-community/impermanence";
+    impermanence = {
+      url = "github:nix-community/impermanence";
+      inputs = {
+        home-manager.follows = "home-manager";
+        nixpkgs.follows = "nixpkgs";
+      };
+    };
 
     lanzaboote = {
       url = "github:matthewpi/lanzaboote/fixes";
