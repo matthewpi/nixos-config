@@ -33,12 +33,14 @@
       cue
       d2
       delve
+      delve-shim-dap
       emmet-language-server
       eslint
       config.programs.git.package
       go_1_25
       gopls
       golangci-lint
+      golangci-lint-langserver
       (go-tools.override {buildGoModule = pkgs.buildGoLatestModule;})
       harper
       intelephense
