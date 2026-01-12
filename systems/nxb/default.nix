@@ -129,7 +129,7 @@
   # Enable the community built framework kernel module.
   hardware.framework.enableKmod = true;
 
-  environment.systemPackages = with pkgs; [brightnessctl easyeffects];
+  environment.systemPackages = with pkgs; [brightnessctl];
   programs.corectrl.enable = false;
   services.ratbagd.enable = false;
 
