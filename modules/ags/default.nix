@@ -11,7 +11,7 @@ in {
   home.packages = [ags];
 
   # Link the config to `.config/ags`.
-  xdg.configFile."ags".source = builtins.filterSource (path: _type: path != "default.nix") ./.;
+  xdg.configFile."ags".source = builtins.filterSource (p: _type: p != "default.nix") ./.;
 
   # Configure a systemd user service for AGS.
   systemd.user.services.ags = {
