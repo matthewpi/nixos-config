@@ -65,5 +65,9 @@
     "\${XDG_STATE_HOME}/nix/profile"
     "/etc/profiles/per-user/$USER"
     "/run/current-system/sw"
+
+    # Flatpak
+    "$HOME/.local/share/flatpak/exports"
+    "/var/lib/flatpak/exports"
   ];
 }
