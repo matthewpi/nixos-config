@@ -5,10 +5,6 @@
   pkgs,
   ...
 }: {
-  imports = [
-    ./matthew/impermanence.nix
-  ];
-
   # Configure matthew with home-manager.
   home-manager.users = {
     matthew = import ./matthew/linux.nix;

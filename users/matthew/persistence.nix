@@ -2,32 +2,31 @@
   config,
   isDesktop,
   lib,
+  nixosConfig,
   ...
-}: let
-  hmConfig = config.home-manager.users.matthew;
-in {
+}: {
   # Impermanence
-  environment.persistence."/persist".users.matthew.directories =
+  home.persistence."/persist".directories =
     [".cache/ags"]
-    ++ lib.optional hmConfig.programs.atuin.enable ".local/share/atuin"
-    ++ lib.optional hmConfig.programs.bat.enable ".cache/bat"
-    ++ lib.optionals hmConfig.programs.direnv.enable [
+    ++ lib.optional config.programs.atuin.enable ".local/share/atuin"
+    ++ lib.optional config.programs.bat.enable ".cache/bat"
+    ++ lib.optionals config.programs.direnv.enable [
       ".cache/direnv"
       ".local/share/direnv"
     ]
-    ++ lib.optionals hmConfig.programs.firefox.enable [
+    ++ lib.optionals config.programs.firefox.enable [
       ".cache/mozilla"
       ".mozilla/firefox"
     ]
-    ++ lib.optional hmConfig.programs.gh.enable ".config/gh"
-    ++ lib.optionals hmConfig.programs.neovim.enable [
+    ++ lib.optional config.programs.gh.enable ".config/gh"
+    ++ lib.optionals config.programs.neovim.enable [
       ".cache/nvim"
       ".local/state/nvim"
     ]
-    ++ lib.optional hmConfig.programs.ssh.enable ".cache/ssh"
-    ++ lib.optional hmConfig.programs.starship.enable ".cache/starship"
-    ++ lib.optional hmConfig.programs.vscode.enable ".config/VSCodium"
-    ++ lib.optionals hmConfig.programs.zed-editor.enable [
+    ++ lib.optional config.programs.ssh.enable ".cache/ssh"
+    ++ lib.optional config.programs.starship.enable ".cache/starship"
+    ++ lib.optional config.programs.vscode.enable ".config/VSCodium"
+    ++ lib.optionals config.programs.zed-editor.enable [
       # Harper is used by Zed for spell-checking, we use this directory to store our custom dictionary
       ".config/harper-ls"
       ".local/share/harper-ls"
@@ -37,9 +36,9 @@ in {
 
       ".local/share/rustup"
     ]
-    ++ lib.optional hmConfig.programs.zsh.enable ".local/share/zsh"
-    ++ lib.optional hmConfig.services.gnome-keyring.enable ".local/share/keyrings"
-    ++ lib.optionals config.programs.steam.enable [
+    ++ lib.optional config.programs.zsh.enable ".local/share/zsh"
+    ++ lib.optional config.services.gnome-keyring.enable ".local/share/keyrings"
+    ++ lib.optionals nixosConfig.programs.steam.enable [
       ".cache/protontricks"
       ".local/share/Steam"
     ]
@@ -52,7 +51,7 @@ in {
       ".local/share/umu"
       "Games"
     ]
-    ++ lib.optional config.services.gvfs.enable ".local/share/gvfs-metadata"
+    ++ lib.optional nixosConfig.services.gvfs.enable ".local/share/gvfs-metadata"
     ++ [
       ".cache/amberol"
       ".cache/buf"

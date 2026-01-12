@@ -5,6 +5,7 @@
 }: {
   imports = [
     ./default.nix
+    ./persistence.nix
 
     ./cli
     ./desktop
