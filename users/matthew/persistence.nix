@@ -136,5 +136,9 @@
       "Music"
       "Pictures"
       "Videos"
+
+      # Flatpak
+      ".local/share/flatpak"
+      ".var/app"
     ];
 }

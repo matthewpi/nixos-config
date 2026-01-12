@@ -7,6 +7,7 @@
     ./firefox
     ./gaming
     ./discord.nix
+    ./flatpak.nix
     ./freelens.nix
     ./supersonic.nix
     ./tailscale.nix
