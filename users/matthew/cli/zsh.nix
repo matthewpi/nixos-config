@@ -43,7 +43,7 @@
       ignoreDups = true;
       ignoreSpace = true;
 
-      path = "${config.home.homeDirectory}/.local/share/zsh/history";
+      path = "${config.xdg.dataHome}/zsh/history";
       save = 1;
       share = false;
     };

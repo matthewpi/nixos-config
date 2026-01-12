@@ -158,14 +158,14 @@ in {
       vim.notify = require("notify")
 
       require("nvim-treesitter").setup({
-        install_dir = "/home/matthew/.cache/tree-sitter",
+        install_dir = "${config.xdg.cacheHome}/tree-sitter",
         auto_install = false,
         highlight = {
           enable = true,
           additional_vim_regex_highlighting = false,
         },
       })
-      vim.opt.runtimepath:append("/home/matthew/.cache/tree-sitter")
+      vim.opt.runtimepath:append("${config.xdg.cacheHome}/tree-sitter")
 
       vim.filetype.add({
         filename = {
