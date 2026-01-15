@@ -18,6 +18,8 @@
   # ref; https://github.com/zed-industries/zed/pull/26890
   home.sessionVariables.ZED_PATH_SAMPLE_COUNT = 0;
 
+  home.sessionVariables.MAVEN_OPTS = "-Dmaven.repo.local=${config.xdg.dataHome}/maven/repository";
+
   # TODO: why do these need to be installed globally?
   home.packages = with pkgs; [nil nixd];
 
@@ -45,6 +47,8 @@
       (go-tools.override {buildGoModule = pkgs.buildGoLatestModule;})
       harper
       intelephense
+      temurin-bin-25
+      jdt-language-server
       (runCommand "json-language-server" {} ''
         mkdir -p "$out"/bin
         ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/json-language-server

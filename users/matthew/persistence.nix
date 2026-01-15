@@ -116,6 +116,7 @@
       ".local/share/gnupg"
       ".local/share/icc"
       ".local/share/k9s"
+      ".local/share/maven"
       ".local/share/nautilus"
       ".local/share/npm"
       ".local/share/obsidian"
