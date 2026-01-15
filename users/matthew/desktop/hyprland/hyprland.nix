@@ -386,7 +386,7 @@ in {
         "match:class org\.gnome\.Calculator, float yes"
 
         # Prism Launcher
-        "match:title ^(.*) — Prism Launcher ([1-9]+\.[0-9])$, float yes, max_size 2880 1080"
+        "match:title ^(.*) — Prism Launcher ([1-9]+.[0-9\.]+)$, float yes, max_size 2880 1080"
 
         # Steam
         "match:title Steam, match:float yes, center yes"
