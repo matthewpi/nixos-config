@@ -34,6 +34,7 @@
       d2
       delve
       delve-shim-dap
+      dockerfile-language-server
       emmet-language-server
       eslint
       config.programs.git.package
