@@ -42,6 +42,8 @@
       hunspell
       hunspellDicts.en_CA
       hunspellDicts.en_US
+
+      jetbrains.idea-oss
     ]
     ++ lib.optional isDesktop polychromatic;
 }

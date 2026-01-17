@@ -53,6 +53,7 @@
     ]
     ++ lib.optional nixosConfig.services.gvfs.enable ".local/share/gvfs-metadata"
     ++ [
+      ".cache/JetBrains"
       ".cache/amberol"
       ".cache/buf"
       ".cache/chromium"
@@ -78,6 +79,7 @@
       ".config/Blockbench"
       ".config/Flipper Devices Inc"
       ".config/Freelens"
+      ".config/JetBrains"
       ".config/Ledger Live"
       ".config/Signal"
       ".config/Slack"
