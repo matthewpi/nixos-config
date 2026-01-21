@@ -159,27 +159,6 @@ box.media {
 	margin-left: 0.5rem;
 }
 
-.volume {
-	margin-right: 0.5rem;
-	margin-left: 0.5rem;
-
-	.volume-slider {
-		min-width: 8rem;
-		/* margin-right: 1rem; */
-
-		highlight {
-			background-color: $primary;
-			min-height: 0.75rem;
-			border-radius: 1.5rem;
-		}
-
-		trough {
-			background-color: $surface2;
-			border-radius: 0.75rem;
-		}
-	}
-}
-
 .battery {
 	margin-right: 0.5rem;
 	margin-left: 0.5rem;
@@ -371,6 +350,59 @@ box.notification {
 
 		&:active {
 			background: $crust;
+		}
+	}
+}
+
+menubutton.wireplumber {
+	margin-right: 0.5rem;
+	margin-left: 0.5rem;
+
+	.volume {
+		margin-left: 0.5rem;
+		margin-right: 0.5rem;
+
+		.volume-slider {
+			min-width: 8rem;
+			margin-left: 0.25rem;
+			margin-right: 0.5rem;
+
+			highlight {
+				background-color: $primary;
+				min-height: 0.75rem;
+				border-radius: 1.5rem;
+			}
+
+			trough {
+				background-color: $surface2;
+				border-radius: 0.75rem;
+			}
+		}
+	}
+}
+
+.wireplumber.popover separator {
+	background-color: $surface2;
+	margin-top: 0.5rem;
+	margin-bottom: 0.5rem;
+}
+
+.wireplumber.device {
+	image {
+		margin-right: 0.75rem;
+	}
+
+	&:hover {
+		background: $peach;
+		color: $overlay1;
+	}
+
+	&.active {
+		background-color: $primary;
+		color: $overlay1;
+
+		&:hover {
+			background: $peach;
 		}
 	}
 }

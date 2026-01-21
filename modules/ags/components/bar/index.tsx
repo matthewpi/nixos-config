@@ -19,6 +19,8 @@ import Gtk from 'gi://Gtk?version=4.0';
 
 type PollFn<T> = (prev: T) => T | Promise<T>;
 
+// TODO: find a better way to show all players, ideally allowing the user to
+// pin one for quick-access.
 function Media() {
 	const mpris = AstalMpris.get_default();
 
@@ -133,20 +135,20 @@ function Workspace({ hypr, id, w, monitor }: WorkspaceProps) {
 	// Using the focused workspace and local monitor, generate classes for the workspace.
 	const fw = createBinding(hypr, 'focusedWorkspace');
 	const hm = createBinding(hypr, 'monitors').as(monitors => monitors.find(m => m.name === monitor));
-	const classes = createComputed([fw, hm], (fw, hm) => {
-		return [
+	const classes = createComputed(() =>
+		[
 			w === undefined ? 'empty' : '',
 			// Only a single workspace across all monitors can be focused.
-			w === fw ? 'focused' : '',
+			w === fw() ? 'focused' : '',
 			// Each monitor can have an active workspace, at least one workspace will be both active and focused.
-			hm?.activeWorkspace?.id === id ? 'active' : '',
+			hm()?.activeWorkspace?.id === id ? 'active' : '',
 			w === undefined || monitor === undefined
 				? ''
 				: monitor === w.monitor.name
 					? 'local-monitor'
 					: 'other-monitor',
-		].filter(v => typeof v === 'string' && v.length > 0);
-	});
+		].filter(v => typeof v === 'string' && v.length > 0),
+	);
 
 	return (
 		<button
@@ -194,6 +196,7 @@ function Time({ fn }: { fn: PollFn<GLib.DateTime | undefined> }) {
 
 function SysTray() {
 	const tray = AstalTray.get_default();
+	// TODO: item sorting.
 	const items = createBinding(tray, 'items');
 
 	function init(btn: Gtk.MenuButton, item: AstalTray.TrayItem): void {
@@ -250,15 +253,17 @@ function BatteryLevel() {
 
 	const batteryIconName = createBinding(battery, 'iconName');
 	const profileIconName = createBinding(powerProfiles, 'iconName');
-	const iconName = createComputed([batteryIconName, profileIconName], (batteryIconName, profileIconName) => {
+	const iconName = createComputed(() => {
+		const bIconName = batteryIconName();
 		// If the device has a battery, show that icon instead.
-		if (batteryIconName !== 'battery-missing-symbolic') {
-			return batteryIconName;
+		if (bIconName !== 'battery-missing-symbolic') {
+			return bIconName;
 		}
 
+		const pIconName = profileIconName();
 		// If the device has a power profile, show that icon instead.
-		if (profileIconName !== 'power-profile-') {
-			return profileIconName;
+		if (pIconName !== 'power-profile-') {
+			return pIconName;
 		}
 
 		// Show a balanced power profile icon otherwise.
@@ -274,6 +279,9 @@ function BatteryLevel() {
 
 			<popover>
 				<box orientation={Gtk.Orientation.VERTICAL}>
+					{/* TODO: placeholder if the system has no power profiles */}
+
+					{/* TODO: active styling */}
 					{powerProfiles.get_profiles().map(({ profile }) => (
 						<button onClicked={() => powerProfiles.set_active_profile(profile)}>
 							<label label={profile} xalign={0} />
@@ -305,21 +313,141 @@ function NotificationsIndicator() {
 }
 
 function VolumeIndicator() {
-	const { defaultSpeaker: speaker } = AstalWp.get_default()!;
-	const percentageText = createBinding(speaker, 'volume').as(p => `${Math.floor(p * 100)}%`);
+	const wireplumber = AstalWp.get_default()!;
+	const audio = wireplumber.get_audio();
+
+	const sinks = createBinding(audio, 'speakers').as(v =>
+		v
+			// Filter out devices I don't care about. Ideally there would be a
+			// better way to handle this instead of just hard-coding a list,
+			// but I am lazy and wanted a clean menu.
+			.filter(v => {
+				switch (true) {
+					case v.is_default as boolean:
+						return true; // Always show the default device even if it may be filtered.
+					case v.description.startsWith('USB Audio '):
+						// I only care about the optical out USB Audio device.
+						return v.description === 'USB Audio S/PDIF Output';
+					case v.description.startsWith('HyperX QuadCast '):
+						return false;
+					case v.description.includes('NVidia '):
+						// I don't use the HDMI port.
+						return false;
+					default:
+						return true;
+				}
+			})
+			.sort((a, b) => a.id - b.id),
+	);
+
+	const sources = createBinding(audio, 'microphones').as(v =>
+		v
+			// Filter out devices I don't care about. Ideally there would be a
+			// better way to handle this instead of just hard-coding a list,
+			// but I am lazy and wanted a clean menu.
+			.filter(v => {
+				switch (true) {
+					case v.is_default as boolean:
+						return true; // Always show the default device even if it may be filtered.
+					case v.description.startsWith('USB Audio '):
+						return false;
+					default:
+						return true;
+				}
+			})
+			.sort((a, b) => a.id - b.id),
+	);
+
+	const { defaultSpeaker: sink, defaultMicrophone: source } = wireplumber;
 
 	return (
-		<menubutton cssClasses={['volume']} tooltipText={percentageText}>
-			<image iconName={createBinding(speaker, 'volumeIcon')} />
+		<menubutton cssClasses={['wireplumber']}>
+			<image iconName={createBinding(sink, 'volumeIcon')} />
+
 			<popover>
-				<box>
-					<slider
-						cssClasses={['volume-slider']}
-						onValueChanged={({ value }) => (speaker.volume = value)}
-						value={createBinding(speaker, 'volume')}
-						widthRequest={260}
-					/>
-					<label label={percentageText} />
+				<box cssClasses={['wireplumber', 'popover']} orientation={Gtk.Orientation.VERTICAL}>
+					<box cssClasses={['wireplumber', 'volume']}>
+						<image iconName={createBinding(sink, 'volumeIcon')} />
+						<slider
+							cssClasses={['volume-slider']}
+							onValueChanged={({ value }) => (sink.volume = value)}
+							value={createBinding(sink, 'volume')}
+							widthRequest={200}
+							hexpand
+						/>
+						<label label={createBinding(sink, 'volume').as(p => `${Math.floor(p * 100)}%`)} />
+					</box>
+
+					<Gtk.Separator visible />
+
+					<box orientation={Gtk.Orientation.VERTICAL}>
+						<For each={sinks}>
+							{sink => (
+								<button
+									cssClasses={createBinding(sink, 'is_default').as(b => {
+										const classes = ['wireplumber', 'device', 'sink'];
+										if (b) {
+											classes.push('active');
+										}
+										return classes;
+									})}
+									// TODO: figure out how switch sinks without executing a command.
+									onClicked={async () =>
+										await execAsync(['wpctl', 'set-default', sink.id.toString()])
+									}
+								>
+									<box>
+										<image iconName="audio-speakers-symbolic" />
+										<label label={`${sink.id}. ${sink.description || sink.name}`} xalign={0} />
+									</box>
+								</button>
+							)}
+						</For>
+					</box>
+
+					<Gtk.Separator visible />
+
+					<box cssClasses={['wireplumber', 'volume']}>
+						<image iconName={createBinding(source, 'volumeIcon')} />
+						<slider
+							cssClasses={['volume-slider']}
+							onValueChanged={({ value }) => (source.volume = value)}
+							value={createBinding(source, 'volume')}
+							widthRequest={200}
+							hexpand
+						/>
+						<label label={createBinding(source, 'volume').as(p => `${Math.floor(p * 100)}%`)} />
+					</box>
+
+					<Gtk.Separator visible />
+
+					<box orientation={Gtk.Orientation.VERTICAL}>
+						<For each={sources}>
+							{source => (
+								<button
+									cssClasses={createBinding(source, 'is_default').as(b => {
+										const classes = ['wireplumber', 'device', 'source'];
+										if (b) {
+											classes.push('active');
+										}
+										return classes;
+									})}
+									// TODO: figure out how switch sources without executing a command.
+									onClicked={async () =>
+										await execAsync(['wpctl', 'set-default', source.id.toString()])
+									}
+								>
+									<box>
+										<image iconName="audio-input-microphone-high-symbolic" />
+										<label
+											label={`${source.id}. ${source.description || source.name}`}
+											xalign={0}
+										/>
+									</box>
+								</button>
+							)}
+						</For>
+					</box>
 				</box>
 			</popover>
 		</menubutton>
