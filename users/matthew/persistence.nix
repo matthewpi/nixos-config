@@ -74,6 +74,7 @@
       ".cache/supersonic"
       ".cache/tree-sitter"
       ".cache/turbo"
+      ".cache/zig"
 
       ".config/1Password"
       ".config/Blockbench"
