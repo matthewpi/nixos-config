@@ -13,7 +13,6 @@
     ./tailscale.nix
     ./terminal.nix
     ./virt-manager.nix
-    # ./vscode.nix
     ./zed-editor.nix
   ];
 
