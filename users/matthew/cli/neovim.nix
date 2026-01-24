@@ -16,8 +16,8 @@
 
     tree-sitter-d2 = rec {
       url = "https://github.com/ravsii/tree-sitter-d2";
-      rev = "f40a9fa426d55a03cedd17475e4d6affe755a1ae";
-      hash = "sha256-pKJ2hsSnIjoUunN8ZjWiinb/mt07WQ9AURc708ENHtY=";
+      rev = "ffb66ce4c801a1e37ed145ebd5eca1ea8865e00f";
+      hash = "sha256-E8NcTrPsann8NMB8yLTbJghyf19chhpnKFlthuZ4l14=";
       fetchSubmodules = false;
       src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
     };
@@ -59,7 +59,7 @@ in {
       :set nu
     '';
 
-    extraLuaConfig = ''
+    initLua = ''
       -- Set default file encodings
       vim.opt.encoding = "utf-8"
       vim.opt.fileencoding = "utf-8"

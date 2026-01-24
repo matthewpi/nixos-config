@@ -19,14 +19,14 @@
       # url."git@github.com:".insteadOf = "https://github.com/";
 
       # Enable the manyFiles feature.
-      feature.manyFiles = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
+      feature.manyFiles = true; # NOTE: this option seems to piss off Cargo when dealing with submodules
 
       # Enable the commit graph.
-      core.commitgraph = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
+      core.commitgraph = true; # NOTE: this option seems to piss off Cargo when dealing with submodules
 
       # Write the commit graph persistently.
-      feature.writeCommitGraph = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
-      fetch.writeCommitGraph = true; # NOTE: this option seems to piss of Cargo when dealing with submodules
+      feature.writeCommitGraph = true; # NOTE: this option seems to piss off Cargo when dealing with submodules
+      fetch.writeCommitGraph = true; # NOTE: this option seems to piss off Cargo when dealing with submodules
 
       # Configure some aliases for commonly used commands and arguments.
       alias = {

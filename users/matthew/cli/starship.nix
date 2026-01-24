@@ -42,7 +42,7 @@
         disabled = true;
       };
 
-      character.disabled = pkgs.stdenv.isDarwin;
+      character.disabled = pkgs.stdenv.isDarwin; # TODO: why?
 
       c = {
         disabled = true;
