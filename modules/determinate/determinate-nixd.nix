@@ -5,14 +5,14 @@
   stdenvNoCC,
 }: let
   hashes = {
-    x86_64-linux = "sha256-NIIk5e9R0OQe2EMAEHZ9+rVh9/vEcbvWb+P0xDDqsvU=";
+    x86_64-linux = "sha256-anMErEzlxo/slr5/Hm7Gg0wT70+zoaA+aIHH0+CMgZY=";
   };
 
   system = stdenvNoCC.hostPlatform.system;
 in
   stdenvNoCC.mkDerivation (finalAttrs: {
     pname = "determinate-nixd";
-    version = "3.15.1";
+    version = "3.15.2";
 
     src = fetchurl {
       url = "https://install.determinate.systems/determinate-nixd/tag/v${finalAttrs.version}/${system}";

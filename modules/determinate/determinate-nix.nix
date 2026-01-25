@@ -10,8 +10,8 @@
   src = fetchFromGitHub {
     owner = "DeterminateSystems";
     repo = "nix-src";
-    tag = "v3.15.1";
-    hash = "sha256-GsC52VFF9Gi2pgP/haQyPdQoF5Qe2myk1tsPcuJZI28=";
+    tag = "v3.15.2";
+    hash = "sha256-32oMe1y+kwvIJNiJsIvozTuSmDxcwST06i+0ak+L4AU=";
   };
 
   determinate_nixDependencies =
