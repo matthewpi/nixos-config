@@ -28,9 +28,11 @@
 
   # Enable systemd-resolved by default.
   services.resolved = {
-    enable = true;
-    llmnr = lib.mkDefault "false";
-    dnssec = lib.mkDefault "false";
+    enable = lib.mkDefault true;
+    settings.Resolve = {
+      DNSSEC = lib.mkDefault false;
+      LLMNR = lib.mkDefault false;
+    };
   };
 
   # Enable nftables by default.
