@@ -30,6 +30,9 @@
       # included from the Determinate Nixd-managed /etc/nix/nix.conf.
       environment.etc."nix/nix.conf".target = "nix/nix.custom.conf";
 
+      # Fix for Determinate Nix 3.15.2 defaulting to `0` and causing a 100ms delay.
+      nix.settings.http-connections = 100;
+
       # Use the determinate-nix packages.
       nix.package = cfg.package;
       environment.systemPackages = [cfg.daemonPackage];
