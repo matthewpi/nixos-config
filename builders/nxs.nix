@@ -15,11 +15,9 @@ in {
       IdentityFile /root/.ssh/id_ed25519
   '';
 
-  programs.ssh.knownHosts = {
-    ${hostName} = {
-      hostNames = [hostName];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6yPh8OeiYN5AZokTs8bZ1eiv2gSk803xnRTjQsIKZk";
-    };
+  programs.ssh.knownHosts.${hostName} = {
+    hostNames = [hostName];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN6yPh8OeiYN5AZokTs8bZ1eiv2gSk803xnRTjQsIKZk";
   };
 
   nix.buildMachines = [
@@ -30,6 +28,8 @@ in {
       maxJobs = 32;
       speedFactor = 2;
       supportedFeatures = [
+        "kernel-module-keys"
+        "secureboot"
         "benchmark"
         "big-parallel"
         "ca-derivations"
