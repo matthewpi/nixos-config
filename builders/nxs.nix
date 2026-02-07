@@ -28,8 +28,8 @@ in {
       maxJobs = 32;
       speedFactor = 2;
       supportedFeatures = [
-        "kernel-module-keys"
-        "secureboot"
+        # "kernel-module-keys"
+        # "secureboot"
         "benchmark"
         "big-parallel"
         "ca-derivations"
