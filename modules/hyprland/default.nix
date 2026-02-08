@@ -103,7 +103,7 @@
 
     # Fixes issues with XDG portal definitions not being detected.
     # ref; https://nix-community.github.io/home-manager/options.xhtml#opt-xdg.portal.enable
-    environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
+    # environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
 
     services.graphical-desktop.enable = lib.mkDefault false;
     hardware.graphics.enable = lib.mkDefault true;
@@ -119,5 +119,61 @@
         Option "XkbVariant" "${config.services.xserver.xkb.variant}"
       EndSection
     '';
+
+    # Disable linking of xdg-autostart files for globally installed packages.
+    xdg.autostart.enable = lib.mkDefault false;
+
+    # TODO: remove `"/etc/xdg"` from `<nixpkgs>/nixos/modules/config/system-path.nix`.
+    environment.pathsToLink = lib.mkForce [
+      "/share/gsettings-schemas/glib-2.0"
+      "/share/applications"
+      "/share/xdg-desktop-portal"
+      "/etc/profile.d"
+      "/etc/dbus-1"
+      "/share/dbus-1"
+      "/share/polkit-1"
+      "/share/zsh"
+      "/share/X11"
+      "/share/nix-ld"
+      "/share/nano"
+      "/lib/gtk-2.0"
+      "/lib/gtk-3.0"
+      "/lib/gtk-4.0"
+      "/etc/bash_completion.d"
+      "/share/bash-completion"
+      "/share/man"
+      "/share/info"
+      "/share/doc"
+      "/share/gtk-doc"
+      "/share/devhelp"
+      "/share/sounds"
+      "/share/mime"
+      "/share/applications"
+      "/share/desktop-directories"
+      "/etc/xdg/menus"
+      "/etc/xdg/menus/applications-merged"
+      "/share/icons"
+      "/share/pixmaps"
+      "/share/terminfo"
+      "/bin"
+      # "/etc/xdg"
+      "/etc/gtk-2.0"
+      "/etc/gtk-3.0"
+      "/lib"
+      "/sbin"
+      "/share/emacs"
+      "/share/hunspell"
+      "/share/org"
+      "/share/themes"
+      "/share/vulkan"
+      "/share/kservices5"
+      "/share/kservicetypes5"
+      "/share/kxmlgui5"
+      "/share/systemd"
+      "/share/thumbnailers"
+      "/share/X11/fonts"
+      "/share/metainfo"
+      "/share/appdata"
+    ];
   };
 }
