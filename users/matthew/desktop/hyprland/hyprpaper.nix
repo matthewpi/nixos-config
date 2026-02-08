@@ -1,4 +1,9 @@
-{pkgs, ...}: {
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}: {
   services.hyprpaper = let
     wallpaper = "${pkgs.catppuccin-wallpapers}/CatppuccinMocha-Kurzgesagt-CloudyQuasar1.png";
   in {
@@ -17,5 +22,11 @@
     };
   };
 
-  systemd.user.services.hyprpaper.Service.Slice = "session.slice";
+  systemd.user.services.hyprpaper = {
+    Unit = {
+      Before = [config.wayland.systemd.target];
+      After = lib.mkForce [];
+    };
+    Service.Slice = "session.slice";
+  };
 }

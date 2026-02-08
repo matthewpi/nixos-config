@@ -24,8 +24,8 @@ in {
     xdg-desktop-portal = {
       Unit = {
         Description = "Portal service";
+        Before = [config.wayland.systemd.target];
         PartOf = [config.wayland.systemd.target];
-        After = [config.wayland.systemd.target];
       };
       Service = {
         Slice = "session.slice";
@@ -39,8 +39,8 @@ in {
     xdg-desktop-portal-gtk = {
       Unit = {
         Description = "Portal service (GTK/GNOME implementation)";
+        Before = [config.wayland.systemd.target];
         PartOf = [config.wayland.systemd.target];
-        After = [config.wayland.systemd.target];
       };
       Service = {
         Slice = "session.slice";
@@ -54,8 +54,8 @@ in {
     xdg-desktop-portal-hyprland = {
       Unit = {
         Description = "Portal service (Hyprland implementation)";
+        Before = [config.wayland.systemd.target];
         PartOf = [config.wayland.systemd.target];
-        After = [config.wayland.systemd.target];
       };
       Service = {
         Slice = "session.slice";

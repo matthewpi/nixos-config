@@ -33,7 +33,7 @@
           timeout = lockTimeout - graceSeconds;
           # We use hyprlock here without `--immediate` so that hyprlock's grace
           # period works.
-          on-timeout = "hyprlock --grace ${builtins.toString graceSeconds}";
+          on-timeout = "hyprlock --grace ${toString graceSeconds}";
         }
         {
           # After we are locked, if no more movement is detected after

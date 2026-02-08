@@ -8,6 +8,19 @@ import { Bar } from './components/bar';
 import { Notifications } from './components/notifications';
 import style from './style.scss';
 
+function nthIndex(str: string, searchString: string, n: number): number {
+	const length = str.length;
+	let i = -1;
+	while (n-- && i++ < length) {
+		i = str.indexOf(searchString, i);
+		if (i < 0) {
+			break;
+		}
+	}
+
+	return i;
+}
+
 app.start({
 	css: style,
 	gtkTheme: 'Adwaita',
@@ -21,10 +34,20 @@ app.start({
 		app.add_window(notifications);
 
 		// sdnotify
-		const credentials = new Gio.Credentials();
-		const pid = credentials.get_unix_pid();
+		const file = Gio.File.new_for_path('/proc/self/stat');
+		const [success, contents] = file.load_contents(null);
+		if (!success) {
+			console.log('Failed to read /proc/self/stat');
+			return;
+		}
+		const data = new TextDecoder().decode(contents);
+		const i = nthIndex(data, ' ', 3);
+		const i2 = nthIndex(data, ' ', 4);
+		const ppid = parseInt(data.substring(i + 1, i2));
+		console.log(`Parent PID: ${ppid}`);
+
 		console.log('informing systemd of ready status...');
-		exec(['systemd-notify', `--pid=${pid}`, '--ready']);
+		exec(['systemd-notify', `--pid=${ppid}`, '--ready']);
 		console.log('informed systemd of ready status!');
 	},
 });

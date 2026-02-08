@@ -57,7 +57,7 @@ in {
       Description = "AGS";
       Documentation = "https://github.com/Aylur/ags";
       After = ["graphical-session-pre.target"];
-      Before = ["xdg-desktop-autostart.target"];
+      Before = [config.wayland.systemd.target];
       PartOf = [config.wayland.systemd.target];
     };
 
@@ -69,7 +69,7 @@ in {
 
       ExecStart = lib.getExe shell;
 
-      Slice = "session.slice";
+      Slice = "app.slice";
 
       Restart = "always";
       KillMode = "mixed";

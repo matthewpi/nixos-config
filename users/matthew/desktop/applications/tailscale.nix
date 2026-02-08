@@ -8,8 +8,8 @@
     systemd.user.services.tailscale-systray = {
       Unit = {
         Description = "Tailscale Systray";
-        PartOf = [config.wayland.systemd.target];
         After = [config.wayland.systemd.target];
+        PartOf = [config.wayland.systemd.target];
       };
 
       Install.WantedBy = [config.wayland.systemd.target];
