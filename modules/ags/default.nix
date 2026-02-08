@@ -1,17 +1,55 @@
 {
   config,
   lib,
-  outputs,
+  inputs,
   pkgs,
   ...
 }: let
-  ags = outputs.packages."${pkgs.stdenv.hostPlatform.system}".ags;
-in {
-  # Install the AGS CLI.
-  home.packages = [ags];
+  agsPackages = inputs.ags.packages."${pkgs.stdenv.hostPlatform.system}";
 
+  shell = pkgs.stdenv.mkDerivation {
+    pname = "shell";
+    version = "0.0.1";
+    src = builtins.filterSource (p: _type: p != "default.nix") ./.;
+
+    nativeBuildInputs = [
+      agsPackages.default
+      pkgs.gobject-introspection
+      pkgs.wrapGAppsHook4
+    ];
+
+    buildInputs = [
+      pkgs.glib
+      pkgs.gjs
+      pkgs.libadwaita
+
+      agsPackages.astal4
+      agsPackages.io
+
+      agsPackages.apps
+      agsPackages.battery
+      agsPackages.bluetooth
+      agsPackages.hyprland
+      agsPackages.mpris
+      agsPackages.notifd
+      agsPackages.powerprofiles
+      agsPackages.tray
+      agsPackages.wireplumber
+    ];
+
+    buildPhase = ''
+      ags bundle app.ts shell --gtk 4
+    '';
+
+    installPhase = ''
+      install -Dm755 -t "$out"/bin shell
+    '';
+
+    meta.mainProgram = "shell";
+  };
+in {
   # Link the config to `.config/ags`.
-  xdg.configFile."ags".source = builtins.filterSource (p: _type: p != "default.nix") ./.;
+  xdg.configFile."ags".source = shell.src;
 
   # Configure a systemd user service for AGS.
   systemd.user.services.ags = {
@@ -26,19 +64,19 @@ in {
     Install.WantedBy = [config.wayland.systemd.target];
 
     Service = {
-      ExecStart = "${lib.getExe ags} run --gtk 4";
-      # Wait 1 second after AGS starts before continuing.
+      ExecStart = lib.getExe shell;
+
+      # Wait 2 seconds after AGS starts before continuing.
       #
       # This helps avoid a timing issue where system tray applications autostart
       # before AGS is actually ready.
       #
-      # TODO: does pre-building/bundling resolve this? We also may want to
-      # consider adding sdnotify into AGS instead just to be 100% sure we don't
-      # encounter any timing issues.
-      ExecStartPost = "${lib.getExe' pkgs.coreutils "sleep"} 1";
+      # TODO: add sdnotify into AGS instead of this shitty workaround.
+      ExecStartPost = "${lib.getExe' pkgs.coreutils "sleep"} 2";
+
       Slice = "session.slice";
 
-      Restart = "on-failure";
+      Restart = "always";
       KillMode = "mixed";
 
       # Capabilities
