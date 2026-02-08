@@ -64,15 +64,10 @@ in {
     Install.WantedBy = [config.wayland.systemd.target];
 
     Service = {
-      ExecStart = lib.getExe shell;
+      Type = "notify";
+      NotifyAccess = "all";
 
-      # Wait 2 seconds after AGS starts before continuing.
-      #
-      # This helps avoid a timing issue where system tray applications autostart
-      # before AGS is actually ready.
-      #
-      # TODO: add sdnotify into AGS instead of this shitty workaround.
-      ExecStartPost = "${lib.getExe' pkgs.coreutils "sleep"} 2";
+      ExecStart = lib.getExe shell;
 
       Slice = "session.slice";
 
