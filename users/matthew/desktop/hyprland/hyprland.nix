@@ -34,11 +34,11 @@
     slice = null;
   };
 
-  # Command used to launch alacritty.
-  alacritty = mkSystemdRun {
-    name = "org.alacritty.Alacritty";
-    command = lib.getExe config.programs.alacritty.package;
-  };
+  # # Command used to launch alacritty.
+  # alacritty = mkSystemdRun {
+  #   name = "org.alacritty.Alacritty";
+  #   command = lib.getExe config.programs.alacritty.package;
+  # };
 
   # Command used to launch discord.
   discord = mkSystemdRun {
@@ -50,6 +50,15 @@
   firefox = mkSystemdRun {
     name = "org.mozilla.Firefox";
     command = lib.getExe config.programs.firefox.package;
+  };
+
+  # Command used to launch ghostty.
+  ghostty = mkSystemdRun {
+    name = "com.mitchellh.ghostty";
+    command =
+      if (config.programs.ghostty.systemd.enable)
+      then "${lib.getExe config.programs.ghostty.package} +new-window"
+      else lib.getExe config.programs.ghostty.package;
   };
 
   # Command used to launch slack.
@@ -331,7 +340,7 @@ in {
       workspace =
         [
           # Special workspaces that can be toggled on and off
-          "special:terminal, on-created-empty:${alacritty}"
+          "special:terminal, on-created-empty:${ghostty}"
           "special:discord,  on-created-empty:${discord}"
           "special:slack,    on-created-empty:${slack}"
           "special:music,    on-created-empty:${supersonic}"
@@ -448,7 +457,7 @@ in {
 
         # Application keybinds
         "$mainMod, Space, exec, ${lib.getExe outputs.packages."${pkgs.stdenv.hostPlatform.system}".ags} toggle launcher"
-        "$mainMod, T, exec, ${alacritty}" # Terminal
+        "$mainMod, T, exec, ${ghostty}" # Terminal
         "$mainMod, B, exec, ${firefox}" # Web Browser
         "$mainMod, Z, exec, ${zed-editor}" # Code Editor
 

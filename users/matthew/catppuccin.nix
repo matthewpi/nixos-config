@@ -20,7 +20,7 @@
 
     fzf.enable = true;
 
-    ghostty.enable = false;
+    ghostty.enable = true;
 
     hyprland.enable = true;
 

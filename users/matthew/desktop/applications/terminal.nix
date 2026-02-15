@@ -39,8 +39,17 @@
 
   programs.ghostty = {
     enable = true;
+    systemd.enable = true;
     settings = {
-      theme = "Catppuccin Mocha";
+      alpha-blending = "linear";
+
+      background-opacity = 0.75;
+
+      copy-on-select = false;
+
+      cursor-style = "bar";
+      cursor-click-to-move = true;
+
       font-family = "Monaspace Neon NF";
       font-size = 10;
       font-feature = [
@@ -75,9 +84,6 @@
         "ss09" # <=> <<= =>> =<< => << >>
         "ss10" # #[ #(
       ];
-      cursor-style = "block";
-      cursor-click-to-move = true;
-      background-opacity = 0.75;
     };
   };
 }
