@@ -84,6 +84,10 @@
         "ss09" # <=> <<= =>> =<< => << >>
         "ss10" # #[ #(
       ];
+
+      keybind = [
+        "ctrl+v=paste_from_clipboard"
+      ];
     };
   };
 }
