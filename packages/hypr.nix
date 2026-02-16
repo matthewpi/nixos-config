@@ -12,7 +12,7 @@
         };
       };
 
-    _packages = rec {
+    _packages = lib.optionalAttrs (system == "x86_64-linux") rec {
       aquamarine = (fixPathForLazyTrees inputs.aquamarine "aquamarine").override {
         inherit hyprutils hyprwayland-scanner;
       };
