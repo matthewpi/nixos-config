@@ -43,6 +43,8 @@
       hunspellDicts.en_US
 
       jetbrains.idea-oss
+
+      fluxer
     ]
     ++ lib.optional isDesktop polychromatic;
 }

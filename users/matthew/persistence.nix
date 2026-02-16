@@ -90,6 +90,7 @@
       ".config/discord"
       ".config/easyeffects"
       ".config/evolution"
+      ".config/fluxer"
       ".config/go"
       ".config/helm"
       ".config/kubernetes"
