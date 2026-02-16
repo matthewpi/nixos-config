@@ -7,12 +7,13 @@
   # Enable libvirtd
   virtualisation.libvirtd = {
     enable = lib.mkDefault true;
+    firewallBackend = lib.mkDefault "nftables";
     onBoot = lib.mkDefault "ignore";
     onShutdown = lib.mkDefault "shutdown";
-
     qemu = {
-      ovmf.packages = with pkgs; [OVMFFull.fd];
-      swtpm.enable = lib.mkDefault true;
+      package = pkgs.qemu_kvm;
+      runAsRoot = false;
+      swtpm.enable = true;
     };
   };
 
@@ -34,4 +35,9 @@
   boot.kernelModules = lib.mkIf config.virtualisation.libvirtd.enable [
     "vfio-pci"
   ];
+
+  boot.extraModprobeConfig = ''
+    options kvm_amd nested=1
+    options kvm ignore_msrs=1 report_ignored_msrs=0
+  '';
 }

@@ -18,9 +18,11 @@
 
     "org/virt-manager/virt-manager/connections" = {
       autoconnect = lib.hm.gvariant.mkArray lib.hm.gvariant.type.string [
+        # "qemu:///system"
         "qemu+ssh://nxos@nxs.blahaj.systems/system"
       ];
       uris = lib.hm.gvariant.mkArray lib.hm.gvariant.type.string [
+        # "qemu:///system"
         "qemu+ssh://nxos@nxs.blahaj.systems/system"
       ];
     };
