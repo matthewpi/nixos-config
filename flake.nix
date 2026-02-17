@@ -353,6 +353,21 @@
             };
           };
 
+        darwinConfigurations.Matthews-Mac-mini = inputs.darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [./systems/mac-mini];
+
+          specialArgs = {
+            inherit inputs;
+            configurationRevision =
+              if (self ? rev)
+              then self.rev
+              else null;
+            outputs = self;
+            isDesktop = true;
+          };
+        };
+
         nixosConfigurations.matthew-desktop = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [./systems/desktop];
@@ -385,6 +400,7 @@
       };
 
       perSystem = {
+        lib,
         pkgs,
         self',
         system,
@@ -412,10 +428,10 @@
         };
 
         devShells.default = pkgs.mkShellNoCC {
-          packages = [
-            self'.packages.agenix
-            self'.packages.ags
-          ];
+          packages =
+            [self'.packages.agenix]
+            ++ lib.optional pkgs.stdenv.hostPlatform.isDarwin self'.packages.darwin-rebuild
+            ++ lib.optional pkgs.stdenv.hostPlatform.isLinux self'.packages.ags;
         };
 
         treefmt = {

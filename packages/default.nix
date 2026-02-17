@@ -51,7 +51,11 @@
       };
     };
   in {
-    packages = lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages;
+    packages =
+      (lib.attrsets.filterAttrs (_: v: builtins.elem system v.meta.platforms) _packages)
+      // lib.optionalAttrs (system == "aarch64-darwin") {
+        inherit (inputs.darwin.packages.${system}) darwin-rebuild;
+      };
 
     overlayAttrs = let
       _1passwordPreFixup = ''

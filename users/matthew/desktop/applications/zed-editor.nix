@@ -25,10 +25,13 @@
 
   programs.zed-editor = {
     enable = true;
-    package = pkgs.zed-editor;
+    package =
+      if pkgs.stdenv.hostPlatform.isDarwin
+      then null
+      else pkgs.zed-editor;
     installRemoteServer = true;
 
-    extraPackages = with pkgs; [
+    extraPackages = lib.optionals (!pkgs.stdenv.hostPlatform.isDarwin) (with pkgs; [
       alejandra
       # biome
       clang-tools
@@ -89,7 +92,7 @@
       clang
       tree-sitter
       rustup
-    ];
+    ]);
 
     extensions = [
       "assembly"
