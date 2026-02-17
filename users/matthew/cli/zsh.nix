@@ -33,7 +33,7 @@
         source "${pkgs.zsh-completion-sync}/share/zsh-completion-sync/zsh-completion-sync.plugin.zsh"
 
         # Enable the fast-syntax-highlighting plugin
-        source "${pkgs.fast-syntax-highlighting}/share/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+        source "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
       ''
     ];
 
