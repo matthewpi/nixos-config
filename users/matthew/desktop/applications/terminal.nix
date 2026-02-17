@@ -1,7 +1,10 @@
-{lib, ...}: {
+{
+  lib,
+  pkgs,
+  ...
+}: {
   programs.alacritty = {
-    enable = true;
-
+    enable = pkgs.stdenv.hostPlatform.isLinux;
     settings = {
       env = {
         TERM_PROGRAM = "alacritty";
@@ -39,7 +42,8 @@
 
   programs.ghostty = {
     enable = true;
-    systemd.enable = true;
+    systemd.enable = pkgs.stdenv.hostPlatform.isLinux;
+    package = lib.mkIf pkgs.stdenv.hostPlatform.isDarwin null;
     settings = {
       alpha-blending = "linear";
 
@@ -51,7 +55,10 @@
       cursor-click-to-move = true;
 
       font-family = "Monaspace Neon NF";
-      font-size = 10;
+      font-size =
+        if pkgs.stdenv.hostPlatform.isLinux
+        then 10
+        else 13;
       font-feature = [
         # https://github.com/githubnext/monaspace?tab=readme-ov-file#cv01-cv09-figure-variants
         "cv01 = 2" # 0 (slash)

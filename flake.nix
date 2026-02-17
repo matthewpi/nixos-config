@@ -353,6 +353,20 @@
             };
           };
 
+        darwinConfigurations.Matthews-Mac-mini = inputs.darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [./systems/mac-mini];
+
+          specialArgs = {
+            inherit inputs;
+            configurationRevision =
+              if (self ? rev)
+              then self.rev
+              else null;
+            outputs = self;
+          };
+        };
+
         nixosConfigurations.matthew-desktop = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [./systems/desktop];
@@ -385,6 +399,7 @@
       };
 
       perSystem = {
+        lib,
         pkgs,
         self',
         system,
@@ -392,30 +407,33 @@
       }: {
         _module.args.pkgs = self.lib.mkNixpkgs system;
 
-        packages = {
-          agenix = inputs.agenix.packages."${system}".default;
-          ags = with inputs.ags.packages."${system}";
-            ags.override {
-              extraPackages = [
-                apps
-                battery
-                bluetooth
-                hyprland
-                mpris
-                notifd
-                powerprofiles
-                tray
-                wireplumber
-                pkgs.libadwaita
-              ];
-            };
-        };
+        packages =
+          {
+            agenix = inputs.agenix.packages."${system}".default;
+          }
+          // lib.optionalAttrs pkgs.stdenv.hostPlatform.isLinux {
+            ags = with inputs.ags.packages."${system}";
+              ags.override {
+                extraPackages = [
+                  apps
+                  battery
+                  bluetooth
+                  hyprland
+                  mpris
+                  notifd
+                  powerprofiles
+                  tray
+                  wireplumber
+                  pkgs.libadwaita
+                ];
+              };
+          };
 
         devShells.default = pkgs.mkShellNoCC {
-          packages = [
-            self'.packages.agenix
-            self'.packages.ags
-          ];
+          packages =
+            [self'.packages.agenix]
+            ++ lib.optional pkgs.stdenv.hostPlatform.isDarwin self'.packages.darwin-rebuild
+            ++ lib.optional pkgs.stdenv.hostPlatform.isLinux self'.packages.ags;
         };
 
         treefmt = {

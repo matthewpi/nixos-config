@@ -1,8 +1,4 @@
-{
-  lib,
-  pkgs,
-  ...
-}: {
+{lib, ...}: {
   programs.starship = {
     enable = true;
 
@@ -42,7 +38,7 @@
         disabled = true;
       };
 
-      character.disabled = pkgs.stdenv.isDarwin; # TODO: why?
+      character.disabled = false;
 
       c = {
         disabled = true;
@@ -206,9 +202,7 @@
         symbol = "󱃾 ";
       };
 
-      line_break = {
-        disabled = pkgs.stdenv.isDarwin;
-      };
+      line_break.disabled = false;
 
       localip = {
         disabled = true;

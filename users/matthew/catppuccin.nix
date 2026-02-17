@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  lib,
   pkgs,
   ...
 }: {
@@ -46,24 +47,26 @@
     zsh-syntax-highlighting.enable = true;
   };
 
-  home.pointerCursor = let
-    inherit (config.catppuccin) flavor;
-    accent = "dark";
-    size = 24;
-  in {
-    # Catppuccin's hyprland module tries to set `HYPRCURSOR_SIZE` to the same
-    # as the main cursor, overriding home-manager. To avoid this, we need to
-    # manually set the cursor theme so Catppuccin doesn't break anything.
-    name = "catppuccin-${flavor}-${accent}-cursors";
-    package = pkgs.catppuccin-cursors.${flavor + "Dark"};
-    inherit size;
-
-    hyprcursor = {
-      enable = true;
+  home = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
+    pointerCursor = let
+      inherit (config.catppuccin) flavor;
+      accent = "dark";
+      size = 24;
+    in {
+      # Catppuccin's hyprland module tries to set `HYPRCURSOR_SIZE` to the same
+      # as the main cursor, overriding home-manager. To avoid this, we need to
+      # manually set the cursor theme so Catppuccin doesn't break anything.
+      name = "catppuccin-${flavor}-${accent}-cursors";
+      package = pkgs.catppuccin-cursors.${flavor + "Dark"};
       inherit size;
-    };
 
-    gtk.enable = true;
+      hyprcursor = {
+        enable = true;
+        inherit size;
+      };
+
+      gtk.enable = true;
+    };
   };
 
   # See `home.pointerCursor` for why this is commented out.
@@ -73,7 +76,7 @@
   # };
 
   # QT Theming
-  qt = {
+  qt = lib.mkIf pkgs.stdenv.hostPlatform.isLinux {
     enable = true;
     style.name = "kvantum";
     platformTheme.name = "kvantum";
