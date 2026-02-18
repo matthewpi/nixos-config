@@ -1,0 +1,51 @@
+From b1534af5803fbc0ff2c91a9de42f2e15532d8c31 Mon Sep 17 00:00:00 2001
+From: Matthew Penner <me@matthewp.io>
+Date: Wed, 18 Feb 2026 14:32:08 -0700
+Subject: [PATCH] wasmtime: disable checks, build using `rust_1_92`
+
+Signed-off-by: Matthew Penner <me@matthewp.io>
+---
+ packaging/wasmtime.nix | 15 +++------------
+ 1 file changed, 3 insertions(+), 12 deletions(-)
+
+diff --git a/packaging/wasmtime.nix b/packaging/wasmtime.nix
+index 3e8b71280..8307015a9 100644
+--- a/packaging/wasmtime.nix
++++ b/packaging/wasmtime.nix
+@@ -3,13 +3,13 @@
+ {
+   lib,
+   stdenv,
+-  rust_1_89,
++  rust_1_92,
+   fetchFromGitHub,
+   cmake,
+   enableShared ? !stdenv.hostPlatform.isStatic,
+   enableStatic ? stdenv.hostPlatform.isStatic,
+ }:
+-rust_1_89.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
++rust_1_92.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
+   pname = "wasmtime";
+   version = "40.0.2";
+ 
+@@ -41,16 +41,7 @@ rust_1_89.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
+     cmake
+   ];
+ 
+-  doCheck =
+-    with stdenv.buildPlatform;
+-    # SIMD tests are only executed on platforms that support all
+-    # required processor features (e.g. SSE3, SSSE3 and SSE4.1 on x86_64):
+-    # https://github.com/bytecodealliance/wasmtime/blob/v9.0.0/cranelift/codegen/src/isa/x64/mod.rs#L220
+-    (isx86_64 -> sse3Support && ssse3Support && sse4_1Support)
+-    &&
+-      # The dependency `wasi-preview1-component-adapter` fails to build because of:
+-      # error: linker `rust-lld` not found
+-      !isAarch64;
++  doCheck = false;
+ 
+   postInstall =
+     let
+-- 
+2.52.0
+

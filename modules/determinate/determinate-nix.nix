@@ -1,4 +1,6 @@
 {
+  applyPatches,
+  callPackage,
   fetchFromGitHub,
   generateSplicesForMkScope,
   lib,
@@ -7,11 +9,16 @@
   splicePackages,
   stdenv,
 }: let
-  src = fetchFromGitHub {
-    owner = "DeterminateSystems";
-    repo = "nix-src";
-    tag = "v3.15.2";
-    hash = "sha256-32oMe1y+kwvIJNiJsIvozTuSmDxcwST06i+0ak+L4AU=";
+  src = applyPatches {
+    src = fetchFromGitHub {
+      owner = "DeterminateSystems";
+      repo = "nix-src";
+      tag = "v3.16.0";
+      hash = "sha256-Itk88UC3CxjGjjAb20KI6KrM9tRoGEpbv996fXwAWGo=";
+    };
+    patches = [
+      ./patches/0001-wasmtime-disable-checks-build-using-rust_1_92.patch
+    ];
   };
 
   determinate_nixDependencies =
@@ -43,6 +50,11 @@
       };
     };
 
+  nix-eval-jobs = callPackage ./nix-eval-jobs.nix {nixComponents = determinate_nixComponents;};
+
   determinate-nix = determinate_nixComponents.nix-everything;
 in
   determinate-nix
+  // {
+    passthru.nix-eval-jobs = nix-eval-jobs;
+  }
