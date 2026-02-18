@@ -7,8 +7,8 @@
   grammars = {
     tree-sitter-caddyfile = rec {
       url = "https://github.com/caddyserver/tree-sitter-caddyfile";
-      rev = "b04bdb4ec53e40c44afbf001e15540f60a296aef";
-      hash = "sha256-WaCWKq3wqjhWdsUd2vAT/JPqaxbHhOsaZrCg6MeXZZw=";
+      rev = "8951716aa2855e02dada302c540a90f277546095";
+      hash = "sha256-mU9q2VKqUl3zmiW+CYUMqSUCYWYJi+UFdhOyyF1b5N4=";
       fetchSubmodules = false;
       src = pkgs.fetchgit {inherit url rev hash fetchSubmodules;};
       generate = true;
@@ -43,13 +43,64 @@
 in {
   xdg.configFile."tree-sitter/config.json".source = (pkgs.formats.json {}).generate "tree-sitter-config.json" {
     parser-directories = [
-      pkgs.tree-sitter.grammars
+      (lib.filterAttrs (name: _: name != "tree-sitter-quint") pkgs.tree-sitter.grammars)
       linkedGrammars
     ];
   };
 
   programs.neovim = {
     enable = true;
+
+    withNodeJs = true;
+    withRuby = false;
+
+    defaultEditor = true;
+
+    viAlias = true;
+    vimAlias = true;
+    vimdiffAlias = true;
+
+    plugins = with pkgs.vimPlugins; [
+      barbar-nvim
+      catppuccin-nvim
+      cmp-buffer
+      cmp-cmdline
+      cmp-cmdline-history
+      cmp-buffer
+      cmp_luasnip
+      cmp-nvim-lsp
+      cmp-nvim-lsp-signature-help
+      cmp-path
+      dropbar-nvim
+      editorconfig-vim
+      indent-blankline-nvim
+      lspkind-nvim
+      lualine-nvim
+      luasnip
+      nvim-cmp
+      nvim-lspconfig
+      nvim-notify
+      nvim-web-devicons
+      nvim-tree-lua
+      nvim-treesitter
+      (nvim-treesitter.withPlugins (
+        _:
+          (lib.attrValues builtGrammars)
+          ++ (lib.filter (v: v.pname != "tree-sitter-quint") nvim-treesitter.allGrammars)
+      ))
+      nvim-treesitter-context
+      plenary-nvim
+      telescope-nvim
+      telescope-fzf-native-nvim
+      vim-lastplace
+    ];
+
+    extraPackages = with pkgs; [
+      fd
+      gcc
+      ripgrep
+      tree-sitter
+    ];
 
     extraConfig = ''
       filetype plugin indent on
@@ -365,52 +416,5 @@ in {
       -- setup must be called before loading
       vim.cmd.colorscheme "catppuccin"
     '';
-
-    plugins = with pkgs.vimPlugins; [
-      barbar-nvim
-      catppuccin-nvim
-      cmp-buffer
-      cmp-cmdline
-      cmp-cmdline-history
-      cmp-buffer
-      cmp_luasnip
-      cmp-nvim-lsp
-      cmp-nvim-lsp-signature-help
-      cmp-path
-      dropbar-nvim
-      editorconfig-vim
-      indent-blankline-nvim
-      lspkind-nvim
-      lualine-nvim
-      luasnip
-      nvim-cmp
-      nvim-lspconfig
-      nvim-notify
-      nvim-web-devicons
-      nvim-tree-lua
-      nvim-treesitter
-      (nvim-treesitter.withPlugins (_: nvim-treesitter.allGrammars ++ (lib.attrValues builtGrammars)))
-      nvim-treesitter-context
-      plenary-nvim
-      telescope-nvim
-      telescope-fzf-native-nvim
-      vim-lastplace
-    ];
-
-    extraPackages = with pkgs; [
-      fd
-      gcc
-      ripgrep
-      tree-sitter
-    ];
-
-    withNodeJs = true;
-    withRuby = false;
-
-    defaultEditor = true;
-
-    viAlias = true;
-    vimAlias = true;
-    vimdiffAlias = true;
   };
 }
