@@ -19,7 +19,13 @@
           # nixpkgs instance which doesn't have `allowUnfree` enabled, which is
           # necessary for us to be able to use `night-eye-dark-mode` and
           # `onepassword-password-manager`.
-          addons = import "${inputs.firefox-addons}/default.nix" {inherit (pkgs) fetchurl lib stdenv;};
+          addons = import "${inputs.firefox-addons}/default.nix" {
+            buildMozillaXpiAddon = let
+              libMozilla = import "${inputs.firefox-addons}/../../lib/mozilla.nix" {inherit (pkgs) lib;};
+            in
+              libMozilla.mkBuildMozillaXpiAddon {inherit (pkgs) fetchurl stdenv;};
+            inherit (pkgs) fetchurl lib stdenv;
+          };
         in
           with addons; [
             decentraleyes
