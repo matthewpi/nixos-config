@@ -28,6 +28,8 @@
     _packages = rec {
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin-wallpapers/package.nix {};
       delve-shim-dap = pkgs.callPackage ./delve-shim-dap/package.nix {};
+      determinate-nix = pkgs.callPackage ../modules/determinate/determinate-nix.nix {};
+      determinate-nixd = pkgs.callPackage ../modules/determinate/determinate-nixd.nix {};
       fluxer = pkgs.callPackage ./fluxer/package.nix {};
       freelens = pkgs.callPackage ./freelens/package.nix {inherit freelens-k8s-proxy;};
       freelens-k8s-proxy = pkgs.callPackage ./freelens-k8s-proxy/package.nix {};

@@ -1,7 +1,7 @@
-From b1534af5803fbc0ff2c91a9de42f2e15532d8c31 Mon Sep 17 00:00:00 2001
+From a91d7237a0f9066ca2007c9d517f50c3729215ce Mon Sep 17 00:00:00 2001
 From: Matthew Penner <me@matthewp.io>
 Date: Wed, 18 Feb 2026 14:32:08 -0700
-Subject: [PATCH] wasmtime: disable checks, build using `rust_1_92`
+Subject: [PATCH] wasmtime: disable checks, build using `rust_1_93`
 
 Signed-off-by: Matthew Penner <me@matthewp.io>
 ---
@@ -9,7 +9,7 @@ Signed-off-by: Matthew Penner <me@matthewp.io>
  1 file changed, 3 insertions(+), 12 deletions(-)
 
 diff --git a/packaging/wasmtime.nix b/packaging/wasmtime.nix
-index 3e8b71280..8307015a9 100644
+index 3e8b71280..3b9346a5b 100644
 --- a/packaging/wasmtime.nix
 +++ b/packaging/wasmtime.nix
 @@ -3,13 +3,13 @@
@@ -17,14 +17,14 @@ index 3e8b71280..8307015a9 100644
    lib,
    stdenv,
 -  rust_1_89,
-+  rust_1_92,
++  rust_1_93,
    fetchFromGitHub,
    cmake,
    enableShared ? !stdenv.hostPlatform.isStatic,
    enableStatic ? stdenv.hostPlatform.isStatic,
  }:
 -rust_1_89.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
-+rust_1_92.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
++rust_1_93.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
    pname = "wasmtime";
    version = "40.0.2";
  
