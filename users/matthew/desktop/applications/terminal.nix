@@ -89,8 +89,6 @@
         "ctrl+v=paste_from_clipboard"
       ];
 
-      shell-integration-features = ["ssh-env"];
-
       app-notifications = lib.concatStringsSep "," ["no-clipboard-copy" "config-reload"];
     };
   };
