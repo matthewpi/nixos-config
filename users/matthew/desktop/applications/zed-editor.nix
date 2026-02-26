@@ -295,7 +295,7 @@
       };
 
       # Disable AI edit predictions.
-      features.edit_prediction_provider = "none";
+      edit_predictions.provider = "none";
 
       # Disable completions in comments.
       edit_predictions_disabled_in = ["comment"];
