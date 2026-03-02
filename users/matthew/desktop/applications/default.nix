@@ -37,7 +37,7 @@
       video-trimmer
       wireshark
 
-      # libreoffice
+      libreoffice
       hunspell
       hunspellDicts.en_CA
       hunspellDicts.en_US
