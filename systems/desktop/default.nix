@@ -240,9 +240,13 @@
   services.ollama = {
     enable = true;
     package = pkgs.ollama-cuda;
+    host = "[::]";
     environmentVariables = {
       OLLAMA_GPU_OVERHEAD = toString (1024 * 1024 * 1024);
       OLLAMA_MAX_LOADED_MODELS = "1";
+      OLLAMA_NO_CLOUD = "1";
+      # OLLAMA_FLASH_ATTENTION = "1";
     };
   };
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [config.services.ollama.port];
 }
