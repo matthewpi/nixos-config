@@ -1,6 +1,7 @@
 {lib, ...}: {
   imports = [
     ./blahaj.nix
+    ./mac-mini.nix
     ./nxs.nix
   ];
 
