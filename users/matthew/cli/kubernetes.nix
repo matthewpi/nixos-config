@@ -18,7 +18,7 @@
 
   # Configure a `kuberc` configuration for kubectl.
   home.sessionVariables.KUBERC = "${config.xdg.configHome}/kubernetes/kuberc.yaml";
-  home.file.".kube/kubrc".source = config.xdg.configFile."kubernetes/kuberc.yaml".source;
+  # home.file.".kube/kuberc".source = config.xdg.configFile."kubernetes/kuberc.yaml".source;
   xdg.configFile."kubernetes/kuberc.yaml".source = (pkgs.formats.yaml {}).generate "kuberc.yaml" {
     apiVersion = "kubectl.config.k8s.io/v1beta1";
     kind = "Preference";
@@ -27,10 +27,16 @@
     credentialPluginPolicy = "Allowlist";
     credentialPluginAllowlist = [
       {
-        name = lib.getExe pkgs.kubelogin-oidc;
+        name = lib.getExe pkgs.kubectl;
       }
       {
         name = "/etc/profiles/per-user/${config.home.username}/bin/kubectl";
+      }
+      {
+        name = lib.getExe pkgs.kubelogin-oidc;
+      }
+      {
+        name = "/etc/profiles/per-user/${config.home.username}/bin/kubectl-oidc_login";
       }
     ];
 
