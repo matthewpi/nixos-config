@@ -1,5 +1,6 @@
 {
   config,
+  isDesktop,
   lib,
   pkgs,
   ...
@@ -152,6 +153,8 @@
       };
       icon_theme = "Catppuccin Mocha";
 
+      restore_on_startup = "last_workspace";
+
       buffer_font_family = "Monaspace Neon NF";
       buffer_font_size = 12;
       buffer_font_features = {
@@ -205,7 +208,7 @@
         show_background = false;
       };
 
-      #project_panel.show_diagnostics = "off";
+      # project_panel.show_diagnostics = "off";
 
       # Hide the collaboration panel button.
       collaboration_panel.button = false;
@@ -297,12 +300,6 @@
         };
       };
 
-      # Disable AI edit predictions.
-      edit_predictions.provider = "none";
-
-      # Disable completions in comments.
-      edit_predictions_disabled_in = ["comment"];
-
       # Disable telemetry.
       telemetry = {
         diagnostics = false;
@@ -317,26 +314,53 @@
 
       # Configure the available models for Ollama.
       language_models.ollama = {
-        available_models = [
+        api_url =
+          if isDesktop
+          then "http://localhost:11434"
+          else "http://matthew-desktop.moose-nase.ts.net:11434";
+        available_models = lib.mkIf isDesktop [
           {
-            name = "devstral-small-2:24b";
             display_name = "Devstral Small 2";
-            # Defaults to 384K which exceeds our available VRAM.
-            max_tokens = 65536;
+            name = "devstral-small-2:24b";
+            max_tokens = 65536; # Defaults to 384K which exceeds our available VRAM.
             supports_tools = true;
             supports_thinking = false;
             supports_images = true;
           }
           {
             # ~17 GB of VRAM
-            name = "gpt-oss:20b";
             display_name = "GPT OSS";
+            name = "gpt-oss:20b";
             max_tokens = 131072; # Default amount of tokens for the model.
             supports_tools = true;
             supports_thinking = true;
             supports_images = false;
           }
+          {
+            display_name = "GLM 4.7 Flash";
+            name = "glm-4.7-flash:latest";
+            max_tokens = 65536;
+            supports_tools = true;
+            supports_thinking = true;
+            supports_images = false;
+          }
         ];
+      };
+
+      # Disable completions in comments.
+      edit_predictions_disabled_in = ["comment"];
+
+      edit_predictions = {
+        # Require manual triggering of edit prediction to reduce system lag.
+        mode = "subtle";
+        # Configure systems to use local Ollama for edit prediction.
+        provider = "ollama";
+        ollama = {
+          api_url = "http://localhost:11434";
+          max_output_tokens = 64;
+          model = "deepseek-coder:6.7b";
+          prompt_format = "deepseek_coder";
+        };
       };
     };
 
