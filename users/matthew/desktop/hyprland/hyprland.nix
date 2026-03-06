@@ -62,10 +62,10 @@
   };
 
   # Command used to launch slack.
-  slack = mkSystemdRun {
-    name = "com.slack.Slack";
-    command = "${lib.getExe pkgs.slack} --disable-gpu";
-  };
+  # slack = mkSystemdRun {
+  #   name = "com.slack.Slack";
+  #   command = "${lib.getExe pkgs.slack} --disable-gpu";
+  # };
 
   # Command used to launch supersonic.
   supersonic = mkSystemdRun {
@@ -342,7 +342,7 @@ in {
           # Special workspaces that can be toggled on and off
           "special:terminal, on-created-empty:${ghostty}"
           "special:discord,  on-created-empty:${discord}"
-          "special:slack,    on-created-empty:${slack}"
+          # "special:slack,    on-created-empty:${slack}"
           "special:music,    on-created-empty:${supersonic}"
         ]
         ++ lib.optionals isDesktop [
@@ -437,13 +437,13 @@ in {
         # Special workspace keybinds, used to toggle the workspaces on and off
         "$mainMod, C, togglespecialworkspace, terminal"
         "$mainMod, D, togglespecialworkspace, discord"
-        "$mainMod, S, togglespecialworkspace, slack"
+        # "$mainMod, S, togglespecialworkspace, slack"
         "$mainMod, M, togglespecialworkspace, music"
 
         # Special workspace keybinds, used to move windows into the workspace
         "$mainMod Shift, C, movetoworkspace, special:terminal"
         "$mainMod Shift, D, movetoworkspace, special:discord"
-        "$mainMod Shift, S, movetoworkspace, special:slack"
+        # "$mainMod Shift, S, movetoworkspace, special:slack"
         "$mainMod Shift, M, movetoworkspace, special:music"
 
         # Screenshot keybinds
