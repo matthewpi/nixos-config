@@ -20,7 +20,7 @@
   };
 
   linuxHeaders = pkgs.makeLinuxHeaders {
-    inherit (pkgs.linuxPackages_xanmod_latest.kernel) src version patches;
+    inherit (pkgs.linuxPackages_xanmod.kernel) src version patches;
   };
 
   wine =

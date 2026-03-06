@@ -81,7 +81,7 @@
   time.timeZone = "America/Edmonton";
 
   # Use the stable xanmod kernel.
-  boot.kernelPackages = pkgs.linuxPackages_xanmod_latest;
+  boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   boot.kernelModules = [
     "unix_diag"
