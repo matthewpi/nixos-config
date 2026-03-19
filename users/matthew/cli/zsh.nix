@@ -30,11 +30,14 @@
       ''
         # Enable the zsh-completion-sync plugin so completions work for programs
         # available via devshells and direnv.
-        source "${pkgs.zsh-completion-sync}/share/zsh-completion-sync/zsh-completion-sync.plugin.zsh"
+        source '${pkgs.zsh-completion-sync}/share/zsh-completion-sync/zsh-completion-sync.plugin.zsh'
 
         # Enable the fast-syntax-highlighting plugin
-        source "${pkgs.zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh"
+        source '${pkgs.zsh-fast-syntax-highlighting}/share/zsh/plugins/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh'
       ''
+      (lib.mkIf pkgs.stdenv.hostPlatform.isDarwin ''
+        fpath[1,0]='/opt/homebrew/share/zsh/site-functions';
+      '')
     ];
 
     # TODO: remove zsh history entirely, we use atuin instead.
