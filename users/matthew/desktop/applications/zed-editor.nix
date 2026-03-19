@@ -299,36 +299,33 @@
       };
 
       # Configure the available models for Ollama.
-      language_models.ollama = {
-        api_url =
-          if isDesktop
-          then "http://localhost:11434"
-          else "http://matthew-desktop.moose-nase.ts.net:11434";
-        available_models = lib.mkIf isDesktop [
+      language_models.ollama = lib.mkIf isDesktop {
+        api_url = "http://localhost:11434";
+        available_models = [
           {
             display_name = "Devstral Small 2";
             name = "devstral-small-2:24b";
             max_tokens = 65536; # Defaults to 384K which exceeds our available VRAM.
-            supports_tools = true;
             supports_thinking = false;
             supports_images = true;
+            supports_tools = true;
           }
           {
             # ~17 GB of VRAM
-            display_name = "GPT OSS";
+            display_name = "GPT OSS 20B";
             name = "gpt-oss:20b";
             max_tokens = 131072; # Default amount of tokens for the model.
-            supports_tools = true;
-            supports_thinking = true;
             supports_images = false;
+            supports_thinking = true;
+            supports_tools = true;
           }
           {
             display_name = "GLM 4.7 Flash";
             name = "glm-4.7-flash:latest";
             max_tokens = 65536;
-            supports_tools = true;
-            supports_thinking = true;
             supports_images = false;
+            supports_thinking = true;
+            supports_tools = true;
           }
         ];
       };
@@ -337,16 +334,8 @@
       edit_predictions_disabled_in = ["comment"];
 
       edit_predictions = {
-        # Require manual triggering of edit prediction to reduce system lag.
         mode = "subtle";
-        # Configure systems to use local Ollama for edit prediction.
-        provider = "ollama";
-        ollama = {
-          api_url = "http://localhost:11434";
-          max_output_tokens = 64;
-          model = "deepseek-coder:6.7b";
-          prompt_format = "deepseek_coder";
-        };
+        provider = "none";
       };
     };
 
