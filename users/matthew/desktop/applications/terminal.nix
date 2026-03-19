@@ -47,7 +47,7 @@
     settings = {
       alpha-blending = "linear";
 
-      background-opacity = 0.75;
+      background-opacity = 0.85;
 
       copy-on-select = false;
 
