@@ -367,6 +367,20 @@
           };
         };
 
+        darwinConfigurations.nxmbp = inputs.darwin.lib.darwinSystem {
+          system = "aarch64-darwin";
+          modules = [./systems/nxmbp];
+
+          specialArgs = {
+            inherit inputs;
+            configurationRevision =
+              if (self ? rev)
+              then self.rev
+              else null;
+            outputs = self;
+          };
+        };
+
         nixosConfigurations.matthew-desktop = inputs.nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
           modules = [./systems/desktop];
