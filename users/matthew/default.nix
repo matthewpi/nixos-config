@@ -19,8 +19,8 @@
     XDG_STATE_HOME = config.xdg.stateHome;
 
     # Make AWS CLI follow the XDG spec.
-    AWS_CONFIG_FILE = "${config.home.sessionVariables.XDG_CONFIG_HOME}/aws/config";
-    AWS_SHARED_CREDENTIALS_FILE = "${config.home.sessionVariables.XDG_CONFIG_HOME}/aws/credentials";
+    AWS_CONFIG_FILE = "${config.xdg.configHome}/aws/config";
+    AWS_SHARED_CREDENTIALS_FILE = "${config.xdg.configHome}/aws/credentials";
 
     # Change CARGO_HOME from the default ~/.cargo location to follow the XDG spec.
     CARGO_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/cargo";
@@ -36,7 +36,7 @@
     # requests a different version.
     GOTOOLCHAIN = "local";
 
-    #_JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.home.sessionVariables.XDG_CONFIG_HOME}/java";
+    #_JAVA_OPTIONS = "-Djava.util.prefs.userRoot=${config.xdg.configHome}/java";
   };
 
   # Add all sessionVariables to systemd.

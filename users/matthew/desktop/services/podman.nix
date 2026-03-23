@@ -38,6 +38,6 @@ in {
     # Set DOCKER_HOST to point to the rootless Podman socket.
     DOCKER_HOST = "unix://$XDG_RUNTIME_DIR/podman/podman.sock";
 
-    REGISTRY_AUTH_FILE = "${config.home.sessionVariables.XDG_CONFIG_HOME}/containers/auth.json";
+    REGISTRY_AUTH_FILE = "${config.xdg.configHome}/containers/auth.json";
   };
 }

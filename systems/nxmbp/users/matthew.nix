@@ -54,5 +54,20 @@
     # Install Go globally since sometimes Zed Editor doesn't pick it up.
     go_1_26
     gopls
+
+    docker-compose
+    docker-credential-helpers
   ];
+
+  # Pre-configure auth to use the `osxkeychain` credential helper instead
+  # of storing credentials on disk in a plain-text.
+  xdg.configFile."containers/auth.json".text = builtins.toJSON {
+    credHelpers = {
+      "docker.io" = "osxkeychain";
+      "ghcr.io" = "osxkeychain";
+      "quay.io" = "osxkeychain";
+      "zot.blahaj.systems" = "osxkeychain";
+    };
+  };
+  home.sessionVariables.REGISTRY_AUTH_FILE = "${config.xdg.configHome}/containers/auth.json";
 }

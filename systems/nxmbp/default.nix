@@ -37,8 +37,12 @@
   # Install packages for the entire system.
   environment.systemPackages = with pkgs; [
     coreutils-full
+    fd
     git
+    nmap
     openssh
+    tree
+    wget
   ];
 
   # Configure fonts.
