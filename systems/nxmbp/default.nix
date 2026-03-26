@@ -87,9 +87,9 @@
   in ''
     if [[ "$SSH_AUTH_SOCK" == '/private/tmp/'* ]]; then
       export SSH_AUTH_SOCK="''${HOME}${sshAuthSock}"
-    fi
-
-    if [ -z "$SSH_AUTH_SOCK" -a -n "$HOME" ]; then
+    elif [[ "$SSH_AUTH_SOCK" != "$HOME"/* ]]; then
+      export SSH_AUTH_SOCK="''${HOME}${sshAuthSock}"
+    elif [ -z "$SSH_AUTH_SOCK" -a -n "$HOME" ]; then
       export SSH_AUTH_SOCK="''${HOME}${sshAuthSock}"
     fi
   '';
