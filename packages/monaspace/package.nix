@@ -5,13 +5,13 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "monaspace";
-  version = "1.301";
+  version = "1.400";
 
   src = fetchFromGitHub {
     owner = "githubnext";
     repo = "monaspace";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-8tPwm92ZtaXL9qeDL+ay9PdXLUBBsspdk7/0U8VO0Tg=";
+    hash = "sha256-c6ej+mpvd/3JfMi6163weCF2tsauIlkZxr9ACyJjjeY=";
   };
 
   outputs = ["out" "otf" "ttf" "woff" "woff2" "nerdfonts"];
