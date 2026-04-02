@@ -298,7 +298,7 @@ in {
       --   capabilities = capabilites,
       -- })
       vim.lsp.config('ts_ls', {
-        cmd = { "${lib.getExe pkgs.nodePackages.typescript-language-server}", "--stdio" },
+        cmd = { "${lib.getExe pkgs.typescript-language-server}", "--stdio" },
         capabilities = capabilities,
       })
 

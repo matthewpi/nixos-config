@@ -41,8 +41,8 @@
       jdt-language-server
       (runCommand "json-language-server" {} ''
         mkdir -p "$out"/bin
-        ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/json-language-server
-        ln -s ${lib.getExe nodePackages.vscode-json-languageserver} "$out"/bin/vscode-json-languageserver
+        ln -s ${lib.getExe vscode-json-languageserver} "$out"/bin/json-language-server
+        ln -s ${lib.getExe vscode-json-languageserver} "$out"/bin/vscode-json-languageserver
       '')
       # nil
       # nixd
@@ -58,7 +58,7 @@
         ln -s ${lib.getExe tofu-ls} "$out"/bin/terraform-ls
       '')
       package-version-server
-      nodePackages.prettier
+      prettier
       python313Packages.python-lsp-server
       rust-analyzer
       simple-completion-language-server
