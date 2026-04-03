@@ -13,11 +13,11 @@
     src = fetchFromGitHub {
       owner = "DeterminateSystems";
       repo = "nix-src";
-      tag = "v3.17.0";
-      hash = "sha256-RtKKd4aefzHEzV9sKa8bQdZIY67GJMV0nRS1QZ2E94g=";
+      tag = "v3.17.2";
+      hash = "sha256-5pg3HyPEUj/AXXwOQAwyieyDx0c1/1rf7+EsOCa1rJM=";
     };
     patches = [
-      ./patches/0001-wasmtime-disable-checks-build-using-rust_1_93.patch
+      ./patches/0001-wasmtime-disable-checks-unpin-rustPlatform-version.patch
     ];
   };
 
