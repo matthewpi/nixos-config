@@ -13,8 +13,8 @@
     src = fetchFromGitHub {
       owner = "DeterminateSystems";
       repo = "nix-src";
-      tag = "v3.17.2";
-      hash = "sha256-5pg3HyPEUj/AXXwOQAwyieyDx0c1/1rf7+EsOCa1rJM=";
+      tag = "v3.17.3";
+      hash = "sha256-/shs/3GA4R3rxhhqpPbEMnDZKbCvf3VpwnHB75nkTcI=";
     };
     patches = [
       ./patches/0001-wasmtime-disable-checks-unpin-rustPlatform-version.patch
