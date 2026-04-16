@@ -236,17 +236,4 @@
     # see comment in include/linux/mm.h in the kernel tree.
     "vm.max_map_count" = 2147483642;
   };
-
-  services.ollama = {
-    enable = true;
-    package = pkgs.ollama-cuda;
-    host = "[::]";
-    environmentVariables = {
-      OLLAMA_GPU_OVERHEAD = toString (1024 * 1024 * 1024);
-      OLLAMA_MAX_LOADED_MODELS = "1";
-      OLLAMA_NO_CLOUD = "1";
-      # OLLAMA_FLASH_ATTENTION = "1";
-    };
-  };
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [config.services.ollama.port];
 }

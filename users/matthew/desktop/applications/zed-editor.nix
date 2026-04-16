@@ -1,6 +1,5 @@
 {
   config,
-  isDesktop,
   lib,
   pkgs,
   ...
@@ -296,38 +295,6 @@
       agent = {
         enabled = true;
         button = true;
-      };
-
-      # Configure the available models for Ollama.
-      language_models.ollama = lib.mkIf isDesktop {
-        api_url = "http://localhost:11434";
-        available_models = [
-          {
-            display_name = "Devstral Small 2";
-            name = "devstral-small-2:24b";
-            max_tokens = 65536; # Defaults to 384K which exceeds our available VRAM.
-            supports_thinking = false;
-            supports_images = true;
-            supports_tools = true;
-          }
-          {
-            # ~17 GB of VRAM
-            display_name = "GPT OSS 20B";
-            name = "gpt-oss:20b";
-            max_tokens = 131072; # Default amount of tokens for the model.
-            supports_images = false;
-            supports_thinking = true;
-            supports_tools = true;
-          }
-          {
-            display_name = "GLM 4.7 Flash";
-            name = "glm-4.7-flash:latest";
-            max_tokens = 65536;
-            supports_images = false;
-            supports_thinking = true;
-            supports_tools = true;
-          }
-        ];
       };
 
       # Disable completions in comments.
