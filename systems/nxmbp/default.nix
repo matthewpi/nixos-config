@@ -43,6 +43,8 @@
     openssh
     tree
     wget
+
+    podman
   ];
 
   # Configure fonts.
