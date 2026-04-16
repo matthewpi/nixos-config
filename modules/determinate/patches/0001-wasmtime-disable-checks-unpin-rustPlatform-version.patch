@@ -1,7 +1,7 @@
-From 52bc33ef07e75c22d44d3bc49acf29e845c605a7 Mon Sep 17 00:00:00 2001
+From 5ecfad134cfa859d4c5f7189dd38a352759cd585 Mon Sep 17 00:00:00 2001
 From: Matthew Penner <me@matthewp.io>
-Date: Wed, 18 Feb 2026 14:32:08 -0700
-Subject: [PATCH] wasmtime: disable checks, unpin `rustPlatform` version
+Date: Wed, 8 Apr 2026 10:48:01 -0600
+Subject: [PATCH 1/4] wasmtime: disable checks, unpin `rustPlatform` version
 
 Signed-off-by: Matthew Penner <me@matthewp.io>
 ---
@@ -47,5 +47,5 @@ index 3e8b71280..e470a55f7 100644
    postInstall =
      let
 -- 
-2.52.0
+2.53.0
 

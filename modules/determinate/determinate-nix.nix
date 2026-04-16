@@ -18,6 +18,9 @@
     };
     patches = [
       ./patches/0001-wasmtime-disable-checks-unpin-rustPlatform-version.patch
+      # ./patches/0002-libblake3-ensure-useTBB-remains-disabled.patch
+      ./patches/0003-fetchers-disable-test-code-that-fails-to-compile.patch
+      ./patches/0004-lowdown-restrict-to-2.x.x-versions-only.patch
     ];
   };
 

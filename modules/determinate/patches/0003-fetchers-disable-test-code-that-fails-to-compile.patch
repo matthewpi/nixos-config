@@ -1,0 +1,28 @@
+From a34e45683d2c7c2a43ebe584a5f379ec0114ba10 Mon Sep 17 00:00:00 2001
+From: Matthew Penner <me@matthewp.io>
+Date: Wed, 8 Apr 2026 10:49:36 -0600
+Subject: [PATCH 3/4] fetchers: disable test code that fails to compile
+
+Signed-off-by: Matthew Penner <me@matthewp.io>
+---
+ src/libfetchers/fetchers.cc | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/libfetchers/fetchers.cc b/src/libfetchers/fetchers.cc
+index 19018aaff..e56ed056b 100644
+--- a/src/libfetchers/fetchers.cc
++++ b/src/libfetchers/fetchers.cc
+@@ -379,8 +379,8 @@ std::pair<ref<SourceAccessor>, Input> Input::getAccessorUnchecked(const Settings
+     PathLocks lock(
+         {lockFilePath.string()}, fmt("waiting for another Nix process to finish fetching input '%s'...", to_string()));
+ 
+-    if (getEnv("_NIX_TEST_CONCURRENT_FETCHES"))
+-        std::this_thread::sleep_for(std::chrono::seconds(1));
++    // if (getEnv("_NIX_TEST_CONCURRENT_FETCHES"))
++    //    std::this_thread::sleep_for(std::chrono::seconds(1));
+ 
+     /* See if the input is in the cache of the fetcher. */
+     try {
+-- 
+2.53.0
+
