@@ -17,9 +17,4 @@
     Defaults:root,%admin env_keep+=TERMINFO_DIRS
     Defaults:root,%admin env_keep+=TERMINFO
   '';
-
-  # environment.extraInit = ''
-  #   # Reset TERM with new TERMINFO available (if any)
-  #   export TERM="$TERM"
-  # '';
 }

@@ -60,7 +60,7 @@
   ];
 
   # Pre-configure auth to use the `osxkeychain` credential helper instead
-  # of storing credentials on disk in a plain-text.
+  # of storing credentials on disk in plain-text.
   xdg.configFile."containers/auth.json".text = builtins.toJSON {
     credHelpers = {
       "docker.io" = "osxkeychain";
