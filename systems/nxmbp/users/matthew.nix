@@ -49,6 +49,10 @@
   programs.home-manager.enable = true;
 
   home.packages = with pkgs; [
+    freelens
+    # Needed by `freelens-multi-pod-logs`.
+    stern
+
     nh
 
     # Install Go globally since sometimes Zed Editor doesn't pick it up.
