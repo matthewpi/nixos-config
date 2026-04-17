@@ -1,4 +1,5 @@
 {
+  cctools,
   copyDesktopItems,
   electron_39,
   fetchFromGitHub,
@@ -46,31 +47,38 @@ in
     };
 
     strictDeps = true;
-    nativeBuildInputs = [
-      copyDesktopItems
-      makeWrapper
-      nodejs_22
-      pnpm
-      pnpmConfigHook
-      python3
-    ];
+    nativeBuildInputs =
+      [
+        makeWrapper
+        nodejs_22
+        pnpm
+        pnpmConfigHook
+        python3
+      ]
+      ++ lib.optional stdenv.hostPlatform.isLinux copyDesktopItems
+      ++ lib.optional stdenv.hostPlatform.isDarwin cctools.libtool;
 
-    env = {
-      # Ensure electron-builder doesn't try to download any binaries as that
-      # won't work in the Nix build sandbox.
-      ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
+    env =
+      {
+        # Ensure electron-builder doesn't try to download any binaries as that
+        # won't work in the Nix build sandbox.
+        ELECTRON_SKIP_BINARY_DOWNLOAD = "1";
 
-      # Set NODE_ENV so the build scripts know we are building for a production
-      # release.
-      NODE_ENV = "production";
+        # Set NODE_ENV so the build scripts know we are building for a production
+        # release.
+        NODE_ENV = "production";
 
-      # Needed to prevent the downloading of binaries for kubectl, helm, etc
-      # during the build process of `freelens`. Instead, we symlink these
-      # binaries from nixpkgs.
-      #
-      # ref; https://github.com/freelensapp/freelens/blob/v1.3.0/packages/ensure-binaries/src/index.mts#L98
-      LENS_SKIP_DOWNLOAD_BINARIES = "true";
-    };
+        # Needed to prevent the downloading of binaries for kubectl, helm, etc
+        # during the build process of `freelens`. Instead, we symlink these
+        # binaries from nixpkgs.
+        #
+        # ref; https://github.com/freelensapp/freelens/blob/v1.3.0/packages/ensure-binaries/src/index.mts#L98
+        LENS_SKIP_DOWNLOAD_BINARIES = "true";
+      }
+      // lib.optionalAttrs stdenv.hostPlatform.isDarwin {
+        # Disable electron-builder codesigning on Darwin.
+        CSC_IDENTITY_AUTO_DISCOVERY = "false";
+      };
 
     configurePhase = ''
       runHook preConfigure
@@ -80,17 +88,20 @@ in
       runHook postConfigure
     '';
 
-    # Without this `process.resourcesPath` will point to `${electron}/libexec`,
-    # which will not work.
-    #
-    # TODO: do we need to do something similar for darwin?
-    preBuild = lib.optionalString stdenv.hostPlatform.isLinux ''
-      substituteInPlace packages/core/src/common/vars/lens-resources-dir.injectable.ts \
-        --replace-fail 'process.resourcesPath' "'$out/share/freelens/resources'"
-
-      substituteInPlace packages/core/src/extensions/extension-discovery/extension-discovery.ts \
-        --replace-fail '".freelens", "extensions"' '".local", "share", "Freelens"'
-    '';
+    preBuild =
+      # Use `.local/share` instead of `.freelens` for extensions.
+      ''
+        substituteInPlace packages/core/src/extensions/extension-discovery/extension-discovery.ts \
+          --replace-fail '".freelens", "extensions"' '".local", "share", "Freelens"'
+      ''
+      # Without this `process.resourcesPath` will point to `${electron}/libexec`,
+      # which will not work.
+      #
+      # For Darwin, we use symlinks in the `Freelens.app/Contents/Resources` directory.
+      + lib.optionalString stdenv.hostPlatform.isLinux ''
+        substituteInPlace packages/core/src/common/vars/lens-resources-dir.injectable.ts \
+          --replace-fail 'process.resourcesPath' "'$out/share/freelens/resources'"
+      '';
 
     postPatch = ''
       sed -i -e 's/corepack //g' freelens/package.json
@@ -109,13 +120,18 @@ in
       # Pre-build the electron part of the application.
       pnpm electron-rebuild
 
+      # electronDist needs to be modifiable on Darwin
+      cp -r ${electron.dist} electron-dist
+      chmod -R u+w electron-dist
+
       # Run electron-builder, making sure it uses the electron from nixpkgs.
       pnpm exec electron-builder \
         --publish never \
         --dir \
         --config electron-builder.yml \
-        -c.electronDist=${electron.dist} \
-        -c.electronVersion=${electron.version}
+        -c.electronDist=electron-dist \
+        -c.electronVersion=${electron.version} \
+        -c.mac.identity=null
 
       runHook postBuild
     '';
@@ -129,21 +145,20 @@ in
           mkdir -p "$out"/Applications
           cp -r dist/mac*/Freelens.app "$out"/Applications
 
-          # TODO: link binaries like we do for Linux.
+          mkdir "$out"/Applications/Freelens.app/Contents/Resources/${binaryArchitecture}
+          pushd "$out"/Applications/Freelens.app/Contents/Resources/${binaryArchitecture}
+          ln -s ${lib.getExe freelens-k8s-proxy} freelens-k8s-proxy
+          ln -s ${lib.getExe kubernetes-helm} helm
+          ln -s ${lib.getExe kubectl} kubectl
+          popd
 
-          # makeWrapper "$out"/Applications/Freelens.app/Contents/MacOS/freelens "$out"/bin/freelens
+          # ln -s "$out"/Applications/Freelens.app/Contents/MacOS/Freelens "$out"/bin/freelens
+          # makeWrapper "$out"/Applications/Freelens.app/Contents/MacOS/Freelens "$out"/bin/freelens
         ''
         else ''
           mkdir -p "$out"/share/freelens
           cp -r dist/*-unpacked/{locales,resources{,.pak}} "$out"/share/freelens
 
-          # TODO: figure out if we really need this or not. While the application
-          # needs these binaries, we really don't want to trigger a rebuild of
-          # freelens, just because kubectl was updated. Ideally we would provide
-          # these in a wrapper (separate of the application build) and ensure
-          # freelens can read them from `$PATH` automatically. That way only
-          # the wrapper gets rebuild if any of these binaries change, not the
-          # entire application.
           mkdir -p "$out"/share/freelens/resources/${binaryArchitecture}
           pushd "$out"/share/freelens/resources/${binaryArchitecture}
           ln -s ${lib.getExe freelens-k8s-proxy} freelens-k8s-proxy
