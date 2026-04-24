@@ -10,7 +10,7 @@ let
 
   machine = system: {
     hostName = sshAlias;
-    inherit sshUser sshKey publicHostKey system;
+    inherit sshKey publicHostKey system;
     protocol = "ssh-ng";
     maxJobs = 32;
     speedFactor = 2;
