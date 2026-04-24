@@ -13,6 +13,8 @@
     ./builders
     ./flake-registry.nix
     ./nix-module.nix
+
+    ../nxmbp/terminfo.nix
   ];
 
   nixpkgs = {
@@ -33,13 +35,19 @@
 
   # Enable ZSH.
   programs.zsh.enable = true;
+  environment.shells = with pkgs; [zsh];
 
   # Install packages for the entire system.
   environment.systemPackages = with pkgs; [
     coreutils-full
+    fd
     git
+    nmap
     openssh
-    ghostty-bin.terminfo
+    tree
+    wget
+
+    podman
   ];
 
   # Configure fonts.
@@ -53,8 +61,6 @@
   users.users.matthew = {
     home = "/Users/matthew";
     openssh.authorizedKeys.keys = ["ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJ30VI7vAdrs2MDgkNHSQMJt2xBtBLrirVhinSyteeU"];
-    # Normally I'd just use the macOS bundled zsh shell, but it seems to have
-    # some issues with Ghostty when I SSH into the system.
     shell = pkgs.zsh;
   };
 
@@ -167,28 +173,14 @@
     "/bin"
     "/usr/sbin"
     "/sbin"
+
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
   ];
 
-  environment.pathsToLink = [
-    "/share/terminfo"
-  ];
-
-  environment.etc.terminfo.source = "${config.system.path}/share/terminfo";
-
-  # TODO: use `environment.profileRelativeSessionVariables`
   environment.variables = {
-    TERMINFO_DIRS = map (path: path + "/share/terminfo") config.environment.profiles ++ ["/usr/share/terminfo"];
+    HOMEBREW_PREFIX = "/opt/homebrew";
+    HOMEBREW_CELLAR = "/opt/homebrew/Cellar";
+    HOMEBREW_REPOSITORY = "/opt/homebrew";
   };
-
-  security = let
-    extraConfig = ''
-
-      # Keep terminfo database for root and %admin.
-      Defaults:root,%admin env_keep+=TERMINFO_DIRS
-      Defaults:root,%admin env_keep+=TERMINFO
-    '';
-  in
-    lib.mkIf config.security.sudo.keepTerminfo {
-      sudo = {inherit extraConfig;};
-    };
 }
