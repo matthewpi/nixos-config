@@ -11,7 +11,7 @@
 
     programs._1password-gui = {
       enable = lib.mkDefault true;
-      package = lib.mkDefault pkgs._1password-gui-beta;
+      package = lib.mkDefault pkgs._1password-gui;
     };
   };
 }
