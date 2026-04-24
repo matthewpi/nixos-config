@@ -1,15 +1,23 @@
-{config, ...}: {
+{
+  config,
+  pkgs,
+  ...
+}: {
   home.sessionVariables.NPM_CONFIG_USERCONFIG = "${config.xdg.configHome}/npm/npmrc";
 
   xdg.configFile."npm/npmrc".text = ''
-    # Disable update notifications.
+    # Disable update notifications
     update-notifier=false
 
     # NPM
     prefix=''${XDG_DATA_HOME}/npm
     cache=''${XDG_CACHE_HOME}/npm
     init-module=''${XDG_CONFIG_HOME}/npm/config/npm-init.js
-    tmp=''${XDG_RUNTIME_DIR}/npm
+    tmp=${
+      if pkgs.stdenv.hostPlatform.isDarwin
+      then "\${TMPDIR}"
+      else "\${XDG_RUNTIME_DIR}"
+    }/npm
 
     # PNPM
     state-dir=''${XDG_STATE_HOME}/pnpm-state
