@@ -260,7 +260,7 @@ in {
         cm_enabled = true;
 
         # Passthrough color settings for all fullscreen applications.
-        cm_fs_passthrough = 1;
+        # cm_fs_passthrough = 1;
 
         # Use `cm, hdredid` (2) instead of `cm, hdr` (1) when using Auto HDR.
         cm_auto_hdr = 2;
@@ -274,7 +274,7 @@ in {
         if isDesktop
         then [
           {
-            output = "DP-3";
+            output = "desc:Microstep MPG321UX OLED 0x01010101";
             mode = "3840x2160@240";
             position = "0x0";
             scale = "1.5";
@@ -294,14 +294,14 @@ in {
             vrr = 3; # Enable VRR (variable refresh-rate) for fullscreened `game` or `video` windows.
           }
           {
-            output = "DP-2";
+            output = "DP-3";
             mode = "3840x2160@60";
             position = "-2560x-720";
             scale = "1.5";
             bitdepth = 8;
           }
           {
-            output = "DP-1";
+            output = "DP-2";
             mode = "3840x2160@60";
             position = "-2560x720";
             scale = "1.5";
@@ -347,9 +347,9 @@ in {
         ]
         ++ lib.optionals isDesktop [
           # Configure default workspaces for the monitors
-          "1, monitor:DP-3, default:true"
-          "2, monitor:DP-2, default:true"
-          "3, monitor:DP-1, default:true"
+          "1, monitor:DP-4, default:true"
+          "2, monitor:DP-3, default:true"
+          "3, monitor:DP-2, default:true"
         ];
 
       windowrule = [
