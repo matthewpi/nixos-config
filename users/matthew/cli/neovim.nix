@@ -406,6 +406,7 @@ in {
 
     withNodeJs = true;
     withRuby = false;
+    withPython3 = false;
 
     defaultEditor = true;
 

@@ -1,4 +1,5 @@
 {
+  # config,
   inputs,
   isDesktop,
   lib,
@@ -10,6 +11,8 @@
   programs.firefox = {
     enable = true;
     package = pkgs.firefox;
+    configPath = ".mozilla/firefox";
+    # configPath = "${config.xdg.configHome}/mozilla/firefox";
 
     # Configure the default Firefox profile.
     profiles.default = lib.mkIf (!isDesktop) {

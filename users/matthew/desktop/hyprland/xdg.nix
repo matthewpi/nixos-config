@@ -69,6 +69,8 @@ in {
 
   xdg.userDirs = {
     enable = true;
+    # TODO: what does this do and do we want it?
+    setSessionVariables = true;
     # createDirectories = true;
   };
 

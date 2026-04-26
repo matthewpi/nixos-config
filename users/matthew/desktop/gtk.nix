@@ -25,6 +25,8 @@
     ];
 
     gtk4.extraConfig.gtk-application-prefer-dark-theme = 1;
+    # TODO: what does this do and do we want it?
+    gtk4.theme = config.gtk.theme;
 
     iconTheme = {
       name = "WhiteSur-dark";
