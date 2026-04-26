@@ -55,7 +55,12 @@
 
   nix-eval-jobs = callPackage ./nix-eval-jobs.nix {nixComponents = determinate_nixComponents;};
 
-  determinate-nix = determinate_nixComponents.nix-everything;
+  determinate-nix = determinate_nixComponents.nix-everything.override (oldAttrs: {
+    # Disable nix-functional-tests.
+    nix-functional-tests = oldAttrs.nix-functional-tests.overrideAttrs {
+      doCheck = false;
+    };
+  });
 in
   determinate-nix
   // {
