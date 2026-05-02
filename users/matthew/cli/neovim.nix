@@ -85,7 +85,7 @@ in {
         transparent_background = true,
 
         integrations = {
-          barbar = true,
+          -- barbar = true,
           cmp = true,
           coc_nvim = true,
           dropbar = {
@@ -342,12 +342,12 @@ in {
         },
       })
 
-      require("barbar").setup({
-        animation = false,
-        sidebar_filetypes = {
-          NvimTree = true,
-        },
-      })
+      -- require("barbar").setup({
+      --   animation = false,
+      --   sidebar_filetypes = {
+      --     NvimTree = true,
+      --   },
+      -- })
 
       -- Handle opening nvim-tree
       local function open_nvim_tree(data)
@@ -367,7 +367,7 @@ in {
     '';
 
     plugins = with pkgs.vimPlugins; [
-      barbar-nvim
+      # barbar-nvim
       catppuccin-nvim
       cmp-buffer
       cmp-cmdline
