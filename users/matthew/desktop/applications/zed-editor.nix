@@ -185,7 +185,7 @@
       load_direnv = "shell_hook";
 
       # Configure soft-wrapping based on the guides of the file.
-      soft_wrap = "bounded";
+      # soft_wrap = "bounded";
 
       # Configure colored indent guides.
       indent_guides.coloring = "indent_aware";
