@@ -1,34 +1,18 @@
-From 5ecfad134cfa859d4c5f7189dd38a352759cd585 Mon Sep 17 00:00:00 2001
+From f4c0994acc66470fd14ebf8d40894818d5f31f51 Mon Sep 17 00:00:00 2001
 From: Matthew Penner <me@matthewp.io>
-Date: Wed, 8 Apr 2026 10:48:01 -0600
-Subject: [PATCH 1/4] wasmtime: disable checks, unpin `rustPlatform` version
+Date: Fri, 8 May 2026 16:19:55 -0600
+Subject: [PATCH 1/2] wasmtime: disable checks
 
 Signed-off-by: Matthew Penner <me@matthewp.io>
 ---
- packaging/wasmtime.nix | 15 +++------------
- 1 file changed, 3 insertions(+), 12 deletions(-)
+ packaging/wasmtime.nix | 11 +----------
+ 1 file changed, 1 insertion(+), 10 deletions(-)
 
 diff --git a/packaging/wasmtime.nix b/packaging/wasmtime.nix
-index 3e8b71280..e470a55f7 100644
+index d2c2b95f6..b3d6dceac 100644
 --- a/packaging/wasmtime.nix
 +++ b/packaging/wasmtime.nix
-@@ -3,13 +3,13 @@
- {
-   lib,
-   stdenv,
--  rust_1_89,
-+  rustPlatform,
-   fetchFromGitHub,
-   cmake,
-   enableShared ? !stdenv.hostPlatform.isStatic,
-   enableStatic ? stdenv.hostPlatform.isStatic,
- }:
--rust_1_89.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
-+rustPlatform.buildRustPackage (finalAttrs: {
-   pname = "wasmtime";
-   version = "40.0.2";
- 
-@@ -41,16 +41,7 @@ rust_1_89.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
+@@ -41,16 +41,7 @@ rust.packages.stable.rustPlatform.buildRustPackage (finalAttrs: {
      cmake
    ];
  

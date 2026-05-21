@@ -13,14 +13,12 @@
     src = fetchFromGitHub {
       owner = "DeterminateSystems";
       repo = "nix-src";
-      tag = "v3.18.1";
-      hash = "sha256-6dtDAH38Jn658Vty5tULesSWvYj79cK+rtJtJgCUbW0=";
+      tag = "v3.20.0";
+      hash = "sha256-oyHvP5HDRe59opmjTrq2ED9lh+R9FrHyaCGPPNfBqWM=";
     };
     patches = [
-      ./patches/0001-wasmtime-disable-checks-unpin-rustPlatform-version.patch
+      ./patches/0001-wasmtime-disable-checks.patch
       # ./patches/0002-libblake3-ensure-useTBB-remains-disabled.patch
-      ./patches/0003-fetchers-disable-test-code-that-fails-to-compile.patch
-      ./patches/0004-lowdown-restrict-to-2.x.x-versions-only.patch
     ];
   };
 
@@ -55,12 +53,7 @@
 
   nix-eval-jobs = callPackage ./nix-eval-jobs.nix {nixComponents = determinate_nixComponents;};
 
-  determinate-nix = determinate_nixComponents.nix-everything.override (oldAttrs: {
-    # Disable nix-functional-tests.
-    nix-functional-tests = oldAttrs.nix-functional-tests.overrideAttrs {
-      doCheck = false;
-    };
-  });
+  determinate-nix = determinate_nixComponents.nix-everything.overrideAttrs {doCheck = false;};
 in
   determinate-nix
   // {
