@@ -48,6 +48,7 @@
       ".config/streamdeck"
       ".config/polychromatic"
       ".cache/umu"
+      ".local/share/models"
       ".local/share/umu"
       "Games"
     ]
