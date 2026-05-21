@@ -221,7 +221,7 @@ in {
       };
 
       dwindle = {
-        pseudotile = true;
+        # pseudotile = true;
         preserve_split = true;
       };
 
@@ -274,7 +274,7 @@ in {
         if isDesktop
         then [
           {
-            output = "desc:Microstep MPG321UX OLED 0x01010101";
+            output = "DP-3";
             mode = "3840x2160@240";
             position = "0x0";
             scale = "1.5";
@@ -294,14 +294,14 @@ in {
             vrr = 3; # Enable VRR (variable refresh-rate) for fullscreened `game` or `video` windows.
           }
           {
-            output = "DP-3";
+            output = "DP-2";
             mode = "3840x2160@60";
             position = "-2560x-720";
             scale = "1.5";
             bitdepth = 8;
           }
           {
-            output = "DP-2";
+            output = "DP-1";
             mode = "3840x2160@60";
             position = "-2560x720";
             scale = "1.5";
