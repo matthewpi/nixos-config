@@ -5,16 +5,16 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "delve-shim-dap";
-  version = "0.0.3";
+  version = "0.0.4";
 
   src = fetchFromGitHub {
     owner = "zed-industries";
     repo = "delve-shim-dap";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-fF19lGZtuT0OMXQfENMgJBlCJ3aD8Z/0Z1wKj/B3xNM=";
+    hash = "sha256-CtE/2bjnSjeLjbQK/UZQVndmmqLUyzfOcZZCx505PAw=";
   };
 
-  cargoHash = "sha256-UnMqsFicA/6QodKJRi0OiK8JHTytgKgOf3ay6+rirQ8=";
+  cargoHash = "sha256-IkB85k7kusPL4WCmwUvB3cJ2mTo8J2OUHmClLYFzGao=";
 
   meta = {
     mainProgram = "delve-shim-dap";
