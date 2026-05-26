@@ -3,8 +3,8 @@ let
   hostName = "nxs.blahaj.systems";
 in {
   nix.settings = {
-    trusted-substituters = ["https://nxs.blahaj.systems"];
-    trusted-public-keys = ["nxs.blahaj.systems:81cbdJwZju4jW0Drx5yJZV0FhPWYSgLLpV6PEeCb8YM="];
+    extra-trusted-substituters = ["https://nxs.blahaj.systems"];
+    extra-trusted-public-keys = ["nxs.blahaj.systems:81cbdJwZju4jW0Drx5yJZV0FhPWYSgLLpV6PEeCb8YM="];
   };
 
   programs.ssh.extraConfig = ''

@@ -12,8 +12,8 @@
   nix.settings.builders-use-substitutes = true;
 
   # Override the default substituters.
-  nix.settings.substituters = lib.mkForce [
-    "https://ncps.blahaj.systems" # local cache for cache.nixos.org
+  nix.settings.extra-substituters = lib.mkForce [
+    "https://ncps.blahaj.systems" # local proxy for cache.nixos.org
     "https://nxs.blahaj.systems"
   ];
 }
