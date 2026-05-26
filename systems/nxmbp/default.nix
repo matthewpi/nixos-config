@@ -10,8 +10,10 @@
     inputs.home-manager.darwinModules.home-manager
 
     ./flake-registry.nix
-    ./nix-module.nix
+    ../mac-mini/nix-module.nix
+    # ./nix-module.nix
     ./terminfo.nix
+    ../mac-mini/builders
   ];
 
   nixpkgs = {
