@@ -1,7 +1,7 @@
 {
   cctools,
   copyDesktopItems,
-  electron_39,
+  electron_41,
   fetchFromGitHub,
   fetchPnpmDeps,
   freelens-k8s-proxy,
@@ -16,7 +16,7 @@
   python3,
   stdenv,
 }: let
-  electron = electron_39;
+  electron = electron_41;
   pnpm = pnpm_10.override {nodejs = nodejs_22;};
 
   # https://www.electron.build/builder-util.typealias.archtype
