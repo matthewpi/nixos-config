@@ -457,9 +457,6 @@
           projectRootFile = "flake.nix";
 
           programs = {
-            # Enable actionlint, a GitHub Actions static checker.
-            actionlint.enable = true;
-
             # Enable alejandra, a Nix formatter.
             alejandra.enable = true;
 
