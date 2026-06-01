@@ -13,12 +13,11 @@
     src = fetchFromGitHub {
       owner = "DeterminateSystems";
       repo = "nix-src";
-      tag = "v3.20.0";
-      hash = "sha256-oyHvP5HDRe59opmjTrq2ED9lh+R9FrHyaCGPPNfBqWM=";
+      tag = "v3.21.0";
+      hash = "sha256-nV5OHwivEf392cB5MDwoVdDHSvy6Q+rRYZBHd9sePj4=";
     };
     patches = [
       ./patches/0001-wasmtime-disable-checks.patch
-      # ./patches/0002-libblake3-ensure-useTBB-remains-disabled.patch
     ];
   };
 

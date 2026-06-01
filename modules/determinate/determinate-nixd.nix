@@ -6,7 +6,7 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "determinate-nixd";
-  version = "3.20.0";
+  version = "3.21.0";
   src = finalAttrs.passthru.sources.${stdenvNoCC.hostPlatform.system} or (throw "Unsupported system: ${stdenvNoCC.hostPlatform.system}");
 
   dontUnpack = true;
@@ -33,12 +33,12 @@ stdenvNoCC.mkDerivation (finalAttrs: {
   passthru.sources = {
     aarch64-linux = fetchurl {
       url = "https://install.determinate.systems/determinate-nixd/tag/v${finalAttrs.version}/aarch64-linux";
-      hash = "sha256-q0H3Ze/DJVzsHZ+i7Lc2Qi1yE4jch54whoASU3+Yz+o=";
+      hash = "sha256-w/a73//rmO3BB9mCJ4+rUm21vsyUUt1ardpLP/7HrFc=";
       executable = true;
     };
     x86_64-linux = fetchurl {
       url = "https://install.determinate.systems/determinate-nixd/tag/v${finalAttrs.version}/x86_64-linux";
-      hash = "sha256-NndrIPtR6pbXmiXamh40qWG08jWxhvgShnMiD1x6IPQ=";
+      hash = "sha256-4BuwGkhlopzA1hB3B7bkvVP84eyDZZxUB2e837ZgOAk=";
       executable = true;
     };
   };
