@@ -276,6 +276,7 @@
 
       # Language settings
       languages = {
+        CSharp.language_servers = ["!roslyn" "csharp-ls" "..."];
         Go.format_on_save = "on";
         JSON.format_on_save = "on";
         JavaScript.format_on_save = "on";
@@ -283,7 +284,7 @@
         TypeScript.format_on_save = "on";
         TSX.format_on_save = "on";
 
-        PHP.language_servers = ["intelephense" "!phpactor"];
+        PHP.language_servers = ["!phpactor" "intelephense"];
 
         "Vue.js" = {
           format_on_save = "on";
