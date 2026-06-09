@@ -31,10 +31,6 @@
 
       hyprland-protocols = fixPathForLazyTrees inputs.hyprland-protocols "hyprland-protocols";
 
-      hyprland-qt-support = (fixPathForLazyTrees inputs.hyprland-qt-support "hyprland-qt-support").override {
-        inherit hyprlang;
-      };
-
       hyprlang = (fixPathForLazyTrees inputs.hyprlang "hyprlang").override {
         inherit hyprutils;
       };
@@ -56,7 +52,7 @@
       };
 
       hyprpolkitagent = (fixPathForLazyTrees inputs.hyprpolkitagent "hyprpolkitagent").override {
-        inherit hyprland-qt-support hyprutils;
+        inherit hyprutils;
       };
 
       hyprtoolkit = (fixPathForLazyTrees inputs.hyprtoolkit "hyprtoolkit").override {
