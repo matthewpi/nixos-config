@@ -1,7 +1,7 @@
 {
   cctools,
   copyDesktopItems,
-  electron_41,
+  electron_39,
   fetchFromGitHub,
   fetchPnpmDeps,
   lib,
@@ -13,7 +13,7 @@
   python3,
   stdenv,
 }: let
-  electron = electron_41;
+  electron = electron_39;
   nodejs = nodejs-slim_24;
   pnpm = pnpm_10.override {nodejs-slim = nodejs;};
 in
