@@ -10,14 +10,15 @@
   lib,
   makeDesktopItem,
   makeWrapper,
-  nodejs_22,
+  nodejs-slim_22,
   pnpm_10,
   pnpmConfigHook,
   python3,
   stdenv,
 }: let
   electron = electron_41;
-  pnpm = pnpm_10.override {nodejs = nodejs_22;};
+  nodejs = nodejs-slim_22;
+  pnpm = pnpm_10.override {nodejs-slim = nodejs;};
 
   # https://www.electron.build/builder-util.typealias.archtype
   binaryArchitecture =
@@ -50,7 +51,7 @@ in
     nativeBuildInputs =
       [
         makeWrapper
-        nodejs_22
+        nodejs
         pnpm
         pnpmConfigHook
         python3

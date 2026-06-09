@@ -7,14 +7,15 @@
   lib,
   makeDesktopItem,
   makeWrapper,
-  nodejs_24,
+  nodejs-slim_24,
   pnpm_10,
   pnpmConfigHook,
   python3,
   stdenv,
 }: let
   electron = electron_41;
-  pnpm = pnpm_10.override {nodejs = nodejs_24;};
+  nodejs = nodejs-slim_24;
+  pnpm = pnpm_10.override {nodejs-slim = nodejs;};
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "fluxer";
@@ -40,7 +41,7 @@ in
     nativeBuildInputs =
       [
         makeWrapper
-        nodejs_24
+        nodejs
         pnpm
         pnpmConfigHook
         python3
