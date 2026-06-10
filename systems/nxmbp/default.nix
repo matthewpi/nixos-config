@@ -42,6 +42,7 @@
     fd
     git
     nmap
+    mtr
     openssh
     tree
     wget
