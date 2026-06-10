@@ -44,7 +44,7 @@
 
       jetbrains.idea-oss
 
-      fluxer
+      # fluxer
     ]
     ++ lib.optional isDesktop polychromatic;
 }
