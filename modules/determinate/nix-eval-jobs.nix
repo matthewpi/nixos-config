@@ -12,13 +12,13 @@
 }:
 stdenv.mkDerivation (finalAttrs: {
   pname = "nix-eval-jobs";
-  version = "3.21.0";
+  version = "3.21.1";
 
   src = fetchFromGitHub {
     owner = "DeterminateSystems";
     repo = "nix-eval-jobs";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-IzDhqdgNthbhSW2fg8+g+vKyCz1n1300f3axPgbdQGQ=";
+    hash = "sha256-ALh2z1NeypfWRVCzV+jv2qRBHFknRoQLJXWmSndhf20=";
   };
 
   buildInputs = [
