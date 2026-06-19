@@ -35,6 +35,7 @@
       inter = pkgs.callPackage ./inter/package.nix {};
       monaspace = pkgs.callPackage ./monaspace/package.nix {};
       proton-ge-bin = pkgs.callPackage ./proton-ge-bin/package.nix {};
+      socktainer = pkgs.callPackage ./socktainer/package.nix {};
       star-citizen = pkgs.callPackage ./star-citizen {inherit inputs proton-ge-bin;};
 
       libvirt = pkgs.libvirt.override {
