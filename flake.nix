@@ -238,12 +238,10 @@
     };
 
     lanzaboote = {
-      url = "github:matthewpi/lanzaboote/fixes";
+      url = "github:nix-community/lanzaboote";
       inputs = {
-        flake-compat.follows = "flake-compat";
-        flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
-        pre-commit-hooks-nix.follows = "";
+        pre-commit.follows = "";
       };
     };
 
