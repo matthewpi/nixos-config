@@ -214,7 +214,7 @@ in {
 
       require("lualine").setup({
         options = {
-          theme = "catppuccin",
+          theme = "catppuccin-nvim",
         },
       })
 
