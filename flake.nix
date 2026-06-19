@@ -307,6 +307,11 @@
             overlays = builtins.attrValues self.overlays;
 
             config = {
+              # The JSON license states "The Software shall be used for Good, not Evil.",
+              # I don't believe I am using any JSON license software (barbar-nvim)
+              # for evil purposes, so allow JSON licensed packages to be used.
+              allowlistedLicenses = with inputs.nixpkgs.lib.licenses; [json];
+
               # Allow some unfree packages by name.
               allowUnfreePredicate = pkg: let
                 name = inputs.nixpkgs.lib.getName pkg;
