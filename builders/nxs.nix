@@ -26,10 +26,8 @@ in {
       system = "x86_64-linux";
       protocol = "ssh-ng";
       maxJobs = 32;
-      speedFactor = 2;
+      speedFactor = 1;
       supportedFeatures = [
-        # "kernel-module-keys"
-        # "secureboot"
         "benchmark"
         "big-parallel"
         "ca-derivations"
@@ -47,7 +45,7 @@ in {
       system = "i686-linux";
       protocol = "ssh-ng";
       maxJobs = 32;
-      speedFactor = 2;
+      speedFactor = 1;
       supportedFeatures = [
         "benchmark"
         "big-parallel"

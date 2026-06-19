@@ -2,6 +2,11 @@ let
   sshAlias = "builder-blahaj";
   hostName = "blahaj.blahaj.systems";
 in {
+  nix.settings = {
+    extra-trusted-substituters = ["https://ncps.blahaj.systems"];
+    extra-trusted-public-keys = ["ncps.blahaj.systems:NV3iFToViaqHGNorfWVMXgkwGq/YWTdzopehQlyEmU8="];
+  };
+
   programs.ssh.extraConfig = ''
     Host ${sshAlias}
       User builder
@@ -10,11 +15,9 @@ in {
       IdentityFile /root/.ssh/id_ed25519
   '';
 
-  programs.ssh.knownHosts = {
-    ${hostName} = {
-      hostNames = [hostName];
-      publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2GQbheOCOd7QjlTCFLC2ZJzImc0I14l8cj5fAsS+aK";
-    };
+  programs.ssh.knownHosts.${hostName} = {
+    hostNames = [hostName];
+    publicKey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ2GQbheOCOd7QjlTCFLC2ZJzImc0I14l8cj5fAsS+aK";
   };
 
   nix.buildMachines = [
@@ -57,9 +60,4 @@ in {
       publicHostKey = "c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUoyR1FiaGVPQ09kN1FqbFRDRkxDMlpKekltYzBJMTRsOGNqNWZBc1MrYUs=";
     }
   ];
-
-  nix.settings = {
-    extra-trusted-substituters = ["https://ncps.blahaj.systems"];
-    extra-trusted-public-keys = ["ncps.blahaj.systems:NV3iFToViaqHGNorfWVMXgkwGq/YWTdzopehQlyEmU8="];
-  };
 }
