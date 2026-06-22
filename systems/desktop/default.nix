@@ -236,4 +236,18 @@
     # see comment in include/linux/mm.h in the kernel tree.
     "vm.max_map_count" = 2147483642;
   };
+
+  users.users.builder = {
+    uid = 1001;
+    isNormalUser = true;
+    home = "/home/builder";
+    openssh.authorizedKeys.keys = [
+      # matthew@1password
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAJ30VI7vAdrs2MDgkNHSQMJt2xBtBLrirVhinSyteeU"
+      # root@nxmbp
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPtqM8SObQwgAPKHEmSHqUC2/VSioRk5k/DF7pChcBmD"
+    ];
+  };
+  nix.settings.allowed-users = ["builder"];
+  nix.settings.trusted-users = ["builder"];
 }
