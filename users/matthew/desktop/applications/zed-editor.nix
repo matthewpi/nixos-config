@@ -313,16 +313,25 @@
       };
     };
 
-    userKeymaps = [
-      {
-        context = "Terminal";
-        bindings = {
-          # Allow pasting with Ctrl+V.
-          "ctrl-v" = "terminal::Paste";
-          # Forward Ctrl+S (used for Atuin to change search mode).
-          "ctrl-s" = ["terminal::SendKeystroke" "ctrl-s"];
-        };
-      }
-    ];
+    userKeymaps =
+      [
+        {
+          context = "Terminal";
+          bindings = {
+            # Allow pasting with Ctrl+V.
+            "ctrl-v" = "terminal::Paste";
+            # Forward Ctrl+S (used for Atuin to change search mode).
+            "ctrl-s" = ["terminal::SendKeystroke" "ctrl-s"];
+          };
+        }
+      ]
+      ++ lib.optional pkgs.stdenv.hostPlatform.isDarwin {
+        context = "Pane";
+        bindings =
+          {
+            "cmd-0" = ["pane::ActivateItem" 9];
+          }
+          // builtins.listToAttrs (map (i: lib.nameValuePair "cmd-${toString (i + 1)}" ["pane::ActivateItem" i]) [0 1 2 3 4 5 6 7 8]);
+      };
   };
 }
