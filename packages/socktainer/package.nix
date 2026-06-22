@@ -2,6 +2,7 @@
   fetchurl,
   lib,
   stdenvNoCC,
+  versionCheckHook,
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "socktainer";
@@ -26,6 +27,9 @@ stdenvNoCC.mkDerivation (finalAttrs: {
 
     runHook postInstall
   '';
+
+  doInstallCheck = true;
+  nativeInstallCheckInputs = [versionCheckHook];
 
   meta = {
     mainProgram = "socktainer";
