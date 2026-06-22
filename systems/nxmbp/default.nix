@@ -9,11 +9,11 @@
   imports = [
     inputs.home-manager.darwinModules.home-manager
 
+    ../../builders/darwin
+
     ./flake-registry.nix
-    ../mac-mini/nix-module.nix
-    # ./nix-module.nix
+    ./nix-module.nix
     ./terminfo.nix
-    ../mac-mini/builders
   ];
 
   nixpkgs = {

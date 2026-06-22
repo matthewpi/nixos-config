@@ -10,10 +10,10 @@
   imports = [
     inputs.home-manager.darwinModules.home-manager
 
-    ./builders
-    ./flake-registry.nix
-    ./nix-module.nix
+    ../../builders/darwin
 
+    ../nxmbp/flake-registry.nix
+    ../nxmbp/nix-module.nix
     ../nxmbp/terminfo.nix
   ];
 
