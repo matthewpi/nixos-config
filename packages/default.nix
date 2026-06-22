@@ -27,6 +27,7 @@
   }: let
     _packages = rec {
       catppuccin-wallpapers = pkgs.callPackage ./catppuccin-wallpapers/package.nix {};
+      container = pkgs.callPackage ./container/package.nix {};
       delve-shim-dap = pkgs.callPackage ./delve-shim-dap/package.nix {};
       determinate-nix = pkgs.callPackage ../modules/determinate/determinate-nix.nix {};
       determinate-nixd = pkgs.callPackage ../modules/determinate/determinate-nixd.nix {};
