@@ -1,7 +1,7 @@
 {
   imports = [
     ./blahaj.nix
-    ./desktop.nix
+    # ./desktop.nix
     ./nxs.nix
   ];
 }
