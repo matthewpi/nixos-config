@@ -5,6 +5,7 @@
   ...
 }: {
   home.packages = [
+    pkgs.container
     pkgs.docker-client
     pkgs.docker-compose
     pkgs.docker-credential-helpers
