@@ -10,14 +10,14 @@
   lib,
   makeDesktopItem,
   makeWrapper,
-  nodejs-slim_22,
+  nodejs-slim_24,
   pnpm_10,
   pnpmConfigHook,
   python3,
   stdenv,
 }: let
   electron = electron_41;
-  nodejs = nodejs-slim_22;
+  nodejs = nodejs-slim_24;
   pnpm = pnpm_10.override {nodejs-slim = nodejs;};
 
   # https://www.electron.build/builder-util.typealias.archtype
@@ -31,20 +31,20 @@
 in
   stdenv.mkDerivation (finalAttrs: {
     pname = "freelens";
-    version = "1.9.0";
+    version = "1.10.1";
 
     src = fetchFromGitHub {
       owner = "freelensapp";
       repo = "freelens";
       tag = "v${finalAttrs.version}";
-      hash = "sha256-xeg+q9jP1w2fB5Bx71bV3t4Y3YXDTUmABt8AW8eTbEM=";
+      hash = "sha256-TMhUKgdH37V1h6/91b12OT4iLASEvLSP/86xsbkCN9o=";
     };
 
     pnpmDeps = fetchPnpmDeps {
       inherit (finalAttrs) pname version src;
       inherit pnpm;
       fetcherVersion = 3;
-      hash = "sha256-si5u8O9EWFX9Fci1Wqc9kcTB+BRULnCG3HVB3aYhu7o=";
+      hash = "sha256-8jdvstZPcqlBE9ngVtbu60c9VKxS6x3BrcFRQtDD8Hk=";
     };
 
     strictDeps = true;
