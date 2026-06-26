@@ -278,6 +278,7 @@
     nix-gaming = {
       url = "github:fufexan/nix-gaming";
       inputs = {
+        flake-compat.follows = "flake-compat";
         flake-parts.follows = "flake-parts";
         nixpkgs.follows = "nixpkgs";
       };
