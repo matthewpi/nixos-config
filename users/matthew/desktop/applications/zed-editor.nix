@@ -138,7 +138,7 @@
       };
       icon_theme = "Catppuccin Mocha";
 
-      restore_on_startup = "last_workspace";
+      restore_on_startup = "launchpad";
 
       buffer_font_family = "Monaspace Neon NF";
       buffer_font_size = 12;
