@@ -23,7 +23,7 @@ in {
       lib.mkEnableOption null
       // {
         description = "Whether to enable the activation of systemd-pcrlock.";
-        default = true;
+        default = false;
       };
 
     package = lib.mkOption {
