@@ -5,7 +5,7 @@
 }: {
   nix = {
     # Use the latest version of Nix by default.
-    package = lib.mkDefault pkgs.nixVersions.nix_2_28;
+    package = lib.mkDefault pkgs.nixVersions.latest;
 
     # Disable nix channels since we don't use them.
     channel.enable = false;
