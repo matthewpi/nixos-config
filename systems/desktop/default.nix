@@ -130,20 +130,17 @@
   # Enable aarch64 emulation for Nix builds
   boot.binfmt.emulatedSystems = ["aarch64-linux"];
 
-  nix.settings.system-features = [
-    "big-parallel"
-    "gccarch-x86-64-v2"
-    "gccarch-x86-64-v3"
-    "gccarch-x86-64-v4"
-    "gccarch-znver3"
-    "gccarch-znver4"
-
-    "keys"
-    "kernel-module-keys"
-    "secureboot"
-    "pcr-keys"
-    "verity-keys"
-  ];
+  nix.settings.system-features =
+    [
+      "big-parallel"
+      "gccarch-x86-64-v2"
+      "gccarch-x86-64-v3"
+      "gccarch-x86-64-v4"
+      "gccarch-znver3"
+      "gccarch-znver4"
+      "gccarch-znver5"
+    ]
+    ++ lib.optionals config.programs.nix-required-mounts.enable (builtins.attrNames config.programs.nix-required-mounts.allowedPatterns);
 
   # Configure restic to backup important directories
   services.restic.backups = {
