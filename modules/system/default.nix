@@ -44,9 +44,5 @@
       clean.extraArgs = lib.mkDefault "--keep-since 5d --keep 5";
       flake = lib.mkDefault "/code/matthewpi/nixos-config";
     };
-
-    # Disable nh checking for `experimental-features` that are no longer
-    # necessary since we use Determinate Nix.
-    environment.variables.NH_NO_CHECKS = "1";
   };
 }

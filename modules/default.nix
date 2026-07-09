@@ -2,7 +2,6 @@
   imports = [
     ./1password
     ./desktop
-    ./determinate
     ./gnome
     ./hyprland
     ./persistence
