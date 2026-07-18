@@ -6,11 +6,11 @@
 }:
 stdenvNoCC.mkDerivation (finalAttrs: {
   pname = "socktainer";
-  version = "1.1.0";
+  version = "1.1.1";
 
   src = fetchurl {
     url = "https://github.com/socktainer/socktainer/releases/download/v${finalAttrs.version}/socktainer";
-    hash = "sha256-DysTbeiG+ltETwj65rCgmHE9euXobFmKp3x3z0aBhfs=";
+    hash = "sha256-zlVSiqthiG1AtL+36KisiQZZeBpw4J9qMD2ydB0LohU=";
     executable = true;
   };
 
