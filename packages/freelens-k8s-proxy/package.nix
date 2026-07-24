@@ -6,16 +6,16 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "freelens-k8s-proxy";
-  version = "1.8.1";
+  version = "1.8.2";
 
   src = fetchFromGitHub {
     owner = "freelensapp";
     repo = "freelens-k8s-proxy";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-Yirfk1dfCf4WEBhx9JjAjqF0W2OXKqHfRaurYXaxumc=";
+    hash = "sha256-IjR3nmwR7iXMKdlY1D2ifA8vPUBOHzF+14SnxD0XkKc=";
   };
 
-  vendorHash = "sha256-jozglQbhyCxjruYOzE4qGDBnOVKabT4gvpXK4MFNPOY=";
+  vendorHash = "sha256-bMzcZs8uPlR8JswW7AaG234dXopwTmCZpnqiXroT2Ng=";
 
   # I love Go, except for the decision to pin the Go version in `go.mod`.
   #
