@@ -6,13 +6,13 @@
 }:
 buildGoModule (finalAttrs: {
   pname = "freelens-k8s-proxy";
-  version = "1.8.2";
+  version = "1.8.3";
 
   src = fetchFromGitHub {
     owner = "freelensapp";
     repo = "freelens-k8s-proxy";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-IjR3nmwR7iXMKdlY1D2ifA8vPUBOHzF+14SnxD0XkKc=";
+    hash = "sha256-FMiEYBFpM4bAfsBPRYG8sDXVjpQOYfyPh8A73pMrm0s=";
   };
 
   vendorHash = "sha256-bMzcZs8uPlR8JswW7AaG234dXopwTmCZpnqiXroT2Ng=";
