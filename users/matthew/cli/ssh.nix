@@ -19,7 +19,7 @@
         # persisted by impermanence.
         UserKnownHostsFile = "~/.cache/ssh/known_hosts";
         ControlMaster = "no";
-        ControlPath = "~/.ssh/master-%r@%n:%p";
+        ControlPath = "~/.ssh/control/%C";
         ControlPersist = "no";
       };
     };
