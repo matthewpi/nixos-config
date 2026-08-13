@@ -45,6 +45,9 @@
     XDG_CONFIG_HOME = "${config.home.homeDirectory}/.config";
     XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
     XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
+
+    # Pin the Atuin hostname so it doesn't change when using a Tailscale exit node.
+    ATUIN_HOST_NAME = "nxmbp.local";
   };
 
   # Enable home-manager.
