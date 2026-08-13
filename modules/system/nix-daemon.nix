@@ -27,7 +27,7 @@
 
       # Hard-link files by file content address
       # Disabled on darwin due to https://github.com/NixOS/nix/issues/7273
-      auto-optimise-store = lib.mkDefault (!pkgs.stdenv.isDarwin);
+      auto-optimise-store = lib.mkDefault (!pkgs.stdenv.hostPlatform.isDarwin);
 
       # Basic trust settings
       require-sigs = lib.mkDefault true;
