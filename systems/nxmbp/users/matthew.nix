@@ -46,6 +46,10 @@
     XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
     XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
 
+    # Change CARGO_HOME from the default ~/.cargo location to follow the XDG spec.
+    CARGO_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/cargo";
+    RUSTUP_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/rustup";
+
     # Pin the Atuin hostname so it doesn't change when using a Tailscale exit node.
     ATUIN_HOST_NAME = "nxmbp.local";
   };
@@ -63,5 +67,7 @@
     # Install Go globally since sometimes Zed Editor doesn't pick it up.
     go_1_26
     gopls
+
+    rustup
   ];
 }
