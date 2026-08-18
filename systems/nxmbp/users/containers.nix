@@ -14,7 +14,7 @@
   launchd.agents.socktainer = {
     enable = true;
     config = {
-      ProgramArguments = [(lib.getExe pkgs.socktainer)];
+      ProgramArguments = [(lib.getExe pkgs.socktainer) "--no-docker-context" "--no-check-compatibility"];
       KeepAlive = true;
       ProcessType = "Background";
       RunAtLoad = true;
