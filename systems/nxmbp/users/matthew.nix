@@ -46,6 +46,9 @@
     XDG_DATA_HOME = "${config.home.homeDirectory}/.local/share";
     XDG_STATE_HOME = "${config.home.homeDirectory}/.local/state";
 
+    # Change GOPATH from the default ~/go location to follow the XDG spec.
+    GOPATH = "${config.home.sessionVariables.XDG_DATA_HOME}/go";
+
     # Change CARGO_HOME from the default ~/.cargo location to follow the XDG spec.
     CARGO_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/cargo";
     RUSTUP_HOME = "${config.home.sessionVariables.XDG_DATA_HOME}/rustup";
